@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/page/home_page.dart';
 
 void main() => runApp(PingerApp());
 
@@ -7,10 +8,7 @@ class PingerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pinger',
-      home: Scaffold(
-        appBar: AppBar(title: Text('Pinger')),
-        body: Center(child: Text('Pinger')),
-      ),
+      home: HomePage(),
     );
   }
 }
