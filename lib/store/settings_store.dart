@@ -20,7 +20,7 @@ abstract class SettingsStoreBase with Store {
   @observable
   UserSettings userSettings;
 
-  Future<UserSettings> initSettings() async {
+  Future<void> initSettings() async {
     if (_sharedPrefs.containsKey(_userSettingsKey)) {
       final settingsJson =
           json.decode(_sharedPrefs.getString(_userSettingsKey));
