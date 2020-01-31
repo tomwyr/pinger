@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/changelog_page.dart';
 import 'package:pinger/page/intro_page.dart';
-import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -12,7 +13,20 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final _settingsStore = SettingsStore();
+  SettingsStore _settingsStore;
+
+  @override
+  void initState() {
+    super.initState();
+    _initStore();
+  }
+
+  void _initStore() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final store = SettingsStore(sharedPrefs);
+    await store.initSettings();
+    setState(() => _settingsStore = store);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +36,8 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Text("Settings"),
       ),
       body: Observer(builder: (_) {
-        final settings = _settingsStore.userSettings;
+        final settings = _settingsStore?.userSettings;
+        if (settings == null) return Container();
         return Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(children: <Widget>[
