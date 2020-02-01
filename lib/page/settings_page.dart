@@ -265,7 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: <Widget>[
           FlatButton(
             child: Text("OK"),
-            onPressed: () => Navigator.of(context).pop(result),
+            onPressed: () => pop(result),
           ),
         ],
       ),
