@@ -9,20 +9,33 @@ part of 'ping_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PingStore on PingStoreBase, Store {
-  final _$valueAtom = Atom(name: 'PingStoreBase.value');
+  final _$currentPingAtom = Atom(name: 'PingStoreBase.currentPing');
 
   @override
-  Ping get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
-    return super.value;
+  Ping get currentPing {
+    _$currentPingAtom.context.enforceReadPolicy(_$currentPingAtom);
+    _$currentPingAtom.reportObserved();
+    return super.currentPing;
   }
 
   @override
-  set value(Ping value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
-      super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+  set currentPing(Ping value) {
+    _$currentPingAtom.context.conditionallyRunInAction(() {
+      super.currentPing = value;
+      _$currentPingAtom.reportChanged();
+    }, _$currentPingAtom, name: '${_$currentPingAtom.name}_set');
+  }
+
+  final _$PingStoreBaseActionController =
+      ActionController(name: 'PingStoreBase');
+
+  @override
+  void start(String host) {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.start(host);
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 }

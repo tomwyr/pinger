@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/hosts_store.dart';
+import 'package:pinger/store/ping_store.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -10,6 +12,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final _hostsStore = HostsStore();
+  final _pingStore = PingStore();
 
   TextEditingController _inputController;
 
@@ -55,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
           Material(
             elevation: 4.0,
             child: ListTile(
-              onTap: () {},
+              onTap: () => _onItemSelected(_inputController.text),
               leading: Icon(Icons.language),
               title: Text(_inputController.text),
               contentPadding: EdgeInsets.only(left: 16.0, right: 12.0),
@@ -101,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildHostItem(HostItem item) {
     final color = Colors.lightBlueAccent;
     return ListTile(
-      onTap: () {},
+      onTap: () => _onItemSelected(item.name),
       leading: Icon(Icons.language, size: 24.0),
       title: Text(item.name, style: TextStyle(fontSize: 18.0)),
       subtitle: Row(children: <Widget>[
@@ -119,5 +122,10 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ]),
     );
+  }
+
+  void _onItemSelected(String host) {
+    _pingStore.start(host);
+    pushReplacement(PingPage());
   }
 }

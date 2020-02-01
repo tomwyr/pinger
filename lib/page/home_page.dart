@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         child: Observer(builder: (_) {
           final history = _historyStore.items;
           final favorites = _favoritesStore.items;
-          final ping = _pingStore.value;
+          final ping = _pingStore.currentPing;
           if (history.isEmpty && favorites.isEmpty && ping == null) {
             return _buildNoSuggestions();
           } else {
