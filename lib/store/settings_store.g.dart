@@ -25,4 +25,11 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
       _$userSettingsAtom.reportChanged();
     }, _$userSettingsAtom, name: '${_$userSettingsAtom.name}_set');
   }
+
+  final _$updateAsyncAction = AsyncAction('update');
+
+  @override
+  Future<void> update(UserSettings newSettings) {
+    return _$updateAsyncAction.run(() => super.update(newSettings));
+  }
 }
