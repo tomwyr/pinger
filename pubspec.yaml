@@ -15,6 +15,7 @@ dependencies:
   dotted_border: ^1.0.4
   json_annotation: ^3.0.1
   copy_with_extension: ^1.0.7
+  kiwi: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -23,6 +24,10 @@ dev_dependencies:
   mobx_codegen: ^0.4.2
   json_serializable: ^3.2.5
   copy_with_extension_gen: ^1.0.8
+  kiwi_generator:
+    git: 
+      url: git://github.com/tomwyr/kiwi.git
+      path: kiwi_generator
 
 flutter:
   uses-material-design: true

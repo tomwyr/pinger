@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/page/home_page.dart';
 
-void main() => runApp(PingerApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Injector.setUp();
+  runApp(PingerApp());
+}
 
 class PingerApp extends StatelessWidget {
   @override

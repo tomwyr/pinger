@@ -239,7 +239,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -282,6 +282,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.5"
+  kiwi:
+    dependency: "direct main"
+    description:
+      name: kiwi
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
+  kiwi_generator:
+    dependency: "direct dev"
+    description:
+      path: kiwi_generator
+      ref: HEAD
+      resolved-ref: "0ce225c93b91c6909c3ebb2b4dfa16d263a6731a"
+      url: "git://github.com/tomwyr/kiwi.git"
+    source: git
+    version: "0.4.0"
   logging:
     dependency: transitive
     description:

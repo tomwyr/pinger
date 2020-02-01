@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/changelog_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _initStore() async {
-    final pingerPrefs = PingerPrefs(await SharedPreferences.getInstance());
+    final pingerPrefs = Injector.resolve<PingerPrefs>();
     final store = SettingsStore(pingerPrefs);
     await store.initSettings();
     setState(() => _settingsStore = store);
