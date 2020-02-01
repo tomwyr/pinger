@@ -1,33 +1,28 @@
-import 'dart:convert';
-
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/user_settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pinger/service/pinger_prefs.dart';
 
 part 'settings_store.g.dart';
 
 class SettingsStore extends SettingsStoreBase with _$SettingsStore {
-  final SharedPreferences _sharedPrefs;
+  final PingerPrefs _pingerPrefs;
 
-  SettingsStore(this._sharedPrefs);
+  SettingsStore(this._pingerPrefs);
 }
 
 abstract class SettingsStoreBase with Store {
-  final String _userSettingsKey = 'userSettings';
-
-  SharedPreferences get _sharedPrefs;
+  PingerPrefs _pingerPrefs;
 
   @observable
   UserSettings userSettings;
 
   Future<void> initSettings() async {
-    if (_sharedPrefs.containsKey(_userSettingsKey)) {
-      final settingsJson =
-          json.decode(_sharedPrefs.getString(_userSettingsKey));
-      userSettings = UserSettings.fromJson(settingsJson);
-    } else {
-      await update(_createDefaultSettings());
+    var settings = _pingerPrefs.getUserSettings();
+    if (settings == null) {
+      settings = _createDefaultSettings();
+      await _pingerPrefs.saveUserSettings(settings);
     }
+    userSettings = settings;
   }
 
   UserSettings _createDefaultSettings() => UserSettings(
@@ -47,9 +42,8 @@ abstract class SettingsStoreBase with Store {
       );
 
   @action
-  Future<void> update(UserSettings newSettings) async {
-    final settingsString = json.encode(newSettings.toJson());
-    await _sharedPrefs.setString(_userSettingsKey, settingsString);
-    userSettings = newSettings;
+  Future<void> update(UserSettings settings) async {
+    await _pingerPrefs.saveUserSettings(settings);
+    userSettings = settings;
   }
 }
