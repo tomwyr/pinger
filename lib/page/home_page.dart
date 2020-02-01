@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/archive_page.dart';
 import 'package:pinger/page/intro_page.dart';
@@ -17,9 +18,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _historyStore = HistoryStore();
-  final _favoritesStore = FavoritesStore();
-  final _pingStore = PingStore();
+  final HistoryStore _historyStore = Injector.resolve();
+  final FavoritesStore _favoritesStore = Injector.resolve();
+  final PingStore _pingStore = Injector.resolve();
 
   @override
   Widget build(BuildContext context) {

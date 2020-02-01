@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/store/ping_store.dart';
 
 class PingPage extends StatefulWidget {
@@ -8,7 +9,7 @@ class PingPage extends StatefulWidget {
 }
 
 class _PingPageState extends State<PingPage> {
-  final _pingStore = PingStore();
+  final PingStore _pingStore = Injector.resolve();
 
   @override
   Widget build(BuildContext context) {

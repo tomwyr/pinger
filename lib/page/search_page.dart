@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -11,8 +12,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final _hostsStore = HostsStore();
-  final _pingStore = PingStore();
+  final HostsStore _hostsStore = Injector.resolve();
+  final PingStore _pingStore = Injector.resolve();
 
   TextEditingController _inputController;
 

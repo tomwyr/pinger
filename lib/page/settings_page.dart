@@ -5,7 +5,6 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/changelog_page.dart';
 import 'package:pinger/page/intro_page.dart';
-import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/settings_store.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -14,20 +13,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  SettingsStore _settingsStore;
-
-  @override
-  void initState() {
-    super.initState();
-    _initStore();
-  }
-
-  void _initStore() async {
-    final pingerPrefs = Injector.resolve<PingerPrefs>();
-    final store = SettingsStore(pingerPrefs);
-    await store.initSettings();
-    setState(() => _settingsStore = store);
-  }
+  final SettingsStore _settingsStore = Injector.resolve();
 
   @override
   Widget build(BuildContext context) {
