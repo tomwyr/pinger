@@ -29,7 +29,7 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   final _$updateAsyncAction = AsyncAction('update');
 
   @override
-  Future<void> update(UserSettings newSettings) {
-    return _$updateAsyncAction.run(() => super.update(newSettings));
+  Future<void> update(UserSettings settings) {
+    return _$updateAsyncAction.run(() => super.update(settings));
   }
 }
