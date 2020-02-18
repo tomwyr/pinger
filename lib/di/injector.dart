@@ -1,30 +1,16 @@
-import 'package:kiwi/kiwi.dart';
-import 'package:pinger/service/pinger_prefs.dart';
-import 'package:pinger/store/favorites_store.dart';
-import 'package:pinger/store/history_store.dart';
-import 'package:pinger/store/hosts_store.dart';
-import 'package:pinger/store/ping_store.dart';
+import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'package:pinger/di/injector.iconfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'injector.g.dart';
+@injectableInit
+Future<void> _initInjectable() => $initGetIt(GetIt.instance);
 
+@registerModule
 abstract class Injector {
-  static Container _container;
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  static Future<void> setUp() async {
-    _container = Container();
-    final prefs = await SharedPreferences.getInstance();
-    _container.registerInstance(prefs);
-    _$Injector()._configure();
-  }
+  static Future<void> configure() => _initInjectable();
 
-  static T resolve<T>([String name]) => _container.resolve(name);
-
-  @Register.factory(PingerPrefs)
-  @Register.singleton(HistoryStore)
-  @Register.singleton(FavoritesStore)
-  @Register.singleton(PingStore)
-  @Register.singleton(HostsStore)
-  // ignore: unused_element
-  void _configure();
+  static T resolve<T>([String instanceName]) => GetIt.instance.get<T>(instanceName);
 }

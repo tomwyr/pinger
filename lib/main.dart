@@ -4,7 +4,7 @@ import 'package:pinger/page/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Injector.setUp();
+  await Injector.configure();
   runApp(PingerApp());
 }
 

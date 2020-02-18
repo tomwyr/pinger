@@ -14,7 +14,8 @@ dependencies:
   flutter_mobx: ^0.3.6+2
   dotted_border: ^1.0.4
   freezed_annotation: ^0.6.0
-  kiwi: ^0.2.0
+  injectable: ^0.2.2
+  get_it: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -23,10 +24,7 @@ dev_dependencies:
   mobx_codegen: ^0.4.2
   json_serializable: ^3.2.5
   freezed: ^0.6.1
-  kiwi_generator:
-    git: 
-      url: git://github.com/tomwyr/kiwi.git
-      path: kiwi_generator
+  injectable_generator: ^0.2.2
 
 flutter:
   uses-material-design: true
