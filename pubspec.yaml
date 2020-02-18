@@ -13,8 +13,7 @@ dependencies:
   mobx: ^0.4.0+4
   flutter_mobx: ^0.3.6+2
   dotted_border: ^1.0.4
-  json_annotation: ^3.0.1
-  copy_with_extension: ^1.0.7
+  freezed_annotation: ^0.6.0
   kiwi: ^0.2.0
 
 dev_dependencies:
@@ -23,7 +22,7 @@ dev_dependencies:
   build_runner: ^1.7.3
   mobx_codegen: ^0.4.2
   json_serializable: ^3.2.5
-  copy_with_extension_gen: ^1.0.8
+  freezed: ^0.6.1
   kiwi_generator:
     git: 
       url: git://github.com/tomwyr/kiwi.git
