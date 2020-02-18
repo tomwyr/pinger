@@ -26,6 +26,13 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     }, _$userSettingsAtom, name: '${_$userSettingsAtom.name}_set');
   }
 
+  final _$initAsyncAction = AsyncAction('init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$updateAsyncAction = AsyncAction('update');
 
   @override

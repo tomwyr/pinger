@@ -18,7 +18,8 @@ abstract class SettingsStoreBase with Store {
   @observable
   UserSettings userSettings;
 
-  Future<void> initSettings() async {
+  @action
+  Future<void> init() async {
     var settings = _pingerPrefs.getUserSettings();
     if (settings == null) {
       settings = _createDefaultSettings();
