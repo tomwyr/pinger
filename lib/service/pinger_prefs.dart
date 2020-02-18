@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@singleton
 class PingerPrefs {
   final String _userSettingsKey = 'userSettings';
 

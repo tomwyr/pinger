@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'hosts_store.g.dart';
 
+@singleton
 class HostsStore = HostsStoreBase with _$HostsStore;
 
 abstract class HostsStoreBase with Store {

@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'favorites_store.g.dart';
 
+@singleton
 class FavoritesStore = FavoritesStoreBase with _$FavoritesStore;
 
 abstract class FavoritesStoreBase with Store {

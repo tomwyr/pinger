@@ -1,9 +1,11 @@
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
 part 'settings_store.g.dart';
 
+@singleton
 class SettingsStore extends SettingsStoreBase with _$SettingsStore {
   final PingerPrefs _pingerPrefs;
 

@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 part 'history_store.g.dart';
 
+@singleton
 class HistoryStore = HistoryStoreBase with _$HistoryStore;
 
 abstract class HistoryStoreBase with Store {
