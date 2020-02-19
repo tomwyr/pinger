@@ -13,7 +13,7 @@ class SettingsStore extends SettingsStoreBase with _$SettingsStore {
 }
 
 abstract class SettingsStoreBase with Store {
-  PingerPrefs _pingerPrefs;
+  PingerPrefs get _pingerPrefs;
 
   @observable
   UserSettings userSettings;

@@ -11,6 +11,7 @@ import 'package:pinger/page/settings_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/history_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/utils/format_utils.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -179,21 +180,12 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.symmetric(vertical: 4.0),
                     child: Row(children: [
                       Expanded(child: Text(it.host)),
-                      Text(_getTimestampLabel(it.timestamp)),
+                      Text(FormatUtils.getSinceNowLabel(it.timestamp)),
                     ]),
                   ))
               .toList(),
         ),
     ];
-  }
-
-  String _getTimestampLabel(DateTime timestamp) {
-    final diff = DateTime.now().difference(timestamp);
-    if (diff.inDays >= 7) return '${diff.inDays ~/ 7} w';
-    if (diff.inHours >= 24) return '${diff.inHours ~/ 24} d';
-    if (diff.inMinutes >= 60) return '${diff.inMinutes ~/ 60} h';
-    if (diff.inSeconds >= 60) return '${diff.inSeconds ~/ 60} m';
-    return '${diff.inSeconds} s';
   }
 
   Widget _buildSectionTitle(String title, {IconData icon}) {
