@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/assets.dart';
 import 'package:pinger/extensions.dart';
 
 class IntroPage extends StatefulWidget {
@@ -49,22 +50,22 @@ class _IntroPageState extends State<IntroPage> {
         onPageChanged: (it) => setState(() => _currentItem = it),
         children: <Widget>[
           _buildItem(
-            'assets/intro_magnifier.png',
+            Images.introMagnifier,
             "Select host",
             "Either pick one of the search results or enter your own host and confirm your choice",
           ),
           _buildItem(
-            'assets/intro_gear.png',
+            Images.introGear,
             "Adjust settings",
             "Change host monitoring preferences and behavior of entire application",
           ),
           _buildItem(
-            'assets/intro_waves.png',
+            Images.introWaves,
             "Ping host",
             "Either perform a quick ping by long pressing play button or tap it to start ping session",
           ),
           _buildItem(
-            'assets/intro_binders.png',
+            Images.introBinders,
             "Save results",
             "Archive ping results to review them later and compare them with rest of the world",
           ),
@@ -73,14 +74,14 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
-  Widget _buildItem(String imageSrc, String title, String description) {
+  Widget _buildItem(AssetImage image, String title, String description) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 48.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.asset(imageSrc, width: 150, height: 150),
+          Image(image: image, width: 150, height: 150),
           Container(height: 40.0),
           Text(title, style: TextStyle(fontSize: 18.0)),
           Container(height: 40.0),

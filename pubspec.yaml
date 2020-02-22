@@ -26,8 +26,9 @@ dev_dependencies:
   json_serializable: ^3.2.5
   freezed: ^0.6.1
   injectable_generator: ^0.2.2
+  r_flutter: ^0.6.0
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - lib/assets/

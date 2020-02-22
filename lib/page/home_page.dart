@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/archive_page.dart';
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Image.asset('assets/box_empty.png', height: 144.0),
+        Image(image: Images.boxEmpty, height: 144.0),
         Container(height: 24.0),
         Text(
           "Looks like there's nothing here yet",

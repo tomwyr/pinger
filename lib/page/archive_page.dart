@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/archive_store.dart';
@@ -43,7 +44,7 @@ class _ArchivePageState extends State<ArchivePage> {
       padding: EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
         Spacer(),
-        Image.asset('assets/box_empty.png', height: 144.0),
+        Image(image: Images.boxEmpty, height: 144.0),
         Container(height: 32.0),
         Text(
           "There't nothing here yet",
