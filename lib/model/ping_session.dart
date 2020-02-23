@@ -10,6 +10,7 @@ abstract class PingSession with _$PingSession {
   factory PingSession({
     @required String host,
     @required DateTime timestamp,
+    @required Duration duration,
     @required PingResults results,
   }) = _PingSession;
 

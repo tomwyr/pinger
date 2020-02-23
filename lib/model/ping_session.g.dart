@@ -12,6 +12,9 @@ _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {
     timestamp: json['timestamp'] == null
         ? null
         : DateTime.parse(json['timestamp'] as String),
+    duration: json['duration'] == null
+        ? null
+        : Duration(microseconds: json['duration'] as int),
     results: json['results'] == null
         ? null
         : PingResults.fromJson(json['results'] as Map<String, dynamic>),
@@ -22,6 +25,7 @@ Map<String, dynamic> _$_$_PingSessionToJson(_$_PingSession instance) =>
     <String, dynamic>{
       'host': instance.host,
       'timestamp': instance.timestamp?.toIso8601String(),
+      'duration': instance.duration?.inMicroseconds,
       'results': instance.results,
     };
 
