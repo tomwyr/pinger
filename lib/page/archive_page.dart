@@ -5,7 +5,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/page/search_page.dart';
+import 'package:pinger/page/session_details_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 
@@ -86,6 +89,7 @@ class _ArchivePageState extends State<ArchivePage>
       itemBuilder: (_, index) {
         final item = sessions[index];
         return ListTile(
+          onTap: () => push(SessionDetailsPage(session: item)),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -169,9 +173,7 @@ class _ArchivePageState extends State<ArchivePage>
         Spacer(),
         RaisedButton(
           child: Text("Start now"),
-          onPressed: () {
-            // TODO navigate to a place where user can start new ping session (home/search)
-          },
+          onPressed: () => pushAndRemoveUntil(SearchPage(), (it) => it.isFirst),
         ),
         Container(height: 64.0),
       ]),
@@ -184,6 +186,7 @@ class _ArchivePageState extends State<ArchivePage>
       itemBuilder: (_, index) {
         final item = sessions[index];
         return ListTile(
+          onTap: () => push(SessionDetailsPage(session: item)),
           leading: Icon(Icons.language),
           title: Text(
             item.host,

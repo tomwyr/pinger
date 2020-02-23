@@ -13,6 +13,12 @@ extension StateExtensions<T extends StatefulWidget> on State<T> {
         result: result,
       );
 
+  Future<T> pushAndRemoveUntil(Widget widget, RoutePredicate predicate) =>
+      Navigator.of(context).pushAndRemoveUntil<T>(
+        MaterialPageRoute(builder: (_) => widget),
+        predicate,
+      );
+
   // ignore: invalid_use_of_protected_member
   void rebuild() => setState(() {});
 }
