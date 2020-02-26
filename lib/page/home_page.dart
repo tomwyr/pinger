@@ -5,8 +5,10 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/archive_page.dart';
+import 'package:pinger/page/favorites_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/page/ping_page.dart';
+import 'package:pinger/page/recents_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/page/settings_page.dart';
 import 'package:pinger/store/favorites_store.dart';
@@ -104,26 +106,26 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildCurrentPing(Ping ping) {
     return [
       _buildSectionTitle('Current'),
-      Row(children: [
-        Image.network(
-          'https://www.netflix.com/favicon.ico',
-          width: 24.0,
-          height: 24.0,
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text(ping.host),
+      InkWell(
+        onTap: () => push(PingPage()),
+        child: Row(children: [
+          Image.network(
+            'https://www.netflix.com/favicon.ico',
+            width: 24.0,
+            height: 24.0,
           ),
-        ),
-        GestureDetector(
-          onTap: () => push(PingPage()),
-          child: Text(
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(ping.host),
+            ),
+          ),
+          Text(
             'Go back',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-        ),
-      ]),
+        ]),
+      ),
     ];
   }
 
@@ -143,17 +145,20 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       else
-        ListView(
-          shrinkWrap: true,
-          children: favorites
-              .map((it) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
-                    child: Row(children: <Widget>[
-                      Expanded(child: Text(it.host)),
-                      Text('${it.pingCount}'),
-                    ]),
-                  ))
-              .toList(),
+        InkWell(
+          onTap: favorites.isNotEmpty ? () => push(FavoritesPage()) : null,
+          child: ListView(
+            shrinkWrap: true,
+            children: favorites
+                .map((it) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(children: <Widget>[
+                        Expanded(child: Text(it.host)),
+                        Text('${it.pingCount} x'),
+                      ]),
+                    ))
+                .toList(),
+          ),
         ),
     ];
   }
@@ -161,7 +166,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildHistory(List<HistoryItem> history) {
     return [
       _buildSectionTitle(
-        'Recent',
+        'Recents',
         icon: history.isNotEmpty ? Icons.history : null,
       ),
       if (history.isEmpty)
@@ -174,17 +179,20 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       else
-        ListView(
-          shrinkWrap: true,
-          children: history
-              .map((it) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4.0),
-                    child: Row(children: [
-                      Expanded(child: Text(it.host)),
-                      Text(FormatUtils.getSinceNowLabel(it.timestamp)),
-                    ]),
-                  ))
-              .toList(),
+        InkWell(
+          onTap: history.isNotEmpty ? () => push(RecentsPage()) : null,
+          child: ListView(
+            shrinkWrap: true,
+            children: history
+                .map((it) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(children: [
+                        Expanded(child: Text(it.host)),
+                        Text(FormatUtils.getSinceNowLabel(it.timestamp)),
+                      ]),
+                    ))
+                .toList(),
+          ),
         ),
     ];
   }
