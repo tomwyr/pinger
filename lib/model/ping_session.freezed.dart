@@ -7,21 +7,106 @@ part of 'ping_session.dart';
 // FreezedGenerator
 // **************************************************************************
 
+PingHost _$PingHostFromJson(Map<String, dynamic> json) {
+  return _PingHost.fromJson(json);
+}
+
+mixin _$PingHost {
+  String get name;
+  String get avatarUrl;
+
+  PingHost copyWith({String name, String avatarUrl});
+
+  Map<String, dynamic> toJson();
+}
+
+@JsonSerializable()
+class _$_PingHost implements _PingHost {
+  _$_PingHost({@required this.name, @required this.avatarUrl})
+      : assert(name != null),
+        assert(avatarUrl != null);
+
+  factory _$_PingHost.fromJson(Map<String, dynamic> json) =>
+      _$_$_PingHostFromJson(json);
+
+  @override
+  final String name;
+  @override
+  final String avatarUrl;
+
+  @override
+  String toString() {
+    return 'PingHost(name: $name, avatarUrl: $avatarUrl)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PingHost &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.avatarUrl, avatarUrl)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(avatarUrl);
+
+  @override
+  _$_PingHost copyWith({
+    Object name = freezed,
+    Object avatarUrl = freezed,
+  }) {
+    assert(name != null);
+    assert(avatarUrl != null);
+    return _$_PingHost(
+      name: name == freezed ? this.name : name as String,
+      avatarUrl: avatarUrl == freezed ? this.avatarUrl : avatarUrl as String,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_PingHostToJson(this);
+  }
+}
+
+abstract class _PingHost implements PingHost {
+  factory _PingHost({@required String name, @required String avatarUrl}) =
+      _$_PingHost;
+
+  factory _PingHost.fromJson(Map<String, dynamic> json) = _$_PingHost.fromJson;
+
+  @override
+  String get name;
+  @override
+  String get avatarUrl;
+
+  @override
+  _PingHost copyWith({String name, String avatarUrl});
+}
+
 PingSession _$PingSessionFromJson(Map<String, dynamic> json) {
   return _PingSession.fromJson(json);
 }
 
 mixin _$PingSession {
-  String get host;
+  PingHost get host;
   DateTime get timestamp;
   Duration get duration;
   PingResults get results;
+  PingSettings get settings;
 
   PingSession copyWith(
-      {String host,
+      {PingHost host,
       DateTime timestamp,
       Duration duration,
-      PingResults results});
+      PingResults results,
+      PingSettings settings});
 
   Map<String, dynamic> toJson();
 }
@@ -32,27 +117,31 @@ class _$_PingSession implements _PingSession {
       {@required this.host,
       @required this.timestamp,
       @required this.duration,
-      @required this.results})
+      @required this.results,
+      @required this.settings})
       : assert(host != null),
         assert(timestamp != null),
         assert(duration != null),
-        assert(results != null);
+        assert(results != null),
+        assert(settings != null);
 
   factory _$_PingSession.fromJson(Map<String, dynamic> json) =>
       _$_$_PingSessionFromJson(json);
 
   @override
-  final String host;
+  final PingHost host;
   @override
   final DateTime timestamp;
   @override
   final Duration duration;
   @override
   final PingResults results;
+  @override
+  final PingSettings settings;
 
   @override
   String toString() {
-    return 'PingSession(host: $host, timestamp: $timestamp, duration: $duration, results: $results)';
+    return 'PingSession(host: $host, timestamp: $timestamp, duration: $duration, results: $results, settings: $settings)';
   }
 
   @override
@@ -68,7 +157,11 @@ class _$_PingSession implements _PingSession {
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
             (identical(other.results, results) ||
-                const DeepCollectionEquality().equals(other.results, results)));
+                const DeepCollectionEquality()
+                    .equals(other.results, results)) &&
+            (identical(other.settings, settings) ||
+                const DeepCollectionEquality()
+                    .equals(other.settings, settings)));
   }
 
   @override
@@ -77,7 +170,8 @@ class _$_PingSession implements _PingSession {
       const DeepCollectionEquality().hash(host) ^
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(duration) ^
-      const DeepCollectionEquality().hash(results);
+      const DeepCollectionEquality().hash(results) ^
+      const DeepCollectionEquality().hash(settings);
 
   @override
   _$_PingSession copyWith({
@@ -85,16 +179,19 @@ class _$_PingSession implements _PingSession {
     Object timestamp = freezed,
     Object duration = freezed,
     Object results = freezed,
+    Object settings = freezed,
   }) {
     assert(host != null);
     assert(timestamp != null);
     assert(duration != null);
     assert(results != null);
+    assert(settings != null);
     return _$_PingSession(
-      host: host == freezed ? this.host : host as String,
+      host: host == freezed ? this.host : host as PingHost,
       timestamp: timestamp == freezed ? this.timestamp : timestamp as DateTime,
       duration: duration == freezed ? this.duration : duration as Duration,
       results: results == freezed ? this.results : results as PingResults,
+      settings: settings == freezed ? this.settings : settings as PingSettings,
     );
   }
 
@@ -106,29 +203,33 @@ class _$_PingSession implements _PingSession {
 
 abstract class _PingSession implements PingSession {
   factory _PingSession(
-      {@required String host,
+      {@required PingHost host,
       @required DateTime timestamp,
       @required Duration duration,
-      @required PingResults results}) = _$_PingSession;
+      @required PingResults results,
+      @required PingSettings settings}) = _$_PingSession;
 
   factory _PingSession.fromJson(Map<String, dynamic> json) =
       _$_PingSession.fromJson;
 
   @override
-  String get host;
+  PingHost get host;
   @override
   DateTime get timestamp;
   @override
   Duration get duration;
   @override
   PingResults get results;
+  @override
+  PingSettings get settings;
 
   @override
   _PingSession copyWith(
-      {String host,
+      {PingHost host,
       DateTime timestamp,
       Duration duration,
-      PingResults results});
+      PingResults results,
+      PingSettings settings});
 }
 
 PingResults _$PingResultsFromJson(Map<String, dynamic> json) {

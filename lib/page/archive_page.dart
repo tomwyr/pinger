@@ -189,7 +189,7 @@ class _ArchivePageState extends State<ArchivePage>
           onTap: () => push(SessionDetailsPage(session: item)),
           leading: Icon(Icons.language),
           title: Text(
-            item.host,
+            item.host.name,
             style: TextStyle(fontSize: 18.0),
             maxLines: 1,
           ),
@@ -220,8 +220,8 @@ class _ArchivePageState extends State<ArchivePage>
   Widget _buildSessionsGroups(List<PingSession> sessions) {
     final countsMap = <String, int>{};
     sessions.forEach((it) => !countsMap.containsKey(it.host)
-        ? countsMap[it.host] = 1
-        : ++countsMap[it.host]);
+        ? countsMap[it.host.name] = 1
+        : ++countsMap[it.host.name]);
     final hostCounts = countsMap.entries.toList()
       ..sort((e1, e2) => e2.value - e1.value);
     return ListView.separated(

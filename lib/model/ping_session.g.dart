@@ -6,9 +6,24 @@ part of 'ping_session.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_PingHost _$_$_PingHostFromJson(Map<String, dynamic> json) {
+  return _$_PingHost(
+    name: json['name'] as String,
+    avatarUrl: json['avatarUrl'] as String,
+  );
+}
+
+Map<String, dynamic> _$_$_PingHostToJson(_$_PingHost instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'avatarUrl': instance.avatarUrl,
+    };
+
 _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {
   return _$_PingSession(
-    host: json['host'] as String,
+    host: json['host'] == null
+        ? null
+        : PingHost.fromJson(json['host'] as Map<String, dynamic>),
     timestamp: json['timestamp'] == null
         ? null
         : DateTime.parse(json['timestamp'] as String),
@@ -18,6 +33,9 @@ _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {
     results: json['results'] == null
         ? null
         : PingResults.fromJson(json['results'] as Map<String, dynamic>),
+    settings: json['settings'] == null
+        ? null
+        : PingSettings.fromJson(json['settings'] as Map<String, dynamic>),
   );
 }
 
@@ -27,6 +45,7 @@ Map<String, dynamic> _$_$_PingSessionToJson(_$_PingSession instance) =>
       'timestamp': instance.timestamp?.toIso8601String(),
       'duration': instance.duration?.inMicroseconds,
       'results': instance.results,
+      'settings': instance.settings,
     };
 
 _$_PingResults _$_$_PingResultsFromJson(Map<String, dynamic> json) {

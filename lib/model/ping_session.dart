@@ -1,17 +1,30 @@
 import 'dart:math' as math;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pinger/model/user_settings.dart';
 
 part 'ping_session.freezed.dart';
 part 'ping_session.g.dart';
 
 @freezed
+abstract class PingHost with _$PingHost {
+  factory PingHost({
+    @required String name,
+    @required String avatarUrl,
+  }) = _PingHost;
+
+  factory PingHost.fromJson(Map<String, dynamic> json) =>
+      _$PingHostFromJson(json);
+}
+
+@freezed
 abstract class PingSession with _$PingSession {
   factory PingSession({
-    @required String host,
+    @required PingHost host,
     @required DateTime timestamp,
     @required Duration duration,
     @required PingResults results,
+    @required PingSettings settings,
   }) = _PingSession;
 
   factory PingSession.fromJson(Map<String, dynamic> json) =>
