@@ -27,6 +27,7 @@ abstract class ArchiveStoreBase with Store {
     sessions = _pingerPrefs.getArchiveSessions() ??
         [
           PingSession(
+            id: 0,
             host: FakeData.hosts.dropbox,
             timestamp: DateTime.now().subtract(Duration(minutes: 10)),
             duration: Duration(minutes: 8, seconds: 7),
@@ -53,6 +54,7 @@ abstract class ArchiveStoreBase with Store {
             ]),
           ),
           PingSession(
+            id: 1,
             host: FakeData.hosts.youtube,
             timestamp: DateTime.now().subtract(Duration(hours: 17)),
             duration: Duration(minutes: 3, seconds: 2),
@@ -65,6 +67,7 @@ abstract class ArchiveStoreBase with Store {
             results: PingResults.fromValues([120.0, 200.0, 80.0, 192.0]),
           ),
           PingSession(
+            id: 2,
             host: FakeData.hosts.dropbox,
             timestamp: DateTime.now().subtract(Duration(days: 3)),
             duration: Duration(minutes: 35, seconds: 58),
@@ -79,6 +82,7 @@ abstract class ArchiveStoreBase with Store {
             ),
           ),
           PingSession(
+            id: 3,
             host: FakeData.hosts.dropbox,
             timestamp: DateTime.now().subtract(Duration(days: 22)),
             duration: Duration(minutes: 99, seconds: 44),

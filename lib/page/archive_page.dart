@@ -76,7 +76,7 @@ class _ArchivePageState extends State<ArchivePage>
             list: () => _buildSessionsList(sessions),
             groups: () => _buildSessionsGroups(sessions),
             host: (name) => _buildSelectedHost(
-                sessions.where((it) => it.host == name).toList()),
+                sessions.where((it) => it.host.name == name).toList()),
           );
         }),
       ),

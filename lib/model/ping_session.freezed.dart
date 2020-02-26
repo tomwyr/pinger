@@ -95,6 +95,7 @@ PingSession _$PingSessionFromJson(Map<String, dynamic> json) {
 }
 
 mixin _$PingSession {
+  int get id;
   PingHost get host;
   DateTime get timestamp;
   Duration get duration;
@@ -102,7 +103,8 @@ mixin _$PingSession {
   PingSettings get settings;
 
   PingSession copyWith(
-      {PingHost host,
+      {int id,
+      PingHost host,
       DateTime timestamp,
       Duration duration,
       PingResults results,
@@ -114,12 +116,14 @@ mixin _$PingSession {
 @JsonSerializable()
 class _$_PingSession implements _PingSession {
   _$_PingSession(
-      {@required this.host,
+      {@required this.id,
+      @required this.host,
       @required this.timestamp,
       @required this.duration,
       @required this.results,
       @required this.settings})
-      : assert(host != null),
+      : assert(id != null),
+        assert(host != null),
         assert(timestamp != null),
         assert(duration != null),
         assert(results != null),
@@ -128,6 +132,8 @@ class _$_PingSession implements _PingSession {
   factory _$_PingSession.fromJson(Map<String, dynamic> json) =>
       _$_$_PingSessionFromJson(json);
 
+  @override
+  final int id;
   @override
   final PingHost host;
   @override
@@ -141,13 +147,15 @@ class _$_PingSession implements _PingSession {
 
   @override
   String toString() {
-    return 'PingSession(host: $host, timestamp: $timestamp, duration: $duration, results: $results, settings: $settings)';
+    return 'PingSession(id: $id, host: $host, timestamp: $timestamp, duration: $duration, results: $results, settings: $settings)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PingSession &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.host, host) ||
                 const DeepCollectionEquality().equals(other.host, host)) &&
             (identical(other.timestamp, timestamp) ||
@@ -167,6 +175,7 @@ class _$_PingSession implements _PingSession {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(host) ^
       const DeepCollectionEquality().hash(timestamp) ^
       const DeepCollectionEquality().hash(duration) ^
@@ -175,18 +184,21 @@ class _$_PingSession implements _PingSession {
 
   @override
   _$_PingSession copyWith({
+    Object id = freezed,
     Object host = freezed,
     Object timestamp = freezed,
     Object duration = freezed,
     Object results = freezed,
     Object settings = freezed,
   }) {
+    assert(id != null);
     assert(host != null);
     assert(timestamp != null);
     assert(duration != null);
     assert(results != null);
     assert(settings != null);
     return _$_PingSession(
+      id: id == freezed ? this.id : id as int,
       host: host == freezed ? this.host : host as PingHost,
       timestamp: timestamp == freezed ? this.timestamp : timestamp as DateTime,
       duration: duration == freezed ? this.duration : duration as Duration,
@@ -203,7 +215,8 @@ class _$_PingSession implements _PingSession {
 
 abstract class _PingSession implements PingSession {
   factory _PingSession(
-      {@required PingHost host,
+      {@required int id,
+      @required PingHost host,
       @required DateTime timestamp,
       @required Duration duration,
       @required PingResults results,
@@ -212,6 +225,8 @@ abstract class _PingSession implements PingSession {
   factory _PingSession.fromJson(Map<String, dynamic> json) =
       _$_PingSession.fromJson;
 
+  @override
+  int get id;
   @override
   PingHost get host;
   @override
@@ -225,7 +240,8 @@ abstract class _PingSession implements PingSession {
 
   @override
   _PingSession copyWith(
-      {PingHost host,
+      {int id,
+      PingHost host,
       DateTime timestamp,
       Duration duration,
       PingResults results,

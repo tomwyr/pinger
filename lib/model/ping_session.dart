@@ -20,6 +20,7 @@ abstract class PingHost with _$PingHost {
 @freezed
 abstract class PingSession with _$PingSession {
   factory PingSession({
+    @required int id,
     @required PingHost host,
     @required DateTime timestamp,
     @required Duration duration,

@@ -21,6 +21,7 @@ Map<String, dynamic> _$_$_PingHostToJson(_$_PingHost instance) =>
 
 _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {
   return _$_PingSession(
+    id: json['id'] as int,
     host: json['host'] == null
         ? null
         : PingHost.fromJson(json['host'] as Map<String, dynamic>),
@@ -41,6 +42,7 @@ _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_PingSessionToJson(_$_PingSession instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'host': instance.host,
       'timestamp': instance.timestamp?.toIso8601String(),
       'duration': instance.duration?.inMicroseconds,
