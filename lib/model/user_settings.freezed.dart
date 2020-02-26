@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package
+// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters
 
 part of 'user_settings.dart';
 
@@ -80,11 +80,11 @@ class _$_UserSettings implements _UserSettings {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      pingSettings.hashCode ^
-      shareSettings.hashCode ^
-      showSystemNotification.hashCode ^
-      nightModeEnabled.hashCode ^
-      rememberHost.hashCode;
+      const DeepCollectionEquality().hash(pingSettings) ^
+      const DeepCollectionEquality().hash(shareSettings) ^
+      const DeepCollectionEquality().hash(showSystemNotification) ^
+      const DeepCollectionEquality().hash(nightModeEnabled) ^
+      const DeepCollectionEquality().hash(rememberHost);
 
   @override
   _$_UserSettings copyWith({
@@ -193,7 +193,9 @@ class _$_ShareSettings implements _ShareSettings {
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ shareResults.hashCode ^ attachLocation.hashCode;
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(shareResults) ^
+      const DeepCollectionEquality().hash(attachLocation);
 
   @override
   _$_ShareSettings copyWith({
@@ -288,10 +290,10 @@ class _$_PingSettings implements _PingSettings {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      count.hashCode ^
-      packetSize.hashCode ^
-      sendInterval.hashCode ^
-      timeout.hashCode;
+      const DeepCollectionEquality().hash(count) ^
+      const DeepCollectionEquality().hash(packetSize) ^
+      const DeepCollectionEquality().hash(sendInterval) ^
+      const DeepCollectionEquality().hash(timeout);
 
   @override
   _$_PingSettings copyWith({

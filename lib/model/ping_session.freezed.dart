@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package
+// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters
 
 part of 'ping_session.dart';
 
@@ -74,10 +74,10 @@ class _$_PingSession implements _PingSession {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      host.hashCode ^
-      timestamp.hashCode ^
-      duration.hashCode ^
-      results.hashCode;
+      const DeepCollectionEquality().hash(host) ^
+      const DeepCollectionEquality().hash(timestamp) ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(results);
 
   @override
   _$_PingSession copyWith({
@@ -193,10 +193,10 @@ class _$_PingResults implements _PingResults {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      values.hashCode ^
-      min.hashCode ^
-      max.hashCode ^
-      mean.hashCode;
+      const DeepCollectionEquality().hash(values) ^
+      const DeepCollectionEquality().hash(min) ^
+      const DeepCollectionEquality().hash(max) ^
+      const DeepCollectionEquality().hash(mean);
 
   @override
   _$_PingResults copyWith({

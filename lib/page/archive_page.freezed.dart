@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package
+// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters
 
 part of 'archive_page.dart';
 
@@ -239,7 +239,8 @@ class _$ArchiveHostView
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
   @override
   _$ArchiveHostView copyWith({
