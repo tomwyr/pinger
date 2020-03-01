@@ -113,7 +113,7 @@ class _ArchivePageState extends State<ArchivePage>
                 width: 48.0,
                 margin: EdgeInsets.only(left: 4.0),
                 child: Text(
-                  _formatSessionDuration(item.duration),
+                  FormatUtils.getDurationLabel(item.duration),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -124,12 +124,6 @@ class _ArchivePageState extends State<ArchivePage>
       },
       separatorBuilder: (_, __) => _buildSeparator(margin: 0.0),
     );
-  }
-
-  String _formatSessionDuration(Duration duration) {
-    final min = duration.inMinutes;
-    final sec = duration.inSeconds - min * 60;
-    return "$min:${sec.toString().padLeft(2, '0')}";
   }
 
   Widget _buildViewTypeIcon() {

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class FormatUtils {
   static String getSinceNowLabel(DateTime timestamp) {
     final diff = DateTime.now().difference(timestamp);
@@ -7,4 +9,13 @@ class FormatUtils {
     if (diff.inSeconds >= 60) return '${diff.inSeconds ~/ 60} m';
     return '${diff.inSeconds} s';
   }
+
+  static String getDurationLabel(Duration duration) {
+    final min = duration.inMinutes;
+    final sec = duration.inSeconds - min * 60;
+    return "$min:${sec.toString().padLeft(2, '0')}";
+  }
+
+  static String getTimestampLabel(DateTime timestamp) =>
+      DateFormat.MMMd().format(timestamp);
 }

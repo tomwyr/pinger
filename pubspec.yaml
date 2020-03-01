@@ -17,6 +17,7 @@ dependencies:
   injectable: ^0.2.2
   get_it: ^3.1.0
   fl_chart: ^0.8.1
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
