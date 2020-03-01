@@ -8,7 +8,7 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/search_page.dart';
-import 'package:pinger/page/session_details_page.dart';
+import 'package:pinger/page/session_details/session_details_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 
