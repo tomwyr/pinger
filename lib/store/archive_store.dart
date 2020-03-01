@@ -23,6 +23,13 @@ abstract class ArchiveStoreBase with Store {
   List<PingSession> sessions;
 
   @action
+  Future<void> deleteSession(int sessionId) async {
+    await _pingerPrefs.deleteArchiveSession(sessionId);
+    final entryIndex = sessions.indexWhere((it) => it.id == sessionId);
+    sessions = sessions.toList()..removeAt(entryIndex);
+  }
+
+  @action
   void init() {
     sessions = _pingerPrefs.getArchiveSessions() ??
         [

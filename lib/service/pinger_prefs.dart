@@ -44,4 +44,12 @@ class PingerPrefs {
         allSessions.map((it) => it.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveSessionsKey, jsonStringList);
   }
+
+  Future<void> deleteArchiveSession(int sessionId) async {
+    final allSessions = getArchiveSessions() ?? [];
+    allSessions.removeWhere((it) => it.id == sessionId);
+    final jsonStringList =
+        allSessions.map((it) => it.toJson()).map(jsonEncode).toList();
+    await _sharedPrefs.setStringList(_archiveSessionsKey, jsonStringList);
+  }
 }

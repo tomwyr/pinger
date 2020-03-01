@@ -26,6 +26,13 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
     }, _$sessionsAtom, name: '${_$sessionsAtom.name}_set');
   }
 
+  final _$deleteSessionAsyncAction = AsyncAction('deleteSession');
+
+  @override
+  Future<void> deleteSession(int sessionId) {
+    return _$deleteSessionAsyncAction.run(() => super.deleteSession(sessionId));
+  }
+
   final _$ArchiveStoreBaseActionController =
       ActionController(name: 'ArchiveStoreBase');
 
