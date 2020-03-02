@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
@@ -102,7 +103,10 @@ class _SessionDetailsPageState extends State<SessionDetailsPage>
               SessionDetailsResults(),
               SessionDetailsGlobal(),
               SessionDetailsInfo(),
-              SessionDetailsMore(),
+              Observer(
+                builder: (_) =>
+                    SessionDetailsMore(sessions: _archiveStore.sessions),
+              ),
             ],
           ),
         ),
