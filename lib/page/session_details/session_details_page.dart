@@ -102,7 +102,7 @@ class _SessionDetailsPageState extends State<SessionDetailsPage>
             children: [
               SessionDetailsResults(),
               SessionDetailsGlobal(),
-              SessionDetailsInfo(),
+              SessionDetailsInfo(session: widget.session),
               Observer(
                 builder: (_) =>
                     SessionDetailsMore(sessions: _archiveStore.sessions),

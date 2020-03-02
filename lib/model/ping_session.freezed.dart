@@ -13,17 +13,20 @@ PingHost _$PingHostFromJson(Map<String, dynamic> json) {
 
 mixin _$PingHost {
   String get name;
+  String get ip;
   String get avatarUrl;
 
-  PingHost copyWith({String name, String avatarUrl});
+  PingHost copyWith({String name, String ip, String avatarUrl});
 
   Map<String, dynamic> toJson();
 }
 
 @JsonSerializable()
 class _$_PingHost implements _PingHost {
-  _$_PingHost({@required this.name, @required this.avatarUrl})
+  _$_PingHost(
+      {@required this.name, @required this.ip, @required this.avatarUrl})
       : assert(name != null),
+        assert(ip != null),
         assert(avatarUrl != null);
 
   factory _$_PingHost.fromJson(Map<String, dynamic> json) =>
@@ -32,11 +35,13 @@ class _$_PingHost implements _PingHost {
   @override
   final String name;
   @override
+  final String ip;
+  @override
   final String avatarUrl;
 
   @override
   String toString() {
-    return 'PingHost(name: $name, avatarUrl: $avatarUrl)';
+    return 'PingHost(name: $name, ip: $ip, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -45,6 +50,8 @@ class _$_PingHost implements _PingHost {
         (other is _PingHost &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.ip, ip) ||
+                const DeepCollectionEquality().equals(other.ip, ip)) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 const DeepCollectionEquality()
                     .equals(other.avatarUrl, avatarUrl)));
@@ -54,17 +61,21 @@ class _$_PingHost implements _PingHost {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(ip) ^
       const DeepCollectionEquality().hash(avatarUrl);
 
   @override
   _$_PingHost copyWith({
     Object name = freezed,
+    Object ip = freezed,
     Object avatarUrl = freezed,
   }) {
     assert(name != null);
+    assert(ip != null);
     assert(avatarUrl != null);
     return _$_PingHost(
       name: name == freezed ? this.name : name as String,
+      ip: ip == freezed ? this.ip : ip as String,
       avatarUrl: avatarUrl == freezed ? this.avatarUrl : avatarUrl as String,
     );
   }
@@ -76,18 +87,22 @@ class _$_PingHost implements _PingHost {
 }
 
 abstract class _PingHost implements PingHost {
-  factory _PingHost({@required String name, @required String avatarUrl}) =
-      _$_PingHost;
+  factory _PingHost(
+      {@required String name,
+      @required String ip,
+      @required String avatarUrl}) = _$_PingHost;
 
   factory _PingHost.fromJson(Map<String, dynamic> json) = _$_PingHost.fromJson;
 
   @override
   String get name;
   @override
+  String get ip;
+  @override
   String get avatarUrl;
 
   @override
-  _PingHost copyWith({String name, String avatarUrl});
+  _PingHost copyWith({String name, String ip, String avatarUrl});
 }
 
 PingSession _$PingSessionFromJson(Map<String, dynamic> json) {
