@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,7 +9,7 @@ import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/page/session_details/session_details_page.dart';
 import 'package:pinger/store/archive_store.dart';
-import 'package:pinger/utils/format_utils.dart';
+import 'package:pinger/widgets/ping_session_item.dart';
 
 part 'archive_page.freezed.dart';
 
@@ -75,7 +74,7 @@ class _ArchivePageState extends State<ArchivePage>
           return _viewType.when(
             list: () => _buildSessionsList(sessions),
             groups: () => _buildSessionsGroups(sessions),
-            host: (name) => _buildSelectedHost(
+            host: (name) => _buildSessionList(
                 sessions.where((it) => it.host.name == name).toList()),
           );
         }),
@@ -83,46 +82,17 @@ class _ArchivePageState extends State<ArchivePage>
     );
   }
 
-  Widget _buildSelectedHost(List<PingSession> sessions) {
+  Widget _buildSessionList(List<PingSession> sessions) {
     return ListView.separated(
       itemCount: sessions.length,
       itemBuilder: (_, index) {
         final item = sessions[index];
-        return ListTile(
+        return PingSessionItem(
+          session: item,
           onTap: () => push(SessionDetailsPage(session: item)),
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(left: 4.0),
-                child: Icon(Icons.compare_arrows),
-              ),
-              Container(
-                width: 32.0,
-                margin: EdgeInsets.only(left: 4.0),
-                child: Text(
-                  item.results.values.length.toString(),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20.0),
-                child: Icon(Icons.timer),
-              ),
-              Container(
-                width: 48.0,
-                margin: EdgeInsets.only(left: 4.0),
-                child: Text(
-                  FormatUtils.getDurationLabel(item.duration),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-          trailing: _buildItemTrailing(item),
         );
       },
-      separatorBuilder: (_, __) => _buildSeparator(margin: 0.0),
+      separatorBuilder: (_, __) => Divider(),
     );
   }
 
@@ -187,27 +157,10 @@ class _ArchivePageState extends State<ArchivePage>
             style: TextStyle(fontSize: 18.0),
             maxLines: 1,
           ),
-          trailing: _buildItemTrailing(item),
+          trailing: PingSessionItemTrailing(session: item),
         );
       },
-      separatorBuilder: (_, __) => _buildSeparator(),
-    );
-  }
-
-  Widget _buildItemTrailing(PingSession item) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        PingSummaryChart(results: item.results),
-        SizedBox(
-          width: 48.0,
-          child: Text(
-            FormatUtils.getSinceNowLabel(item.timestamp),
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
-      ],
+      separatorBuilder: (_, __) => Divider(),
     );
   }
 
@@ -238,82 +191,8 @@ class _ArchivePageState extends State<ArchivePage>
           ),
         );
       },
-      separatorBuilder: (_, __) => _buildSeparator(),
+      separatorBuilder: (_, __) => Divider(),
     );
-  }
-
-  Widget _buildSeparator({double margin = 64.0}) {
-    return Container(
-      height: 0.5,
-      width: double.infinity,
-      margin: EdgeInsets.only(left: margin),
-      color: Colors.grey,
-    );
-  }
-}
-
-class PingSummaryChart extends StatelessWidget {
-  final PingResults results;
-  final double width;
-  final double height;
-  final double barWidth;
-
-  const PingSummaryChart({
-    Key key,
-    @required this.results,
-    this.width = 96.0,
-    this.height = 40.0,
-  })  : this.barWidth = width / 3,
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: Stack(children: <Widget>[
-        BarChart(BarChartData(
-          groupsSpace: 0.0,
-          borderData: FlBorderData(show: false),
-          axisTitleData: FlAxisTitleData(show: false),
-          titlesData: FlTitlesData(show: false),
-          barGroups: [
-            _buildBarData(0, results.min),
-            _buildBarData(1, results.mean),
-            _buildBarData(2, results.max),
-          ],
-        )),
-        LineChart(LineChartData(
-          titlesData: FlTitlesData(show: false),
-          axisTitleData: FlAxisTitleData(show: false),
-          borderData: FlBorderData(show: false),
-          gridData: FlGridData(show: false),
-          lineBarsData: [
-            LineChartBarData(
-              dotData: FlDotData(show: false),
-              isCurved: true,
-              preventCurveOverShooting: true,
-              colors: [Colors.lightBlue],
-              spots: List.generate(
-                results.values.length,
-                (index) => FlSpot(index.toDouble(), results.values[index]),
-              ),
-            ),
-          ],
-        )),
-      ]),
-    );
-  }
-
-  BarChartGroupData _buildBarData(int index, double value) {
-    return BarChartGroupData(x: index, barRods: [
-      BarChartRodData(
-        y: value,
-        width: barWidth,
-        color: Colors.lightBlue.withOpacity(0.25),
-        borderRadius: BorderRadius.zero,
-      ),
-    ]);
   }
 }
 
