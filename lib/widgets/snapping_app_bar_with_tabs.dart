@@ -54,7 +54,7 @@ class _SnappingAppBarWithTabsState extends State<SnappingAppBarWithTabs> {
             SliverOverlapInjector(
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
             ),
-            SliverToBoxAdapter(child: it),
+            it,
           ],
         ));
     children.setRange(0, children.length, wrappedChildren);
