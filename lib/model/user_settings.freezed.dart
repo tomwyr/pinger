@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters
+// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
 
 part of 'user_settings.dart';
 
@@ -27,6 +27,27 @@ mixin _$UserSettings {
 
   Map<String, dynamic> toJson();
 }
+
+class _$UserSettingsTearOff {
+  const _$UserSettingsTearOff();
+
+  _UserSettings call(
+      {PingSettings pingSettings,
+      ShareSettings shareSettings,
+      bool showSystemNotification,
+      bool nightModeEnabled,
+      bool rememberHost}) {
+    return _UserSettings(
+      pingSettings: pingSettings,
+      shareSettings: shareSettings,
+      showSystemNotification: showSystemNotification,
+      nightModeEnabled: nightModeEnabled,
+      rememberHost: rememberHost,
+    );
+  }
+}
+
+const $UserSettings = _$UserSettingsTearOff();
 
 @JsonSerializable()
 class _$_UserSettings implements _UserSettings {
@@ -162,6 +183,19 @@ mixin _$ShareSettings {
   Map<String, dynamic> toJson();
 }
 
+class _$ShareSettingsTearOff {
+  const _$ShareSettingsTearOff();
+
+  _ShareSettings call({bool shareResults, bool attachLocation}) {
+    return _ShareSettings(
+      shareResults: shareResults,
+      attachLocation: attachLocation,
+    );
+  }
+}
+
+const $ShareSettings = _$ShareSettingsTearOff();
+
 @JsonSerializable()
 class _$_ShareSettings implements _ShareSettings {
   _$_ShareSettings({this.shareResults, this.attachLocation});
@@ -248,6 +282,22 @@ mixin _$PingSettings {
 
   Map<String, dynamic> toJson();
 }
+
+class _$PingSettingsTearOff {
+  const _$PingSettingsTearOff();
+
+  _PingSettings call(
+      {int count, int packetSize, int sendInterval, int timeout}) {
+    return _PingSettings(
+      count: count,
+      packetSize: packetSize,
+      sendInterval: sendInterval,
+      timeout: timeout,
+    );
+  }
+}
+
+const $PingSettings = _$PingSettingsTearOff();
 
 @JsonSerializable()
 class _$_PingSettings implements _PingSettings {

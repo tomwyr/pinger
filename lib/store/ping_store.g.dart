@@ -38,4 +38,10 @@ mixin _$PingStore on PingStoreBase, Store {
       _$PingStoreBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'currentPing: ${currentPing.toString()}';
+    return '{$string}';
+  }
 }

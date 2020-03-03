@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters
+// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
 
 part of 'ping_session.dart';
 
@@ -20,6 +20,23 @@ mixin _$PingHost {
 
   Map<String, dynamic> toJson();
 }
+
+class _$PingHostTearOff {
+  const _$PingHostTearOff();
+
+  _PingHost call(
+      {@required String name,
+      @required String ip,
+      @required String avatarUrl}) {
+    return _PingHost(
+      name: name,
+      ip: ip,
+      avatarUrl: avatarUrl,
+    );
+  }
+}
+
+const $PingHost = _$PingHostTearOff();
 
 @JsonSerializable()
 class _$_PingHost implements _PingHost {
@@ -70,9 +87,6 @@ class _$_PingHost implements _PingHost {
     Object ip = freezed,
     Object avatarUrl = freezed,
   }) {
-    assert(name != null);
-    assert(ip != null);
-    assert(avatarUrl != null);
     return _$_PingHost(
       name: name == freezed ? this.name : name as String,
       ip: ip == freezed ? this.ip : ip as String,
@@ -127,6 +141,29 @@ mixin _$PingSession {
 
   Map<String, dynamic> toJson();
 }
+
+class _$PingSessionTearOff {
+  const _$PingSessionTearOff();
+
+  _PingSession call(
+      {@required int id,
+      @required PingHost host,
+      @required DateTime timestamp,
+      @required Duration duration,
+      @required PingResults results,
+      @required PingSettings settings}) {
+    return _PingSession(
+      id: id,
+      host: host,
+      timestamp: timestamp,
+      duration: duration,
+      results: results,
+      settings: settings,
+    );
+  }
+}
+
+const $PingSession = _$PingSessionTearOff();
 
 @JsonSerializable()
 class _$_PingSession implements _PingSession {
@@ -206,12 +243,6 @@ class _$_PingSession implements _PingSession {
     Object results = freezed,
     Object settings = freezed,
   }) {
-    assert(id != null);
-    assert(host != null);
-    assert(timestamp != null);
-    assert(duration != null);
-    assert(results != null);
-    assert(settings != null);
     return _$_PingSession(
       id: id == freezed ? this.id : id as int,
       host: host == freezed ? this.host : host as PingHost,
@@ -279,6 +310,25 @@ mixin _$PingResults {
   Map<String, dynamic> toJson();
 }
 
+class _$PingResultsTearOff {
+  const _$PingResultsTearOff();
+
+  _PingResults call(
+      {@required List<double> values,
+      @required double min,
+      @required double max,
+      @required double mean}) {
+    return _PingResults(
+      values: values,
+      min: min,
+      max: max,
+      mean: mean,
+    );
+  }
+}
+
+const $PingResults = _$PingResultsTearOff();
+
 @JsonSerializable()
 class _$_PingResults implements _PingResults {
   _$_PingResults(
@@ -337,10 +387,6 @@ class _$_PingResults implements _PingResults {
     Object max = freezed,
     Object mean = freezed,
   }) {
-    assert(values != null);
-    assert(min != null);
-    assert(max != null);
-    assert(mean != null);
     return _$_PingResults(
       values: values == freezed ? this.values : values as List<double>,
       min: min == freezed ? this.min : min as double,

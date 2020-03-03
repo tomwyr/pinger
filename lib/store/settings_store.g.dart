@@ -39,4 +39,10 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   Future<void> update(UserSettings settings) {
     return _$updateAsyncAction.run(() => super.update(settings));
   }
+
+  @override
+  String toString() {
+    final string = 'userSettings: ${userSettings.toString()}';
+    return '{$string}';
+  }
 }

@@ -45,4 +45,10 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
       _$ArchiveStoreBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'sessions: ${sessions.toString()}';
+    return '{$string}';
+  }
 }

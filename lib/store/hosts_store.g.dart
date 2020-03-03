@@ -49,4 +49,11 @@ mixin _$HostsStore on HostsStoreBase, Store {
   Future<void> search(String query) {
     return _$searchAsyncAction.run(() => super.search(query));
   }
+
+  @override
+  String toString() {
+    final string =
+        'hosts: ${hosts.toString()},isLoading: ${isLoading.toString()}';
+    return '{$string}';
+  }
 }

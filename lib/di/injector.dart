@@ -14,7 +14,7 @@ abstract class Injector {
   }
 
   static T resolve<T>([String instanceName]) =>
-      GetIt.instance.get<T>(instanceName);
+      GetIt.instance.get<T>(instanceName: instanceName);
 
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 }

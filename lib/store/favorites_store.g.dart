@@ -25,4 +25,10 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
       _$itemsAtom.reportChanged();
     }, _$itemsAtom, name: '${_$itemsAtom.name}_set');
   }
+
+  @override
+  String toString() {
+    final string = 'items: ${items.toString()}';
+    return '{$string}';
+  }
 }
