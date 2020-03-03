@@ -87,18 +87,16 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                   return SizedBox(
                     height: chartHeight + 2 * chartPadding,
                     child: LayoutBuilder(builder: (_, constraints) {
-                      final chartSize = Size(constraints.maxWidth, chartHeight);
                       final meanLineTop = chartPadding +
-                          chartSize.height *
+                          chartHeight *
                               (1 - session.results.mean / session.results.max);
                       return Stack(
                         overflow: Overflow.visible,
                         children: <Widget>[
                           _buildChart(chartPadding),
-                          _buildChartMeanLine(
-                              chartSize, chartPadding, meanLineTop),
+                          _buildChartMeanLine(chartPadding, meanLineTop),
                           ..._buildChartLabels(
-                              chartSize, chartPadding, meanLineTop),
+                              constraints.maxWidth, chartPadding, meanLineTop),
                         ],
                       );
                     }),
@@ -176,14 +174,13 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
     );
   }
 
-  Widget _buildChartMeanLine(
-      Size chartSize, double chartPadding, double meanLineTop) {
+  Widget _buildChartMeanLine(double chartPadding, double meanLineTop) {
     return Positioned(
       top: meanLineTop,
       left: 0.0,
       right: 0.0,
       child: DottedBorder(
-        customPath: Path()..lineTo(chartSize.width, 0.0),
+        customPath: (size) => Path()..lineTo(size.width, 0.0),
         color: Colors.pink,
         dashPattern: [4, 4],
         strokeWidth: 2.0,
@@ -193,7 +190,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
   }
 
   List<Widget> _buildChartLabels(
-      Size chartSize, double chartPadding, double meanLineTop) {
+      double chartWidth, double chartPadding, double meanLineTop) {
     final labelSize = Size(64.0, 18.0);
     final pingCount = session.results.values.length;
     final indexMin = session.results.values.indexOf(session.results.min);
@@ -201,8 +198,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
     return [
       Positioned(
         top: 0.0,
-        left: chartSize.width * (indexMax / (pingCount - 1)) -
-            labelSize.width / 2,
+        left: chartWidth * (indexMax / (pingCount - 1)) - labelSize.width / 2,
         child: _buildLabel(session.results.max, labelSize),
       ),
       Positioned(
@@ -213,8 +209,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
       ),
       Positioned(
         bottom: 0.0,
-        left: chartSize.width * (indexMin / (pingCount - 1)) -
-            labelSize.width / 2,
+        left: chartWidth * (indexMin / (pingCount - 1)) - labelSize.width / 2,
         child: _buildLabel(session.results.min, labelSize),
       ),
     ];
