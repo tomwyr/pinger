@@ -102,9 +102,9 @@ class PingSessionSummaryChart extends StatelessWidget {
           axisTitleData: FlAxisTitleData(show: false),
           titlesData: FlTitlesData(show: false),
           barGroups: [
-            _buildBarData(0, results.min),
-            _buildBarData(1, results.mean),
-            _buildBarData(2, results.max),
+            _buildBarData(0, results.stats.min),
+            _buildBarData(1, results.stats.mean),
+            _buildBarData(2, results.stats.max),
           ],
         )),
         LineChart(LineChartData(

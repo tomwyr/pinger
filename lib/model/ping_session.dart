@@ -37,9 +37,7 @@ abstract class PingSession with _$PingSession {
 abstract class PingResults with _$PingResults {
   factory PingResults({
     @required List<double> values,
-    @required double min,
-    @required double max,
-    @required double mean,
+    @required PingStats stats,
   }) = _PingResults;
 
   static PingResults fromValues(List<double> values) {
@@ -55,12 +53,26 @@ abstract class PingResults with _$PingResults {
     });
     return PingResults(
       values: values,
-      min: min,
-      max: max,
-      mean: sum / values.length,
+      stats: PingStats(
+        min: min,
+        max: max,
+        mean: sum / values.length,
+      ),
     );
   }
 
   factory PingResults.fromJson(Map<String, dynamic> json) =>
       _$PingResultsFromJson(json);
+}
+
+@freezed
+abstract class PingStats with _$PingStats {
+  factory PingStats({
+    @required double min,
+    @required double max,
+    @required double mean,
+  }) = _PingStats;
+
+  factory PingStats.fromJson(Map<String, dynamic> json) =>
+      _$PingStatsFromJson(json);
 }

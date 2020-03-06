@@ -300,12 +300,9 @@ PingResults _$PingResultsFromJson(Map<String, dynamic> json) {
 
 mixin _$PingResults {
   List<double> get values;
-  double get min;
-  double get max;
-  double get mean;
+  PingStats get stats;
 
-  PingResults copyWith(
-      {List<double> values, double min, double max, double mean});
+  PingResults copyWith({List<double> values, PingStats stats});
 
   Map<String, dynamic> toJson();
 }
@@ -314,15 +311,10 @@ class _$PingResultsTearOff {
   const _$PingResultsTearOff();
 
   _PingResults call(
-      {@required List<double> values,
-      @required double min,
-      @required double max,
-      @required double mean}) {
+      {@required List<double> values, @required PingStats stats}) {
     return _PingResults(
       values: values,
-      min: min,
-      max: max,
-      mean: mean,
+      stats: stats,
     );
   }
 }
@@ -331,15 +323,9 @@ const $PingResults = _$PingResultsTearOff();
 
 @JsonSerializable()
 class _$_PingResults implements _PingResults {
-  _$_PingResults(
-      {@required this.values,
-      @required this.min,
-      @required this.max,
-      @required this.mean})
+  _$_PingResults({@required this.values, @required this.stats})
       : assert(values != null),
-        assert(min != null),
-        assert(max != null),
-        assert(mean != null);
+        assert(stats != null);
 
   factory _$_PingResults.fromJson(Map<String, dynamic> json) =>
       _$_$_PingResultsFromJson(json);
@@ -347,15 +333,11 @@ class _$_PingResults implements _PingResults {
   @override
   final List<double> values;
   @override
-  final double min;
-  @override
-  final double max;
-  @override
-  final double mean;
+  final PingStats stats;
 
   @override
   String toString() {
-    return 'PingResults(values: $values, min: $min, max: $max, mean: $mean)';
+    return 'PingResults(values: $values, stats: $stats)';
   }
 
   @override
@@ -364,34 +346,24 @@ class _$_PingResults implements _PingResults {
         (other is _PingResults &&
             (identical(other.values, values) ||
                 const DeepCollectionEquality().equals(other.values, values)) &&
-            (identical(other.min, min) ||
-                const DeepCollectionEquality().equals(other.min, min)) &&
-            (identical(other.max, max) ||
-                const DeepCollectionEquality().equals(other.max, max)) &&
-            (identical(other.mean, mean) ||
-                const DeepCollectionEquality().equals(other.mean, mean)));
+            (identical(other.stats, stats) ||
+                const DeepCollectionEquality().equals(other.stats, stats)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(values) ^
-      const DeepCollectionEquality().hash(min) ^
-      const DeepCollectionEquality().hash(max) ^
-      const DeepCollectionEquality().hash(mean);
+      const DeepCollectionEquality().hash(stats);
 
   @override
   _$_PingResults copyWith({
     Object values = freezed,
-    Object min = freezed,
-    Object max = freezed,
-    Object mean = freezed,
+    Object stats = freezed,
   }) {
     return _$_PingResults(
       values: values == freezed ? this.values : values as List<double>,
-      min: min == freezed ? this.min : min as double,
-      max: max == freezed ? this.max : max as double,
-      mean: mean == freezed ? this.mean : mean as double,
+      stats: stats == freezed ? this.stats : stats as PingStats,
     );
   }
 
@@ -404,15 +376,118 @@ class _$_PingResults implements _PingResults {
 abstract class _PingResults implements PingResults {
   factory _PingResults(
       {@required List<double> values,
-      @required double min,
-      @required double max,
-      @required double mean}) = _$_PingResults;
+      @required PingStats stats}) = _$_PingResults;
 
   factory _PingResults.fromJson(Map<String, dynamic> json) =
       _$_PingResults.fromJson;
 
   @override
   List<double> get values;
+  @override
+  PingStats get stats;
+
+  @override
+  _PingResults copyWith({List<double> values, PingStats stats});
+}
+
+PingStats _$PingStatsFromJson(Map<String, dynamic> json) {
+  return _PingStats.fromJson(json);
+}
+
+mixin _$PingStats {
+  double get min;
+  double get max;
+  double get mean;
+
+  PingStats copyWith({double min, double max, double mean});
+
+  Map<String, dynamic> toJson();
+}
+
+class _$PingStatsTearOff {
+  const _$PingStatsTearOff();
+
+  _PingStats call(
+      {@required double min, @required double max, @required double mean}) {
+    return _PingStats(
+      min: min,
+      max: max,
+      mean: mean,
+    );
+  }
+}
+
+const $PingStats = _$PingStatsTearOff();
+
+@JsonSerializable()
+class _$_PingStats implements _PingStats {
+  _$_PingStats({@required this.min, @required this.max, @required this.mean})
+      : assert(min != null),
+        assert(max != null),
+        assert(mean != null);
+
+  factory _$_PingStats.fromJson(Map<String, dynamic> json) =>
+      _$_$_PingStatsFromJson(json);
+
+  @override
+  final double min;
+  @override
+  final double max;
+  @override
+  final double mean;
+
+  @override
+  String toString() {
+    return 'PingStats(min: $min, max: $max, mean: $mean)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PingStats &&
+            (identical(other.min, min) ||
+                const DeepCollectionEquality().equals(other.min, min)) &&
+            (identical(other.max, max) ||
+                const DeepCollectionEquality().equals(other.max, max)) &&
+            (identical(other.mean, mean) ||
+                const DeepCollectionEquality().equals(other.mean, mean)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(min) ^
+      const DeepCollectionEquality().hash(max) ^
+      const DeepCollectionEquality().hash(mean);
+
+  @override
+  _$_PingStats copyWith({
+    Object min = freezed,
+    Object max = freezed,
+    Object mean = freezed,
+  }) {
+    return _$_PingStats(
+      min: min == freezed ? this.min : min as double,
+      max: max == freezed ? this.max : max as double,
+      mean: mean == freezed ? this.mean : mean as double,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_PingStatsToJson(this);
+  }
+}
+
+abstract class _PingStats implements PingStats {
+  factory _PingStats(
+      {@required double min,
+      @required double max,
+      @required double mean}) = _$_PingStats;
+
+  factory _PingStats.fromJson(Map<String, dynamic> json) =
+      _$_PingStats.fromJson;
+
   @override
   double get min;
   @override
@@ -421,6 +496,5 @@ abstract class _PingResults implements PingResults {
   double get mean;
 
   @override
-  _PingResults copyWith(
-      {List<double> values, double min, double max, double mean});
+  _PingStats copyWith({double min, double max, double mean});
 }

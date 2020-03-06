@@ -56,15 +56,28 @@ _$_PingResults _$_$_PingResultsFromJson(Map<String, dynamic> json) {
   return _$_PingResults(
     values:
         (json['values'] as List)?.map((e) => (e as num)?.toDouble())?.toList(),
-    min: (json['min'] as num)?.toDouble(),
-    max: (json['max'] as num)?.toDouble(),
-    mean: (json['mean'] as num)?.toDouble(),
+    stats: json['stats'] == null
+        ? null
+        : PingStats.fromJson(json['stats'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$_$_PingResultsToJson(_$_PingResults instance) =>
     <String, dynamic>{
       'values': instance.values,
+      'stats': instance.stats,
+    };
+
+_$_PingStats _$_$_PingStatsFromJson(Map<String, dynamic> json) {
+  return _$_PingStats(
+    min: (json['min'] as num)?.toDouble(),
+    max: (json['max'] as num)?.toDouble(),
+    mean: (json['mean'] as num)?.toDouble(),
+  );
+}
+
+Map<String, dynamic> _$_$_PingStatsToJson(_$_PingStats instance) =>
+    <String, dynamic>{
       'min': instance.min,
       'max': instance.max,
       'mean': instance.mean,

@@ -89,7 +89,9 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                     child: LayoutBuilder(builder: (_, constraints) {
                       final meanLineTop = chartPadding +
                           chartHeight *
-                              (1 - session.results.mean / session.results.max);
+                              (1 -
+                                  session.results.stats.mean /
+                                      session.results.stats.max);
                       return Stack(
                         overflow: Overflow.visible,
                         children: <Widget>[
@@ -136,10 +138,10 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
   }
 
   Widget _buildChart(double chartPadding) {
-    final minIndex =
-        session.results.values.indexWhere((it) => it == session.results.min);
-    final maxIndex =
-        session.results.values.indexWhere((it) => it == session.results.max);
+    final minIndex = session.results.values
+        .indexWhere((it) => it == session.results.stats.min);
+    final maxIndex = session.results.values
+        .indexWhere((it) => it == session.results.stats.max);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: chartPadding),
       child: LayoutBuilder(
@@ -193,24 +195,24 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
       double chartWidth, double chartPadding, double meanLineTop) {
     final labelSize = Size(64.0, 18.0);
     final pingCount = session.results.values.length;
-    final indexMin = session.results.values.indexOf(session.results.min);
-    final indexMax = session.results.values.indexOf(session.results.max);
+    final indexMin = session.results.values.indexOf(session.results.stats.min);
+    final indexMax = session.results.values.indexOf(session.results.stats.max);
     return [
       Positioned(
         top: 0.0,
         left: chartWidth * (indexMax / (pingCount - 1)) - labelSize.width / 2,
-        child: _buildLabel(session.results.max, labelSize),
+        child: _buildLabel(session.results.stats.max, labelSize),
       ),
       Positioned(
         top: meanLineTop - labelSize.height / 2,
         left: 0.0,
         right: 0.0,
-        child: _buildLabel(session.results.mean, labelSize),
+        child: _buildLabel(session.results.stats.mean, labelSize),
       ),
       Positioned(
         bottom: 0.0,
         left: chartWidth * (indexMin / (pingCount - 1)) - labelSize.width / 2,
-        child: _buildLabel(session.results.min, labelSize),
+        child: _buildLabel(session.results.stats.min, labelSize),
       ),
     ];
   }
