@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/session_details/session_details_collapsing_tile.dart';
 import 'package:pinger/page/session_details/session_details_tabs/session_details_global.dart';
@@ -101,7 +102,11 @@ class _SessionDetailsPageState extends State<SessionDetailsPage>
             controller: _tabController,
             children: [
               SessionDetailsResults(),
-              SessionDetailsGlobal(),
+              SessionDetailsGlobal(
+                hasLocationPermission: true,
+                userResult: widget.session.results,
+                globalResults: FakeData.globalResults,
+              ),
               SessionDetailsInfo(session: widget.session),
               Observer(
                 builder: (_) =>

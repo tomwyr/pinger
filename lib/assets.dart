@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 class Images {
   /// ![](file:///c:/dev/projects/pinger/lib/assets/box_empty.png)
   static AssetImage get boxEmpty => const AssetImage("lib/assets/box_empty.png");
+  /// ![](file:///c:/dev/projects/pinger/lib/assets/globe_location.png)
+  static AssetImage get globeLocation => const AssetImage("lib/assets/globe_location.png");
   /// ![](file:///c:/dev/projects/pinger/lib/assets/intro_binders.png)
   static AssetImage get introBinders => const AssetImage("lib/assets/intro_binders.png");
   /// ![](file:///c:/dev/projects/pinger/lib/assets/intro_gear.png)
