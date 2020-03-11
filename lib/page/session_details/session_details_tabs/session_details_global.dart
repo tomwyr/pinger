@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/dotted_map.dart';
 
 part 'session_details_global.freezed.dart';
@@ -30,32 +31,32 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: widget.hasLocationPermission
-          ? _buildGlobalResults()
-          : _buildPermissionRequest(),
-    );
+    return CollapsingTabLayoutItem(slivers: <Widget>[
+      SliverToBoxAdapter(
+        child: widget.hasLocationPermission
+            ? _buildGlobalResults()
+            : _buildPermissionRequest(),
+      ),
+    ]);
   }
 
   Widget _buildGlobalResults() {
-    return Column(children: <Widget>[
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(height: 12.0),
-          _buildResultSection(),
-          Container(height: 24.0),
-          Text("Mean value for others was 286 ms"),
-          Container(height: 18.0),
-          DottedMap(dots: _getMapData()),
-          Container(height: 36.0),
-          Text("Your ping was better than 45% of others"),
-          Container(height: 18.0),
-          _buildDistributionGraph(),
-          Container(height: 12.0),
-        ],
-      )
-    ]);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(height: 12.0),
+        _buildResultSection(),
+        Container(height: 24.0),
+        Text("Mean value for others was 286 ms"),
+        Container(height: 18.0),
+        DottedMap(dots: _getMapData()),
+        Container(height: 36.0),
+        Text("Your ping was better than 45% of others"),
+        Container(height: 18.0),
+        _buildDistributionGraph(),
+        Container(height: 12.0),
+      ],
+    );
   }
 
   Widget _buildResultSection() {

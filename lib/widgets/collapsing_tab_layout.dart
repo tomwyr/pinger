@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SnappingAppBarWithTabs extends StatefulWidget {
+class CollapsingTabLayout extends StatefulWidget {
   final SliverAppBar appBar;
   final TabBarView tabBarView;
   final double collapsedOffset;
   final ScrollController scrollController;
   final Future<void> Function(double) scroller;
 
-  const SnappingAppBarWithTabs({
+  const CollapsingTabLayout({
     Key key,
     @required this.appBar,
     @required this.tabBarView,
@@ -17,10 +17,10 @@ class SnappingAppBarWithTabs extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SnappingAppBarWithTabsState createState() => _SnappingAppBarWithTabsState();
+  _CollapsingTabLayoutState createState() => _CollapsingTabLayoutState();
 }
 
-class _SnappingAppBarWithTabsState extends State<SnappingAppBarWithTabs> {
+class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
   bool _isSnapping = false;
   ScrollUpdateNotification _lastScrollUpdate;
 
@@ -37,27 +37,9 @@ class _SnappingAppBarWithTabsState extends State<SnappingAppBarWithTabs> {
             child: widget.appBar,
           ),
         ],
-        body: Builder(
-          builder: (bodyContext) {
-            _wrapTabViews(bodyContext);
-            return widget.tabBarView;
-          },
-        ),
+        body: widget.tabBarView,
       ),
     );
-  }
-
-  void _wrapTabViews(BuildContext context) {
-    final children = widget.tabBarView.children;
-    final wrappedChildren = children.map((it) => CustomScrollView(
-          slivers: <Widget>[
-            SliverOverlapInjector(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
-            it,
-          ],
-        ));
-    children.setRange(0, children.length, wrappedChildren);
   }
 
   bool _onScrollEvent(Notification notification) {
@@ -81,5 +63,24 @@ class _SnappingAppBarWithTabsState extends State<SnappingAppBarWithTabs> {
       _lastScrollUpdate = null;
       _isSnapping = false;
     });
+  }
+}
+
+class CollapsingTabLayoutItem extends StatelessWidget {
+  final List<Widget> slivers;
+
+  const CollapsingTabLayoutItem({Key key, @required this.slivers})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverOverlapInjector(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        ),
+        ...slivers,
+      ],
+    );
   }
 }

@@ -10,7 +10,7 @@ import 'package:pinger/page/session_details/session_details_tabs/session_details
 import 'package:pinger/page/session_details/session_details_tabs/session_details_more.dart';
 import 'package:pinger/page/session_details/session_details_tabs/session_details_results.dart';
 import 'package:pinger/store/archive_store.dart';
-import 'package:pinger/widgets/snapping_app_bar_with_tabs.dart';
+import 'package:pinger/widgets/collapsing_tab_layout.dart';
 
 enum SessionDetailsTab { results, global, info, more }
 
@@ -56,7 +56,7 @@ class _SessionDetailsPageState extends State<SessionDetailsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SnappingAppBarWithTabs(
+        child: CollapsingTabLayout(
           collapsedOffset: _collapsedOffset,
           scrollController: _scrollController,
           scroller: _scrollLayoutTo,
@@ -101,7 +101,7 @@ class _SessionDetailsPageState extends State<SessionDetailsPage>
           tabBarView: TabBarView(
             controller: _tabController,
             children: [
-              SessionDetailsResults(),
+              SessionDetailsResults(session: widget.session),
               SessionDetailsGlobal(
                 hasLocationPermission: true,
                 userResult: widget.session.results,
