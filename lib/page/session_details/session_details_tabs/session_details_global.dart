@@ -8,8 +8,6 @@ import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/dotted_map.dart';
 
-part 'session_details_global.freezed.dart';
-
 class SessionDetailsGlobal extends StatefulWidget {
   final bool hasLocationPermission;
   final PingResults userResult;
@@ -27,7 +25,21 @@ class SessionDetailsGlobal extends StatefulWidget {
 }
 
 class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
-  UserResultType _resultTypeSelection = UserResultType.mean();
+  UserResultType _resultTypeSelection;
+  UserResultTypeData _resultTypeData;
+
+  @override
+  void initState() {
+    super.initState();
+    _changeResultType(UserResultType.mean);
+  }
+
+  void _changeResultType(UserResultType type) {
+    _resultTypeSelection = type;
+    _resultTypeData = UserResultTypeData.forType(
+        type, widget.userResult, widget.globalResults);
+    if (mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,29 +72,26 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
   }
 
   Widget _buildResultSection() {
-    final selectedResult = _resultTypeSelection.when(
-      min: () => widget.userResult.stats.min,
-      mean: () => widget.userResult.stats.mean,
-      max: () => widget.userResult.stats.max,
-    );
+    final resultValue =
+        _resultTypeData.getStatsValue(widget.userResult.stats).toInt();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text("Your result", style: TextStyle(fontSize: 18.0)),
         Container(height: 16.0),
         Text(
-          "${selectedResult.toInt()} ms",
+          "$resultValue ms",
           style: TextStyle(fontSize: 24.0),
         ),
         Container(height: 8.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: Row(children: <Widget>[
-            _buildResultTypeButton(UserResultType.min()),
+            _buildResultTypeButton(UserResultType.min),
             _buildResultTypeDivider(),
-            _buildResultTypeButton(UserResultType.mean()),
+            _buildResultTypeButton(UserResultType.mean),
             _buildResultTypeDivider(),
-            _buildResultTypeButton(UserResultType.max()),
+            _buildResultTypeButton(UserResultType.max),
           ]),
         ),
       ],
@@ -91,9 +100,9 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
 
   Widget _buildResultTypeButton(UserResultType type) {
     return FlatButton(
-      onPressed: () => setState(() => _resultTypeSelection = type),
+      onPressed: () => _changeResultType(type),
       child: Text(
-        type.when(min: () => "Min", mean: () => "Mean", max: () => "Max"),
+        _resultTypeData.typeButtonLabel,
         style: TextStyle(
           color: type == _resultTypeSelection ? Colors.black : Colors.grey,
         ),
@@ -105,13 +114,9 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
       Text("/", style: TextStyle(color: Colors.grey));
 
   List<MapDot> _getMapData() {
-    final double Function(PingStats) getStatsValue = _resultTypeSelection.when(
-      min: () => (stats) => stats.min,
-      mean: () => (stats) => stats.mean,
-      max: () => (stats) => stats.max,
-    );
     return widget.globalResults.geoStats
-        .map((it) => MapDot(it.position, getStatsValue(it.stats)))
+        .map((it) =>
+            MapDot(it.position, _resultTypeData.getStatsValue(it.stats)))
         .toList();
   }
 
@@ -145,17 +150,14 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
   }
 
   double _getGraphLabelsInterval(int labelCount) {
-    final stats = widget.globalResults.groupStats;
-    final data = _resultTypeSelection.when(
-        min: () => stats.min, mean: () => stats.mean, max: () => stats.max);
+    final data = _resultTypeData.graphData;
     return (data.last.ping - data.first.ping) / labelCount;
   }
 
   List<FlSpot> _getGraphData() {
-    final stats = widget.globalResults.groupStats;
-    final data = _resultTypeSelection.when(
-        min: () => stats.min, mean: () => stats.mean, max: () => stats.max);
-    return data.map((it) => FlSpot(it.ping, it.percentage)).toList();
+    return _resultTypeData.graphData
+        .map((it) => FlSpot(it.ping, it.percentage))
+        .toList();
   }
 
   Widget _buildPermissionRequest() {
@@ -186,9 +188,41 @@ class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
   }
 }
 
-@freezed
-abstract class UserResultType with _$UserResultType {
-  const factory UserResultType.min() = UserResultMin;
-  const factory UserResultType.mean() = UserResultMean;
-  const factory UserResultType.max() = UserResultMax;
+enum UserResultType { min, mean, max }
+
+class UserResultTypeData {
+  final String typeButtonLabel;
+  final List<PingGroup> graphData;
+  final double Function(PingStats) getStatsValue;
+
+  factory UserResultTypeData.forType(UserResultType type,
+      PingResults userResult, PingGlobalResults globalResults) {
+    switch (type) {
+      case UserResultType.min:
+        return UserResultTypeData(
+          typeButtonLabel: "Min",
+          graphData: globalResults.groupStats.min,
+          getStatsValue: (stats) => stats.min,
+        );
+      case UserResultType.mean:
+        return UserResultTypeData(
+          typeButtonLabel: "Mean",
+          graphData: globalResults.groupStats.mean,
+          getStatsValue: (stats) => stats.mean,
+        );
+      case UserResultType.max:
+        return UserResultTypeData(
+          typeButtonLabel: "Max",
+          graphData: globalResults.groupStats.max,
+          getStatsValue: (stats) => stats.max,
+        );
+    }
+    throw ArgumentError("Unrecognized $UserResultType: $type.");
+  }
+
+  UserResultTypeData({
+    @required this.typeButtonLabel,
+    @required this.getStatsValue,
+    @required this.graphData,
+  });
 }

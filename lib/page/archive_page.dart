@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
@@ -10,8 +8,6 @@ import 'package:pinger/page/search_page.dart';
 import 'package:pinger/page/session_details/session_details_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/ping_session_item.dart';
-
-part 'archive_page.freezed.dart';
 
 class ArchivePage extends StatefulWidget {
   @override
@@ -22,8 +18,9 @@ class _ArchivePageState extends State<ArchivePage>
     with SingleTickerProviderStateMixin {
   final ArchiveStore _archiveStore = Injector.resolve();
 
-  ArchiveViewType _viewType = ArchiveViewType.list();
+  ArchiveViewType _viewType = ArchiveViewType.list;
   AnimationController _animator;
+  String _hostName;
 
   @override
   void initState() {
@@ -43,43 +40,73 @@ class _ArchivePageState extends State<ArchivePage>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => _viewType.maybeWhen(
-        host: (_) {
-          setState(() => _viewType = ArchiveViewType.groups());
-          return false;
-        },
-        orElse: () => true,
-      ),
+      onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: _viewType.maybeWhen(
-          host: (name) => AppBar(
-            leading: BackButton(
-              onPressed: () => setState(() {
-                _viewType = ArchiveViewType.groups();
-              }),
-            ),
-            title: Text(name),
-          ),
-          orElse: () => AppBar(
+        appBar: _buildAppBar(),
+        body: Observer(
+          builder: (_) => _buildBody(_archiveStore.sessions),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> _onWillPop() async {
+    if (_viewType == ArchiveViewType.host) {
+      setState(() => _viewType = ArchiveViewType.groups);
+      return false;
+    }
+    return true;
+  }
+
+  Widget _buildAppBar() {
+    return _viewType == ArchiveViewType.host
+        ? AppBar(
+            leading: BackButton(onPressed: () {
+              setState(() => _viewType = ArchiveViewType.groups);
+            }),
+            title: Text(_hostName),
+          )
+        : AppBar(
             leading: BackButton(),
             title: Text("Archive"),
             actions: <Widget>[_buildViewTypeIcon()],
-          ),
-        ),
-        body: Observer(builder: (_) {
-          final sessions = _archiveStore.sessions;
-          if (sessions == null)
-            return Center(child: CircularProgressIndicator());
-          if (sessions.isEmpty) return _buildEmptySessions();
-          return _viewType.when(
-            list: () => _buildSessionsList(sessions),
-            groups: () => _buildSessionsGroups(sessions),
-            host: (name) => _buildSessionList(
-                sessions.where((it) => it.host.name == name).toList()),
           );
-        }),
+  }
+
+  Widget _buildViewTypeIcon() {
+    return GestureDetector(
+      onTap: () => setState(() {
+        if (_viewType == ArchiveViewType.list) {
+          _viewType = ArchiveViewType.groups;
+          _animator.forward();
+        } else {
+          _viewType = ArchiveViewType.list;
+          _animator.reverse();
+        }
+      }),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: AnimatedIcon(
+          icon: AnimatedIcons.view_list,
+          progress: _animator,
+        ),
       ),
     );
+  }
+
+  Widget _buildBody(List<PingSession> sessions) {
+    if (sessions == null) return Center(child: CircularProgressIndicator());
+    if (sessions.isEmpty) return _buildEmptySessions();
+    switch (_viewType) {
+      case ArchiveViewType.list:
+        return _buildSessionsList(sessions);
+      case ArchiveViewType.groups:
+        return _buildSessionsGroups(sessions);
+      case ArchiveViewType.host:
+        return _buildSessionList(
+            sessions.where((it) => it.host.name == _hostName).toList());
+    }
+    throw StateError("Unrecognized $ArchiveViewType selected: $_viewType.");
   }
 
   Widget _buildSessionList(List<PingSession> sessions) {
@@ -93,27 +120,6 @@ class _ArchivePageState extends State<ArchivePage>
         );
       },
       separatorBuilder: (_, __) => Divider(),
-    );
-  }
-
-  Widget _buildViewTypeIcon() {
-    return GestureDetector(
-      onTap: () => setState(() {
-        if (_viewType is ArchiveListView) {
-          _viewType = ArchiveViewType.groups();
-          _animator.forward();
-        } else {
-          _viewType = ArchiveViewType.list();
-          _animator.reverse();
-        }
-      }),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: AnimatedIcon(
-          icon: AnimatedIcons.view_list,
-          progress: _animator,
-        ),
-      ),
     );
   }
 
@@ -177,7 +183,8 @@ class _ArchivePageState extends State<ArchivePage>
         final item = hostCounts[index];
         return ListTile(
           onTap: () => setState(() {
-            _viewType = ArchiveViewType.host(name: item.key);
+            _viewType = ArchiveViewType.host;
+            _hostName = item.key;
           }),
           leading: Icon(Icons.language),
           title: Text(item.key, style: TextStyle(fontSize: 18.0)),
@@ -196,9 +203,4 @@ class _ArchivePageState extends State<ArchivePage>
   }
 }
 
-@freezed
-abstract class ArchiveViewType with _$ArchiveViewType {
-  const factory ArchiveViewType.list() = ArchiveListView;
-  const factory ArchiveViewType.groups() = ArchiveGroupsView;
-  const factory ArchiveViewType.host({String name}) = ArchiveHostView;
-}
+enum ArchiveViewType { list, groups, host }
