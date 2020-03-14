@@ -8,7 +8,7 @@ import 'package:pinger/page/session_details/session_details_collapsing_tile.dart
 import 'package:pinger/page/session_details/session_details_tabs/session_details_global.dart';
 import 'package:pinger/page/session_details/session_details_tabs/session_details_info.dart';
 import 'package:pinger/page/session_details/session_details_tabs/session_details_more.dart';
-import 'package:pinger/page/session_details/session_details_tabs/session_details_results.dart';
+import 'package:pinger/page/session_details/session_details_tabs/session_details_results/session_details_results.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 
