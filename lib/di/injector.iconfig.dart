@@ -16,24 +16,18 @@ import 'package:pinger/store/settings_store.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
-  final injector = _$Injector();
-  final sharedPreferences = await injector.prefs;
+  final injectorModule = _$InjectorModule();
+  final sharedPreferences = await injectorModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
 
   //Eager singletons must be registered in the right order
-  g.registerSingleton<PingerPrefs>(PingerPrefs(
-    g<SharedPreferences>(),
-  ));
-  g.registerSingleton<ArchiveStore>(ArchiveStore(
-    g<PingerPrefs>(),
-  ));
+  g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));
+  g.registerSingleton<ArchiveStore>(ArchiveStore(g<PingerPrefs>()));
   g.registerSingleton<FavoritesStore>(FavoritesStore());
   g.registerSingleton<HistoryStore>(HistoryStore());
   g.registerSingleton<HostsStore>(HostsStore());
   g.registerSingleton<PingStore>(PingStore());
-  g.registerSingleton<SettingsStore>(SettingsStore(
-    g<PingerPrefs>(),
-  ));
+  g.registerSingleton<SettingsStore>(SettingsStore(g<PingerPrefs>()));
 }
 
-class _$Injector extends Injector {}
+class _$InjectorModule extends InjectorModule {}
