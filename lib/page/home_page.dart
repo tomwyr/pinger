@@ -4,24 +4,23 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/page/archive_page.dart';
 import 'package:pinger/page/favorites_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/page/recents_page.dart';
 import 'package:pinger/page/search_page.dart';
-import 'package:pinger/page/settings_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/history_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/utils/format_utils.dart';
+import 'package:pinger/widgets/pinger_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with PingerAppBar {
   final HistoryStore _historyStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: buildAppBar(),
       body: Padding(
         padding: EdgeInsets.all(32.0),
         child: Observer(builder: (_) {
@@ -51,23 +50,6 @@ class _HomePageState extends State<HomePage> {
           }
         }),
       ),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.tune),
-        onPressed: () => push(SettingsPage()),
-      ),
-      title: Text("Pinger"),
-      centerTitle: true,
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.unarchive),
-          onPressed: () => push(ArchivePage()),
-        ),
-      ],
     );
   }
 
@@ -117,7 +99,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(ping.host),
+              child: Text(ping.host.name),
             ),
           ),
           Text(
@@ -129,7 +111,7 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  List<Widget> _buildFavorites(List<FavoriteItem> favorites) {
+  List<Widget> _buildFavorites(List<String> favorites) {
     return [
       _buildSectionTitle(
         'Favorites',
@@ -153,8 +135,8 @@ class _HomePageState extends State<HomePage> {
                 .map((it) => Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(children: <Widget>[
-                        Expanded(child: Text(it.host)),
-                        Text('${it.pingCount} x'),
+                        Expanded(child: Text(it)),
+                        Text('??? x'),
                       ]),
                     ))
                 .toList(),

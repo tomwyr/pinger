@@ -10,7 +10,6 @@ _$_PingHost _$_$_PingHostFromJson(Map<String, dynamic> json) {
   return _$_PingHost(
     name: json['name'] as String,
     ip: json['ip'] as String,
-    avatarUrl: json['avatarUrl'] as String,
   );
 }
 
@@ -18,7 +17,6 @@ Map<String, dynamic> _$_$_PingHostToJson(_$_PingHost instance) =>
     <String, dynamic>{
       'name': instance.name,
       'ip': instance.ip,
-      'avatarUrl': instance.avatarUrl,
     };
 
 _$_PingSession _$_$_PingSessionFromJson(Map<String, dynamic> json) {

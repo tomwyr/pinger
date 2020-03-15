@@ -29,10 +29,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
           itemBuilder: (_, index) {
             final item = favoriteHosts[index];
             return ListTile(
-              title: Text(item.host),
-              trailing: Text('${item.pingCount} x'),
+              title: Text(item),
+              trailing: Text('??? x'),
               onTap: () {
-                _pingStore.start(item.host);
+                _pingStore.start(item);
                 pushReplacement(PingPage());
               },
             );

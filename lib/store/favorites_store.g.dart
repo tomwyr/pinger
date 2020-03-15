@@ -12,18 +12,31 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
   final _$itemsAtom = Atom(name: 'FavoritesStoreBase.items');
 
   @override
-  List<FavoriteItem> get items {
+  List<String> get items {
     _$itemsAtom.context.enforceReadPolicy(_$itemsAtom);
     _$itemsAtom.reportObserved();
     return super.items;
   }
 
   @override
-  set items(List<FavoriteItem> value) {
+  set items(List<String> value) {
     _$itemsAtom.context.conditionallyRunInAction(() {
       super.items = value;
       _$itemsAtom.reportChanged();
     }, _$itemsAtom, name: '${_$itemsAtom.name}_set');
+  }
+
+  final _$FavoritesStoreBaseActionController =
+      ActionController(name: 'FavoritesStoreBase');
+
+  @override
+  void toggleFavorite(String host) {
+    final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
+    try {
+      return super.toggleFavorite(host);
+    } finally {
+      _$FavoritesStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

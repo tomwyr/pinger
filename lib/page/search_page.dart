@@ -20,7 +20,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController();
+    _inputController = TextEditingController(
+      text: _pingStore.currentPing?.host?.name,
+    );
   }
 
   @override

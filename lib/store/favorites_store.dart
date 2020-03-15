@@ -8,12 +8,12 @@ class FavoritesStore = FavoritesStoreBase with _$FavoritesStore;
 
 abstract class FavoritesStoreBase with Store {
   @observable
-  List<FavoriteItem> items = [];
-}
+  List<String> items = [];
 
-class FavoriteItem {
-  final String host;
-  final int pingCount;
-
-  FavoriteItem(this.host, this.pingCount);
+  @action
+  void toggleFavorite(String host) {
+    final favs = items.toList();
+    favs.contains(host) ? favs.remove(host) : favs.add(host);
+    items = favs;
+  }
 }

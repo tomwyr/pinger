@@ -10,8 +10,7 @@ part 'ping_session.g.dart';
 abstract class PingHost with _$PingHost {
   factory PingHost({
     @required String name,
-    @required String ip,
-    @required String avatarUrl,
+    String ip,
   }) = _PingHost;
 
   factory PingHost.fromJson(Map<String, dynamic> json) =>

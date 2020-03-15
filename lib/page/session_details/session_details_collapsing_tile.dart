@@ -59,7 +59,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24.0),
                     ),
                     elevation: 4.0 * expansion,
-                    child: Image.network(session.host.avatarUrl),
+                    child: Image.network('https://www.netflix.com/favicon.ico'),
                   ),
                 ),
                 label: Container(
