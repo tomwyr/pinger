@@ -18,6 +18,7 @@ dependencies:
   get_it: ^4.0.0
   fl_chart: ^0.8.3
   intl: ^0.16.1
+  path_provider: ^1.6.5
 
 dev_dependencies:
   flutter_test:
