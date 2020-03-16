@@ -1,10 +1,7 @@
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
-import 'package:pinger/service/favicon_service.dart';
 
 part 'ping_store.g.dart';
 
@@ -13,20 +10,15 @@ class PingStore = PingStoreBase with _$PingStore;
 
 abstract class PingStoreBase with Store {
   @observable
-  Ping currentPing;
+  PingSession currentSession;
 
   @action
-  void start(String host) {
-    currentPing = Ping(
+  void initSession(String host) {
+    currentSession = PingSession(
       host: PingHost(name: host),
-      avatar: FaviconService(urlWrapper: FaviconService.google).load(host),
+      status: PingStatus.initial,
+      values: [],
+      startTime: null,
     );
   }
-}
-
-class Ping {
-  final PingHost host;
-  final Future<Uint8List> avatar;
-
-  Ping({@required this.host, @required this.avatar});
 }

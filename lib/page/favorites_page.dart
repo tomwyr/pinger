@@ -32,7 +32,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               title: Text(item),
               trailing: Text('??? x'),
               onTap: () {
-                _pingStore.start(item);
+                _pingStore.initSession(item);
                 pushReplacement(PingPage());
               },
             );

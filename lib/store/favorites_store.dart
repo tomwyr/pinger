@@ -11,9 +11,12 @@ abstract class FavoritesStoreBase with Store {
   List<String> items = [];
 
   @action
-  void toggleFavorite(String host) {
-    final favs = items.toList();
-    favs.contains(host) ? favs.remove(host) : favs.add(host);
-    items = favs;
+  void addFavorite(String host) {
+    items = items..add(host);
+  }
+
+  @action
+  void removeFavorite(String host) {
+    items = items..remove(host);
   }
 }

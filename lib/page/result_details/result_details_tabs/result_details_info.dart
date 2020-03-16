@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 
-class SessionDetailsInfo extends StatelessWidget {
-  final PingSession session;
+class ResultDetailsInfo extends StatelessWidget {
+  final PingResult result;
 
-  const SessionDetailsInfo({Key key, @required this.session}) : super(key: key);
+  const ResultDetailsInfo({Key key, @required this.result}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,15 @@ class SessionDetailsInfo extends StatelessWidget {
             children: <Widget>[
               _buildHeader("Info"),
               _buildItem(
-                  "Date", FormatUtils.getTimestampLabel(session.timestamp)),
-              _buildItem("Host IP", session.host.ip),
+                  "Date", FormatUtils.getTimestampLabel(result.timestamp)),
+              _buildItem("Host IP", result.host.ip),
               _buildItem(
-                  "Total time", FormatUtils.getDurationLabel(session.duration)),
+                  "Total time", FormatUtils.getDurationLabel(result.duration)),
               _buildHeader("Settings"),
-              _buildItem("Count", "${session.settings.count}x"),
-              _buildItem("Packet size", "${session.settings.packetSize}B"),
-              _buildItem("Send interval", "${session.settings.sendInterval}s"),
-              _buildItem("Timeout", "${session.settings.timeout}s"),
+              _buildItem("Count", "${result.settings.count}x"),
+              _buildItem("Packet size", "${result.settings.packetSize}B"),
+              _buildItem("Send interval", "${result.settings.sendInterval}s"),
+              _buildItem("Timeout", "${result.settings.timeout}s"),
             ],
           ),
         ),

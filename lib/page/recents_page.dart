@@ -33,7 +33,7 @@ class _RecentsPageState extends State<RecentsPage> {
               title: Text(item.host),
               trailing: Text(FormatUtils.getSinceNowLabel(item.timestamp)),
               onTap: () {
-                _pingStore.start(item.host);
+                _pingStore.initSession(item.host);
                 pushReplacement(PingPage());
               },
             );

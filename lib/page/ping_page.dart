@@ -16,7 +16,7 @@ class _PingPageState extends State<PingPage> {
     return Scaffold(
       body: Observer(
         builder: (_) => Center(
-          child: Text(_pingStore.currentPing.host),
+          child: Text(_pingStore.currentSession.host.name),
         ),
       ),
     );

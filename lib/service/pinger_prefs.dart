@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
 class PingerPrefs {
   final String _userSettingsKey = 'userSettings';
-  final String _archiveSessionsKey = 'archiveSessions';
+  final String _archiveResultsKey = 'archiveResults';
 
   final SharedPreferences _sharedPrefs;
 
@@ -27,29 +27,29 @@ class PingerPrefs {
     await _sharedPrefs.setString(_userSettingsKey, jsonString);
   }
 
-  List<PingSession> getArchiveSessions() {
-    if (_sharedPrefs.containsKey(_archiveSessionsKey)) {
+  List<PingResult> getArchiveResults() {
+    if (_sharedPrefs.containsKey(_archiveResultsKey)) {
       return _sharedPrefs
-          .getStringList(_archiveSessionsKey)
+          .getStringList(_archiveResultsKey)
           .map(jsonDecode)
-          .map((it) => PingSession.fromJson(it as Map<String, dynamic>))
+          .map((it) => PingResult.fromJson(it as Map<String, dynamic>))
           .toList();
     }
     return null;
   }
 
-  Future<void> saveArchiveSession(PingSession session) async {
-    final allSessions = (getArchiveSessions() ?? [])..add(session);
+  Future<void> saveArchiveResult(PingResult result) async {
+    final allResults = (getArchiveResults() ?? [])..add(result);
     final jsonStringList =
-        allSessions.map((it) => it.toJson()).map(jsonEncode).toList();
-    await _sharedPrefs.setStringList(_archiveSessionsKey, jsonStringList);
+        allResults.map((it) => it.toJson()).map(jsonEncode).toList();
+    await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
   }
 
-  Future<void> deleteArchiveSession(int sessionId) async {
-    final allSessions = getArchiveSessions() ?? [];
-    allSessions.removeWhere((it) => it.id == sessionId);
+  Future<void> deleteArchiveResult(int resultId) async {
+    final allResults = getArchiveResults() ?? [];
+    allResults.removeWhere((it) => it.id == resultId);
     final jsonStringList =
-        allSessions.map((it) => it.toJson()).map(jsonEncode).toList();
-    await _sharedPrefs.setStringList(_archiveSessionsKey, jsonStringList);
+        allResults.map((it) => it.toJson()).map(jsonEncode).toList();
+    await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 
 part 'ping_global.freezed.dart';
 part 'ping_global.g.dart';

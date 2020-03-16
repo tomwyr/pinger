@@ -1,5 +1,5 @@
 import 'package:pinger/model/ping_global.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 
 class FakeData {
   static final hosts = FakeHosts();

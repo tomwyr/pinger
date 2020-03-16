@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/favorites_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/page/ping_page.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
         child: Observer(builder: (_) {
           final history = _historyStore.items;
           final favorites = _favoritesStore.items;
-          final ping = _pingStore.currentPing;
+          final ping = _pingStore.currentSession;
           if (history.isEmpty && favorites.isEmpty && ping == null) {
             return _buildNoSuggestions();
           } else {
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     );
   }
 
-  List<Widget> _buildCurrentPing(Ping ping) {
+  List<Widget> _buildCurrentPing(PingSession session) {
     return [
       _buildSectionTitle('Current'),
       InkWell(
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
-              child: Text(ping.host.name),
+              child: Text(session.host.name),
             ),
           ),
           Text(

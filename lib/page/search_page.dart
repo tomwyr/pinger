@@ -21,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _inputController = TextEditingController(
-      text: _pingStore.currentPing?.host?.name,
+      text: _pingStore.currentSession?.host?.name,
     );
   }
 
@@ -128,7 +128,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onItemSelected(String host) {
-    _pingStore.start(host);
+    _pingStore.initSession(host);
     pushReplacement(PingPage());
   }
 }

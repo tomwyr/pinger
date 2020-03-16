@@ -7,6 +7,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/service/pinger_prefs.dart';
+import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/history_store.dart';
@@ -19,6 +20,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   final injectorModule = _$InjectorModule();
   final sharedPreferences = await injectorModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<PingService>(() => PingService());
 
   //Eager singletons must be registered in the right order
   g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));

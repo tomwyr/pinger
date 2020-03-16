@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/fake_data.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
@@ -20,21 +20,21 @@ abstract class ArchiveStoreBase with Store {
   PingerPrefs get _pingerPrefs;
 
   @observable
-  List<PingSession> sessions;
+  List<PingResult> results;
 
   @action
-  Future<void> deleteSession(int sessionId) async {
-    await _pingerPrefs.deleteArchiveSession(sessionId);
-    final entryIndex = sessions.indexWhere((it) => it.id == sessionId);
-    sessions = sessions.toList()..removeAt(entryIndex);
+  Future<void> deleteResult(int resultId) async {
+    await _pingerPrefs.deleteArchiveResult(resultId);
+    final entryIndex = results.indexWhere((it) => it.id == resultId);
+    results = results.toList()..removeAt(entryIndex);
   }
 
   @action
   void init() {
-    sessions = _pingerPrefs.getArchiveSessions() ?? [];
-    if (sessions.isEmpty)
-      sessions.addAll([
-        PingSession(
+    results = _pingerPrefs.getArchiveResults() ?? [];
+    if (results.isEmpty)
+      results.addAll([
+        PingResult(
           id: 0,
           host: FakeData.hosts.dropbox,
           timestamp: DateTime.now().subtract(Duration(minutes: 10)),
@@ -45,7 +45,7 @@ abstract class ArchiveStoreBase with Store {
             sendInterval: 3,
             timeout: 30,
           ),
-          results: PingResults.fromValues([
+          values: [
             30.0,
             75.0,
             34.0,
@@ -59,9 +59,9 @@ abstract class ArchiveStoreBase with Store {
             64.0,
             48.0,
             51.0,
-          ]),
+          ],
         ),
-        PingSession(
+        PingResult(
           id: 1,
           host: FakeData.hosts.youtube,
           timestamp: DateTime.now().subtract(Duration(hours: 17)),
@@ -72,11 +72,9 @@ abstract class ArchiveStoreBase with Store {
             sendInterval: 1,
             timeout: 12,
           ),
-          results: PingResults.fromValues(
-            List.generate(10, (_) => Random().nextDouble() * 50.0),
-          ),
+          values: List.generate(10, (_) => Random().nextDouble() * 50.0),
         ),
-        PingSession(
+        PingResult(
           id: 2,
           host: FakeData.hosts.dropbox,
           timestamp: DateTime.now().subtract(Duration(days: 3)),
@@ -87,11 +85,9 @@ abstract class ArchiveStoreBase with Store {
             sendInterval: 5,
             timeout: 10,
           ),
-          results: PingResults.fromValues(
-            List.generate(120, (_) => Random().nextDouble() * 50.0),
-          ),
+          values: List.generate(120, (_) => Random().nextDouble() * 50.0),
         ),
-        PingSession(
+        PingResult(
           id: 3,
           host: FakeData.hosts.dropbox,
           timestamp: DateTime.now().subtract(Duration(days: 22)),
@@ -102,7 +98,7 @@ abstract class ArchiveStoreBase with Store {
             sendInterval: 2,
             timeout: 5,
           ),
-          results: PingResults.fromValues([37.0, 88.0, 76.0, 92.0]),
+          values: [37.0, 88.0, 76.0, 92.0],
         ),
       ]);
   }

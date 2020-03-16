@@ -1,15 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/utils/format_utils.dart';
 
-class PingSessionItem extends StatelessWidget {
-  final PingSession session;
+class PingResultItem extends StatelessWidget {
+  final PingResult result;
   final VoidCallback onTap;
 
-  const PingSessionItem({
+  const PingResultItem({
     Key key,
-    @required this.session,
+    @required this.result,
     @required this.onTap,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class PingSessionItem extends StatelessWidget {
             width: 32.0,
             margin: EdgeInsets.only(left: 4.0),
             child: Text(
-              session.results.values.length.toString(),
+              result.values.length.toString(),
               textAlign: TextAlign.center,
             ),
           ),
@@ -40,21 +40,21 @@ class PingSessionItem extends StatelessWidget {
             width: 48.0,
             margin: EdgeInsets.only(left: 4.0),
             child: Text(
-              FormatUtils.getDurationLabel(session.duration),
+              FormatUtils.getDurationLabel(result.duration),
               textAlign: TextAlign.center,
             ),
           ),
         ],
       ),
-      trailing: PingSessionItemTrailing(session: session),
+      trailing: PingResultItemTrailing(result: result),
     );
   }
 }
 
-class PingSessionItemTrailing extends StatelessWidget {
-  final PingSession session;
+class PingResultItemTrailing extends StatelessWidget {
+  final PingResult result;
 
-  const PingSessionItemTrailing({Key key, @required this.session})
+  const PingResultItemTrailing({Key key, @required this.result})
       : super(key: key);
 
   @override
@@ -62,11 +62,11 @@ class PingSessionItemTrailing extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        PingSessionSummaryChart(results: session.results),
+        PingResultSummaryChart(results: result),
         SizedBox(
           width: 48.0,
           child: Text(
-            FormatUtils.getSinceNowLabel(session.timestamp),
+            FormatUtils.getSinceNowLabel(result.timestamp),
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey),
           ),
@@ -76,13 +76,13 @@ class PingSessionItemTrailing extends StatelessWidget {
   }
 }
 
-class PingSessionSummaryChart extends StatelessWidget {
-  final PingResults results;
+class PingResultSummaryChart extends StatelessWidget {
+  final PingResult results;
   final double width;
   final double height;
   final double barWidth;
 
-  const PingSessionSummaryChart({
+  const PingResultSummaryChart({
     Key key,
     @required this.results,
     this.width = 96.0,

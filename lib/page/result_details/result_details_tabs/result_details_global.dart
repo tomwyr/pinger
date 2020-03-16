@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/model/ping_global.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/dotted_map.dart';
 
-class SessionDetailsGlobal extends StatefulWidget {
+class ResultDetailsGlobal extends StatefulWidget {
   final bool hasLocationPermission;
-  final PingResults userResult;
+  final PingResult userResult;
   final PingGlobalResults globalResults;
 
-  const SessionDetailsGlobal({
+  const ResultDetailsGlobal({
     Key key,
     @required this.hasLocationPermission,
     @required this.userResult,
@@ -21,10 +21,10 @@ class SessionDetailsGlobal extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SessionDetailsGlobalState createState() => _SessionDetailsGlobalState();
+  _ResultDetailsGlobalState createState() => _ResultDetailsGlobalState();
 }
 
-class _SessionDetailsGlobalState extends State<SessionDetailsGlobal> {
+class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
   UserResultType _resultTypeSelection;
   UserResultTypeData _resultTypeData;
 
@@ -195,8 +195,8 @@ class UserResultTypeData {
   final List<PingGroup> graphData;
   final double Function(PingStats) getStatsValue;
 
-  factory UserResultTypeData.forType(UserResultType type,
-      PingResults userResult, PingGlobalResults globalResults) {
+  factory UserResultTypeData.forType(UserResultType type, PingResult userResult,
+      PingGlobalResults globalResults) {
     switch (type) {
       case UserResultType.min:
         return UserResultTypeData(

@@ -30,10 +30,20 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
       ActionController(name: 'FavoritesStoreBase');
 
   @override
-  void toggleFavorite(String host) {
+  void addFavorite(String host) {
     final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
     try {
-      return super.toggleFavorite(host);
+      return super.addFavorite(host);
+    } finally {
+      _$FavoritesStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeFavorite(String host) {
+    final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
+    try {
+      return super.removeFavorite(host);
     } finally {
       _$FavoritesStoreBaseActionController.endAction(_$actionInfo);
     }

@@ -3,9 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/page/result_details/result_details_page.dart';
 import 'package:pinger/page/search_page.dart';
-import 'package:pinger/page/session_details/session_details_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/ping_session_item.dart';
 
@@ -44,7 +44,7 @@ class _ArchivePageState extends State<ArchivePage>
       child: Scaffold(
         appBar: _buildAppBar(),
         body: Observer(
-          builder: (_) => _buildBody(_archiveStore.sessions),
+          builder: (_) => _buildBody(_archiveStore.results),
         ),
       ),
     );
@@ -94,36 +94,36 @@ class _ArchivePageState extends State<ArchivePage>
     );
   }
 
-  Widget _buildBody(List<PingSession> sessions) {
-    if (sessions == null) return Center(child: CircularProgressIndicator());
-    if (sessions.isEmpty) return _buildEmptySessions();
+  Widget _buildBody(List<PingResult> results) {
+    if (results == null) return Center(child: CircularProgressIndicator());
+    if (results.isEmpty) return _buildEmptyResults();
     switch (_viewType) {
       case ArchiveViewType.list:
-        return _buildSessionsList(sessions);
+        return _buildResultsList(results);
       case ArchiveViewType.groups:
-        return _buildSessionsGroups(sessions);
+        return _buildResultsGroups(results);
       case ArchiveViewType.host:
-        return _buildSessionList(
-            sessions.where((it) => it.host.name == _hostName).toList());
+        return _buildHostList(
+            results.where((it) => it.host.name == _hostName).toList());
     }
     throw StateError("Unrecognized $ArchiveViewType selected: $_viewType.");
   }
 
-  Widget _buildSessionList(List<PingSession> sessions) {
+  Widget _buildHostList(List<PingResult> results) {
     return ListView.separated(
-      itemCount: sessions.length,
+      itemCount: results.length,
       itemBuilder: (_, index) {
-        final item = sessions[index];
-        return PingSessionItem(
-          session: item,
-          onTap: () => push(SessionDetailsPage(session: item)),
+        final item = results[index];
+        return PingResultItem(
+          result: item,
+          onTap: () => push(ResultDetailsPage(result: item)),
         );
       },
       separatorBuilder: (_, __) => Divider(),
     );
   }
 
-  Widget _buildEmptySessions() {
+  Widget _buildEmptyResults() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
@@ -150,29 +150,29 @@ class _ArchivePageState extends State<ArchivePage>
     );
   }
 
-  Widget _buildSessionsList(List<PingSession> sessions) {
+  Widget _buildResultsList(List<PingResult> results) {
     return ListView.separated(
-      itemCount: sessions.length,
+      itemCount: results.length,
       itemBuilder: (_, index) {
-        final item = sessions[index];
+        final item = results[index];
         return ListTile(
-          onTap: () => push(SessionDetailsPage(session: item)),
+          onTap: () => push(ResultDetailsPage(result: item)),
           leading: Icon(Icons.language),
           title: Text(
             item.host.name,
             style: TextStyle(fontSize: 18.0),
             maxLines: 1,
           ),
-          trailing: PingSessionItemTrailing(session: item),
+          trailing: PingResultItemTrailing(result: item),
         );
       },
       separatorBuilder: (_, __) => Divider(),
     );
   }
 
-  Widget _buildSessionsGroups(List<PingSession> sessions) {
+  Widget _buildResultsGroups(List<PingResult> results) {
     final countsMap = <String, int>{};
-    sessions.forEach((it) => !countsMap.containsKey(it.host)
+    results.forEach((it) => !countsMap.containsKey(it.host)
         ? countsMap[it.host.name] = 1
         : ++countsMap[it.host.name]);
     final hostCounts = countsMap.entries.toList()

@@ -9,28 +9,28 @@ part of 'archive_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ArchiveStore on ArchiveStoreBase, Store {
-  final _$sessionsAtom = Atom(name: 'ArchiveStoreBase.sessions');
+  final _$resultsAtom = Atom(name: 'ArchiveStoreBase.results');
 
   @override
-  List<PingSession> get sessions {
-    _$sessionsAtom.context.enforceReadPolicy(_$sessionsAtom);
-    _$sessionsAtom.reportObserved();
-    return super.sessions;
+  List<PingResult> get results {
+    _$resultsAtom.context.enforceReadPolicy(_$resultsAtom);
+    _$resultsAtom.reportObserved();
+    return super.results;
   }
 
   @override
-  set sessions(List<PingSession> value) {
-    _$sessionsAtom.context.conditionallyRunInAction(() {
-      super.sessions = value;
-      _$sessionsAtom.reportChanged();
-    }, _$sessionsAtom, name: '${_$sessionsAtom.name}_set');
+  set results(List<PingResult> value) {
+    _$resultsAtom.context.conditionallyRunInAction(() {
+      super.results = value;
+      _$resultsAtom.reportChanged();
+    }, _$resultsAtom, name: '${_$resultsAtom.name}_set');
   }
 
-  final _$deleteSessionAsyncAction = AsyncAction('deleteSession');
+  final _$deleteResultAsyncAction = AsyncAction('deleteResult');
 
   @override
-  Future<void> deleteSession(int sessionId) {
-    return _$deleteSessionAsyncAction.run(() => super.deleteSession(sessionId));
+  Future<void> deleteResult(int resultId) {
+    return _$deleteResultAsyncAction.run(() => super.deleteResult(resultId));
   }
 
   final _$ArchiveStoreBaseActionController =
@@ -48,7 +48,7 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'sessions: ${sessions.toString()}';
+    final string = 'results: ${results.toString()}';
     return '{$string}';
   }
 }

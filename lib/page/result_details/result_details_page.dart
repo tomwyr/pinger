@@ -1,18 +1,159 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:pinger/model/ping_session.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
+import 'package:pinger/extensions.dart';
+import 'package:pinger/fake_data.dart';
+import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/page/result_details/result_details_tabs/result_details_global.dart';
+import 'package:pinger/page/result_details/result_details_tabs/result_details_info.dart';
+import 'package:pinger/page/result_details/result_details_tabs/result_details_more.dart';
+import 'package:pinger/page/result_details/result_details_tabs/result_details_results.dart';
+import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/utils/format_utils.dart';
+import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/collapsing_tile.dart';
 
-class SessionSummaryCollapsingTile extends StatelessWidget {
-  final PingSession session;
+enum ResultDetailsTab { results, global, info, more }
+
+class ResultDetailsPage extends StatefulWidget {
+  final PingResult result;
+
+  const ResultDetailsPage({Key key, @required this.result}) : super(key: key);
+
+  @override
+  _ResultDetailsPageState createState() => _ResultDetailsPageState();
+}
+
+class _ResultDetailsPageState extends State<ResultDetailsPage>
+    with SingleTickerProviderStateMixin {
+  static const _collapsingTileHeight = 480.0;
+  static const _collapsedHeight = kToolbarHeight + 48.0;
+  static const _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
+
+  final ArchiveStore _archiveStore = Injector.resolve();
+
+  ResultDetailsTab _selectedTab = ResultDetailsTab.results;
+  ScrollController _scrollController;
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _tabController = TabController(
+      vsync: this,
+      length: ResultDetailsTab.values.length,
+    );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: CollapsingTabLayout(
+          collapsedOffset: _collapsedOffset,
+          scrollController: _scrollController,
+          scroller: _scrollLayoutTo,
+          appBar: SliverAppBar(
+            pinned: true,
+            elevation: 2.0,
+            forceElevated: true,
+            expandedHeight: _collapsingTileHeight,
+            backgroundColor: Theme.of(context).canvasColor,
+            leading: BackButton(color: Colors.black),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.delete, color: Colors.black),
+                onPressed: () async {
+                  await _archiveStore.deleteResult(widget.result.id);
+                  pop();
+                },
+              ),
+            ],
+            flexibleSpace: LayoutBuilder(
+              builder: (_, constraints) => ResultDetailsCollapsingTile(
+                expansion: (constraints.maxHeight - _collapsedHeight) /
+                    (_collapsingTileHeight - _collapsedHeight),
+                result: widget.result,
+                minExtent: kToolbarHeight,
+                maxExtent: _collapsingTileHeight,
+              ),
+            ),
+            bottom: TabBar(
+              onTap: _onTabTap,
+              controller: _tabController,
+              labelColor: Colors.black,
+              indicatorColor: Colors.lightBlue,
+              tabs: [
+                Tab(text: "Results"),
+                Tab(text: "Global"),
+                Tab(text: "Info"),
+                Tab(text: "More"),
+              ],
+            ),
+          ),
+          tabBarView: TabBarView(
+            controller: _tabController,
+            children: [
+              ResultDetailsResults(result: widget.result),
+              ResultDetailsGlobal(
+                hasLocationPermission: true,
+                userResult: widget.result,
+                globalResults: FakeData.globalResults,
+              ),
+              ResultDetailsInfo(result: widget.result),
+              Observer(
+                builder: (_) =>
+                    ResultDetailsMore(results: _archiveStore.results),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onTabTap(int index) {
+    final tab = ResultDetailsTab.values[index];
+    if (_selectedTab == tab) {
+      final offset =
+          _scrollController.offset == _collapsedOffset ? 0.0 : _collapsedOffset;
+      _scrollLayoutTo(offset);
+    } else {
+      _selectedTab = tab;
+      _tabController.animateTo(ResultDetailsTab.values.indexOf(tab));
+      if (_scrollController.offset < _collapsedOffset) {
+        _scrollLayoutTo(_collapsedOffset);
+      }
+    }
+  }
+
+  Future<void> _scrollLayoutTo(double offset) async {
+    await _scrollController.animateTo(
+      offset,
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+    );
+  }
+}
+
+class ResultDetailsCollapsingTile extends StatelessWidget {
+  final PingResult result;
   final double expansion;
   final double minExtent;
   final double maxExtent;
 
-  SessionSummaryCollapsingTile({
-    @required this.session,
+  ResultDetailsCollapsingTile({
+    @required this.result,
     @required this.expansion,
     @required this.minExtent,
     @required this.maxExtent,
@@ -30,7 +171,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 48.0),
             child: Center(
               child: Text(
-                "Session details",
+                "Result details",
                 style: Theme.of(context).textTheme.title,
               ),
             ),
@@ -68,7 +209,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        session.host.name,
+                        result.host.name,
                         style: TextStyle(fontSize: 18.0 + 6.0 * expansion),
                       ),
                     ],
@@ -89,9 +230,7 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                     child: LayoutBuilder(builder: (_, constraints) {
                       final meanLineTop = chartPadding +
                           chartHeight *
-                              (1 -
-                                  session.results.stats.mean /
-                                      session.results.stats.max);
+                              (1 - result.stats.mean / result.stats.max);
                       return Stack(
                         overflow: Overflow.visible,
                         children: <Widget>[
@@ -116,15 +255,15 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                   children: <Widget>[
                     _buildSummaryItem(
                       Icons.compare_arrows,
-                      session.results.values.length.toString(),
+                      result.values.length.toString(),
                     ),
                     _buildSummaryItem(
                       Icons.timer,
-                      FormatUtils.getDurationLabel(session.duration),
+                      FormatUtils.getDurationLabel(result.duration),
                     ),
                     _buildSummaryItem(
                       Icons.calendar_today,
-                      FormatUtils.getTimestampLabel(session.timestamp),
+                      FormatUtils.getTimestampLabel(result.timestamp),
                     ),
                   ],
                 ),
@@ -138,10 +277,8 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
   }
 
   Widget _buildChart(double chartPadding) {
-    final minIndex = session.results.values
-        .indexWhere((it) => it == session.results.stats.min);
-    final maxIndex = session.results.values
-        .indexWhere((it) => it == session.results.stats.max);
+    final minIndex = result.values.indexWhere((it) => it == result.stats.min);
+    final maxIndex = result.values.indexWhere((it) => it == result.stats.max);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: chartPadding),
       child: LayoutBuilder(
@@ -164,9 +301,8 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
                 preventCurveOverShooting: true,
                 colors: [Colors.lightBlue],
                 spots: List.generate(
-                  session.results.values.length,
-                  (index) =>
-                      FlSpot(index.toDouble(), session.results.values[index]),
+                  result.values.length,
+                  (index) => FlSpot(index.toDouble(), result.values[index]),
                 ),
               ),
             ],
@@ -194,25 +330,25 @@ class SessionSummaryCollapsingTile extends StatelessWidget {
   List<Widget> _buildChartLabels(
       double chartWidth, double chartPadding, double meanLineTop) {
     final labelSize = Size(64.0, 18.0);
-    final pingCount = session.results.values.length;
-    final indexMin = session.results.values.indexOf(session.results.stats.min);
-    final indexMax = session.results.values.indexOf(session.results.stats.max);
+    final pingCount = result.values.length;
+    final indexMin = result.values.indexOf(result.stats.min);
+    final indexMax = result.values.indexOf(result.stats.max);
     return [
       Positioned(
         top: 0.0,
         left: chartWidth * (indexMax / (pingCount - 1)) - labelSize.width / 2,
-        child: _buildLabel(session.results.stats.max, labelSize),
+        child: _buildLabel(result.stats.max, labelSize),
       ),
       Positioned(
         top: meanLineTop - labelSize.height / 2,
         left: 0.0,
         right: 0.0,
-        child: _buildLabel(session.results.stats.mean, labelSize),
+        child: _buildLabel(result.stats.mean, labelSize),
       ),
       Positioned(
         bottom: 0.0,
         left: chartWidth * (indexMin / (pingCount - 1)) - labelSize.width / 2,
-        child: _buildLabel(session.results.stats.min, labelSize),
+        child: _buildLabel(result.stats.min, labelSize),
       ),
     ];
   }
