@@ -46,7 +46,7 @@ _$_PingSettings _$_$_PingSettingsFromJson(Map<String, dynamic> json) {
   return _$_PingSettings(
     count: json['count'] as int,
     packetSize: json['packetSize'] as int,
-    sendInterval: json['sendInterval'] as int,
+    interval: json['interval'] as int,
     timeout: json['timeout'] as int,
   );
 }
@@ -55,6 +55,6 @@ Map<String, dynamic> _$_$_PingSettingsToJson(_$_PingSettings instance) =>
     <String, dynamic>{
       'count': instance.count,
       'packetSize': instance.packetSize,
-      'sendInterval': instance.sendInterval,
+      'interval': instance.interval,
       'timeout': instance.timeout,
     };

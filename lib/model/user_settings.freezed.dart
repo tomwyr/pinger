@@ -274,11 +274,10 @@ PingSettings _$PingSettingsFromJson(Map<String, dynamic> json) {
 mixin _$PingSettings {
   int get count;
   int get packetSize;
-  int get sendInterval;
+  int get interval;
   int get timeout;
 
-  PingSettings copyWith(
-      {int count, int packetSize, int sendInterval, int timeout});
+  PingSettings copyWith({int count, int packetSize, int interval, int timeout});
 
   Map<String, dynamic> toJson();
 }
@@ -286,12 +285,11 @@ mixin _$PingSettings {
 class _$PingSettingsTearOff {
   const _$PingSettingsTearOff();
 
-  _PingSettings call(
-      {int count, int packetSize, int sendInterval, int timeout}) {
+  _PingSettings call({int count, int packetSize, int interval, int timeout}) {
     return _PingSettings(
       count: count,
       packetSize: packetSize,
-      sendInterval: sendInterval,
+      interval: interval,
       timeout: timeout,
     );
   }
@@ -301,8 +299,7 @@ const $PingSettings = _$PingSettingsTearOff();
 
 @JsonSerializable()
 class _$_PingSettings implements _PingSettings {
-  _$_PingSettings(
-      {this.count, this.packetSize, this.sendInterval, this.timeout});
+  _$_PingSettings({this.count, this.packetSize, this.interval, this.timeout});
 
   factory _$_PingSettings.fromJson(Map<String, dynamic> json) =>
       _$_$_PingSettingsFromJson(json);
@@ -312,13 +309,13 @@ class _$_PingSettings implements _PingSettings {
   @override
   final int packetSize;
   @override
-  final int sendInterval;
+  final int interval;
   @override
   final int timeout;
 
   @override
   String toString() {
-    return 'PingSettings(count: $count, packetSize: $packetSize, sendInterval: $sendInterval, timeout: $timeout)';
+    return 'PingSettings(count: $count, packetSize: $packetSize, interval: $interval, timeout: $timeout)';
   }
 
   @override
@@ -330,9 +327,9 @@ class _$_PingSettings implements _PingSettings {
             (identical(other.packetSize, packetSize) ||
                 const DeepCollectionEquality()
                     .equals(other.packetSize, packetSize)) &&
-            (identical(other.sendInterval, sendInterval) ||
+            (identical(other.interval, interval) ||
                 const DeepCollectionEquality()
-                    .equals(other.sendInterval, sendInterval)) &&
+                    .equals(other.interval, interval)) &&
             (identical(other.timeout, timeout) ||
                 const DeepCollectionEquality().equals(other.timeout, timeout)));
   }
@@ -342,21 +339,20 @@ class _$_PingSettings implements _PingSettings {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(count) ^
       const DeepCollectionEquality().hash(packetSize) ^
-      const DeepCollectionEquality().hash(sendInterval) ^
+      const DeepCollectionEquality().hash(interval) ^
       const DeepCollectionEquality().hash(timeout);
 
   @override
   _$_PingSettings copyWith({
     Object count = freezed,
     Object packetSize = freezed,
-    Object sendInterval = freezed,
+    Object interval = freezed,
     Object timeout = freezed,
   }) {
     return _$_PingSettings(
       count: count == freezed ? this.count : count as int,
       packetSize: packetSize == freezed ? this.packetSize : packetSize as int,
-      sendInterval:
-          sendInterval == freezed ? this.sendInterval : sendInterval as int,
+      interval: interval == freezed ? this.interval : interval as int,
       timeout: timeout == freezed ? this.timeout : timeout as int,
     );
   }
@@ -369,10 +365,7 @@ class _$_PingSettings implements _PingSettings {
 
 abstract class _PingSettings implements PingSettings {
   factory _PingSettings(
-      {int count,
-      int packetSize,
-      int sendInterval,
-      int timeout}) = _$_PingSettings;
+      {int count, int packetSize, int interval, int timeout}) = _$_PingSettings;
 
   factory _PingSettings.fromJson(Map<String, dynamic> json) =
       _$_PingSettings.fromJson;
@@ -382,11 +375,11 @@ abstract class _PingSettings implements PingSettings {
   @override
   int get packetSize;
   @override
-  int get sendInterval;
+  int get interval;
   @override
   int get timeout;
 
   @override
   _PingSettings copyWith(
-      {int count, int packetSize, int sendInterval, int timeout});
+      {int count, int packetSize, int interval, int timeout});
 }

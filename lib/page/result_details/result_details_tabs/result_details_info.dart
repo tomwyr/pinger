@@ -27,7 +27,7 @@ class ResultDetailsInfo extends StatelessWidget {
               _buildHeader("Settings"),
               _buildItem("Count", "${result.settings.count}x"),
               _buildItem("Packet size", "${result.settings.packetSize}B"),
-              _buildItem("Send interval", "${result.settings.sendInterval}s"),
+              _buildItem("Send interval", "${result.settings.interval}s"),
               _buildItem("Timeout", "${result.settings.timeout}s"),
             ],
           ),

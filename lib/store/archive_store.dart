@@ -42,7 +42,7 @@ abstract class ArchiveStoreBase with Store {
           settings: PingSettings(
             count: 20,
             packetSize: 24,
-            sendInterval: 3,
+            interval: 3,
             timeout: 30,
           ),
           values: [
@@ -69,7 +69,7 @@ abstract class ArchiveStoreBase with Store {
           settings: PingSettings(
             count: 10,
             packetSize: 24,
-            sendInterval: 1,
+            interval: 1,
             timeout: 12,
           ),
           values: List.generate(10, (_) => Random().nextDouble() * 50.0),
@@ -82,7 +82,7 @@ abstract class ArchiveStoreBase with Store {
           settings: PingSettings(
             count: 120,
             packetSize: 48,
-            sendInterval: 5,
+            interval: 5,
             timeout: 10,
           ),
           values: List.generate(120, (_) => Random().nextDouble() * 50.0),
@@ -95,7 +95,7 @@ abstract class ArchiveStoreBase with Store {
           settings: PingSettings(
             count: 4,
             packetSize: 10,
-            sendInterval: 2,
+            interval: 2,
             timeout: 5,
           ),
           values: [37.0, 88.0, 76.0, 92.0],

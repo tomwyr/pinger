@@ -31,7 +31,7 @@ abstract class PingSettings with _$PingSettings {
   factory PingSettings({
     int count,
     int packetSize,
-    int sendInterval,
+    int interval,
     int timeout,
   }) = _PingSettings;
 

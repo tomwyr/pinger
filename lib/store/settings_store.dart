@@ -39,7 +39,7 @@ abstract class SettingsStoreBase with Store {
         pingSettings: PingSettings(
           count: 10,
           packetSize: 24,
-          sendInterval: 2,
+          interval: 2,
           timeout: 30,
         ),
       );

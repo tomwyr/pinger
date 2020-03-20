@@ -59,11 +59,11 @@ class _SettingsPageState extends State<SettingsPage> {
               _buildItem(
                 _buildLabel("Send interval"),
                 _buildIntValue(
-                  settings.pingSettings.sendInterval,
+                  settings.pingSettings.interval,
                   onChanged: (it) {
                     final newSettings = settings.copyWith(
                       pingSettings: settings.pingSettings.copyWith(
-                        sendInterval: it,
+                        interval: it,
                       ),
                     );
                     _settingsStore.update(newSettings);
