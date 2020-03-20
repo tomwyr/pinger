@@ -6,23 +6,14 @@ import 'package:pinger/model/user_settings.dart';
 
 @injectable
 class PingService {
-  Stream<double> ping(String host, PingSettings settings) {
-    StreamController<double> controller;
-    controller = StreamController<double>(
-      onListen: () async {
-        final args = _parseArgs(settings);
-        final count = settings.count ?? double.infinity;
-        for (var i = 0; i < count; i++) {
-          if (controller.isClosed) break;
-          final result = await Process.run('ping', [...args, host]);
-          if (controller.isClosed) break;
-          controller.add(_parseResult(result));
-          await Future.delayed(Duration(seconds: settings.sendInterval));
-        }
-      },
-      onCancel: () => controller.close(),
-    );
-    return controller.stream;
+  Stream<double> ping(String host, PingSettings settings) async* {
+    final args = _parseArgs(settings);
+    final count = settings.count ?? double.infinity;
+    for (var i = 0; i < count; i++) {
+      final result = await Process.run('ping', [...args, host]);
+      yield _parseResult(result);
+      await Future.delayed(Duration(seconds: settings.sendInterval));
+    }
   }
 
   List<String> _parseArgs(PingSettings settings) {
