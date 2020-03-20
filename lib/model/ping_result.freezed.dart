@@ -313,7 +313,8 @@ const $PingStats = _$PingStatsTearOff();
 
 @JsonSerializable()
 class _$_PingStats implements _PingStats {
-  _$_PingStats({@required this.min, @required this.max, @required this.mean})
+  const _$_PingStats(
+      {@required this.min, @required this.max, @required this.mean})
       : assert(min != null),
         assert(max != null),
         assert(mean != null);
@@ -372,7 +373,7 @@ class _$_PingStats implements _PingStats {
 }
 
 abstract class _PingStats implements PingStats {
-  factory _PingStats(
+  const factory _PingStats(
       {@required double min,
       @required double max,
       @required double mean}) = _$_PingStats;

@@ -19,4 +19,6 @@ abstract class FavoritesStoreBase with Store {
   void removeFavorite(String host) {
     items = items..remove(host);
   }
+
+  bool isFavorite(String host) => items.any((it) => it == host);
 }

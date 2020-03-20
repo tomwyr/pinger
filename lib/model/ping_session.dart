@@ -6,17 +6,22 @@ part 'ping_session.freezed.dart';
 @freezed
 abstract class PingSession with _$PingSession {
   factory PingSession({
-    @required List<double> values,
-    @required PingStatus status,
     @required PingHost host,
+    @required PingStatus status,
+    @Default([]) List<double> values,
     DateTime startTime,
+    DateTime endTime,
   }) = _PingSession;
+
+  @late
+  PingStats get stats =>
+      values.isNotEmpty ? PingStats.fromValues(values) : null;
 }
 
 enum PingStatus {
   initial,
-  checkStarted,
-  checkDone,
+  quickCheckStarted,
+  quickCheckDone,
   sessionStarted,
   sessionPaused,
   sessionDone,

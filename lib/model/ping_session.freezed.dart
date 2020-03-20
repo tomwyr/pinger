@@ -8,31 +8,35 @@ part of 'ping_session.dart';
 // **************************************************************************
 
 mixin _$PingSession {
-  List<double> get values;
-  PingStatus get status;
   PingHost get host;
+  PingStatus get status;
+  List<double> get values;
   DateTime get startTime;
+  DateTime get endTime;
 
   PingSession copyWith(
-      {List<double> values,
+      {PingHost host,
       PingStatus status,
-      PingHost host,
-      DateTime startTime});
+      List<double> values,
+      DateTime startTime,
+      DateTime endTime});
 }
 
 class _$PingSessionTearOff {
   const _$PingSessionTearOff();
 
   _PingSession call(
-      {@required List<double> values,
+      {@required PingHost host,
       @required PingStatus status,
-      @required PingHost host,
-      DateTime startTime}) {
+      List<double> values = const [],
+      DateTime startTime,
+      DateTime endTime}) {
     return _PingSession(
-      values: values,
-      status: status,
       host: host,
+      status: status,
+      values: values,
       startTime: startTime,
+      endTime: endTime,
     );
   }
 }
@@ -41,87 +45,110 @@ const $PingSession = _$PingSessionTearOff();
 
 class _$_PingSession implements _PingSession {
   _$_PingSession(
-      {@required this.values,
+      {@required this.host,
       @required this.status,
-      @required this.host,
-      this.startTime})
-      : assert(values != null),
-        assert(status != null),
-        assert(host != null);
+      this.values = const [],
+      this.startTime,
+      this.endTime})
+      : assert(host != null),
+        assert(status != null);
 
-  @override
-  final List<double> values;
-  @override
-  final PingStatus status;
   @override
   final PingHost host;
   @override
+  final PingStatus status;
+  @JsonKey(defaultValue: const [])
+  @override
+  final List<double> values;
+  @override
   final DateTime startTime;
+  @override
+  final DateTime endTime;
+  bool _didstats = false;
+  PingStats _stats;
+
+  @override
+  PingStats get stats {
+    if (_didstats == false) {
+      _didstats = true;
+      _stats = values.isNotEmpty ? PingStats.fromValues(values) : null;
+    }
+    return _stats;
+  }
 
   @override
   String toString() {
-    return 'PingSession(values: $values, status: $status, host: $host, startTime: $startTime)';
+    return 'PingSession(host: $host, status: $status, values: $values, startTime: $startTime, endTime: $endTime, stats: $stats)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PingSession &&
-            (identical(other.values, values) ||
-                const DeepCollectionEquality().equals(other.values, values)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.host, host) ||
                 const DeepCollectionEquality().equals(other.host, host)) &&
+            (identical(other.status, status) ||
+                const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.values, values) ||
+                const DeepCollectionEquality().equals(other.values, values)) &&
             (identical(other.startTime, startTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.startTime, startTime)));
+                    .equals(other.startTime, startTime)) &&
+            (identical(other.endTime, endTime) ||
+                const DeepCollectionEquality().equals(other.endTime, endTime)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(values) ^
-      const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(host) ^
-      const DeepCollectionEquality().hash(startTime);
+      const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(values) ^
+      const DeepCollectionEquality().hash(startTime) ^
+      const DeepCollectionEquality().hash(endTime);
 
   @override
   _$_PingSession copyWith({
-    Object values = freezed,
-    Object status = freezed,
     Object host = freezed,
+    Object status = freezed,
+    Object values = freezed,
     Object startTime = freezed,
+    Object endTime = freezed,
   }) {
     return _$_PingSession(
-      values: values == freezed ? this.values : values as List<double>,
-      status: status == freezed ? this.status : status as PingStatus,
       host: host == freezed ? this.host : host as PingHost,
+      status: status == freezed ? this.status : status as PingStatus,
+      values: values == freezed ? this.values : values as List<double>,
       startTime: startTime == freezed ? this.startTime : startTime as DateTime,
+      endTime: endTime == freezed ? this.endTime : endTime as DateTime,
     );
   }
 }
 
 abstract class _PingSession implements PingSession {
   factory _PingSession(
-      {@required List<double> values,
+      {@required PingHost host,
       @required PingStatus status,
-      @required PingHost host,
-      DateTime startTime}) = _$_PingSession;
+      List<double> values,
+      DateTime startTime,
+      DateTime endTime}) = _$_PingSession;
 
-  @override
-  List<double> get values;
-  @override
-  PingStatus get status;
   @override
   PingHost get host;
   @override
+  PingStatus get status;
+  @override
+  List<double> get values;
+  @override
   DateTime get startTime;
+  @override
+  DateTime get endTime;
 
   @override
   _PingSession copyWith(
-      {List<double> values,
+      {PingHost host,
       PingStatus status,
-      PingHost host,
-      DateTime startTime});
+      List<double> values,
+      DateTime startTime,
+      DateTime endTime});
 }

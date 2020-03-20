@@ -10,9 +10,11 @@ import 'package:pinger/widgets/switch_toggle_buttons.dart';
 enum ResultsViewType { list, chart }
 
 class ResultDetailsResults extends StatefulWidget {
-  final PingResult result;
+  final List<double> values;
+  final PingStats stats;
 
-  const ResultDetailsResults({Key key, @required this.result})
+  const ResultDetailsResults(
+      {Key key, @required this.values, @required this.stats})
       : super(key: key);
 
   @override
@@ -22,8 +24,6 @@ class ResultDetailsResults extends StatefulWidget {
 class _ResultDetailsResultsState extends State<ResultDetailsResults> {
   ResultsViewType _selectedViewType = ResultsViewType.list;
   int _chartPosition = 0;
-
-  List<double> get values => widget.result.values;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,7 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("Summary", style: TextStyle(fontWeight: FontWeight.bold)),
-            Container(height: 4.0),
-            ResultDetailsSummary(result: widget.result),
+            ResultDetailsSummary(values: widget.values, stats: widget.stats),
             Container(height: 18.0),
             Row(children: <Widget>[
               Text("Results", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -85,10 +83,10 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (_, index) => ResultDetailsItem.valueAt(
-          values: values,
+          values: widget.values,
           index: index,
         ),
-        childCount: values.length,
+        childCount: widget.values.length,
       ),
     );
   }
@@ -101,8 +99,8 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
         children: <Widget>[
           Stack(children: <Widget>[
             ResultDetailsItem.valueAt(
-              values: widget.result.values,
-              index: values.length - _chartPosition - 1,
+              values: widget.values,
+              index: widget.values.length - _chartPosition - 1,
             ),
             _buildChartResultGradient(VerticalDirection.up),
             _buildChartResultGradient(VerticalDirection.down),
@@ -111,7 +109,7 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
             height: 256.0,
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: SnappingScrollArea(
-              itemCount: values.length,
+              itemCount: widget.values.length,
               mainAxisPadding: screenSize,
               itemInterval: screenSize * 0.3,
               onPositionChanged: (it) => setState(() => _chartPosition = it),
@@ -161,8 +159,8 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
           preventCurveOverShooting: true,
           colors: [Colors.lightBlue],
           spots: List.generate(
-            values.length,
-            (index) => FlSpot(index.toDouble(), values[index]),
+            widget.values.length,
+            (index) => FlSpot(index.toDouble(), widget.values[index]),
           ),
         ),
       ],
@@ -268,37 +266,58 @@ class ResultDetailsItem extends StatelessWidget {
 }
 
 class ResultDetailsSummary extends StatelessWidget {
-  final PingResult result;
+  final List<double> values;
+  final PingStats stats;
 
-  const ResultDetailsSummary({Key key, @required this.result})
-      : super(key: key);
+  const ResultDetailsSummary({
+    Key key,
+    @required this.values,
+    @required this.stats,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final totalCount = result.values.length;
-    final successCount = result.values.where((it) => it != null).length;
+    final totalCount = values.length;
+    final successCount = values.where((it) => it != null).length;
     final failedCount = totalCount - successCount;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Row(children: <Widget>[
-          _buildSummaryItem(
-              "Success", "$successCount", successCount / totalCount),
-          _buildSummaryItem("Failed", "$failedCount", failedCount / totalCount),
-          _buildSummaryItem("Total", "$totalCount", 1.0),
-        ]),
-        Row(children: <Widget>[
-          _buildSummaryItem("Min", "${result.stats.min.round()} ms",
-              result.stats.min / result.stats.max),
-          _buildSummaryItem("Mean", "${result.stats.mean.round()} ms",
-              result.stats.mean / result.stats.max),
-          _buildSummaryItem("Max", "${result.stats.max.round()} ms", 1.0),
-        ]),
+        Text("Summary", style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(height: 4.0),
+        if (stats != null) ...[
+          Row(children: <Widget>[
+            _buildSummaryItem(
+                "Failed", "$failedCount", failedCount / totalCount),
+            _buildSummaryItem(
+                "Success", "$successCount", successCount / totalCount),
+            _buildSummaryItem("Total", "$totalCount", 1.0),
+          ]),
+          Row(children: <Widget>[
+            _buildSummaryItem(
+                "Min", "${stats.min.round()} ms", stats.min / stats.max),
+            _buildSummaryItem(
+                "Mean", "${stats.mean.round()} ms", stats.mean / stats.max),
+            _buildSummaryItem("Max", "${stats.max.round()} ms", 1.0),
+          ])
+        ] else ...[
+          Row(children: <Widget>[
+            _buildSummaryItem("Success"),
+            _buildSummaryItem("Failed"),
+            _buildSummaryItem("Total"),
+          ]),
+          Row(children: <Widget>[
+            _buildSummaryItem("Min"),
+            _buildSummaryItem("Mean"),
+            _buildSummaryItem("Max"),
+          ]),
+        ]
       ],
     );
   }
 
-  Widget _buildSummaryItem(String label, String value, double barProgress) {
+  Widget _buildSummaryItem(String label,
+      [String value = "", double barProgress = 0.0]) {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

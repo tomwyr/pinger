@@ -40,6 +40,86 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
+  void startQuickCheck() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.startQuickCheck();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _onPingResult(double value) {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super._onPingResult(value);
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopQuickCheck() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.stopQuickCheck();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void startSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.startSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void pauseSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.pauseSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void resumeSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.resumeSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.stopSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void restart() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.restart();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string = 'currentSession: ${currentSession.toString()}';
     return '{$string}';

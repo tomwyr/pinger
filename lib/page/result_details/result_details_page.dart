@@ -104,7 +104,10 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
           tabBarView: TabBarView(
             controller: _tabController,
             children: [
-              ResultDetailsResults(result: widget.result),
+              ResultDetailsResults(
+                values: widget.result.values,
+                stats: widget.result.stats,
+              ),
               ResultDetailsGlobal(
                 hasLocationPermission: true,
                 userResult: widget.result,

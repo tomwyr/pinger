@@ -14,7 +14,7 @@ class PingService {
         final count = settings.count ?? double.infinity;
         for (var i = 0; i < count; i++) {
           if (controller.isClosed) break;
-          final result = await Process.run('ping $host', args);
+          final result = await Process.run('ping', [...args, host]);
           if (controller.isClosed) break;
           controller.add(_parseResult(result));
           await Future.delayed(Duration(seconds: settings.sendInterval));
@@ -34,8 +34,12 @@ class PingService {
   }
 
   double _parseResult(ProcessResult result) {
-    if (result.stderr != null || result.stdout == null) return null;
-    final match = RegExp('time=(\\d+\\.\\d+) ms').firstMatch(result.stdout);
-    return match != null ? double.parse(match.group(1)) : null;
+    final didSucceed =
+        (result.stderr as String ?? "").isEmpty && result.stdout != null;
+    if (didSucceed) {
+      final match = RegExp(r"time=(\d+\.\d+) ms").firstMatch(result.stdout);
+      return match != null ? double.parse(match.group(1)) : null;
+    }
+    return null;
   }
 }
