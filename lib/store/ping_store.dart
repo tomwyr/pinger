@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/store/settings_store.dart';
 
@@ -21,6 +23,10 @@ abstract class PingStoreBase with Store {
   PingService get _pingService;
   SettingsStore get _settingsStore;
 
+  PingSettings get _pingSettings => _settingsStore.userSettings.pingSettings;
+
+  StreamSubscription _pingSub;
+
   @observable
   PingSession currentSession;
 
@@ -32,26 +38,14 @@ abstract class PingStoreBase with Store {
     );
   }
 
-  StreamSubscription _pingSub;
-
   @action
   void startQuickCheck() {
-    final settings =
-        _settingsStore.userSettings.pingSettings.copyWith(count: null);
-    _pingSub = _pingService
-        .ping(currentSession.host.name, settings)
-        .listen(_onPingResult);
     currentSession = PingSession(
       host: currentSession.host,
       status: PingStatus.quickCheckStarted,
       startTime: DateTime.now(),
     );
-  }
-
-  @action
-  void _onPingResult(double value) {
-    final values = currentSession.values.toList()..add(value);
-    currentSession = currentSession.copyWith(values: values);
+    _startPing(count: null);
   }
 
   @action
@@ -70,25 +64,55 @@ abstract class PingStoreBase with Store {
       status: PingStatus.sessionStarted,
       startTime: DateTime.now(),
     );
+    _startPing(onDone: _onSessionDone);
   }
 
   @action
   void pauseSession() {
+    _pingSub.cancel();
     currentSession = currentSession.copyWith(status: PingStatus.sessionPaused);
   }
 
   @action
   void resumeSession() {
-    currentSession = currentSession.copyWith(status: PingStatus.sessionStarted);
+    final remainingCount = _pingSettings.count - currentSession.values.length;
+    if (remainingCount > 0) {
+      currentSession =
+          currentSession.copyWith(status: PingStatus.sessionStarted);
+      _startPing(count: remainingCount, onDone: _onSessionDone);
+    } else {
+      _onSessionDone();
+    }
+  }
+
+  void _startPing({int count, VoidCallback onDone}) {
+    final settings =
+        count != null ? _pingSettings.copyWith(count: count) : _pingSettings;
+    _pingSub = _pingService
+        .ping(currentSession.host.name, settings)
+        .listen(_onPingResult, onDone: onDone);
+  }
+
+  void _onPingResult(double value) {
+    final values = currentSession.values.toList()..add(value);
+    currentSession = currentSession.copyWith(values: values);
+  }
+
+  void _onSessionDone() {
+    currentSession = currentSession.copyWith(
+      status: PingStatus.sessionDone,
+      endTime: DateTime.now(),
+    );
   }
 
   @action
   void stopSession() {
+    _pingSub.cancel();
     currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
   }
 
   @action
   void restart() {
-    currentSession = currentSession.copyWith(status: PingStatus.initial);
+    initSession(currentSession.host.name);
   }
 }

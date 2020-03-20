@@ -50,16 +50,6 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
-  void _onPingResult(double value) {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
-    try {
-      return super._onPingResult(value);
-    } finally {
-      _$PingStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void stopQuickCheck() {
     final _$actionInfo = _$PingStoreBaseActionController.startAction();
     try {

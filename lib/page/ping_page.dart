@@ -79,6 +79,7 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
       case PingStatus.sessionStarted:
       case PingStatus.sessionPaused:
       case PingStatus.sessionDone:
+        return _buildSessionResults(session);
     }
     throw StateError("Unknown status of ping session: ${session.status}");
   }
@@ -170,14 +171,57 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
   }
 
   Widget _buildPingButton(PingSession session) {
+    switch (session.status) {
+      case PingStatus.initial:
+      case PingStatus.quickCheckDone:
+        return _buildFloatingButton(
+          icon: Icons.play_arrow,
+          onTap: _pingStore.startSession,
+          onLongPressStart: _pingStore.startQuickCheck,
+        );
+      case PingStatus.quickCheckStarted:
+        return _buildFloatingButton(
+          icon: Icons.lens,
+          onTap: _pingStore.pauseSession,
+          onLongPressEnd: _pingStore.stopQuickCheck,
+        );
+      case PingStatus.sessionStarted:
+        return _buildFloatingButton(
+          icon: Icons.pause,
+          onTap: _pingStore.pauseSession,
+          onLongPress: _pingStore.stopSession,
+        );
+      case PingStatus.sessionPaused:
+        return _buildFloatingButton(
+          icon: Icons.play_arrow,
+          onTap: _pingStore.resumeSession,
+        );
+      case PingStatus.sessionDone:
+        return _buildFloatingButton(
+          icon: Icons.undo,
+          onTap: _pingStore.restart,
+        );
+    }
+    throw StateError("Unknown status of ping session: ${session.status}");
+  }
+
+  Widget _buildFloatingButton({
+    @required IconData icon,
+    VoidCallback onTap,
+    VoidCallback onLongPress,
+    VoidCallback onLongPressStart,
+    VoidCallback onLongPressEnd,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: GestureDetector(
-        onLongPressStart: (_) => _pingStore.startQuickCheck(),
-        onLongPressEnd: (_) => _pingStore.stopQuickCheck(),
+        onTap: onTap,
+        onLongPress: onLongPress,
+        onLongPressStart: (_) => onLongPressStart(),
+        onLongPressEnd: (_) => onLongPressEnd(),
         child: FloatingActionButton(
-          child: Icon(Icons.play_arrow),
-          onPressed: () {},
+          child: Icon(icon),
+          onPressed: null,
         ),
       ),
     );
