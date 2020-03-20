@@ -12,7 +12,10 @@ class PingService {
     for (var i = 0; i < count; i++) {
       final result = await Process.run('ping', [...args, host]);
       yield _parseResult(result);
-      await Future.delayed(Duration(seconds: settings.interval));
+      // Skip last interval to send done signal immidiately
+      if (i < count - 1) {
+        await Future.delayed(Duration(seconds: settings.interval));
+      }
     }
   }
 
