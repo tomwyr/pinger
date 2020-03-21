@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/model/ping_result.dart';
-import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/snapping_scroll_area.dart';
 import 'package:pinger/widgets/switch_toggle_buttons.dart';
 
@@ -12,10 +11,14 @@ enum ResultsViewType { list, chart }
 class ResultDetailsResults extends StatefulWidget {
   final List<double> values;
   final PingStats stats;
+  final Widget Function(List<Widget> slivers) scrollBuilder;
 
-  const ResultDetailsResults(
-      {Key key, @required this.values, @required this.stats})
-      : super(key: key);
+  const ResultDetailsResults({
+    Key key,
+    @required this.values,
+    @required this.stats,
+    @required this.scrollBuilder,
+  }) : super(key: key);
 
   @override
   _ResultDetailsResultsState createState() => _ResultDetailsResultsState();
@@ -27,7 +30,7 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
 
   @override
   Widget build(BuildContext context) {
-    return CollapsingTabLayoutItem(slivers: <Widget>[
+    return widget.scrollBuilder(<Widget>[
       _buildCommonSection(),
       _selectedViewType == ResultsViewType.list
           ? _buildResultsList()
@@ -281,6 +284,7 @@ class ResultDetailsSummary extends StatelessWidget {
     final successCount = values.where((it) => it != null).length;
     final failedCount = totalCount - successCount;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text("Summary", style: TextStyle(fontWeight: FontWeight.bold)),

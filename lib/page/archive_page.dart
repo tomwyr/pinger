@@ -4,7 +4,7 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
-import 'package:pinger/page/result_details/result_details_page.dart';
+import 'package:pinger/page/result_details_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/ping_session_item.dart';

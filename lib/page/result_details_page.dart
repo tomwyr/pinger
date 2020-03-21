@@ -6,14 +6,14 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_result.dart';
-import 'package:pinger/page/result_details/result_details_tabs/result_details_global.dart';
-import 'package:pinger/page/result_details/result_details_tabs/result_details_info.dart';
-import 'package:pinger/page/result_details/result_details_tabs/result_details_more.dart';
-import 'package:pinger/page/result_details/result_details_tabs/result_details_results.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/collapsing_tile.dart';
+import 'package:pinger/widgets/result_details_tabs/result_details_global.dart';
+import 'package:pinger/widgets/result_details_tabs/result_details_info.dart';
+import 'package:pinger/widgets/result_details_tabs/result_details_more.dart';
+import 'package:pinger/widgets/result_details_tabs/result_details_results.dart';
 
 enum ResultDetailsTab { results, global, info, more }
 
@@ -107,6 +107,8 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
               ResultDetailsResults(
                 values: widget.result.values,
                 stats: widget.result.stats,
+                scrollBuilder: (slivers) =>
+                    CollapsingTabLayoutItem(slivers: slivers),
               ),
               ResultDetailsGlobal(
                 hasLocationPermission: true,
@@ -115,8 +117,11 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
               ),
               ResultDetailsInfo(result: widget.result),
               Observer(
-                builder: (_) =>
-                    ResultDetailsMore(results: _archiveStore.results),
+                builder: (_) => ResultDetailsMore(
+                  results: _archiveStore.results,
+                  onItemSelected: (item) =>
+                      push(ResultDetailsPage(result: item)),
+                ),
               ),
             ],
           ),
