@@ -46,10 +46,13 @@ abstract class PingStoreBase with Store {
 
   @action
   void initSession(String host) {
+    _stopPing();
     currentSession = PingSession(
       host: PingHost(name: host),
       status: PingStatus.initial,
     );
+    pingDuration = Duration.zero;
+    _archivedId = null;
     _timer = Stopwatch();
   }
 
@@ -126,9 +129,9 @@ abstract class PingStoreBase with Store {
   }
 
   void _stopPing() {
-    _timer.stop();
-    _timerSub.cancel();
-    _pingSub.cancel();
+    _timer?.stop();
+    _timerSub?.cancel();
+    _pingSub?.cancel();
   }
 
   @action

@@ -307,13 +307,10 @@ class PingButton extends StatelessWidget {
       child: Row(children: <Widget>[
         SizedBox(
           width: 48.0,
-          child: StreamBuilder(
-            stream: Stream.periodic(Duration(seconds: 1)),
-            builder: (_, __) => Text(
-              FormatUtils.getDurationLabel(pingDuration),
-              style: TextStyle(fontSize: 12.0),
-              textAlign: TextAlign.center,
-            ),
+          child: Text(
+            FormatUtils.getDurationLabel(pingDuration),
+            style: TextStyle(fontSize: 12.0),
+            textAlign: TextAlign.center,
           ),
         ),
         button,
@@ -346,6 +343,7 @@ class PingButton extends StatelessWidget {
       onLongPressStart: (_) => onLongPressStart(),
       onLongPressEnd: (_) => onLongPressEnd(),
       child: FloatingActionButton(
+        heroTag: Object(),
         mini: mini,
         backgroundColor: backgroundColor,
         elevation: elevation,

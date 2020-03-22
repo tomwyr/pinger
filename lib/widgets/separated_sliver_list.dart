@@ -17,7 +17,7 @@ class SeparatedSliverList extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final builder = index.isEven ? separatorBuilder : itemBuilder;
+          final builder = !index.isEven ? separatorBuilder : itemBuilder;
           return builder(context, index ~/ 2);
         },
         semanticIndexCallback: (_, localIndex) =>

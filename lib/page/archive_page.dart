@@ -172,7 +172,7 @@ class _ArchivePageState extends State<ArchivePage>
 
   Widget _buildResultsGroups(List<PingResult> results) {
     final countsMap = <String, int>{};
-    results.forEach((it) => !countsMap.containsKey(it.host)
+    results.forEach((it) => !countsMap.containsKey(it.host.name)
         ? countsMap[it.host.name] = 1
         : ++countsMap[it.host.name]);
     final hostCounts = countsMap.entries.toList()

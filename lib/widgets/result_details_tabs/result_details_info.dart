@@ -21,7 +21,7 @@ class ResultDetailsInfo extends StatelessWidget {
               _buildHeader("Info"),
               _buildItem(
                   "Date", FormatUtils.getTimestampLabel(result.startTime)),
-              _buildItem("Host IP", result.host.ip),
+              _buildItem("Host IP", result.host.ip ?? "-"),
               _buildItem(
                   "Total time", FormatUtils.getDurationLabel(result.duration)),
               _buildHeader("Settings"),

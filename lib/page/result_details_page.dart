@@ -117,11 +117,17 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
               ),
               ResultDetailsInfo(result: widget.result),
               Observer(
-                builder: (_) => ResultDetailsMore(
-                  results: _archiveStore.results,
-                  onItemSelected: (item) =>
-                      push(ResultDetailsPage(result: item)),
-                ),
+                builder: (_) {
+                  return ResultDetailsMore(
+                    results: _archiveStore.results
+                        .where((it) =>
+                            it.host.name == widget.result.host.name &&
+                            it.id != widget.result.id)
+                        .toList(),
+                    onItemSelected: (item) =>
+                        push(ResultDetailsPage(result: item)),
+                  );
+                },
               ),
             ],
           ),
