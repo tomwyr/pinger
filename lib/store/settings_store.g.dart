@@ -26,18 +26,24 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     }, _$userSettingsAtom, name: '${_$userSettingsAtom.name}_set');
   }
 
-  final _$initAsyncAction = AsyncAction('init');
-
-  @override
-  Future<void> init() {
-    return _$initAsyncAction.run(() => super.init());
-  }
-
   final _$updateAsyncAction = AsyncAction('update');
 
   @override
   Future<void> update(UserSettings settings) {
     return _$updateAsyncAction.run(() => super.update(settings));
+  }
+
+  final _$SettingsStoreBaseActionController =
+      ActionController(name: 'SettingsStoreBase');
+
+  @override
+  void init() {
+    final _$actionInfo = _$SettingsStoreBaseActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$SettingsStoreBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

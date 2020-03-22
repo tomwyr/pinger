@@ -25,7 +25,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   //Eager singletons must be registered in the right order
   g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));
   g.registerSingleton<ArchiveStore>(ArchiveStore(g<PingerPrefs>()));
-  g.registerSingleton<FavoritesStore>(FavoritesStore());
+  g.registerSingleton<FavoritesStore>(FavoritesStore(g<PingerPrefs>()));
   g.registerSingleton<HistoryStore>(HistoryStore());
   g.registerSingleton<HostsStore>(HostsStore());
   g.registerSingleton<SettingsStore>(SettingsStore(g<PingerPrefs>()));

@@ -19,11 +19,11 @@ abstract class SettingsStoreBase with Store {
   UserSettings userSettings;
 
   @action
-  Future<void> init() async {
+  void init() {
     var settings = _pingerPrefs.getUserSettings();
     if (settings == null) {
       settings = _createDefaultSettings();
-      await _pingerPrefs.saveUserSettings(settings);
+      _pingerPrefs.saveUserSettings(settings);
     }
     userSettings = settings;
   }

@@ -2,14 +2,16 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pinger/di/injector.iconfig.dart';
 import 'package:pinger/store/archive_store.dart';
+import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Injector {
   static Future<void> configure() async {
     await _initInjectable();
-    await resolve<SettingsStore>().init();
+    resolve<SettingsStore>().init();
     resolve<ArchiveStore>().init();
+    resolve<FavoritesStore>().init();
   }
 
   static T resolve<T>([String instanceName]) =>

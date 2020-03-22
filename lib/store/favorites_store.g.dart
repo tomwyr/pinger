@@ -26,24 +26,28 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
     }, _$itemsAtom, name: '${_$itemsAtom.name}_set');
   }
 
+  final _$addFavoriteAsyncAction = AsyncAction('addFavorite');
+
+  @override
+  Future<void> addFavorite(String host) {
+    return _$addFavoriteAsyncAction.run(() => super.addFavorite(host));
+  }
+
+  final _$removeFavoriteAsyncAction = AsyncAction('removeFavorite');
+
+  @override
+  Future<void> removeFavorite(String host) {
+    return _$removeFavoriteAsyncAction.run(() => super.removeFavorite(host));
+  }
+
   final _$FavoritesStoreBaseActionController =
       ActionController(name: 'FavoritesStoreBase');
 
   @override
-  void addFavorite(String host) {
+  void init() {
     final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
     try {
-      return super.addFavorite(host);
-    } finally {
-      _$FavoritesStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void removeFavorite(String host) {
-    final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
-    try {
-      return super.removeFavorite(host);
+      return super.init();
     } finally {
       _$FavoritesStoreBaseActionController.endAction(_$actionInfo);
     }

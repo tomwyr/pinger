@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PingerPrefs {
   final String _userSettingsKey = 'userSettings';
   final String _archiveResultsKey = 'archiveResults';
+  final String _favoriteHostsKey = 'favoriteHosts';
 
   final SharedPreferences _sharedPrefs;
 
@@ -36,11 +37,11 @@ class PingerPrefs {
           .map((it) => PingResult.fromJson(it as Map<String, dynamic>))
           .toList();
     }
-    return null;
+    return [];
   }
 
   Future<int> saveArchiveResult(PingResult result) async {
-    final allResults = getArchiveResults() ?? [];
+    final allResults = getArchiveResults();
     final resultId = _getNewResultId(allResults);
     allResults.add(result.copyWith(id: resultId));
     final jsonStringList =
@@ -59,10 +60,33 @@ class PingerPrefs {
   }
 
   Future<void> deleteArchiveResult(int resultId) async {
-    final allResults = getArchiveResults() ?? [];
+    final allResults = getArchiveResults();
     allResults.removeWhere((it) => it.id == resultId);
     final jsonStringList =
         allResults.map((it) => it.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
+  }
+
+  List<String> getFavoriteHosts() {
+    if (_sharedPrefs.containsKey(_favoriteHostsKey)) {
+      return _sharedPrefs.getStringList(_favoriteHostsKey);
+    }
+    return [];
+  }
+
+  Future<void> addFavoriteHost(String host) async {
+    final allHosts = getFavoriteHosts();
+    if (!allHosts.contains(host)) {
+      allHosts.add(host);
+      await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
+    }
+  }
+
+  Future<void> removeFavoriteHost(String host) async {
+    final allHosts = getFavoriteHosts();
+    if (allHosts.contains(host)) {
+      allHosts.remove(host);
+      await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
+    }
   }
 }
