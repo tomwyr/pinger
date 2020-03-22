@@ -25,29 +25,33 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
     return Scaffold(
       appBar: buildAppBar(elevation: 0.0),
       body: Observer(builder: (_) {
-        var isArchieved = false;
         final session = _pingStore.currentSession;
         final isFavorite = _favoritesStore.isFavorite(session.host.name);
         return Column(children: <Widget>[
           _buildHostCard(session, isFavorite),
           Expanded(child: _buildContent(session)),
-          StatefulBuilder(builder: (context, setState) {
-            return PingButton(
-              session: session,
-              isArchieved: isArchieved,
-              onQuickCheckStart: _pingStore.startQuickCheck,
-              onQuickCheckStop: _pingStore.stopQuickCheck,
-              onSessionStart: _pingStore.startSession,
-              onSessionPause: _pingStore.pauseSession,
-              onSessionResume: _pingStore.resumeSession,
-              onSessionStop: _pingStore.stopSession,
-              onRestart: _pingStore.restart,
-              onResultArchive: () => setState(() => isArchieved = true),
-              onResultDelete: () => setState(() => isArchieved = false),
-            );
-          }),
+          _buildPingButton(session),
         ]);
       }),
+    );
+  }
+
+  Widget _buildPingButton(PingSession session) {
+    return Observer(
+      builder: (_) => PingButton(
+        session: session,
+        pingDuration: _pingStore.pingDuration,
+        isArchived: _pingStore.isArchived,
+        onQuickCheckStart: _pingStore.startQuickCheck,
+        onQuickCheckStop: _pingStore.stopQuickCheck,
+        onSessionStart: _pingStore.startSession,
+        onSessionPause: _pingStore.pauseSession,
+        onSessionResume: _pingStore.resumeSession,
+        onSessionStop: _pingStore.stopSession,
+        onRestart: _pingStore.restart,
+        onResultArchive: _pingStore.saveResult,
+        onResultDelete: _pingStore.deleteResult,
+      ),
     );
   }
 
@@ -146,13 +150,12 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
                 _getDeltaLabel(session.values),
                 style: TextStyle(fontSize: 24.0, color: Colors.grey),
               ),
-              StreamBuilder(
-                stream: Stream.periodic(Duration(seconds: 1)),
-                builder: (_, __) => Text(
-                  _getDurationLabel(session),
+              Observer(
+                builder: (_) => Text(
+                  FormatUtils.getDurationLabel(_pingStore.pingDuration),
                   style: TextStyle(fontSize: 18.0),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -162,12 +165,6 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
 
   String _getValueLabel(double value) =>
       value != null ? "${value.round()} ms" : "-";
-
-  String _getDurationLabel(PingSession session) {
-    final duration =
-        (session.endTime ?? DateTime.now()).difference(session.startTime);
-    return FormatUtils.getDurationLabel(duration);
-  }
 
   String _getDeltaLabel(List<double> values) {
     if (values.length > 1 && values.last != null) {
@@ -193,7 +190,8 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
 
 class PingButton extends StatelessWidget {
   final PingSession session;
-  final bool isArchieved;
+  final Duration pingDuration;
+  final bool isArchived;
   final VoidCallback onQuickCheckStart;
   final VoidCallback onQuickCheckStop;
   final VoidCallback onSessionStart;
@@ -207,7 +205,8 @@ class PingButton extends StatelessWidget {
   const PingButton({
     Key key,
     @required this.session,
-    @required this.isArchieved,
+    @required this.pingDuration,
+    @required this.isArchived,
     @required this.onQuickCheckStart,
     @required this.onQuickCheckStop,
     @required this.onSessionStart,
@@ -256,8 +255,8 @@ class PingButton extends StatelessWidget {
           icon: Icons.archive,
           mini: true,
           backgroundColor: Colors.white,
-          iconColor: isArchieved ? Colors.red : Colors.black,
-          onTap: isArchieved ? onResultDelete : onResultArchive,
+          iconColor: isArchived ? Colors.red : Colors.black,
+          onTap: isArchived ? onResultDelete : onResultArchive,
         );
     }
     throw StateError("Unknown status of ping session: ${session.status}");
@@ -311,7 +310,7 @@ class PingButton extends StatelessWidget {
           child: StreamBuilder(
             stream: Stream.periodic(Duration(seconds: 1)),
             builder: (_, __) => Text(
-              _getDurationLabel(),
+              FormatUtils.getDurationLabel(pingDuration),
               style: TextStyle(fontSize: 12.0),
               textAlign: TextAlign.center,
             ),
@@ -328,12 +327,6 @@ class PingButton extends StatelessWidget {
         ),
       ]),
     );
-  }
-
-  String _getDurationLabel() {
-    final duration =
-        (session.endTime ?? DateTime.now()).difference(session.startTime);
-    return FormatUtils.getDurationLabel(duration);
   }
 
   Widget _buildFloatingButton({

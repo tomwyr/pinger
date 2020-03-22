@@ -12,14 +12,12 @@ mixin _$PingSession {
   PingStatus get status;
   List<double> get values;
   DateTime get startTime;
-  DateTime get endTime;
 
   PingSession copyWith(
       {PingHost host,
       PingStatus status,
       List<double> values,
-      DateTime startTime,
-      DateTime endTime});
+      DateTime startTime});
 }
 
 class _$PingSessionTearOff {
@@ -29,14 +27,12 @@ class _$PingSessionTearOff {
       {@required PingHost host,
       @required PingStatus status,
       List<double> values = const [],
-      DateTime startTime,
-      DateTime endTime}) {
+      DateTime startTime}) {
     return _PingSession(
       host: host,
       status: status,
       values: values,
       startTime: startTime,
-      endTime: endTime,
     );
   }
 }
@@ -48,8 +44,7 @@ class _$_PingSession implements _PingSession {
       {@required this.host,
       @required this.status,
       this.values = const [],
-      this.startTime,
-      this.endTime})
+      this.startTime})
       : assert(host != null),
         assert(status != null);
 
@@ -62,8 +57,6 @@ class _$_PingSession implements _PingSession {
   final List<double> values;
   @override
   final DateTime startTime;
-  @override
-  final DateTime endTime;
   bool _didstats = false;
   PingStats _stats;
 
@@ -78,7 +71,7 @@ class _$_PingSession implements _PingSession {
 
   @override
   String toString() {
-    return 'PingSession(host: $host, status: $status, values: $values, startTime: $startTime, endTime: $endTime, stats: $stats)';
+    return 'PingSession(host: $host, status: $status, values: $values, startTime: $startTime, stats: $stats)';
   }
 
   @override
@@ -93,9 +86,7 @@ class _$_PingSession implements _PingSession {
                 const DeepCollectionEquality().equals(other.values, values)) &&
             (identical(other.startTime, startTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.startTime, startTime)) &&
-            (identical(other.endTime, endTime) ||
-                const DeepCollectionEquality().equals(other.endTime, endTime)));
+                    .equals(other.startTime, startTime)));
   }
 
   @override
@@ -104,8 +95,7 @@ class _$_PingSession implements _PingSession {
       const DeepCollectionEquality().hash(host) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(values) ^
-      const DeepCollectionEquality().hash(startTime) ^
-      const DeepCollectionEquality().hash(endTime);
+      const DeepCollectionEquality().hash(startTime);
 
   @override
   _$_PingSession copyWith({
@@ -113,14 +103,12 @@ class _$_PingSession implements _PingSession {
     Object status = freezed,
     Object values = freezed,
     Object startTime = freezed,
-    Object endTime = freezed,
   }) {
     return _$_PingSession(
       host: host == freezed ? this.host : host as PingHost,
       status: status == freezed ? this.status : status as PingStatus,
       values: values == freezed ? this.values : values as List<double>,
       startTime: startTime == freezed ? this.startTime : startTime as DateTime,
-      endTime: endTime == freezed ? this.endTime : endTime as DateTime,
     );
   }
 }
@@ -130,8 +118,7 @@ abstract class _PingSession implements PingSession {
       {@required PingHost host,
       @required PingStatus status,
       List<double> values,
-      DateTime startTime,
-      DateTime endTime}) = _$_PingSession;
+      DateTime startTime}) = _$_PingSession;
 
   @override
   PingHost get host;
@@ -141,14 +128,11 @@ abstract class _PingSession implements PingSession {
   List<double> get values;
   @override
   DateTime get startTime;
-  @override
-  DateTime get endTime;
 
   @override
   _PingSession copyWith(
       {PingHost host,
       PingStatus status,
       List<double> values,
-      DateTime startTime,
-      DateTime endTime});
+      DateTime startTime});
 }

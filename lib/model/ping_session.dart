@@ -10,7 +10,6 @@ abstract class PingSession with _$PingSession {
     @required PingStatus status,
     @Default([]) List<double> values,
     DateTime startTime,
-    DateTime endTime,
   }) = _PingSession;
 
   @late

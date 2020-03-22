@@ -31,7 +31,7 @@ class PingService {
     final didSucceed =
         (result.stderr as String ?? "").isEmpty && result.stdout != null;
     if (didSucceed) {
-      final match = RegExp(r"time=(\d+\.\d+) ms").firstMatch(result.stdout);
+      final match = RegExp(r"time=(\d+(\.\d+)?) ms").firstMatch(result.stdout);
       return match != null ? double.parse(match.group(1)) : null;
     }
     return null;

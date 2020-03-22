@@ -29,8 +29,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerSingleton<HistoryStore>(HistoryStore());
   g.registerSingleton<HostsStore>(HostsStore());
   g.registerSingleton<SettingsStore>(SettingsStore(g<PingerPrefs>()));
-  g.registerSingleton<PingStore>(
-      PingStore(g<PingService>(), g<SettingsStore>()));
+  g.registerSingleton<PingStore>(PingStore(
+    g<PingService>(),
+    g<SettingsStore>(),
+    g<ArchiveStore>(),
+  ));
 }
 
 class _$InjectorModule extends InjectorModule {}

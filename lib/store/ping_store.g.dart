@@ -9,6 +9,29 @@ part of 'ping_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PingStore on PingStoreBase, Store {
+  Computed<bool> _$isArchivedComputed;
+
+  @override
+  bool get isArchived =>
+      (_$isArchivedComputed ??= Computed<bool>(() => super.isArchived)).value;
+
+  final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
+
+  @override
+  Duration get pingDuration {
+    _$pingDurationAtom.context.enforceReadPolicy(_$pingDurationAtom);
+    _$pingDurationAtom.reportObserved();
+    return super.pingDuration;
+  }
+
+  @override
+  set pingDuration(Duration value) {
+    _$pingDurationAtom.context.conditionallyRunInAction(() {
+      super.pingDuration = value;
+      _$pingDurationAtom.reportChanged();
+    }, _$pingDurationAtom, name: '${_$pingDurationAtom.name}_set');
+  }
+
   final _$currentSessionAtom = Atom(name: 'PingStoreBase.currentSession');
 
   @override
@@ -24,6 +47,37 @@ mixin _$PingStore on PingStoreBase, Store {
       super.currentSession = value;
       _$currentSessionAtom.reportChanged();
     }, _$currentSessionAtom, name: '${_$currentSessionAtom.name}_set');
+  }
+
+  final _$_archivedIdAtom = Atom(name: 'PingStoreBase._archivedId');
+
+  @override
+  int get _archivedId {
+    _$_archivedIdAtom.context.enforceReadPolicy(_$_archivedIdAtom);
+    _$_archivedIdAtom.reportObserved();
+    return super._archivedId;
+  }
+
+  @override
+  set _archivedId(int value) {
+    _$_archivedIdAtom.context.conditionallyRunInAction(() {
+      super._archivedId = value;
+      _$_archivedIdAtom.reportChanged();
+    }, _$_archivedIdAtom, name: '${_$_archivedIdAtom.name}_set');
+  }
+
+  final _$saveResultAsyncAction = AsyncAction('saveResult');
+
+  @override
+  Future<void> saveResult() {
+    return _$saveResultAsyncAction.run(() => super.saveResult());
+  }
+
+  final _$deleteResultAsyncAction = AsyncAction('deleteResult');
+
+  @override
+  Future<void> deleteResult() {
+    return _$deleteResultAsyncAction.run(() => super.deleteResult());
   }
 
   final _$PingStoreBaseActionController =
@@ -111,7 +165,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'currentSession: ${currentSession.toString()}';
+    final string =
+        'pingDuration: ${pingDuration.toString()},currentSession: ${currentSession.toString()},isArchived: ${isArchived.toString()}';
     return '{$string}';
   }
 }

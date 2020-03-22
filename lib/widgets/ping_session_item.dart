@@ -66,7 +66,7 @@ class PingResultItemTrailing extends StatelessWidget {
         SizedBox(
           width: 48.0,
           child: Text(
-            FormatUtils.getSinceNowLabel(result.timestamp),
+            FormatUtils.getSinceNowLabel(result.startTime),
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey),
           ),

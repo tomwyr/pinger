@@ -85,9 +85,9 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
   Widget _buildResultsList() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (_, index) => ResultDetailsItem.valueAt(
+        (_, index) => ResultDetailsItem(
           values: widget.values,
-          index: index,
+          index: widget.values.length - index - 1,
         ),
         childCount: widget.values.length,
       ),
@@ -101,9 +101,9 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Stack(children: <Widget>[
-            ResultDetailsItem.valueAt(
+            ResultDetailsItem(
               values: widget.values,
-              index: widget.values.length - _chartPosition - 1,
+              index: _chartPosition,
             ),
             _buildChartResultGradient(VerticalDirection.up),
             _buildChartResultGradient(VerticalDirection.down),
@@ -179,7 +179,7 @@ class ResultDetailsItem extends StatelessWidget {
   final int delta;
   final int resultsCount;
 
-  const ResultDetailsItem({
+  const ResultDetailsItem._({
     Key key,
     @required this.index,
     @required this.result,
@@ -187,7 +187,7 @@ class ResultDetailsItem extends StatelessWidget {
     @required this.resultsCount,
   }) : super(key: key);
 
-  factory ResultDetailsItem.valueAt({
+  factory ResultDetailsItem({
     Key key,
     @required List<double> values,
     @required int index,
@@ -199,7 +199,7 @@ class ResultDetailsItem extends StatelessWidget {
         ?.round();
     final delta =
         result != null && prevResult != null ? result - prevResult : null;
-    return ResultDetailsItem(
+    return ResultDetailsItem._(
       key: key,
       index: index,
       result: result,
@@ -226,15 +226,13 @@ class ResultDetailsItem extends StatelessWidget {
         ),
         SizedBox(
           width: 64.0,
-          child: index == resultsCount - 1
-              ? Container()
-              : Text(
-                  (delta != null && delta != 0)
-                      ? delta > 0 ? "+$delta" : "$delta"
-                      : "-",
-                  style: TextStyle(color: Colors.grey),
-                  textAlign: TextAlign.center,
-                ),
+          child: Text(
+            (delta != null && delta != 0)
+                ? delta > 0 ? "+$delta" : "$delta"
+                : "-",
+            style: TextStyle(color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
         )
       ]),
     );
@@ -244,7 +242,7 @@ class ResultDetailsItem extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _buildIndicatorLink(index != 0),
+        _buildIndicatorLink(index != resultsCount - 1),
         Container(
           height: 32.0,
           width: 32.0,
@@ -252,9 +250,9 @@ class ResultDetailsItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(24.0),
             border: Border.all(color: Colors.lightBlue, width: 2.0),
           ),
-          child: Center(child: Text("${resultsCount - index}")),
+          child: Center(child: Text("${index + 1}")),
         ),
-        _buildIndicatorLink(index != resultsCount - 1),
+        _buildIndicatorLink(index != 0),
       ],
     );
   }

@@ -67,7 +67,7 @@ class _ArchivePageState extends State<ArchivePage>
             title: Text(_hostName),
           )
         : AppBar(
-            leading: BackButton(),
+            leading: CloseButton(),
             title: Text("Archive"),
             actions: <Widget>[_buildViewTypeIcon()],
           );

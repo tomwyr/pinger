@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -38,11 +39,23 @@ class PingerPrefs {
     return null;
   }
 
-  Future<void> saveArchiveResult(PingResult result) async {
-    final allResults = (getArchiveResults() ?? [])..add(result);
+  Future<int> saveArchiveResult(PingResult result) async {
+    final allResults = getArchiveResults() ?? [];
+    final resultId = _getNewResultId(allResults);
+    allResults.add(result.copyWith(id: resultId));
     final jsonStringList =
         allResults.map((it) => it.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
+    return resultId;
+  }
+
+  int _getNewResultId(List<PingResult> results) {
+    while (true) {
+      final id = Random().nextInt(100000);
+      if (results.every((it) => it.id != id)) {
+        return id;
+      }
+    }
   }
 
   Future<void> deleteArchiveResult(int resultId) async {

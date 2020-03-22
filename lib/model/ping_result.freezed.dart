@@ -15,7 +15,7 @@ mixin _$PingResult {
   int get id;
   PingHost get host;
   PingSettings get settings;
-  DateTime get timestamp;
+  DateTime get startTime;
   Duration get duration;
   List<double> get values;
 
@@ -23,7 +23,7 @@ mixin _$PingResult {
       {int id,
       PingHost host,
       PingSettings settings,
-      DateTime timestamp,
+      DateTime startTime,
       Duration duration,
       List<double> values});
 
@@ -34,17 +34,17 @@ class _$PingResultTearOff {
   const _$PingResultTearOff();
 
   _PingResult call(
-      {@required int id,
+      {int id,
       @required PingHost host,
       @required PingSettings settings,
-      @required DateTime timestamp,
+      @required DateTime startTime,
       @required Duration duration,
       @required List<double> values}) {
     return _PingResult(
       id: id,
       host: host,
       settings: settings,
-      timestamp: timestamp,
+      startTime: startTime,
       duration: duration,
       values: values,
     );
@@ -56,16 +56,15 @@ const $PingResult = _$PingResultTearOff();
 @JsonSerializable()
 class _$_PingResult implements _PingResult {
   _$_PingResult(
-      {@required this.id,
+      {this.id,
       @required this.host,
       @required this.settings,
-      @required this.timestamp,
+      @required this.startTime,
       @required this.duration,
       @required this.values})
-      : assert(id != null),
-        assert(host != null),
+      : assert(host != null),
         assert(settings != null),
-        assert(timestamp != null),
+        assert(startTime != null),
         assert(duration != null),
         assert(values != null);
 
@@ -79,7 +78,7 @@ class _$_PingResult implements _PingResult {
   @override
   final PingSettings settings;
   @override
-  final DateTime timestamp;
+  final DateTime startTime;
   @override
   final Duration duration;
   @override
@@ -98,7 +97,7 @@ class _$_PingResult implements _PingResult {
 
   @override
   String toString() {
-    return 'PingResult(id: $id, host: $host, settings: $settings, timestamp: $timestamp, duration: $duration, values: $values, stats: $stats)';
+    return 'PingResult(id: $id, host: $host, settings: $settings, startTime: $startTime, duration: $duration, values: $values, stats: $stats)';
   }
 
   @override
@@ -112,9 +111,9 @@ class _$_PingResult implements _PingResult {
             (identical(other.settings, settings) ||
                 const DeepCollectionEquality()
                     .equals(other.settings, settings)) &&
-            (identical(other.timestamp, timestamp) ||
+            (identical(other.startTime, startTime) ||
                 const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)) &&
+                    .equals(other.startTime, startTime)) &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
@@ -128,7 +127,7 @@ class _$_PingResult implements _PingResult {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(host) ^
       const DeepCollectionEquality().hash(settings) ^
-      const DeepCollectionEquality().hash(timestamp) ^
+      const DeepCollectionEquality().hash(startTime) ^
       const DeepCollectionEquality().hash(duration) ^
       const DeepCollectionEquality().hash(values);
 
@@ -137,7 +136,7 @@ class _$_PingResult implements _PingResult {
     Object id = freezed,
     Object host = freezed,
     Object settings = freezed,
-    Object timestamp = freezed,
+    Object startTime = freezed,
     Object duration = freezed,
     Object values = freezed,
   }) {
@@ -145,7 +144,7 @@ class _$_PingResult implements _PingResult {
       id: id == freezed ? this.id : id as int,
       host: host == freezed ? this.host : host as PingHost,
       settings: settings == freezed ? this.settings : settings as PingSettings,
-      timestamp: timestamp == freezed ? this.timestamp : timestamp as DateTime,
+      startTime: startTime == freezed ? this.startTime : startTime as DateTime,
       duration: duration == freezed ? this.duration : duration as Duration,
       values: values == freezed ? this.values : values as List<double>,
     );
@@ -159,10 +158,10 @@ class _$_PingResult implements _PingResult {
 
 abstract class _PingResult implements PingResult {
   factory _PingResult(
-      {@required int id,
+      {int id,
       @required PingHost host,
       @required PingSettings settings,
-      @required DateTime timestamp,
+      @required DateTime startTime,
       @required Duration duration,
       @required List<double> values}) = _$_PingResult;
 
@@ -176,7 +175,7 @@ abstract class _PingResult implements PingResult {
   @override
   PingSettings get settings;
   @override
-  DateTime get timestamp;
+  DateTime get startTime;
   @override
   Duration get duration;
   @override
@@ -187,7 +186,7 @@ abstract class _PingResult implements PingResult {
       {int id,
       PingHost host,
       PingSettings settings,
-      DateTime timestamp,
+      DateTime startTime,
       Duration duration,
       List<double> values});
 }

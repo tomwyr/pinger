@@ -271,7 +271,7 @@ class ResultDetailsCollapsingTile extends StatelessWidget {
                     ),
                     _buildSummaryItem(
                       Icons.calendar_today,
-                      FormatUtils.getTimestampLabel(result.timestamp),
+                      FormatUtils.getTimestampLabel(result.startTime),
                     ),
                   ],
                 ),

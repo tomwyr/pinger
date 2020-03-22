@@ -33,6 +33,13 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
     return _$deleteResultAsyncAction.run(() => super.deleteResult(resultId));
   }
 
+  final _$saveResultAsyncAction = AsyncAction('saveResult');
+
+  @override
+  Future<int> saveResult(PingResult result) {
+    return _$saveResultAsyncAction.run(() => super.saveResult(result));
+  }
+
   final _$ArchiveStoreBaseActionController =
       ActionController(name: 'ArchiveStoreBase');
 

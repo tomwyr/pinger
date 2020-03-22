@@ -9,10 +9,10 @@ part 'ping_result.g.dart';
 @freezed
 abstract class PingResult with _$PingResult {
   factory PingResult({
-    @required int id,
+    int id,
     @required PingHost host,
     @required PingSettings settings,
-    @required DateTime timestamp,
+    @required DateTime startTime,
     @required Duration duration,
     @required List<double> values,
   }) = _PingResult;

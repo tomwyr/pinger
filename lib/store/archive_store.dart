@@ -30,6 +30,13 @@ abstract class ArchiveStoreBase with Store {
   }
 
   @action
+  Future<int> saveResult(PingResult result) async {
+    final resultId = await _pingerPrefs.saveArchiveResult(result);
+    results = results.toList()..add(result.copyWith(id: resultId));
+    return resultId;
+  }
+
+  @action
   void init() {
     results = _pingerPrefs.getArchiveResults() ?? [];
     if (results.isEmpty)
@@ -37,7 +44,7 @@ abstract class ArchiveStoreBase with Store {
         PingResult(
           id: 0,
           host: FakeData.hosts.dropbox,
-          timestamp: DateTime.now().subtract(Duration(minutes: 10)),
+          startTime: DateTime.now().subtract(Duration(minutes: 10)),
           duration: Duration(minutes: 8, seconds: 7),
           settings: PingSettings(
             count: 20,
@@ -64,7 +71,7 @@ abstract class ArchiveStoreBase with Store {
         PingResult(
           id: 1,
           host: FakeData.hosts.youtube,
-          timestamp: DateTime.now().subtract(Duration(hours: 17)),
+          startTime: DateTime.now().subtract(Duration(hours: 17)),
           duration: Duration(minutes: 3, seconds: 2),
           settings: PingSettings(
             count: 10,
@@ -77,7 +84,7 @@ abstract class ArchiveStoreBase with Store {
         PingResult(
           id: 2,
           host: FakeData.hosts.dropbox,
-          timestamp: DateTime.now().subtract(Duration(days: 3)),
+          startTime: DateTime.now().subtract(Duration(days: 3)),
           duration: Duration(minutes: 35, seconds: 58),
           settings: PingSettings(
             count: 120,
@@ -90,7 +97,7 @@ abstract class ArchiveStoreBase with Store {
         PingResult(
           id: 3,
           host: FakeData.hosts.dropbox,
-          timestamp: DateTime.now().subtract(Duration(days: 22)),
+          startTime: DateTime.now().subtract(Duration(days: 22)),
           duration: Duration(minutes: 99, seconds: 44),
           settings: PingSettings(
             count: 4,
