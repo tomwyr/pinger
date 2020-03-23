@@ -317,7 +317,7 @@ class PingButton extends StatelessWidget {
         SizedBox(
           width: 48.0,
           child: Text(
-            "${session.values.length}/0",
+            "${session.values.length}/${session.settings.count}",
             style: TextStyle(fontSize: 12.0),
             textAlign: TextAlign.center,
           ),

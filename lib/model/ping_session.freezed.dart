@@ -10,12 +10,14 @@ part of 'ping_session.dart';
 mixin _$PingSession {
   PingHost get host;
   PingStatus get status;
+  PingSettings get settings;
   List<double> get values;
   DateTime get startTime;
 
   PingSession copyWith(
       {PingHost host,
       PingStatus status,
+      PingSettings settings,
       List<double> values,
       DateTime startTime});
 }
@@ -26,11 +28,13 @@ class _$PingSessionTearOff {
   _PingSession call(
       {@required PingHost host,
       @required PingStatus status,
-      List<double> values = const [],
+      @required PingSettings settings,
+      List<double> values,
       DateTime startTime}) {
     return _PingSession(
       host: host,
       status: status,
+      settings: settings,
       values: values,
       startTime: startTime,
     );
@@ -43,16 +47,19 @@ class _$_PingSession implements _PingSession {
   _$_PingSession(
       {@required this.host,
       @required this.status,
-      this.values = const [],
+      @required this.settings,
+      this.values,
       this.startTime})
       : assert(host != null),
-        assert(status != null);
+        assert(status != null),
+        assert(settings != null);
 
   @override
   final PingHost host;
   @override
   final PingStatus status;
-  @JsonKey(defaultValue: const [])
+  @override
+  final PingSettings settings;
   @override
   final List<double> values;
   @override
@@ -71,7 +78,7 @@ class _$_PingSession implements _PingSession {
 
   @override
   String toString() {
-    return 'PingSession(host: $host, status: $status, values: $values, startTime: $startTime, stats: $stats)';
+    return 'PingSession(host: $host, status: $status, settings: $settings, values: $values, startTime: $startTime, stats: $stats)';
   }
 
   @override
@@ -82,6 +89,9 @@ class _$_PingSession implements _PingSession {
                 const DeepCollectionEquality().equals(other.host, host)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
+            (identical(other.settings, settings) ||
+                const DeepCollectionEquality()
+                    .equals(other.settings, settings)) &&
             (identical(other.values, values) ||
                 const DeepCollectionEquality().equals(other.values, values)) &&
             (identical(other.startTime, startTime) ||
@@ -94,6 +104,7 @@ class _$_PingSession implements _PingSession {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(host) ^
       const DeepCollectionEquality().hash(status) ^
+      const DeepCollectionEquality().hash(settings) ^
       const DeepCollectionEquality().hash(values) ^
       const DeepCollectionEquality().hash(startTime);
 
@@ -101,12 +112,14 @@ class _$_PingSession implements _PingSession {
   _$_PingSession copyWith({
     Object host = freezed,
     Object status = freezed,
+    Object settings = freezed,
     Object values = freezed,
     Object startTime = freezed,
   }) {
     return _$_PingSession(
       host: host == freezed ? this.host : host as PingHost,
       status: status == freezed ? this.status : status as PingStatus,
+      settings: settings == freezed ? this.settings : settings as PingSettings,
       values: values == freezed ? this.values : values as List<double>,
       startTime: startTime == freezed ? this.startTime : startTime as DateTime,
     );
@@ -117,6 +130,7 @@ abstract class _PingSession implements PingSession {
   factory _PingSession(
       {@required PingHost host,
       @required PingStatus status,
+      @required PingSettings settings,
       List<double> values,
       DateTime startTime}) = _$_PingSession;
 
@@ -124,6 +138,8 @@ abstract class _PingSession implements PingSession {
   PingHost get host;
   @override
   PingStatus get status;
+  @override
+  PingSettings get settings;
   @override
   List<double> get values;
   @override
@@ -133,6 +149,7 @@ abstract class _PingSession implements PingSession {
   _PingSession copyWith(
       {PingHost host,
       PingStatus status,
+      PingSettings settings,
       List<double> values,
       DateTime startTime});
 }

@@ -15,10 +15,8 @@ abstract class PingResult with _$PingResult {
     @required DateTime startTime,
     @required Duration duration,
     @required List<double> values,
+    @required PingStats stats,
   }) = _PingResult;
-
-  @late
-  PingStats get stats => PingStats.fromValues(values);
 
   factory PingResult.fromJson(Map<String, dynamic> json) =>
       _$PingResultFromJson(json);

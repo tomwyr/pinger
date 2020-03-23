@@ -18,6 +18,7 @@ mixin _$PingResult {
   DateTime get startTime;
   Duration get duration;
   List<double> get values;
+  PingStats get stats;
 
   PingResult copyWith(
       {int id,
@@ -25,7 +26,8 @@ mixin _$PingResult {
       PingSettings settings,
       DateTime startTime,
       Duration duration,
-      List<double> values});
+      List<double> values,
+      PingStats stats});
 
   Map<String, dynamic> toJson();
 }
@@ -39,7 +41,8 @@ class _$PingResultTearOff {
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
-      @required List<double> values}) {
+      @required List<double> values,
+      @required PingStats stats}) {
     return _PingResult(
       id: id,
       host: host,
@@ -47,6 +50,7 @@ class _$PingResultTearOff {
       startTime: startTime,
       duration: duration,
       values: values,
+      stats: stats,
     );
   }
 }
@@ -61,12 +65,14 @@ class _$_PingResult implements _PingResult {
       @required this.settings,
       @required this.startTime,
       @required this.duration,
-      @required this.values})
+      @required this.values,
+      @required this.stats})
       : assert(host != null),
         assert(settings != null),
         assert(startTime != null),
         assert(duration != null),
-        assert(values != null);
+        assert(values != null),
+        assert(stats != null);
 
   factory _$_PingResult.fromJson(Map<String, dynamic> json) =>
       _$_$_PingResultFromJson(json);
@@ -83,17 +89,8 @@ class _$_PingResult implements _PingResult {
   final Duration duration;
   @override
   final List<double> values;
-  bool _didstats = false;
-  PingStats _stats;
-
   @override
-  PingStats get stats {
-    if (_didstats == false) {
-      _didstats = true;
-      _stats = PingStats.fromValues(values);
-    }
-    return _stats;
-  }
+  final PingStats stats;
 
   @override
   String toString() {
@@ -118,7 +115,9 @@ class _$_PingResult implements _PingResult {
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
             (identical(other.values, values) ||
-                const DeepCollectionEquality().equals(other.values, values)));
+                const DeepCollectionEquality().equals(other.values, values)) &&
+            (identical(other.stats, stats) ||
+                const DeepCollectionEquality().equals(other.stats, stats)));
   }
 
   @override
@@ -129,7 +128,8 @@ class _$_PingResult implements _PingResult {
       const DeepCollectionEquality().hash(settings) ^
       const DeepCollectionEquality().hash(startTime) ^
       const DeepCollectionEquality().hash(duration) ^
-      const DeepCollectionEquality().hash(values);
+      const DeepCollectionEquality().hash(values) ^
+      const DeepCollectionEquality().hash(stats);
 
   @override
   _$_PingResult copyWith({
@@ -139,6 +139,7 @@ class _$_PingResult implements _PingResult {
     Object startTime = freezed,
     Object duration = freezed,
     Object values = freezed,
+    Object stats = freezed,
   }) {
     return _$_PingResult(
       id: id == freezed ? this.id : id as int,
@@ -147,6 +148,7 @@ class _$_PingResult implements _PingResult {
       startTime: startTime == freezed ? this.startTime : startTime as DateTime,
       duration: duration == freezed ? this.duration : duration as Duration,
       values: values == freezed ? this.values : values as List<double>,
+      stats: stats == freezed ? this.stats : stats as PingStats,
     );
   }
 
@@ -163,7 +165,8 @@ abstract class _PingResult implements PingResult {
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
-      @required List<double> values}) = _$_PingResult;
+      @required List<double> values,
+      @required PingStats stats}) = _$_PingResult;
 
   factory _PingResult.fromJson(Map<String, dynamic> json) =
       _$_PingResult.fromJson;
@@ -180,6 +183,8 @@ abstract class _PingResult implements PingResult {
   Duration get duration;
   @override
   List<double> get values;
+  @override
+  PingStats get stats;
 
   @override
   _PingResult copyWith(
@@ -188,7 +193,8 @@ abstract class _PingResult implements PingResult {
       PingSettings settings,
       DateTime startTime,
       Duration duration,
-      List<double> values});
+      List<double> values,
+      PingStats stats});
 }
 
 PingHost _$PingHostFromJson(Map<String, dynamic> json) {

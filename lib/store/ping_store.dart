@@ -26,8 +26,6 @@ abstract class PingStoreBase with Store {
   SettingsStore get _settingsStore;
   ArchiveStore get _archiveStore;
 
-  PingSettings get _pingSettings => _settingsStore.userSettings.pingSettings;
-
   StreamSubscription _pingSub;
   StreamSubscription _timerSub;
   Stopwatch _timer;
@@ -50,6 +48,7 @@ abstract class PingStoreBase with Store {
     currentSession = PingSession(
       host: PingHost(name: host),
       status: PingStatus.initial,
+      settings: _settingsStore.userSettings.pingSettings,
     );
     pingDuration = Duration.zero;
     _archivedId = null;
@@ -58,12 +57,13 @@ abstract class PingStoreBase with Store {
 
   @action
   void startQuickCheck() {
-    currentSession = PingSession(
-      host: currentSession.host,
+    _timer.reset();
+    currentSession = currentSession.copyWith(
       status: PingStatus.quickCheckStarted,
       startTime: DateTime.now(),
+      values: [],
     );
-    _startPing(count: null);
+    _startPing();
   }
 
   @action
@@ -74,10 +74,11 @@ abstract class PingStoreBase with Store {
 
   @action
   void startSession() {
-    currentSession = PingSession(
-      host: currentSession.host,
+    _timer.reset();
+    currentSession = currentSession.copyWith(
       status: PingStatus.sessionStarted,
       startTime: DateTime.now(),
+      values: [],
     );
     _startPing(onDone: _onSessionDone);
   }
@@ -90,21 +91,21 @@ abstract class PingStoreBase with Store {
 
   @action
   void resumeSession() {
-    final remainingCount = _pingSettings.count - currentSession.values.length;
+    final remainingCount =
+        currentSession.settings.count - currentSession.values.length;
     if (remainingCount > 0) {
       currentSession =
           currentSession.copyWith(status: PingStatus.sessionStarted);
-      _startPing(count: remainingCount, onDone: _onSessionDone);
+      final settings = currentSession.settings.copyWith(count: remainingCount);
+      _startPing(settings: settings, onDone: _onSessionDone);
     } else {
       currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
     }
   }
 
-  void _startPing({int count, VoidCallback onDone}) {
-    final settings =
-        count != null ? _pingSettings.copyWith(count: count) : _pingSettings;
+  void _startPing({PingSettings settings, VoidCallback onDone}) {
     _pingSub = _pingService
-        .ping(currentSession.host.name, settings)
+        .ping(currentSession.host.name, settings ?? currentSession.settings)
         .listen(_onPingResult, onDone: onDone);
     _timer.start();
     _timerSub = Stream.periodic(Duration(seconds: 1))
@@ -141,10 +142,11 @@ abstract class PingStoreBase with Store {
   Future<void> saveResult() async {
     final result = PingResult(
       host: currentSession.host,
-      settings: _settingsStore.userSettings.pingSettings,
+      settings: currentSession.settings,
       startTime: currentSession.startTime,
-      duration: _timer.elapsed,
       values: currentSession.values,
+      stats: currentSession.stats,
+      duration: _timer.elapsed,
     );
     _archivedId = await _archiveStore.saveResult(result);
   }

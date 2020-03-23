@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/model/user_settings.dart';
 
 part 'ping_session.freezed.dart';
 
@@ -8,7 +9,8 @@ abstract class PingSession with _$PingSession {
   factory PingSession({
     @required PingHost host,
     @required PingStatus status,
-    @Default([]) List<double> values,
+    @required PingSettings settings,
+    List<double> values,
     DateTime startTime,
   }) = _PingSession;
 

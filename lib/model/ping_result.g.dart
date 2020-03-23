@@ -23,6 +23,9 @@ _$_PingResult _$_$_PingResultFromJson(Map<String, dynamic> json) {
         : Duration(microseconds: json['duration'] as int),
     values:
         (json['values'] as List)?.map((e) => (e as num)?.toDouble())?.toList(),
+    stats: json['stats'] == null
+        ? null
+        : PingStats.fromJson(json['stats'] as Map<String, dynamic>),
   );
 }
 
@@ -34,6 +37,7 @@ Map<String, dynamic> _$_$_PingResultToJson(_$_PingResult instance) =>
       'startTime': instance.startTime?.toIso8601String(),
       'duration': instance.duration?.inMicroseconds,
       'values': instance.values,
+      'stats': instance.stats,
     };
 
 _$_PingHost _$_$_PingHostFromJson(Map<String, dynamic> json) {
