@@ -6,7 +6,9 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/archive_store.dart';
+import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/collapsing_tile.dart';
@@ -33,6 +35,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
   static const _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
 
   final ArchiveStore _archiveStore = Injector.resolve();
+  final PingStore _pingStore = Injector.resolve();
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
   ScrollController _scrollController;
@@ -126,6 +129,10 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
                         .toList(),
                     onItemSelected: (item) =>
                         push(ResultDetailsPage(result: item)),
+                    onStartPingPressed: () {
+                      _pingStore.initSession(widget.result.host.name);
+                      pushReplacement(PingPage());
+                    },
                   );
                 },
               ),
