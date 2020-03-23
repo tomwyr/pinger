@@ -84,6 +84,16 @@ mixin _$PingStore on PingStoreBase, Store {
       ActionController(name: 'PingStoreBase');
 
   @override
+  void init() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void initSession(String host) {
     final _$actionInfo = _$PingStoreBaseActionController.startAction();
     try {

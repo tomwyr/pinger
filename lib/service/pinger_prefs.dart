@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:injectable/injectable.dart';
+import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ class PingerPrefs {
   final String _userSettingsKey = 'userSettings';
   final String _archiveResultsKey = 'archiveResults';
   final String _favoriteHostsKey = 'favoriteHosts';
+  final String _hostsStatsKey = 'hostsStats';
 
   final SharedPreferences _sharedPrefs;
 
@@ -88,5 +90,21 @@ class PingerPrefs {
       allHosts.remove(host);
       await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
     }
+  }
+
+  List<HostStats> getHostsStats() {
+    if (_sharedPrefs.containsKey(_hostsStatsKey)) {
+      return _sharedPrefs
+          .getStringList(_hostsStatsKey)
+          .map((it) => jsonDecode(it) as Map<String, dynamic>)
+          .map((it) => HostStats.fromJson(it))
+          .toList();
+    }
+    return [];
+  }
+
+  Future<void> saveHostsStats(List<HostStats> stats) async {
+    final jsonStringList = stats.map((it) => jsonEncode(it.toJson())).toList();
+    await _sharedPrefs.setStringList(_hostsStatsKey, jsonStringList);
   }
 }

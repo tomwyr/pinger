@@ -3,6 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:pinger/di/injector.iconfig.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/favorites_store.dart';
+import 'package:pinger/store/hosts_store.dart';
+import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +14,8 @@ abstract class Injector {
     resolve<SettingsStore>().init();
     resolve<ArchiveStore>().init();
     resolve<FavoritesStore>().init();
+    resolve<HostsStore>().init();
+    resolve<PingStore>().init();
   }
 
   static T resolve<T>([String instanceName]) =>

@@ -128,7 +128,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onItemSelected(String host) {
-    if (host != _pingStore.currentSession.host.name) {
+    if (host != _pingStore.currentSession?.host?.name) {
       _pingStore.initSession(host);
     }
     pushReplacement(PingPage());

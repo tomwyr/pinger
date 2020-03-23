@@ -9,6 +9,23 @@ part of 'hosts_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HostsStore on HostsStoreBase, Store {
+  final _$statsAtom = Atom(name: 'HostsStoreBase.stats');
+
+  @override
+  List<HostStats> get stats {
+    _$statsAtom.context.enforceReadPolicy(_$statsAtom);
+    _$statsAtom.reportObserved();
+    return super.stats;
+  }
+
+  @override
+  set stats(List<HostStats> value) {
+    _$statsAtom.context.conditionallyRunInAction(() {
+      super.stats = value;
+      _$statsAtom.reportChanged();
+    }, _$statsAtom, name: '${_$statsAtom.name}_set');
+  }
+
   final _$hostsAtom = Atom(name: 'HostsStoreBase.hosts');
 
   @override
@@ -43,6 +60,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
     }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
+  final _$incrementStatsAsyncAction = AsyncAction('incrementStats');
+
+  @override
+  Future<void> incrementStats(String host) {
+    return _$incrementStatsAsyncAction.run(() => super.incrementStats(host));
+  }
+
   final _$searchAsyncAction = AsyncAction('search');
 
   @override
@@ -50,10 +74,23 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return _$searchAsyncAction.run(() => super.search(query));
   }
 
+  final _$HostsStoreBaseActionController =
+      ActionController(name: 'HostsStoreBase');
+
+  @override
+  void init() {
+    final _$actionInfo = _$HostsStoreBaseActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$HostsStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     final string =
-        'hosts: ${hosts.toString()},isLoading: ${isLoading.toString()}';
+        'stats: ${stats.toString()},hosts: ${hosts.toString()},isLoading: ${isLoading.toString()}';
     return '{$string}';
   }
 }

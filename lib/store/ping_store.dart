@@ -8,6 +8,7 @@ import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/store/archive_store.dart';
+import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
 
 part 'ping_store.g.dart';
@@ -17,18 +18,26 @@ class PingStore extends PingStoreBase with _$PingStore {
   final PingService _pingService;
   final SettingsStore _settingsStore;
   final ArchiveStore _archiveStore;
+  final HostsStore _hostsStore;
 
-  PingStore(this._pingService, this._settingsStore, this._archiveStore);
+  PingStore(
+    this._pingService,
+    this._settingsStore,
+    this._archiveStore,
+    this._hostsStore,
+  );
 }
 
 abstract class PingStoreBase with Store {
   PingService get _pingService;
   SettingsStore get _settingsStore;
   ArchiveStore get _archiveStore;
+  HostsStore get _hostsStore;
 
   StreamSubscription _pingSub;
   StreamSubscription _timerSub;
   Stopwatch _timer;
+  PingStatus _lastStatus;
 
   @observable
   Duration pingDuration;
@@ -41,6 +50,21 @@ abstract class PingStoreBase with Store {
 
   @computed
   bool get isArchived => _archivedId != null;
+
+  @action
+  void init() {
+    autorun((_) => _updateStatsIfDidStart());
+  }
+
+  void _updateStatsIfDidStart() {
+    final status = currentSession.status;
+    if (_lastStatus == PingStatus.initial &&
+        (status == PingStatus.sessionStarted ||
+            status == PingStatus.quickCheckStarted)) {
+      _hostsStore.incrementStats(currentSession.host.name);
+    }
+    _lastStatus = status;
+  }
 
   @action
   void initSession(String host) {

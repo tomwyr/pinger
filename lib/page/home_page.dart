@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/favorites_page.dart';
 import 'package:pinger/page/intro_page.dart';
@@ -11,7 +12,7 @@ import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/page/recents_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/store/favorites_store.dart';
-import 'package:pinger/store/history_store.dart';
+import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/pinger_app_bar.dart';
@@ -22,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with PingerAppBar {
-  final HistoryStore _historyStore = Injector.resolve();
+  final HostsStore _hostsStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
 
@@ -33,10 +34,10 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
       body: Padding(
         padding: EdgeInsets.all(32.0),
         child: Observer(builder: (_) {
-          final history = _historyStore.items;
+          final stats = _hostsStore.stats;
           final favorites = _favoritesStore.items;
           final ping = _pingStore.currentSession;
-          if (history.isEmpty && favorites.isEmpty && ping == null) {
+          if (stats.isEmpty && favorites.isEmpty && ping == null) {
             return _buildNoSuggestions();
           } else {
             return Column(
@@ -44,8 +45,8 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
               children: <Widget>[
                 _buildSearchBar(),
                 if (ping != null) ..._buildCurrentPing(ping),
-                ..._buildFavorites(favorites),
-                ..._buildHistory(history),
+                ..._buildFavorites(favorites, stats),
+                ..._buildHistory(stats),
               ],
             );
           }
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     ];
   }
 
-  List<Widget> _buildFavorites(List<String> favorites) {
+  List<Widget> _buildFavorites(List<String> favorites, List<HostStats> stats) {
     return [
       _buildSectionTitle(
         'Favorites',
@@ -137,7 +138,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(children: <Widget>[
                         Expanded(child: Text(it)),
-                        Text('??? x'),
+                        Text(_getFavoriteValueLabel(it, stats)),
                       ]),
                     ))
                 .toList(),
@@ -146,13 +147,21 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     ];
   }
 
-  List<Widget> _buildHistory(List<HistoryItem> history) {
+  String _getFavoriteValueLabel(String host, List<HostStats> stats) {
+    final pingCount = stats
+            .firstWhere((it) => it.host == host, orElse: () => null)
+            ?.pingCount ??
+        0;
+    return "$pingCount x";
+  }
+
+  List<Widget> _buildHistory(List<HostStats> stats) {
     return [
       _buildSectionTitle(
         'Recents',
-        icon: history.isNotEmpty ? Icons.history : null,
+        icon: stats.isNotEmpty ? Icons.history : null,
       ),
-      if (history.isEmpty)
+      if (stats.isEmpty)
         DottedBorder(
           padding: EdgeInsets.all(16.0),
           child: Text(
@@ -163,15 +172,15 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
         )
       else
         InkWell(
-          onTap: history.isNotEmpty ? () => push(RecentsPage()) : null,
+          onTap: stats.isNotEmpty ? () => push(RecentsPage()) : null,
           child: ListView(
             shrinkWrap: true,
-            children: history
+            children: stats
                 .map((it) => Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(children: [
                         Expanded(child: Text(it.host)),
-                        Text(FormatUtils.getSinceNowLabel(it.timestamp)),
+                        Text(FormatUtils.getSinceNowLabel(it.pingTime)),
                       ]),
                     ))
                 .toList(),
