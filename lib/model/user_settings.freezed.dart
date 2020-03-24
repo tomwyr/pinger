@@ -7,25 +7,9 @@ part of 'user_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+T _$identity<T>(T value) => value;
 UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) {
   return _UserSettings.fromJson(json);
-}
-
-mixin _$UserSettings {
-  PingSettings get pingSettings;
-  ShareSettings get shareSettings;
-  bool get showSystemNotification;
-  bool get nightModeEnabled;
-  bool get rememberHost;
-
-  UserSettings copyWith(
-      {PingSettings pingSettings,
-      ShareSettings shareSettings,
-      bool showSystemNotification,
-      bool nightModeEnabled,
-      bool rememberHost});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$UserSettingsTearOff {
@@ -47,7 +31,143 @@ class _$UserSettingsTearOff {
   }
 }
 
+// ignore: unused_element
 const $UserSettings = _$UserSettingsTearOff();
+
+mixin _$UserSettings {
+  PingSettings get pingSettings;
+  ShareSettings get shareSettings;
+  bool get showSystemNotification;
+  bool get nightModeEnabled;
+  bool get rememberHost;
+
+  Map<String, dynamic> toJson();
+  $UserSettingsCopyWith<UserSettings> get copyWith;
+}
+
+abstract class $UserSettingsCopyWith<$Res> {
+  factory $UserSettingsCopyWith(
+          UserSettings value, $Res Function(UserSettings) then) =
+      _$UserSettingsCopyWithImpl<$Res>;
+  $Res call(
+      {PingSettings pingSettings,
+      ShareSettings shareSettings,
+      bool showSystemNotification,
+      bool nightModeEnabled,
+      bool rememberHost});
+
+  $PingSettingsCopyWith<$Res> get pingSettings;
+  $ShareSettingsCopyWith<$Res> get shareSettings;
+}
+
+class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
+  _$UserSettingsCopyWithImpl(this._value, this._then);
+
+  final UserSettings _value;
+  // ignore: unused_field
+  final $Res Function(UserSettings) _then;
+
+  @override
+  $Res call({
+    Object pingSettings = freezed,
+    Object shareSettings = freezed,
+    Object showSystemNotification = freezed,
+    Object nightModeEnabled = freezed,
+    Object rememberHost = freezed,
+  }) {
+    return _then(_value.copyWith(
+      pingSettings: pingSettings == freezed
+          ? _value.pingSettings
+          : pingSettings as PingSettings,
+      shareSettings: shareSettings == freezed
+          ? _value.shareSettings
+          : shareSettings as ShareSettings,
+      showSystemNotification: showSystemNotification == freezed
+          ? _value.showSystemNotification
+          : showSystemNotification as bool,
+      nightModeEnabled: nightModeEnabled == freezed
+          ? _value.nightModeEnabled
+          : nightModeEnabled as bool,
+      rememberHost:
+          rememberHost == freezed ? _value.rememberHost : rememberHost as bool,
+    ));
+  }
+
+  @override
+  $PingSettingsCopyWith<$Res> get pingSettings {
+    if (_value.pingSettings == null) {
+      return null;
+    }
+    return $PingSettingsCopyWith<$Res>(_value.pingSettings, (value) {
+      return _then(_value.copyWith(pingSettings: value));
+    });
+  }
+
+  @override
+  $ShareSettingsCopyWith<$Res> get shareSettings {
+    if (_value.shareSettings == null) {
+      return null;
+    }
+    return $ShareSettingsCopyWith<$Res>(_value.shareSettings, (value) {
+      return _then(_value.copyWith(shareSettings: value));
+    });
+  }
+}
+
+abstract class _$UserSettingsCopyWith<$Res>
+    implements $UserSettingsCopyWith<$Res> {
+  factory _$UserSettingsCopyWith(
+          _UserSettings value, $Res Function(_UserSettings) then) =
+      __$UserSettingsCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {PingSettings pingSettings,
+      ShareSettings shareSettings,
+      bool showSystemNotification,
+      bool nightModeEnabled,
+      bool rememberHost});
+
+  @override
+  $PingSettingsCopyWith<$Res> get pingSettings;
+  @override
+  $ShareSettingsCopyWith<$Res> get shareSettings;
+}
+
+class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
+    implements _$UserSettingsCopyWith<$Res> {
+  __$UserSettingsCopyWithImpl(
+      _UserSettings _value, $Res Function(_UserSettings) _then)
+      : super(_value, (v) => _then(v as _UserSettings));
+
+  @override
+  _UserSettings get _value => super._value as _UserSettings;
+
+  @override
+  $Res call({
+    Object pingSettings = freezed,
+    Object shareSettings = freezed,
+    Object showSystemNotification = freezed,
+    Object nightModeEnabled = freezed,
+    Object rememberHost = freezed,
+  }) {
+    return _then(_UserSettings(
+      pingSettings: pingSettings == freezed
+          ? _value.pingSettings
+          : pingSettings as PingSettings,
+      shareSettings: shareSettings == freezed
+          ? _value.shareSettings
+          : shareSettings as ShareSettings,
+      showSystemNotification: showSystemNotification == freezed
+          ? _value.showSystemNotification
+          : showSystemNotification as bool,
+      nightModeEnabled: nightModeEnabled == freezed
+          ? _value.nightModeEnabled
+          : nightModeEnabled as bool,
+      rememberHost:
+          rememberHost == freezed ? _value.rememberHost : rememberHost as bool,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_UserSettings implements _UserSettings {
@@ -108,30 +228,8 @@ class _$_UserSettings implements _UserSettings {
       const DeepCollectionEquality().hash(rememberHost);
 
   @override
-  _$_UserSettings copyWith({
-    Object pingSettings = freezed,
-    Object shareSettings = freezed,
-    Object showSystemNotification = freezed,
-    Object nightModeEnabled = freezed,
-    Object rememberHost = freezed,
-  }) {
-    return _$_UserSettings(
-      pingSettings: pingSettings == freezed
-          ? this.pingSettings
-          : pingSettings as PingSettings,
-      shareSettings: shareSettings == freezed
-          ? this.shareSettings
-          : shareSettings as ShareSettings,
-      showSystemNotification: showSystemNotification == freezed
-          ? this.showSystemNotification
-          : showSystemNotification as bool,
-      nightModeEnabled: nightModeEnabled == freezed
-          ? this.nightModeEnabled
-          : nightModeEnabled as bool,
-      rememberHost:
-          rememberHost == freezed ? this.rememberHost : rememberHost as bool,
-    );
-  }
+  _$UserSettingsCopyWith<_UserSettings> get copyWith =>
+      __$UserSettingsCopyWithImpl<_UserSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -160,27 +258,12 @@ abstract class _UserSettings implements UserSettings {
   bool get nightModeEnabled;
   @override
   bool get rememberHost;
-
   @override
-  _UserSettings copyWith(
-      {PingSettings pingSettings,
-      ShareSettings shareSettings,
-      bool showSystemNotification,
-      bool nightModeEnabled,
-      bool rememberHost});
+  _$UserSettingsCopyWith<_UserSettings> get copyWith;
 }
 
 ShareSettings _$ShareSettingsFromJson(Map<String, dynamic> json) {
   return _ShareSettings.fromJson(json);
-}
-
-mixin _$ShareSettings {
-  bool get shareResults;
-  bool get attachLocation;
-
-  ShareSettings copyWith({bool shareResults, bool attachLocation});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$ShareSettingsTearOff {
@@ -194,7 +277,80 @@ class _$ShareSettingsTearOff {
   }
 }
 
+// ignore: unused_element
 const $ShareSettings = _$ShareSettingsTearOff();
+
+mixin _$ShareSettings {
+  bool get shareResults;
+  bool get attachLocation;
+
+  Map<String, dynamic> toJson();
+  $ShareSettingsCopyWith<ShareSettings> get copyWith;
+}
+
+abstract class $ShareSettingsCopyWith<$Res> {
+  factory $ShareSettingsCopyWith(
+          ShareSettings value, $Res Function(ShareSettings) then) =
+      _$ShareSettingsCopyWithImpl<$Res>;
+  $Res call({bool shareResults, bool attachLocation});
+}
+
+class _$ShareSettingsCopyWithImpl<$Res>
+    implements $ShareSettingsCopyWith<$Res> {
+  _$ShareSettingsCopyWithImpl(this._value, this._then);
+
+  final ShareSettings _value;
+  // ignore: unused_field
+  final $Res Function(ShareSettings) _then;
+
+  @override
+  $Res call({
+    Object shareResults = freezed,
+    Object attachLocation = freezed,
+  }) {
+    return _then(_value.copyWith(
+      shareResults:
+          shareResults == freezed ? _value.shareResults : shareResults as bool,
+      attachLocation: attachLocation == freezed
+          ? _value.attachLocation
+          : attachLocation as bool,
+    ));
+  }
+}
+
+abstract class _$ShareSettingsCopyWith<$Res>
+    implements $ShareSettingsCopyWith<$Res> {
+  factory _$ShareSettingsCopyWith(
+          _ShareSettings value, $Res Function(_ShareSettings) then) =
+      __$ShareSettingsCopyWithImpl<$Res>;
+  @override
+  $Res call({bool shareResults, bool attachLocation});
+}
+
+class __$ShareSettingsCopyWithImpl<$Res>
+    extends _$ShareSettingsCopyWithImpl<$Res>
+    implements _$ShareSettingsCopyWith<$Res> {
+  __$ShareSettingsCopyWithImpl(
+      _ShareSettings _value, $Res Function(_ShareSettings) _then)
+      : super(_value, (v) => _then(v as _ShareSettings));
+
+  @override
+  _ShareSettings get _value => super._value as _ShareSettings;
+
+  @override
+  $Res call({
+    Object shareResults = freezed,
+    Object attachLocation = freezed,
+  }) {
+    return _then(_ShareSettings(
+      shareResults:
+          shareResults == freezed ? _value.shareResults : shareResults as bool,
+      attachLocation: attachLocation == freezed
+          ? _value.attachLocation
+          : attachLocation as bool,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_ShareSettings implements _ShareSettings {
@@ -232,18 +388,8 @@ class _$_ShareSettings implements _ShareSettings {
       const DeepCollectionEquality().hash(attachLocation);
 
   @override
-  _$_ShareSettings copyWith({
-    Object shareResults = freezed,
-    Object attachLocation = freezed,
-  }) {
-    return _$_ShareSettings(
-      shareResults:
-          shareResults == freezed ? this.shareResults : shareResults as bool,
-      attachLocation: attachLocation == freezed
-          ? this.attachLocation
-          : attachLocation as bool,
-    );
-  }
+  _$ShareSettingsCopyWith<_ShareSettings> get copyWith =>
+      __$ShareSettingsCopyWithImpl<_ShareSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -262,24 +408,12 @@ abstract class _ShareSettings implements ShareSettings {
   bool get shareResults;
   @override
   bool get attachLocation;
-
   @override
-  _ShareSettings copyWith({bool shareResults, bool attachLocation});
+  _$ShareSettingsCopyWith<_ShareSettings> get copyWith;
 }
 
 PingSettings _$PingSettingsFromJson(Map<String, dynamic> json) {
   return _PingSettings.fromJson(json);
-}
-
-mixin _$PingSettings {
-  int get count;
-  int get packetSize;
-  int get interval;
-  int get timeout;
-
-  PingSettings copyWith({int count, int packetSize, int interval, int timeout});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$PingSettingsTearOff {
@@ -295,7 +429,82 @@ class _$PingSettingsTearOff {
   }
 }
 
+// ignore: unused_element
 const $PingSettings = _$PingSettingsTearOff();
+
+mixin _$PingSettings {
+  int get count;
+  int get packetSize;
+  int get interval;
+  int get timeout;
+
+  Map<String, dynamic> toJson();
+  $PingSettingsCopyWith<PingSettings> get copyWith;
+}
+
+abstract class $PingSettingsCopyWith<$Res> {
+  factory $PingSettingsCopyWith(
+          PingSettings value, $Res Function(PingSettings) then) =
+      _$PingSettingsCopyWithImpl<$Res>;
+  $Res call({int count, int packetSize, int interval, int timeout});
+}
+
+class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
+  _$PingSettingsCopyWithImpl(this._value, this._then);
+
+  final PingSettings _value;
+  // ignore: unused_field
+  final $Res Function(PingSettings) _then;
+
+  @override
+  $Res call({
+    Object count = freezed,
+    Object packetSize = freezed,
+    Object interval = freezed,
+    Object timeout = freezed,
+  }) {
+    return _then(_value.copyWith(
+      count: count == freezed ? _value.count : count as int,
+      packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
+      interval: interval == freezed ? _value.interval : interval as int,
+      timeout: timeout == freezed ? _value.timeout : timeout as int,
+    ));
+  }
+}
+
+abstract class _$PingSettingsCopyWith<$Res>
+    implements $PingSettingsCopyWith<$Res> {
+  factory _$PingSettingsCopyWith(
+          _PingSettings value, $Res Function(_PingSettings) then) =
+      __$PingSettingsCopyWithImpl<$Res>;
+  @override
+  $Res call({int count, int packetSize, int interval, int timeout});
+}
+
+class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
+    implements _$PingSettingsCopyWith<$Res> {
+  __$PingSettingsCopyWithImpl(
+      _PingSettings _value, $Res Function(_PingSettings) _then)
+      : super(_value, (v) => _then(v as _PingSettings));
+
+  @override
+  _PingSettings get _value => super._value as _PingSettings;
+
+  @override
+  $Res call({
+    Object count = freezed,
+    Object packetSize = freezed,
+    Object interval = freezed,
+    Object timeout = freezed,
+  }) {
+    return _then(_PingSettings(
+      count: count == freezed ? _value.count : count as int,
+      packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
+      interval: interval == freezed ? _value.interval : interval as int,
+      timeout: timeout == freezed ? _value.timeout : timeout as int,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_PingSettings implements _PingSettings {
@@ -343,19 +552,8 @@ class _$_PingSettings implements _PingSettings {
       const DeepCollectionEquality().hash(timeout);
 
   @override
-  _$_PingSettings copyWith({
-    Object count = freezed,
-    Object packetSize = freezed,
-    Object interval = freezed,
-    Object timeout = freezed,
-  }) {
-    return _$_PingSettings(
-      count: count == freezed ? this.count : count as int,
-      packetSize: packetSize == freezed ? this.packetSize : packetSize as int,
-      interval: interval == freezed ? this.interval : interval as int,
-      timeout: timeout == freezed ? this.timeout : timeout as int,
-    );
-  }
+  _$PingSettingsCopyWith<_PingSettings> get copyWith =>
+      __$PingSettingsCopyWithImpl<_PingSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -378,8 +576,6 @@ abstract class _PingSettings implements PingSettings {
   int get interval;
   @override
   int get timeout;
-
   @override
-  _PingSettings copyWith(
-      {int count, int packetSize, int interval, int timeout});
+  _$PingSettingsCopyWith<_PingSettings> get copyWith;
 }

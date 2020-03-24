@@ -7,17 +7,9 @@ part of 'geo_position.dart';
 // FreezedGenerator
 // **************************************************************************
 
+T _$identity<T>(T value) => value;
 GeoPosition _$GeoPositionFromJson(Map<String, dynamic> json) {
   return _GeoPosition.fromJson(json);
-}
-
-mixin _$GeoPosition {
-  double get lat;
-  double get lon;
-
-  GeoPosition copyWith({double lat, double lon});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$GeoPositionTearOff {
@@ -31,7 +23,72 @@ class _$GeoPositionTearOff {
   }
 }
 
+// ignore: unused_element
 const $GeoPosition = _$GeoPositionTearOff();
+
+mixin _$GeoPosition {
+  double get lat;
+  double get lon;
+
+  Map<String, dynamic> toJson();
+  $GeoPositionCopyWith<GeoPosition> get copyWith;
+}
+
+abstract class $GeoPositionCopyWith<$Res> {
+  factory $GeoPositionCopyWith(
+          GeoPosition value, $Res Function(GeoPosition) then) =
+      _$GeoPositionCopyWithImpl<$Res>;
+  $Res call({double lat, double lon});
+}
+
+class _$GeoPositionCopyWithImpl<$Res> implements $GeoPositionCopyWith<$Res> {
+  _$GeoPositionCopyWithImpl(this._value, this._then);
+
+  final GeoPosition _value;
+  // ignore: unused_field
+  final $Res Function(GeoPosition) _then;
+
+  @override
+  $Res call({
+    Object lat = freezed,
+    Object lon = freezed,
+  }) {
+    return _then(_value.copyWith(
+      lat: lat == freezed ? _value.lat : lat as double,
+      lon: lon == freezed ? _value.lon : lon as double,
+    ));
+  }
+}
+
+abstract class _$GeoPositionCopyWith<$Res>
+    implements $GeoPositionCopyWith<$Res> {
+  factory _$GeoPositionCopyWith(
+          _GeoPosition value, $Res Function(_GeoPosition) then) =
+      __$GeoPositionCopyWithImpl<$Res>;
+  @override
+  $Res call({double lat, double lon});
+}
+
+class __$GeoPositionCopyWithImpl<$Res> extends _$GeoPositionCopyWithImpl<$Res>
+    implements _$GeoPositionCopyWith<$Res> {
+  __$GeoPositionCopyWithImpl(
+      _GeoPosition _value, $Res Function(_GeoPosition) _then)
+      : super(_value, (v) => _then(v as _GeoPosition));
+
+  @override
+  _GeoPosition get _value => super._value as _GeoPosition;
+
+  @override
+  $Res call({
+    Object lat = freezed,
+    Object lon = freezed,
+  }) {
+    return _then(_GeoPosition(
+      lat: lat == freezed ? _value.lat : lat as double,
+      lon: lon == freezed ? _value.lon : lon as double,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_GeoPosition implements _GeoPosition {
@@ -69,15 +126,8 @@ class _$_GeoPosition implements _GeoPosition {
       const DeepCollectionEquality().hash(lon);
 
   @override
-  _$_GeoPosition copyWith({
-    Object lat = freezed,
-    Object lon = freezed,
-  }) {
-    return _$_GeoPosition(
-      lat: lat == freezed ? this.lat : lat as double,
-      lon: lon == freezed ? this.lon : lon as double,
-    );
-  }
+  _$GeoPositionCopyWith<_GeoPosition> get copyWith =>
+      __$GeoPositionCopyWithImpl<_GeoPosition>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -96,7 +146,6 @@ abstract class _GeoPosition implements GeoPosition {
   double get lat;
   @override
   double get lon;
-
   @override
-  _GeoPosition copyWith({double lat, double lon});
+  _$GeoPositionCopyWith<_GeoPosition> get copyWith;
 }

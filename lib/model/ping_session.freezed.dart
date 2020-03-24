@@ -7,20 +7,7 @@ part of 'ping_session.dart';
 // FreezedGenerator
 // **************************************************************************
 
-mixin _$PingSession {
-  PingHost get host;
-  PingStatus get status;
-  PingSettings get settings;
-  List<double> get values;
-  DateTime get startTime;
-
-  PingSession copyWith(
-      {PingHost host,
-      PingStatus status,
-      PingSettings settings,
-      List<double> values,
-      DateTime startTime});
-}
+T _$identity<T>(T value) => value;
 
 class _$PingSessionTearOff {
   const _$PingSessionTearOff();
@@ -41,7 +28,128 @@ class _$PingSessionTearOff {
   }
 }
 
+// ignore: unused_element
 const $PingSession = _$PingSessionTearOff();
+
+mixin _$PingSession {
+  PingHost get host;
+  PingStatus get status;
+  PingSettings get settings;
+  List<double> get values;
+  DateTime get startTime;
+
+  $PingSessionCopyWith<PingSession> get copyWith;
+}
+
+abstract class $PingSessionCopyWith<$Res> {
+  factory $PingSessionCopyWith(
+          PingSession value, $Res Function(PingSession) then) =
+      _$PingSessionCopyWithImpl<$Res>;
+  $Res call(
+      {PingHost host,
+      PingStatus status,
+      PingSettings settings,
+      List<double> values,
+      DateTime startTime});
+
+  $PingHostCopyWith<$Res> get host;
+  $PingSettingsCopyWith<$Res> get settings;
+}
+
+class _$PingSessionCopyWithImpl<$Res> implements $PingSessionCopyWith<$Res> {
+  _$PingSessionCopyWithImpl(this._value, this._then);
+
+  final PingSession _value;
+  // ignore: unused_field
+  final $Res Function(PingSession) _then;
+
+  @override
+  $Res call({
+    Object host = freezed,
+    Object status = freezed,
+    Object settings = freezed,
+    Object values = freezed,
+    Object startTime = freezed,
+  }) {
+    return _then(_value.copyWith(
+      host: host == freezed ? _value.host : host as PingHost,
+      status: status == freezed ? _value.status : status as PingStatus,
+      settings:
+          settings == freezed ? _value.settings : settings as PingSettings,
+      values: values == freezed ? _value.values : values as List<double>,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+    ));
+  }
+
+  @override
+  $PingHostCopyWith<$Res> get host {
+    if (_value.host == null) {
+      return null;
+    }
+    return $PingHostCopyWith<$Res>(_value.host, (value) {
+      return _then(_value.copyWith(host: value));
+    });
+  }
+
+  @override
+  $PingSettingsCopyWith<$Res> get settings {
+    if (_value.settings == null) {
+      return null;
+    }
+    return $PingSettingsCopyWith<$Res>(_value.settings, (value) {
+      return _then(_value.copyWith(settings: value));
+    });
+  }
+}
+
+abstract class _$PingSessionCopyWith<$Res>
+    implements $PingSessionCopyWith<$Res> {
+  factory _$PingSessionCopyWith(
+          _PingSession value, $Res Function(_PingSession) then) =
+      __$PingSessionCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {PingHost host,
+      PingStatus status,
+      PingSettings settings,
+      List<double> values,
+      DateTime startTime});
+
+  @override
+  $PingHostCopyWith<$Res> get host;
+  @override
+  $PingSettingsCopyWith<$Res> get settings;
+}
+
+class __$PingSessionCopyWithImpl<$Res> extends _$PingSessionCopyWithImpl<$Res>
+    implements _$PingSessionCopyWith<$Res> {
+  __$PingSessionCopyWithImpl(
+      _PingSession _value, $Res Function(_PingSession) _then)
+      : super(_value, (v) => _then(v as _PingSession));
+
+  @override
+  _PingSession get _value => super._value as _PingSession;
+
+  @override
+  $Res call({
+    Object host = freezed,
+    Object status = freezed,
+    Object settings = freezed,
+    Object values = freezed,
+    Object startTime = freezed,
+  }) {
+    return _then(_PingSession(
+      host: host == freezed ? _value.host : host as PingHost,
+      status: status == freezed ? _value.status : status as PingStatus,
+      settings:
+          settings == freezed ? _value.settings : settings as PingSettings,
+      values: values == freezed ? _value.values : values as List<double>,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+    ));
+  }
+}
 
 class _$_PingSession implements _PingSession {
   _$_PingSession(
@@ -64,6 +172,7 @@ class _$_PingSession implements _PingSession {
   final List<double> values;
   @override
   final DateTime startTime;
+
   bool _didstats = false;
   PingStats _stats;
 
@@ -109,21 +218,8 @@ class _$_PingSession implements _PingSession {
       const DeepCollectionEquality().hash(startTime);
 
   @override
-  _$_PingSession copyWith({
-    Object host = freezed,
-    Object status = freezed,
-    Object settings = freezed,
-    Object values = freezed,
-    Object startTime = freezed,
-  }) {
-    return _$_PingSession(
-      host: host == freezed ? this.host : host as PingHost,
-      status: status == freezed ? this.status : status as PingStatus,
-      settings: settings == freezed ? this.settings : settings as PingSettings,
-      values: values == freezed ? this.values : values as List<double>,
-      startTime: startTime == freezed ? this.startTime : startTime as DateTime,
-    );
-  }
+  _$PingSessionCopyWith<_PingSession> get copyWith =>
+      __$PingSessionCopyWithImpl<_PingSession>(this, _$identity);
 }
 
 abstract class _PingSession implements PingSession {
@@ -144,12 +240,6 @@ abstract class _PingSession implements PingSession {
   List<double> get values;
   @override
   DateTime get startTime;
-
   @override
-  _PingSession copyWith(
-      {PingHost host,
-      PingStatus status,
-      PingSettings settings,
-      List<double> values,
-      DateTime startTime});
+  _$PingSessionCopyWith<_PingSession> get copyWith;
 }

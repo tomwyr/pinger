@@ -7,29 +7,9 @@ part of 'ping_result.dart';
 // FreezedGenerator
 // **************************************************************************
 
+T _$identity<T>(T value) => value;
 PingResult _$PingResultFromJson(Map<String, dynamic> json) {
   return _PingResult.fromJson(json);
-}
-
-mixin _$PingResult {
-  int get id;
-  PingHost get host;
-  PingSettings get settings;
-  DateTime get startTime;
-  Duration get duration;
-  List<double> get values;
-  PingStats get stats;
-
-  PingResult copyWith(
-      {int id,
-      PingHost host,
-      PingSettings settings,
-      DateTime startTime,
-      Duration duration,
-      List<double> values,
-      PingStats stats});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$PingResultTearOff {
@@ -55,7 +35,155 @@ class _$PingResultTearOff {
   }
 }
 
+// ignore: unused_element
 const $PingResult = _$PingResultTearOff();
+
+mixin _$PingResult {
+  int get id;
+  PingHost get host;
+  PingSettings get settings;
+  DateTime get startTime;
+  Duration get duration;
+  List<double> get values;
+  PingStats get stats;
+
+  Map<String, dynamic> toJson();
+  $PingResultCopyWith<PingResult> get copyWith;
+}
+
+abstract class $PingResultCopyWith<$Res> {
+  factory $PingResultCopyWith(
+          PingResult value, $Res Function(PingResult) then) =
+      _$PingResultCopyWithImpl<$Res>;
+  $Res call(
+      {int id,
+      PingHost host,
+      PingSettings settings,
+      DateTime startTime,
+      Duration duration,
+      List<double> values,
+      PingStats stats});
+
+  $PingHostCopyWith<$Res> get host;
+  $PingSettingsCopyWith<$Res> get settings;
+  $PingStatsCopyWith<$Res> get stats;
+}
+
+class _$PingResultCopyWithImpl<$Res> implements $PingResultCopyWith<$Res> {
+  _$PingResultCopyWithImpl(this._value, this._then);
+
+  final PingResult _value;
+  // ignore: unused_field
+  final $Res Function(PingResult) _then;
+
+  @override
+  $Res call({
+    Object id = freezed,
+    Object host = freezed,
+    Object settings = freezed,
+    Object startTime = freezed,
+    Object duration = freezed,
+    Object values = freezed,
+    Object stats = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as int,
+      host: host == freezed ? _value.host : host as PingHost,
+      settings:
+          settings == freezed ? _value.settings : settings as PingSettings,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+      duration: duration == freezed ? _value.duration : duration as Duration,
+      values: values == freezed ? _value.values : values as List<double>,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
+    ));
+  }
+
+  @override
+  $PingHostCopyWith<$Res> get host {
+    if (_value.host == null) {
+      return null;
+    }
+    return $PingHostCopyWith<$Res>(_value.host, (value) {
+      return _then(_value.copyWith(host: value));
+    });
+  }
+
+  @override
+  $PingSettingsCopyWith<$Res> get settings {
+    if (_value.settings == null) {
+      return null;
+    }
+    return $PingSettingsCopyWith<$Res>(_value.settings, (value) {
+      return _then(_value.copyWith(settings: value));
+    });
+  }
+
+  @override
+  $PingStatsCopyWith<$Res> get stats {
+    if (_value.stats == null) {
+      return null;
+    }
+    return $PingStatsCopyWith<$Res>(_value.stats, (value) {
+      return _then(_value.copyWith(stats: value));
+    });
+  }
+}
+
+abstract class _$PingResultCopyWith<$Res> implements $PingResultCopyWith<$Res> {
+  factory _$PingResultCopyWith(
+          _PingResult value, $Res Function(_PingResult) then) =
+      __$PingResultCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int id,
+      PingHost host,
+      PingSettings settings,
+      DateTime startTime,
+      Duration duration,
+      List<double> values,
+      PingStats stats});
+
+  @override
+  $PingHostCopyWith<$Res> get host;
+  @override
+  $PingSettingsCopyWith<$Res> get settings;
+  @override
+  $PingStatsCopyWith<$Res> get stats;
+}
+
+class __$PingResultCopyWithImpl<$Res> extends _$PingResultCopyWithImpl<$Res>
+    implements _$PingResultCopyWith<$Res> {
+  __$PingResultCopyWithImpl(
+      _PingResult _value, $Res Function(_PingResult) _then)
+      : super(_value, (v) => _then(v as _PingResult));
+
+  @override
+  _PingResult get _value => super._value as _PingResult;
+
+  @override
+  $Res call({
+    Object id = freezed,
+    Object host = freezed,
+    Object settings = freezed,
+    Object startTime = freezed,
+    Object duration = freezed,
+    Object values = freezed,
+    Object stats = freezed,
+  }) {
+    return _then(_PingResult(
+      id: id == freezed ? _value.id : id as int,
+      host: host == freezed ? _value.host : host as PingHost,
+      settings:
+          settings == freezed ? _value.settings : settings as PingSettings,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+      duration: duration == freezed ? _value.duration : duration as Duration,
+      values: values == freezed ? _value.values : values as List<double>,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_PingResult implements _PingResult {
@@ -132,25 +260,8 @@ class _$_PingResult implements _PingResult {
       const DeepCollectionEquality().hash(stats);
 
   @override
-  _$_PingResult copyWith({
-    Object id = freezed,
-    Object host = freezed,
-    Object settings = freezed,
-    Object startTime = freezed,
-    Object duration = freezed,
-    Object values = freezed,
-    Object stats = freezed,
-  }) {
-    return _$_PingResult(
-      id: id == freezed ? this.id : id as int,
-      host: host == freezed ? this.host : host as PingHost,
-      settings: settings == freezed ? this.settings : settings as PingSettings,
-      startTime: startTime == freezed ? this.startTime : startTime as DateTime,
-      duration: duration == freezed ? this.duration : duration as Duration,
-      values: values == freezed ? this.values : values as List<double>,
-      stats: stats == freezed ? this.stats : stats as PingStats,
-    );
-  }
+  _$PingResultCopyWith<_PingResult> get copyWith =>
+      __$PingResultCopyWithImpl<_PingResult>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -185,29 +296,12 @@ abstract class _PingResult implements PingResult {
   List<double> get values;
   @override
   PingStats get stats;
-
   @override
-  _PingResult copyWith(
-      {int id,
-      PingHost host,
-      PingSettings settings,
-      DateTime startTime,
-      Duration duration,
-      List<double> values,
-      PingStats stats});
+  _$PingResultCopyWith<_PingResult> get copyWith;
 }
 
 PingHost _$PingHostFromJson(Map<String, dynamic> json) {
   return _PingHost.fromJson(json);
-}
-
-mixin _$PingHost {
-  String get name;
-  String get ip;
-
-  PingHost copyWith({String name, String ip});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$PingHostTearOff {
@@ -221,7 +315,68 @@ class _$PingHostTearOff {
   }
 }
 
+// ignore: unused_element
 const $PingHost = _$PingHostTearOff();
+
+mixin _$PingHost {
+  String get name;
+  String get ip;
+
+  Map<String, dynamic> toJson();
+  $PingHostCopyWith<PingHost> get copyWith;
+}
+
+abstract class $PingHostCopyWith<$Res> {
+  factory $PingHostCopyWith(PingHost value, $Res Function(PingHost) then) =
+      _$PingHostCopyWithImpl<$Res>;
+  $Res call({String name, String ip});
+}
+
+class _$PingHostCopyWithImpl<$Res> implements $PingHostCopyWith<$Res> {
+  _$PingHostCopyWithImpl(this._value, this._then);
+
+  final PingHost _value;
+  // ignore: unused_field
+  final $Res Function(PingHost) _then;
+
+  @override
+  $Res call({
+    Object name = freezed,
+    Object ip = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: name == freezed ? _value.name : name as String,
+      ip: ip == freezed ? _value.ip : ip as String,
+    ));
+  }
+}
+
+abstract class _$PingHostCopyWith<$Res> implements $PingHostCopyWith<$Res> {
+  factory _$PingHostCopyWith(_PingHost value, $Res Function(_PingHost) then) =
+      __$PingHostCopyWithImpl<$Res>;
+  @override
+  $Res call({String name, String ip});
+}
+
+class __$PingHostCopyWithImpl<$Res> extends _$PingHostCopyWithImpl<$Res>
+    implements _$PingHostCopyWith<$Res> {
+  __$PingHostCopyWithImpl(_PingHost _value, $Res Function(_PingHost) _then)
+      : super(_value, (v) => _then(v as _PingHost));
+
+  @override
+  _PingHost get _value => super._value as _PingHost;
+
+  @override
+  $Res call({
+    Object name = freezed,
+    Object ip = freezed,
+  }) {
+    return _then(_PingHost(
+      name: name == freezed ? _value.name : name as String,
+      ip: ip == freezed ? _value.ip : ip as String,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_PingHost implements _PingHost {
@@ -257,15 +412,8 @@ class _$_PingHost implements _PingHost {
       const DeepCollectionEquality().hash(ip);
 
   @override
-  _$_PingHost copyWith({
-    Object name = freezed,
-    Object ip = freezed,
-  }) {
-    return _$_PingHost(
-      name: name == freezed ? this.name : name as String,
-      ip: ip == freezed ? this.ip : ip as String,
-    );
-  }
+  _$PingHostCopyWith<_PingHost> get copyWith =>
+      __$PingHostCopyWithImpl<_PingHost>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -282,23 +430,12 @@ abstract class _PingHost implements PingHost {
   String get name;
   @override
   String get ip;
-
   @override
-  _PingHost copyWith({String name, String ip});
+  _$PingHostCopyWith<_PingHost> get copyWith;
 }
 
 PingStats _$PingStatsFromJson(Map<String, dynamic> json) {
   return _PingStats.fromJson(json);
-}
-
-mixin _$PingStats {
-  double get min;
-  double get max;
-  double get mean;
-
-  PingStats copyWith({double min, double max, double mean});
-
-  Map<String, dynamic> toJson();
 }
 
 class _$PingStatsTearOff {
@@ -314,7 +451,74 @@ class _$PingStatsTearOff {
   }
 }
 
+// ignore: unused_element
 const $PingStats = _$PingStatsTearOff();
+
+mixin _$PingStats {
+  double get min;
+  double get max;
+  double get mean;
+
+  Map<String, dynamic> toJson();
+  $PingStatsCopyWith<PingStats> get copyWith;
+}
+
+abstract class $PingStatsCopyWith<$Res> {
+  factory $PingStatsCopyWith(PingStats value, $Res Function(PingStats) then) =
+      _$PingStatsCopyWithImpl<$Res>;
+  $Res call({double min, double max, double mean});
+}
+
+class _$PingStatsCopyWithImpl<$Res> implements $PingStatsCopyWith<$Res> {
+  _$PingStatsCopyWithImpl(this._value, this._then);
+
+  final PingStats _value;
+  // ignore: unused_field
+  final $Res Function(PingStats) _then;
+
+  @override
+  $Res call({
+    Object min = freezed,
+    Object max = freezed,
+    Object mean = freezed,
+  }) {
+    return _then(_value.copyWith(
+      min: min == freezed ? _value.min : min as double,
+      max: max == freezed ? _value.max : max as double,
+      mean: mean == freezed ? _value.mean : mean as double,
+    ));
+  }
+}
+
+abstract class _$PingStatsCopyWith<$Res> implements $PingStatsCopyWith<$Res> {
+  factory _$PingStatsCopyWith(
+          _PingStats value, $Res Function(_PingStats) then) =
+      __$PingStatsCopyWithImpl<$Res>;
+  @override
+  $Res call({double min, double max, double mean});
+}
+
+class __$PingStatsCopyWithImpl<$Res> extends _$PingStatsCopyWithImpl<$Res>
+    implements _$PingStatsCopyWith<$Res> {
+  __$PingStatsCopyWithImpl(_PingStats _value, $Res Function(_PingStats) _then)
+      : super(_value, (v) => _then(v as _PingStats));
+
+  @override
+  _PingStats get _value => super._value as _PingStats;
+
+  @override
+  $Res call({
+    Object min = freezed,
+    Object max = freezed,
+    Object mean = freezed,
+  }) {
+    return _then(_PingStats(
+      min: min == freezed ? _value.min : min as double,
+      max: max == freezed ? _value.max : max as double,
+      mean: mean == freezed ? _value.mean : mean as double,
+    ));
+  }
+}
 
 @JsonSerializable()
 class _$_PingStats implements _PingStats {
@@ -359,17 +563,8 @@ class _$_PingStats implements _PingStats {
       const DeepCollectionEquality().hash(mean);
 
   @override
-  _$_PingStats copyWith({
-    Object min = freezed,
-    Object max = freezed,
-    Object mean = freezed,
-  }) {
-    return _$_PingStats(
-      min: min == freezed ? this.min : min as double,
-      max: max == freezed ? this.max : max as double,
-      mean: mean == freezed ? this.mean : mean as double,
-    );
-  }
+  _$PingStatsCopyWith<_PingStats> get copyWith =>
+      __$PingStatsCopyWithImpl<_PingStats>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -392,7 +587,6 @@ abstract class _PingStats implements PingStats {
   double get max;
   @override
   double get mean;
-
   @override
-  _PingStats copyWith({double min, double max, double mean});
+  _$PingStatsCopyWith<_PingStats> get copyWith;
 }
