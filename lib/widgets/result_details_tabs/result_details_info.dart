@@ -20,7 +20,9 @@ class ResultDetailsInfo extends StatelessWidget {
             children: <Widget>[
               _buildHeader("Info"),
               _buildItem(
-                  "Date", FormatUtils.getTimestampLabel(result.startTime)),
+                "Date",
+                FormatUtils.getTimestampLabel(result.startTime, showTime: true),
+              ),
               _buildItem("Host IP", result.host.ip ?? "-"),
               _buildItem(
                   "Total time", FormatUtils.getDurationLabel(result.duration)),

@@ -16,6 +16,9 @@ class FormatUtils {
     return "$min:${sec.toString().padLeft(2, '0')}";
   }
 
-  static String getTimestampLabel(DateTime timestamp) =>
-      DateFormat.MMMd().format(timestamp);
+  static String getTimestampLabel(DateTime timestamp, {bool showTime = false}) {
+    var formatter = DateFormat.MMMd();
+    if (showTime) formatter = formatter.add_Hm();
+    return formatter.format(timestamp);
+  }
 }

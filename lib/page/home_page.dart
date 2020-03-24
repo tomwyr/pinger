@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     return Scaffold(
       appBar: buildAppBar(),
       body: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: EdgeInsets.symmetric(horizontal: 48.0, vertical: 32.0),
         child: Observer(builder: (_) {
           final stats = _hostsStore.stats;
           final favorites = _favoritesStore.items;
@@ -59,32 +59,24 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     return Column(children: <Widget>[
       _buildSearchBar(),
       Spacer(),
-      _buildNoSuggestionsInfo(),
+      Image(image: Images.boxEmpty, height: 144.0),
+      Container(height: 24.0),
+      Text(
+        "Looks like there's nothing here yet",
+        style: TextStyle(fontSize: 18.0),
+        textAlign: TextAlign.center,
+      ),
+      Container(height: 24.0),
+      Text(
+        "Use search field above to choose host to ping or see intro explaining app concept",
+        textAlign: TextAlign.center,
+      ),
       Spacer(),
       RaisedButton(
         child: Text("Show intro"),
         onPressed: () => push(IntroPage()),
       ),
     ]);
-  }
-
-  Widget _buildNoSuggestionsInfo() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Image(image: Images.boxEmpty, height: 144.0),
-        Container(height: 24.0),
-        Text(
-          "Looks like there's nothing here yet",
-          style: TextStyle(fontSize: 18.0),
-        ),
-        Container(height: 24.0),
-        Text(
-          "Use search field above to choose host to ping or see intro explaining app concept",
-          style: TextStyle(fontSize: 14.0),
-        ),
-      ],
-    );
   }
 
   List<Widget> _buildCurrentPing(PingSession session) {
