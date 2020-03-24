@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_result.dart';
 
 part 'ping_global.freezed.dart';
@@ -24,17 +25,6 @@ abstract class PingGeoStats with _$PingGeoStats {
 
   factory PingGeoStats.fromJson(Map<String, dynamic> json) =>
       _$PingGeoStatsFromJson(json);
-}
-
-@freezed
-abstract class GeoPosition with _$GeoPosition {
-  factory GeoPosition({
-    @required double lat,
-    @required double lon,
-  }) = _GeoPosition;
-
-  factory GeoPosition.fromJson(Map<String, dynamic> json) =>
-      _$GeoPositionFromJson(json);
 }
 
 @freezed

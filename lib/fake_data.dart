@@ -1,3 +1,4 @@
+import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
 

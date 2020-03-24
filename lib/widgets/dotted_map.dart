@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:pinger/model/ping_global.dart';
+import 'package:pinger/model/geo_position.dart';
 
 class DottedMap extends StatelessWidget {
   final List<MapDot> dots;

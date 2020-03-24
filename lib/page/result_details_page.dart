@@ -8,6 +8,7 @@ import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/archive_store.dart';
+import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
@@ -36,6 +37,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
 
   final ArchiveStore _archiveStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
+  final LocationStore _locationStore = Injector.resolve();
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
   ScrollController _scrollController;
@@ -113,10 +115,13 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
                 scrollBuilder: (slivers) =>
                     CollapsingTabLayoutItem(slivers: slivers),
               ),
-              ResultDetailsGlobal(
-                hasLocationPermission: true,
-                userResult: widget.result,
-                globalResults: FakeData.globalResults,
+              Observer(
+                builder: (_) => ResultDetailsGlobal(
+                  hasPermission: _locationStore.hasPermission,
+                  onPermissionRequestPressed: _locationStore.requestPermission,
+                  userResult: widget.result,
+                  globalResults: FakeData.globalResults,
+                ),
               ),
               ResultDetailsInfo(result: widget.result),
               Observer(

@@ -9,13 +9,15 @@ import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/dotted_map.dart';
 
 class ResultDetailsGlobal extends StatefulWidget {
-  final bool hasLocationPermission;
+  final bool hasPermission;
+  final VoidCallback onPermissionRequestPressed;
   final PingResult userResult;
   final PingGlobalResults globalResults;
 
   const ResultDetailsGlobal({
     Key key,
-    @required this.hasLocationPermission,
+    @required this.hasPermission,
+    @required this.onPermissionRequestPressed,
     @required this.userResult,
     @required this.globalResults,
   }) : super(key: key);
@@ -45,7 +47,7 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
   Widget build(BuildContext context) {
     return CollapsingTabLayoutItem(slivers: <Widget>[
       SliverToBoxAdapter(
-        child: widget.hasLocationPermission
+        child: widget.hasPermission
             ? _buildGlobalResults()
             : _buildPermissionRequest(),
       ),
@@ -173,15 +175,13 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
         ),
         Container(height: 16.0),
         Text(
-          "Your location will be used to match it with your result and to present it on a world map for other users",
+          "Your location will be used to match it with your result and to present it for other users.",
           textAlign: TextAlign.center,
         ),
         Container(height: 48.0),
         RaisedButton(
           child: Text("Grant permission"),
-          onPressed: () {
-            //
-          },
+          onPressed: widget.onPermissionRequestPressed,
         ),
       ]),
     );

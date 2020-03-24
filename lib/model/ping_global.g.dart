@@ -42,19 +42,6 @@ Map<String, dynamic> _$_$_PingGeoStatsToJson(_$_PingGeoStats instance) =>
       'stats': instance.stats,
     };
 
-_$_GeoPosition _$_$_GeoPositionFromJson(Map<String, dynamic> json) {
-  return _$_GeoPosition(
-    lat: (json['lat'] as num)?.toDouble(),
-    lon: (json['lon'] as num)?.toDouble(),
-  );
-}
-
-Map<String, dynamic> _$_$_GeoPositionToJson(_$_GeoPosition instance) =>
-    <String, dynamic>{
-      'lat': instance.lat,
-      'lon': instance.lon,
-    };
-
 _$_PingGlobalStats _$_$_PingGlobalStatsFromJson(Map<String, dynamic> json) {
   return _$_PingGlobalStats(
     min: (json['min'] as List)
