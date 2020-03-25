@@ -15,5 +15,7 @@ class Images {
   static AssetImage get introWaves => const AssetImage("lib/assets/intro_waves.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/screen_pulse.png)
   static AssetImage get screenPulse => const AssetImage("lib/assets/screen_pulse.png");
+  /// ![](file:///C:/dev/projects/pinger/lib/assets/splash.png)
+  static AssetImage get splash => const AssetImage("lib/assets/splash.png");
 }
 
