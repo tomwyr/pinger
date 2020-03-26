@@ -15,6 +15,7 @@ import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/store/notification_store.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
@@ -37,6 +38,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<ArchiveStore>(),
     g<HostsStore>(),
   ));
+  g.registerSingleton<NotificationStore>(
+      NotificationStore(g<SettingsStore>(), g<PingStore>()));
 }
 
 class _$InjectorModule extends InjectorModule {}

@@ -1,0 +1,30 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'notification_store.dart';
+
+// **************************************************************************
+// StoreGenerator
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+
+mixin _$NotificationStore on NotificationStoreBase, Store {
+  final _$NotificationStoreBaseActionController =
+      ActionController(name: 'NotificationStoreBase');
+
+  @override
+  void init() {
+    final _$actionInfo = _$NotificationStoreBaseActionController.startAction();
+    try {
+      return super.init();
+    } finally {
+      _$NotificationStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String toString() {
+    final string = '';
+    return '{$string}';
+  }
+}

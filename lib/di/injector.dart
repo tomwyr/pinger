@@ -6,6 +6,7 @@ import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/location_store.dart';
+import 'package:pinger/store/notification_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,7 @@ abstract class Injector {
     resolve<HostsStore>().init();
     resolve<PingStore>().init();
     resolve<LocationStore>().init();
+    resolve<NotificationStore>().init();
   }
 
   static T resolve<T>([String instanceName]) =>
