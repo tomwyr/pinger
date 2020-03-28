@@ -7,6 +7,7 @@ import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/ping_service.dart';
+import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -15,12 +16,14 @@ part 'ping_store.g.dart';
 
 @singleton
 class PingStore extends PingStoreBase with _$PingStore {
+  final PingerPrefs _pingerPrefs;
   final PingService _pingService;
   final SettingsStore _settingsStore;
   final ArchiveStore _archiveStore;
   final HostsStore _hostsStore;
 
   PingStore(
+    this._pingerPrefs,
     this._pingService,
     this._settingsStore,
     this._archiveStore,
@@ -29,6 +32,7 @@ class PingStore extends PingStoreBase with _$PingStore {
 }
 
 abstract class PingStoreBase with Store {
+  PingerPrefs get _pingerPrefs;
   PingService get _pingService;
   SettingsStore get _settingsStore;
   ArchiveStore get _archiveStore;
@@ -53,7 +57,17 @@ abstract class PingStoreBase with Store {
 
   @action
   void init() {
+    final lastHost = _pingerPrefs.getLastHost();
+    if (lastHost != null) initSession(lastHost);
+    autorun((_) => _cacheCurrentHost());
     autorun((_) => _updateStatsIfDidStart());
+  }
+
+  void _cacheCurrentHost() async {
+    final host = _settingsStore.userSettings.rememberHost
+        ? currentSession?.host?.name
+        : null;
+    await _pingerPrefs.setLastHost(host);
   }
 
   void _updateStatsIfDidStart() {
@@ -77,6 +91,14 @@ abstract class PingStoreBase with Store {
     pingDuration = Duration.zero;
     _archivedId = null;
     _timer = Stopwatch();
+  }
+
+  @action
+  void clearSession() {
+    _stopPing();
+    currentSession = null;
+    pingDuration = null;
+    _archivedId = null;
   }
 
   @action

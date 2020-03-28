@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/page/home_page.dart';
+import 'package:pinger/page/ping_page.dart';
+import 'package:pinger/store/ping_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +15,9 @@ class PingerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Pinger',
-      home: HomePage(),
+      home: Injector.resolve<PingStore>().currentSession != null
+          ? PingPage()
+          : HomePage(),
     );
   }
 }

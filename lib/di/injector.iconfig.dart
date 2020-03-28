@@ -34,6 +34,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerSingleton<LocationStore>(
       LocationStore(g<Geolocator>(), g<SettingsStore>()));
   g.registerSingleton<PingStore>(PingStore(
+    g<PingerPrefs>(),
     g<PingService>(),
     g<SettingsStore>(),
     g<ArchiveStore>(),

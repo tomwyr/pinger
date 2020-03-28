@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
     return [
       _buildSectionTitle('Current'),
       InkWell(
-        onTap: () => push(PingPage()),
+        onTap: () => pushReplacement(PingPage()),
         child: Row(children: [
           Image.network(
             'https://www.netflix.com/favicon.ico',
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
       alignment: Alignment.centerLeft,
       children: <Widget>[
         OutlineButton(
-          onPressed: () => push(SearchPage()),
+          onPressed: () => pushReplacement(SearchPage()),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(32.0),
           ),
@@ -228,7 +228,7 @@ class _HomePageState extends State<HomePage> with PingerAppBar {
             fillColor: Colors.blue,
             shape: CircleBorder(),
             child: Icon(Icons.search, color: Colors.white),
-            onPressed: () => push(SearchPage()),
+            onPressed: () => pushReplacement(SearchPage()),
           ),
         ),
       ],

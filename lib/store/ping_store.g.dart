@@ -104,6 +104,16 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
+  void clearSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    try {
+      return super.clearSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void startQuickCheck() {
     final _$actionInfo = _$PingStoreBaseActionController.startAction();
     try {

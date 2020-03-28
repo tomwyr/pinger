@@ -26,8 +26,8 @@ abstract class LocationStoreBase with Store {
   bool hasPermission;
 
   @action
-  void init() {
-    _updatePermissionStatus();
+  Future<void> init() async {
+    await _updatePermissionStatus();
     autorun((_) {
       if (_settingsStore.userSettings == null) return;
       _requestPermissionIfGotEnabled();

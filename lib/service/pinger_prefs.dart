@@ -13,6 +13,7 @@ class PingerPrefs {
   final String _archiveResultsKey = 'archiveResults';
   final String _favoriteHostsKey = 'favoriteHosts';
   final String _hostsStatsKey = 'hostsStats';
+  final String _lastHostKey = 'lastHost';
 
   final SharedPreferences _sharedPrefs;
 
@@ -107,4 +108,9 @@ class PingerPrefs {
     final jsonStringList = stats.map((it) => jsonEncode(it.toJson())).toList();
     await _sharedPrefs.setStringList(_hostsStatsKey, jsonStringList);
   }
+
+  String getLastHost() => _sharedPrefs.getString(_lastHostKey);
+
+  Future<void> setLastHost(String host) =>
+      _sharedPrefs.setString(_lastHostKey, host);
 }

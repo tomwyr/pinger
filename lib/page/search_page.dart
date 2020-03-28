@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/home_page.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
@@ -33,58 +34,64 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: _inputController.text.isEmpty ? 4.0 : 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: null,
-        ),
-        title: TextField(
-          autofocus: true,
-          controller: _inputController,
-          decoration: InputDecoration(
-            hintText: "Type host to search",
+    return WillPopScope(
+      onWillPop: () async {
+        pushReplacement(HomePage());
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: _inputController.text.isEmpty ? 4.0 : 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: null,
           ),
-          onChanged: _onQueryChanged,
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.clear, color: Colors.black),
-            onPressed: _onClearPressed,
-          ),
-        ],
-      ),
-      body: Column(children: <Widget>[
-        if (_inputController.text.isNotEmpty)
-          Material(
-            elevation: 4.0,
-            child: ListTile(
-              onTap: () => _onItemSelected(_inputController.text),
-              leading: Icon(Icons.language),
-              title: Text(_inputController.text),
-              contentPadding: EdgeInsets.only(left: 16.0, right: 12.0),
-              trailing: Icon(Icons.arrow_forward, color: Colors.black),
+          title: TextField(
+            autofocus: true,
+            controller: _inputController,
+            decoration: InputDecoration(
+              hintText: "Type host to search",
             ),
+            onChanged: _onQueryChanged,
           ),
-        Expanded(
-          child: Observer(builder: (_) {
-            final hosts = _hostsStore.hosts;
-            if (_inputController.text.isEmpty)
-              return Center(child: Text("Type something"));
-            if (_hostsStore.isLoading)
-              return Center(child: CircularProgressIndicator());
-            if (hosts == null) return Center(child: Text("Type something"));
-            if (hosts.isEmpty)
-              return Center(child: Text("No results for given query"));
-            return ListView.builder(
-              itemCount: hosts.length,
-              itemBuilder: (_, index) => _buildHostItem(hosts[index]),
-            );
-          }),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.clear, color: Colors.black),
+              onPressed: _onClearPressed,
+            ),
+          ],
         ),
-      ]),
+        body: Column(children: <Widget>[
+          if (_inputController.text.isNotEmpty)
+            Material(
+              elevation: 4.0,
+              child: ListTile(
+                onTap: () => _onItemSelected(_inputController.text),
+                leading: Icon(Icons.language),
+                title: Text(_inputController.text),
+                contentPadding: EdgeInsets.only(left: 16.0, right: 12.0),
+                trailing: Icon(Icons.arrow_forward, color: Colors.black),
+              ),
+            ),
+          Expanded(
+            child: Observer(builder: (_) {
+              final hosts = _hostsStore.hosts;
+              if (_inputController.text.isEmpty)
+                return Center(child: Text("Type something"));
+              if (_hostsStore.isLoading)
+                return Center(child: CircularProgressIndicator());
+              if (hosts == null) return Center(child: Text("Type something"));
+              if (hosts.isEmpty)
+                return Center(child: Text("No results for given query"));
+              return ListView.builder(
+                itemCount: hosts.length,
+                itemBuilder: (_, index) => _buildHostItem(hosts[index]),
+              );
+            }),
+          ),
+        ]),
+      ),
     );
   }
 
@@ -100,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
       _inputController.clear();
       rebuild();
     } else {
-      pop();
+      pushReplacement(HomePage());
     }
   }
 

@@ -4,6 +4,7 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/page/home_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/ping_store.dart';
@@ -21,18 +22,34 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
   final FavoritesStore _favoritesStore = Injector.resolve();
 
   @override
+  void dispose() {
+    final status = _pingStore.currentSession.status;
+    if (status == PingStatus.quickCheckDone ||
+        status == PingStatus.quickCheckDone) {
+      _pingStore.clearSession();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(elevation: 0.0),
-      body: Observer(builder: (_) {
-        final session = _pingStore.currentSession;
-        final isFavorite = _favoritesStore.isFavorite(session.host.name);
-        return Column(children: <Widget>[
-          _buildHostCard(session, isFavorite),
-          Expanded(child: _buildContent(session)),
-          _buildPingButton(session),
-        ]);
-      }),
+    return WillPopScope(
+      onWillPop: () async {
+        pushReplacement(HomePage());
+        return false;
+      },
+      child: Scaffold(
+        appBar: buildAppBar(elevation: 0.0),
+        body: Observer(builder: (_) {
+          final session = _pingStore.currentSession;
+          final isFavorite = _favoritesStore.isFavorite(session.host.name);
+          return Column(children: <Widget>[
+            _buildHostCard(session, isFavorite),
+            Expanded(child: _buildContent(session)),
+            _buildPingButton(session),
+          ]);
+        }),
+      ),
     );
   }
 
@@ -245,7 +262,6 @@ class PingButton extends StatelessWidget {
       case PingStatus.sessionPaused:
         return _buildFloatingButton(
           icon: Icons.stop,
-          mini: true,
           iconColor: Colors.black,
           backgroundColor: Colors.white,
           onTap: onSessionStop,
@@ -253,7 +269,6 @@ class PingButton extends StatelessWidget {
       case PingStatus.sessionDone:
         return _buildFloatingButton(
           icon: Icons.archive,
-          mini: true,
           backgroundColor: Colors.white,
           iconColor: isArchived ? Colors.red : Colors.black,
           onTap: isArchived ? onResultDelete : onResultArchive,

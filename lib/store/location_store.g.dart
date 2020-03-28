@@ -26,6 +26,13 @@ mixin _$LocationStore on LocationStoreBase, Store {
     }, _$hasPermissionAtom, name: '${_$hasPermissionAtom.name}_set');
   }
 
+  final _$initAsyncAction = AsyncAction('init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$_requestPermissionIfGotEnabledAsyncAction =
       AsyncAction('_requestPermissionIfGotEnabled');
 
@@ -41,19 +48,6 @@ mixin _$LocationStore on LocationStoreBase, Store {
   Future<GeoPosition> getCurrentPosition() {
     return _$getCurrentPositionAsyncAction
         .run(() => super.getCurrentPosition());
-  }
-
-  final _$LocationStoreBaseActionController =
-      ActionController(name: 'LocationStoreBase');
-
-  @override
-  void init() {
-    final _$actionInfo = _$LocationStoreBaseActionController.startAction();
-    try {
-      return super.init();
-    } finally {
-      _$LocationStoreBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override
