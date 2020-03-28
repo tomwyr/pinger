@@ -9,15 +9,15 @@ import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/dotted_map.dart';
 
 class ResultDetailsGlobal extends StatefulWidget {
-  final bool hasPermission;
-  final VoidCallback onPermissionRequestPressed;
+  final bool isSharingLocation;
+  final VoidCallback onShareLocationPressed;
   final PingResult userResult;
   final PingGlobalResults globalResults;
 
   const ResultDetailsGlobal({
     Key key,
-    @required this.hasPermission,
-    @required this.onPermissionRequestPressed,
+    @required this.isSharingLocation,
+    @required this.onShareLocationPressed,
     @required this.userResult,
     @required this.globalResults,
   }) : super(key: key);
@@ -47,9 +47,9 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
   Widget build(BuildContext context) {
     return CollapsingTabLayoutItem(slivers: <Widget>[
       SliverToBoxAdapter(
-        child: widget.hasPermission
+        child: widget.isSharingLocation
             ? _buildGlobalResults()
-            : _buildPermissionRequest(),
+            : _buildShareLocationRequest(),
       ),
     ]);
   }
@@ -162,7 +162,7 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
         .toList();
   }
 
-  Widget _buildPermissionRequest() {
+  Widget _buildShareLocationRequest() {
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(children: <Widget>[
@@ -180,8 +180,8 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
         ),
         Container(height: 48.0),
         RaisedButton(
-          child: Text("Grant permission"),
-          onPressed: widget.onPermissionRequestPressed,
+          child: Text("Share location"),
+          onPressed: widget.onShareLocationPressed,
         ),
       ]),
     );

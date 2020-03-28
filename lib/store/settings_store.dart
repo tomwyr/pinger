@@ -33,13 +33,13 @@ abstract class SettingsStoreBase with Store {
         rememberHost: true,
         showSystemNotification: false,
         shareSettings: ShareSettings(
-          attachLocation: true,
-          shareResults: false,
+          shareResults: true,
+          attachLocation: false,
         ),
         pingSettings: PingSettings(
           count: 10,
           packetSize: 24,
-          interval: 2,
+          interval: 1,
           timeout: 30,
         ),
       );

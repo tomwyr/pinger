@@ -6,10 +6,12 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/widgets/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/collapsing_tile.dart';
@@ -38,6 +40,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
   final ArchiveStore _archiveStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final LocationStore _locationStore = Injector.resolve();
+  final SettingsStore _settingsStore = Injector.resolve();
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
   ScrollController _scrollController;
@@ -68,82 +71,50 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
           collapsedOffset: _collapsedOffset,
           scrollController: _scrollController,
           scroller: _scrollLayoutTo,
-          appBar: SliverAppBar(
-            pinned: true,
-            elevation: 2.0,
-            forceElevated: true,
-            expandedHeight: _collapsingTileHeight,
-            backgroundColor: Theme.of(context).canvasColor,
-            leading: BackButton(color: Colors.black),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.delete, color: Colors.black),
-                onPressed: () async {
-                  await _archiveStore.deleteResult(widget.result.id);
-                  pop();
-                },
-              ),
-            ],
-            flexibleSpace: LayoutBuilder(
-              builder: (_, constraints) => ResultDetailsCollapsingTile(
-                expansion: (constraints.maxHeight - _collapsedHeight) /
-                    (_collapsingTileHeight - _collapsedHeight),
-                result: widget.result,
-                minExtent: kToolbarHeight,
-                maxExtent: _collapsingTileHeight,
-              ),
-            ),
-            bottom: TabBar(
-              onTap: _onTabTap,
-              controller: _tabController,
-              labelColor: Colors.black,
-              indicatorColor: Colors.lightBlue,
-              tabs: [
-                Tab(text: "Results"),
-                Tab(text: "Global"),
-                Tab(text: "Info"),
-                Tab(text: "More"),
-              ],
-            ),
-          ),
-          tabBarView: TabBarView(
-            controller: _tabController,
-            children: [
-              ResultDetailsResults(
-                values: widget.result.values,
-                stats: widget.result.stats,
-                scrollBuilder: (slivers) =>
-                    CollapsingTabLayoutItem(slivers: slivers),
-              ),
-              Observer(
-                builder: (_) => ResultDetailsGlobal(
-                  hasPermission: _locationStore.hasPermission,
-                  onPermissionRequestPressed: _locationStore.requestPermission,
-                  userResult: widget.result,
-                  globalResults: FakeData.globalResults,
-                ),
-              ),
-              ResultDetailsInfo(result: widget.result),
-              Observer(
-                builder: (_) {
-                  return ResultDetailsMore(
-                    results: _archiveStore.results
-                        .where((it) =>
-                            it.host.name == widget.result.host.name &&
-                            it.id != widget.result.id)
-                        .toList(),
-                    onItemSelected: (item) =>
-                        push(ResultDetailsPage(result: item)),
-                    onStartPingPressed: () {
-                      _pingStore.initSession(widget.result.host.name);
-                      pushReplacement(PingPage());
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
+          appBar: _buildAppBar(),
+          tabBarView: _buildTabBarView(),
         ),
+      ),
+    );
+  }
+
+  SliverAppBar _buildAppBar() {
+    return SliverAppBar(
+      pinned: true,
+      elevation: 2.0,
+      forceElevated: true,
+      expandedHeight: _collapsingTileHeight,
+      backgroundColor: Theme.of(context).canvasColor,
+      leading: BackButton(color: Colors.black),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.delete, color: Colors.black),
+          onPressed: () async {
+            await _archiveStore.deleteResult(widget.result.id);
+            pop();
+          },
+        ),
+      ],
+      flexibleSpace: LayoutBuilder(
+        builder: (_, constraints) => ResultDetailsCollapsingTile(
+          expansion: (constraints.maxHeight - _collapsedHeight) /
+              (_collapsingTileHeight - _collapsedHeight),
+          result: widget.result,
+          minExtent: kToolbarHeight,
+          maxExtent: _collapsingTileHeight,
+        ),
+      ),
+      bottom: TabBar(
+        onTap: _onTabTap,
+        controller: _tabController,
+        labelColor: Colors.black,
+        indicatorColor: Colors.lightBlue,
+        tabs: [
+          Tab(text: "Results"),
+          Tab(text: "Global"),
+          Tab(text: "Info"),
+          Tab(text: "More"),
+        ],
       ),
     );
   }
@@ -168,6 +139,62 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
       offset,
       duration: Duration(milliseconds: 200),
       curve: Curves.easeOut,
+    );
+  }
+
+  TabBarView _buildTabBarView() {
+    return TabBarView(
+      controller: _tabController,
+      children: [
+        ResultDetailsResults(
+          values: widget.result.values,
+          stats: widget.result.stats,
+          scrollBuilder: (slivers) => CollapsingTabLayoutItem(slivers: slivers),
+        ),
+        Observer(
+          builder: (_) => ResultDetailsGlobal(
+            isSharingLocation: _checkIsSharingLocation(),
+            onShareLocationPressed: _enableShareSettings,
+            userResult: widget.result,
+            globalResults: FakeData.globalResults,
+          ),
+        ),
+        ResultDetailsInfo(result: widget.result),
+        Observer(
+          builder: (_) {
+            return ResultDetailsMore(
+              results: _archiveStore.results
+                  .where((it) =>
+                      it.host.name == widget.result.host.name &&
+                      it.id != widget.result.id)
+                  .toList(),
+              onItemSelected: (item) => push(ResultDetailsPage(result: item)),
+              onStartPingPressed: () {
+                _pingStore.initSession(widget.result.host.name);
+                pushReplacement(PingPage());
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  bool _checkIsSharingLocation() {
+    final shareSettings = _settingsStore.userSettings.shareSettings;
+    return shareSettings.shareResults &&
+        shareSettings.attachLocation &&
+        _locationStore.hasPermission;
+  }
+
+  void _enableShareSettings() {
+    _settingsStore.update(
+      _settingsStore.userSettings.copyWith(
+        shareSettings: ShareSettings(
+          shareResults: true,
+          attachLocation: true,
+        ),
+      ),
     );
   }
 }
