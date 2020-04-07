@@ -26,6 +26,7 @@ export async function updateDailyResult(session: Session) {
     ((await dailyResultsDoc.get()).data() as JsonObject<HostResult>) ?? {};
   const todayKey = _getTodayDateKey();
   const todayResults = dailyResults[todayKey] ?? {
+    count: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
   };
@@ -35,6 +36,7 @@ export async function updateDailyResult(session: Session) {
 }
 
 function _addSessionToTodayResults(session: Session, todayResults: HostResult) {
+  todayResults.count += session.count;
   _addStatsToValuesResults(todayResults.values, session.count, session.stats);
   if (session.location) {
     const locationKey =
@@ -140,6 +142,7 @@ function _createMonthlyResults(
   monthAgoKey: string
 ) {
   const monthlyResults = {
+    count: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
   } as HostResult;
@@ -147,6 +150,7 @@ function _createMonthlyResults(
     if (dateKey <= monthAgoKey) {
       delete dailyResults[dateKey];
     } else {
+      monthlyResults.count += dayResults.count;
       _addDayToMonthlyValueResults(dayResults, monthlyResults.values);
       Object.entries(dayResults.locations).forEach(([locationKey, result]) => {
         _addStatsToLocationResults(

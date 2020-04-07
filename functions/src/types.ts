@@ -14,6 +14,7 @@ export type PingStats = {
 };
 
 export type HostResult = {
+  count: number,
   values: ValueResults;
   locations: JsonObject<LocationResult>;
 };
