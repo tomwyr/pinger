@@ -3,7 +3,13 @@ import { Collections, Paths } from "./constants";
 import { DailyCounts, DailyResults, DailyResultsMap, MonthlyCounts, MonthlyResults } from "./types";
 
 export class PingerStore {
-  readonly _firestore = admin.firestore();
+  _firestoreInstance!: FirebaseFirestore.Firestore;
+
+  public get _firestore() {
+    return (
+      this._firestoreInstance || (this._firestoreInstance = admin.firestore())
+    );
+  }
 
   public get currentDate(): Date {
     return admin.firestore.Timestamp.now().toDate();
@@ -73,7 +79,7 @@ export class PingerStore {
       .get();
     const dailyResultsMap = {} as DailyResultsMap;
     dailyResultsQuery.docs.forEach((it) => {
-      const host = it.ref.path.split("/").pop()!!;
+      const host = it.ref.path.split("/").pop()!;
       dailyResultsMap[host] = it.data();
     });
     return dailyResultsMap;
