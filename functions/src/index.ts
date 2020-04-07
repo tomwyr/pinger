@@ -1,7 +1,7 @@
 import admin = require("firebase-admin");
 import functions = require("firebase-functions");
 import handlers = require("./handlers");
-import { Paths, Regions, Intervals } from "./constants";
+import { Intervals, Paths, Regions } from "./constants";
 import { Session } from "./types";
 
 admin.initializeApp();
@@ -12,8 +12,8 @@ exports.updateDailyData = functions
   .onCreate((snapshot, _) => {
     const session = snapshot.data() as Session;
     return Promise.all([
-      handlers.updateDailyCount(session),
-      handlers.updateDailyResult(session),
+      handlers.updateDailyCounts(session),
+      handlers.updateDailyResults(session),
     ]);
   });
 

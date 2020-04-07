@@ -1,111 +1,74 @@
-import admin = require("firebase-admin");
-import { Collections, Intervals, Paths } from "./constants";
-import { HostResult, JsonObject, LocationResult, PingStats, Session, ValueResults } from "./types";
+import { Intervals } from "./constants";
+import { PingerStore } from "./pinger_store";
+import { DailyCounts, DailyResults, HostResult, LocationResult, MonthlyCounts, Session } from "./types";
 
-export async function updateDailyCount(session: Session) {
-  const dailyCountsDoc = admin
-    .firestore()
-    .collection(Collections.countsDaily)
-    .doc(Paths.all);
-  const dailyCounts =
-    ((await dailyCountsDoc.get()).data() as JsonObject<JsonObject<number>>) ??
-    {};
+const pingerStore = new PingerStore();
+
+export async function updateDailyCounts(session: Session) {
+  const dailyCounts = await pingerStore.getDailyCounts();
+  _updateTodayDailyCounts(dailyCounts, session);
+  await pingerStore.setDailyCounts(dailyCounts);
+}
+
+function _updateTodayDailyCounts(dailyCounts: DailyCounts, session: Session) {
   const todayKey = _getTodayDateKey();
   const todayCounts = dailyCounts[todayKey] ?? {};
   todayCounts[session.host] = (todayCounts[session.host] ?? 0) + 1;
   dailyCounts[todayKey] = todayCounts;
-  await dailyCountsDoc.set(dailyCounts);
 }
 
-export async function updateDailyResult(session: Session) {
-  const dailyResultsDoc = admin
-    .firestore()
-    .collection(Collections.resultsDaily)
-    .doc(session.host);
-  const dailyResults =
-    ((await dailyResultsDoc.get()).data() as JsonObject<HostResult>) ?? {};
+export async function updateDailyResults(session: Session) {
+  const dailyResults = await pingerStore.getDailyResults(session.host);
+  _updateTodayDailyResults(dailyResults, session);
+  await pingerStore.setDailyResults(session.host, dailyResults);
+}
+
+function _updateTodayDailyResults(
+  dailyResults: DailyResults,
+  session: Session
+) {
   const todayKey = _getTodayDateKey();
   const todayResults = dailyResults[todayKey] ?? {
     count: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
   };
-  _addSessionToTodayResults(session, todayResults);
-  dailyResults[todayKey] = todayResults;
-  await dailyResultsDoc.set(dailyResults);
-}
-
-function _addSessionToTodayResults(session: Session, todayResults: HostResult) {
-  todayResults.count += session.count;
-  _addStatsToValuesResults(todayResults.values, session.count, session.stats);
+  _addSessionToTodayValuesResults(session, todayResults);
   if (session.location) {
     const locationKey =
       session.location.latitude.toFixed(0) +
       "," +
       session.location.longitude.toFixed(0);
-    _addStatsToLocationResults(todayResults.locations, locationKey, {
-      count: session.count,
-      stats: session.stats,
-    });
+    _addDayToMonthlyLocationResults(locationKey, session, todayResults);
   }
+  dailyResults[todayKey] = todayResults;
 }
 
-function _addStatsToValuesResults(
-  values: ValueResults,
-  count: number,
-  stats: PingStats
+function _addSessionToTodayValuesResults(
+  session: Session,
+  todayResults: HostResult
 ) {
+  const values = todayResults.values;
+  const stats = session.stats;
+  const count = session.count;
+  todayResults.count += count;
   values.min[stats.min] = (values.min[stats.min] ?? 0) + count;
   values.mean[stats.mean] = (values.mean[stats.mean] ?? 0) + count;
   values.max[stats.max] = (values.max[stats.max] ?? 0) + count;
 }
 
-function _addStatsToLocationResults(
-  locations: JsonObject<LocationResult>,
-  locationKey: string,
-  result: LocationResult
-) {
-  const locationResults = locations[locationKey] ?? {
-    count: 0,
-    stats: { min: 0, mean: 0, max: 0 },
-  };
-  const totalCount = locationResults.count + result.count;
-  locationResults.stats.min =
-    (locationResults.stats.min * locationResults.count +
-      result.stats.min * result.count) /
-    totalCount;
-  locationResults.stats.mean =
-    (locationResults.stats.mean * locationResults.count +
-      result.stats.mean * result.count) /
-    totalCount;
-  locationResults.stats.max =
-    (locationResults.stats.max * locationResults.count +
-      result.stats.max * result.count) /
-    totalCount;
-  locationResults.count = totalCount;
-  locations[locationKey] = locationResults;
-}
-
 export async function refreshMonthlyCounts() {
-  const monthlyCountsDoc = admin
-    .firestore()
-    .collection(Collections.countsMonthly)
-    .doc(Paths.all);
-  const dailyCountsDoc = admin
-    .firestore()
-    .collection(Collections.countsDaily)
-    .doc(Paths.all);
-  const dailyCounts =
-    ((await dailyCountsDoc.get()).data() as JsonObject<JsonObject<number>>) ??
-    {};
-  const monthlyCounts = await _createCountsData(dailyCounts);
-  await dailyCountsDoc.set(dailyCounts);
-  await monthlyCountsDoc.set(monthlyCounts);
+  const dailyCounts = await pingerStore.getDailyCounts();
+  const monthlyCounts = await _createMonthlyCounts(dailyCounts);
+  await pingerStore.setDailyCounts(dailyCounts);
+  await pingerStore.setMonthlyCounts(monthlyCounts);
 }
 
-async function _createCountsData(dailyCounts: JsonObject<JsonObject<number>>) {
+async function _createMonthlyCounts(
+  dailyCounts: DailyCounts
+): Promise<MonthlyCounts> {
   const monthAgoKey = _getTodayDateKey(-30);
-  const monthlyCounts = {} as JsonObject<number>;
+  const monthlyCounts: MonthlyCounts = {};
   Object.entries(dailyCounts).forEach(([dateKey, dayCounts]) => {
     if (dateKey <= monthAgoKey) {
       delete dailyCounts[dateKey];
@@ -115,97 +78,101 @@ async function _createCountsData(dailyCounts: JsonObject<JsonObject<number>>) {
       });
     }
   });
-  return { dailyCounts, monthlyCounts };
+  return monthlyCounts;
 }
 
 export async function refreshMonthlyResults() {
   const monthAgoKey = _getTodayDateKey(-Intervals.monthlyDataDaysSpan);
-  const dailyResultsQuerySnap = await admin
-    .firestore()
-    .collection(Collections.resultsDaily)
-    .get();
+  const dailyResultsEntries = Object.entries(
+    await pingerStore.getDailyResultsMap()
+  );
   await Promise.all(
-    dailyResultsQuerySnap.docs.map(async (dailyResultsSnap) => {
-      const dailyResults = dailyResultsSnap.data() as JsonObject<HostResult>;
-      const monthlyResults = _createMonthlyResults(dailyResults, monthAgoKey);
-      await _updateMonthlyResultsDocs(
-        dailyResultsSnap,
-        dailyResults,
-        monthlyResults
-      );
+    dailyResultsEntries.map(async ([host, dailyResults]) => {
+      if (Object.keys(dailyResults).length === 0) {
+        await pingerStore.deleteDailyResults(host);
+        await pingerStore.deleteMonthlyResults(host);
+      } else {
+        const monthlyResults = _createMonthlyResults(dailyResults, monthAgoKey);
+        await pingerStore.setDailyResults(host, dailyResults);
+        await pingerStore.setMonthlyResults(host, monthlyResults);
+      }
     })
   );
 }
 
 function _createMonthlyResults(
-  dailyResults: JsonObject<HostResult>,
+  dailyResults: DailyResults,
   monthAgoKey: string
-) {
-  const monthlyResults = {
+): HostResult {
+  const monthlyResults: HostResult = {
     count: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
-  } as HostResult;
+  };
   Object.entries(dailyResults).forEach(([dateKey, dayResults]) => {
     if (dateKey <= monthAgoKey) {
       delete dailyResults[dateKey];
     } else {
-      monthlyResults.count += dayResults.count;
-      _addDayToMonthlyValueResults(dayResults, monthlyResults.values);
-      Object.entries(dayResults.locations).forEach(([locationKey, result]) => {
-        _addStatsToLocationResults(
-          monthlyResults.locations,
-          locationKey,
-          result
-        );
-      });
+      _addDayToMonthlyResults(monthlyResults, dayResults);
     }
   });
   return monthlyResults;
 }
 
-function _addDayToMonthlyValueResults(
-  dayResults: HostResult,
-  valueResults: ValueResults
+function _addDayToMonthlyResults(
+  monthlyResults: HostResult,
+  dayResults: HostResult
 ) {
-  Object.entries(dayResults.values.min).forEach(([ping, count]) => {
-    valueResults.min[ping] = (valueResults.min[ping] ?? 0) + count;
+  const dayValues = dayResults.values;
+  const monthlyValues = monthlyResults.values;
+  monthlyResults.count += dayResults.count;
+  Object.entries(dayValues.min).forEach(([ping, count]) => {
+    monthlyValues.min[ping] = (monthlyValues.min[ping] ?? 0) + count;
   });
-  Object.entries(dayResults.values.mean).forEach(([ping, count]) => {
-    valueResults.mean[ping] = (valueResults.mean[ping] ?? 0) + count;
+  Object.entries(dayValues.mean).forEach(([ping, count]) => {
+    monthlyValues.mean[ping] = (monthlyValues.mean[ping] ?? 0) + count;
   });
-  Object.entries(dayResults.values.max).forEach(([ping, count]) => {
-    valueResults.max[ping] = (valueResults.max[ping] ?? 0) + count;
+  Object.entries(dayValues.max).forEach(([ping, count]) => {
+    monthlyValues.max[ping] = (monthlyValues.max[ping] ?? 0) + count;
   });
+  Object.entries(dayResults.locations).forEach(
+    ([locationKey, locationResult]) => {
+      _addDayToMonthlyLocationResults(
+        locationKey,
+        locationResult,
+        monthlyResults
+      );
+    }
+  );
 }
 
-async function _updateMonthlyResultsDocs(
-  dailyResultsSnap: FirebaseFirestore.QueryDocumentSnapshot,
-  dailyResults: JsonObject<HostResult>,
+function _addDayToMonthlyLocationResults(
+  locationKey: string,
+  dayResults: LocationResult,
   monthlyResults: HostResult
 ) {
-  const hostPath = dailyResultsSnap.ref.path.split("/").pop();
-  if (!hostPath)
-    throw Error("Host path missing in daily results document reference.");
-  const dailyResultsDoc = admin
-    .firestore()
-    .collection(Collections.resultsDaily)
-    .doc(hostPath);
-  const monthlyResultsDoc = admin
-    .firestore()
-    .collection(Collections.resultsMonthly)
-    .doc(hostPath);
-  if (Object.keys(dailyResults).length === 0) {
-    await dailyResultsDoc.delete();
-    await monthlyResultsDoc.delete();
-  } else {
-    await dailyResultsDoc.set(dailyResults);
-    await monthlyResultsDoc.set(monthlyResults);
-  }
+  const locationResults = monthlyResults.locations[locationKey] ?? {
+    count: 0,
+    stats: { min: 0, mean: 0, max: 0 },
+  };
+  const dayCount = dayResults.count;
+  const dayStats = dayResults.stats;
+  const locationCount = locationResults.count;
+  const locationStats = locationResults.stats;
+  const totalCount = locationCount + dayCount;
+  locationStats.min =
+    (locationStats.min * locationCount + dayStats.min * dayCount) / totalCount;
+  locationStats.mean =
+    (locationStats.mean * locationCount + dayStats.mean * dayCount) /
+    totalCount;
+  locationStats.max =
+    (locationStats.max * locationCount + dayStats.max * dayCount) / totalCount;
+  locationResults.count = totalCount;
+  monthlyResults.locations[locationKey] = locationResults;
 }
 
-function _getTodayDateKey(daysDelta: number = 0) {
-  let date = admin.firestore.Timestamp.now().toDate();
+function _getTodayDateKey(daysDelta: number = 0): string {
+  let date = pingerStore.currentDate;
   if (daysDelta !== 0) {
     date = new Date(date.getTime() + daysDelta * Intervals.secondsPerDay);
   }

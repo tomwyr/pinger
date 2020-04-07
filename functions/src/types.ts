@@ -7,14 +7,8 @@ export type Session = {
   stats: PingStats;
 };
 
-export type PingStats = {
-  min: number;
-  mean: number;
-  max: number;
-};
-
 export type HostResult = {
-  count: number,
+  count: number;
   values: ValueResults;
   locations: JsonObject<LocationResult>;
 };
@@ -29,3 +23,19 @@ export type LocationResult = {
   count: number;
   stats: PingStats;
 };
+
+export type PingStats = {
+  min: number;
+  mean: number;
+  max: number;
+};
+
+export type DailyResultsMap = JsonObject<DailyResults>;
+
+export type DailyCounts = JsonObject<JsonObject<number>>;
+
+export type DailyResults = JsonObject<HostResult>;
+
+export type MonthlyCounts = JsonObject<number>;
+
+export type MonthlyResults = HostResult;
