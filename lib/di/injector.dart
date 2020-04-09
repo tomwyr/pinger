@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -33,6 +34,8 @@ abstract class InjectorModule {
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
   Geolocator get geolocator => Geolocator();
+
+  Firestore get firestore => Firestore.instance;
 }
 
 @injectableInit
