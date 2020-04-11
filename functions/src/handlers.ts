@@ -1,6 +1,6 @@
 import { Intervals } from "./constants";
 import { PingerStore } from "./pinger_store";
-import { DailyCounts, DailyResults, HostResult, LocationResult, MonthlyCounts, Session } from "./types";
+import { DailyCounts, DailyResults, HostCounts, HostResults, LocationResults, Session } from "./types";
 
 const pingerStore = new PingerStore();
 
@@ -12,8 +12,17 @@ export async function updateDailyCounts(session: Session) {
 
 function _updateTodayDailyCounts(dailyCounts: DailyCounts, session: Session) {
   const todayKey = _getTodayDateKey();
-  const todayCounts = dailyCounts[todayKey] ?? {};
-  todayCounts[session.host] = (todayCounts[session.host] ?? 0) + 1;
+  const todayCounts = dailyCounts[todayKey] ?? {
+    totalCount: 0,
+    records: {},
+  };
+  const record = todayCounts.records[session.host] ?? {
+    name: session.host,
+    count: 0,
+  };
+  record.count += session.count;
+  todayCounts.totalCount += session.count;
+  todayCounts.records[session.host] = record;
   dailyCounts[todayKey] = todayCounts;
 }
 
@@ -29,16 +38,14 @@ function _updateTodayDailyResults(
 ) {
   const todayKey = _getTodayDateKey();
   const todayResults = dailyResults[todayKey] ?? {
-    count: 0,
+    totalCount: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
   };
   _addSessionToTodayValuesResults(session, todayResults);
   if (session.location) {
     const locationKey =
-      session.location.latitude.toFixed(0) +
-      "," +
-      session.location.longitude.toFixed(0);
+      session.location.lat.toFixed(0) + "," + session.location.lon.toFixed(0);
     _addDayToMonthlyLocationResults(locationKey, session, todayResults);
   }
   dailyResults[todayKey] = todayResults;
@@ -46,12 +53,12 @@ function _updateTodayDailyResults(
 
 function _addSessionToTodayValuesResults(
   session: Session,
-  todayResults: HostResult
+  todayResults: HostResults
 ) {
   const values = todayResults.values;
   const stats = session.stats;
   const count = session.count;
-  todayResults.count += count;
+  todayResults.totalCount += count;
   values.min[stats.min] = (values.min[stats.min] ?? 0) + count;
   values.mean[stats.mean] = (values.mean[stats.mean] ?? 0) + count;
   values.max[stats.max] = (values.max[stats.max] ?? 0) + count;
@@ -66,15 +73,21 @@ export async function refreshMonthlyCounts() {
 
 async function _createMonthlyCounts(
   dailyCounts: DailyCounts
-): Promise<MonthlyCounts> {
+): Promise<HostCounts> {
   const monthAgoKey = _getTodayDateKey(-30);
-  const monthlyCounts: MonthlyCounts = {};
+  const monthlyCounts: HostCounts = { totalCount: 0, records: {} };
   Object.entries(dailyCounts).forEach(([dateKey, dayCounts]) => {
     if (dateKey <= monthAgoKey) {
       delete dailyCounts[dateKey];
     } else {
-      Object.entries(dayCounts).forEach(([host, count]) => {
-        monthlyCounts[host] = (monthlyCounts[host] ?? 0) + count;
+      Object.entries(dayCounts.records).forEach(([host, record]) => {
+        const monthlyRecord = monthlyCounts.records[host] ?? {
+          name: host,
+          count: 0,
+        };
+        monthlyRecord.count += record.count;
+        monthlyCounts.totalCount += record.count;
+        monthlyCounts.records[host] = monthlyRecord;
       });
     }
   });
@@ -84,7 +97,7 @@ async function _createMonthlyCounts(
 export async function refreshMonthlyResults() {
   const monthAgoKey = _getTodayDateKey(-Intervals.monthlyDataDaysSpan);
   const dailyResultsEntries = Object.entries(
-    await pingerStore.getDailyResultsMap()
+    await pingerStore.getAllDailyResults()
   );
   await Promise.all(
     dailyResultsEntries.map(async ([host, dailyResults]) => {
@@ -103,9 +116,9 @@ export async function refreshMonthlyResults() {
 function _createMonthlyResults(
   dailyResults: DailyResults,
   monthAgoKey: string
-): HostResult {
-  const monthlyResults: HostResult = {
-    count: 0,
+): HostResults {
+  const monthlyResults: HostResults = {
+    totalCount: 0,
     values: { min: {}, mean: {}, max: {} },
     locations: {},
   };
@@ -120,12 +133,12 @@ function _createMonthlyResults(
 }
 
 function _addDayToMonthlyResults(
-  monthlyResults: HostResult,
-  dayResults: HostResult
+  monthlyResults: HostResults,
+  dayResults: HostResults
 ) {
   const dayValues = dayResults.values;
   const monthlyValues = monthlyResults.values;
-  monthlyResults.count += dayResults.count;
+  monthlyResults.totalCount += dayResults.totalCount;
   Object.entries(dayValues.min).forEach(([ping, count]) => {
     monthlyValues.min[ping] = (monthlyValues.min[ping] ?? 0) + count;
   });
@@ -136,10 +149,10 @@ function _addDayToMonthlyResults(
     monthlyValues.max[ping] = (monthlyValues.max[ping] ?? 0) + count;
   });
   Object.entries(dayResults.locations).forEach(
-    ([locationKey, locationResult]) => {
+    ([locationKey, locationResults]) => {
       _addDayToMonthlyLocationResults(
         locationKey,
-        locationResult,
+        locationResults,
         monthlyResults
       );
     }
@@ -148,27 +161,27 @@ function _addDayToMonthlyResults(
 
 function _addDayToMonthlyLocationResults(
   locationKey: string,
-  dayResults: LocationResult,
-  monthlyResults: HostResult
+  dayResults: LocationResults,
+  monthlyResults: HostResults
 ) {
-  const locationResults = monthlyResults.locations[locationKey] ?? {
+  const monthResults = monthlyResults.locations[locationKey] ?? {
     count: 0,
     stats: { min: 0, mean: 0, max: 0 },
+    location: dayResults.location,
   };
   const dayCount = dayResults.count;
   const dayStats = dayResults.stats;
-  const locationCount = locationResults.count;
-  const locationStats = locationResults.stats;
-  const totalCount = locationCount + dayCount;
-  locationStats.min =
-    (locationStats.min * locationCount + dayStats.min * dayCount) / totalCount;
-  locationStats.mean =
-    (locationStats.mean * locationCount + dayStats.mean * dayCount) /
-    totalCount;
-  locationStats.max =
-    (locationStats.max * locationCount + dayStats.max * dayCount) / totalCount;
-  locationResults.count = totalCount;
-  monthlyResults.locations[locationKey] = locationResults;
+  const monthCount = monthResults.count;
+  const monthStats = monthResults.stats;
+  const totalCount = monthCount + dayCount;
+  monthStats.min =
+    (monthStats.min * monthCount + dayStats.min * dayCount) / totalCount;
+  monthStats.mean =
+    (monthStats.mean * monthCount + dayStats.mean * dayCount) / totalCount;
+  monthStats.max =
+    (monthStats.max * monthCount + dayStats.max * dayCount) / totalCount;
+  monthResults.count = totalCount;
+  monthlyResults.locations[locationKey] = monthResults;
 }
 
 function _getTodayDateKey(daysDelta: number = 0): string {

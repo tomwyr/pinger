@@ -1,6 +1,6 @@
 import admin = require("firebase-admin");
 import { Collections, Paths } from "./constants";
-import { DailyCounts, DailyResults, DailyResultsMap, MonthlyCounts, MonthlyResults } from "./types";
+import { DailyCounts, DailyResults, HostCounts, HostResults, JsonObject } from "./types";
 
 export class PingerStore {
   _firestoreInstance!: FirebaseFirestore.Firestore;
@@ -59,29 +59,29 @@ export class PingerStore {
       .delete();
   }
 
-  async setMonthlyCounts(monthlyCounts: MonthlyCounts) {
+  async setMonthlyCounts(monthlyCounts: HostCounts) {
     await this._firestore
       .collection(Collections.countsMonthly)
       .doc(Paths.all)
       .set(monthlyCounts);
   }
 
-  async setMonthlyResults(host: string, monthlyResults: MonthlyResults) {
+  async setMonthlyResults(host: string, monthlyResults: HostResults) {
     await this._firestore
       .collection(Collections.resultsMonthly)
       .doc(host)
       .set(monthlyResults);
   }
 
-  async getDailyResultsMap(): Promise<DailyResultsMap> {
+  async getAllDailyResults(): Promise<JsonObject<DailyResults>> {
     const dailyResultsQuery = await this._firestore
       .collection(Collections.resultsDaily)
       .get();
-    const dailyResultsMap = {} as DailyResultsMap;
+    const allDailyResults: JsonObject<DailyResults> = {};
     dailyResultsQuery.docs.forEach((it) => {
       const host = it.ref.path.split("/").pop()!;
-      dailyResultsMap[host] = it.data();
+      allDailyResults[host] = it.data();
     });
-    return dailyResultsMap;
+    return allDailyResults;
   }
 }

@@ -1,16 +1,30 @@
-export type JsonObject<V = any> = { [key: string]: V };
+export type JsonObject<T> = { [key: string]: T };
 
 export type Session = {
   host: string;
   count: number;
-  location: FirebaseFirestore.GeoPoint;
+  location: GeoPoint;
   stats: PingStats;
 };
 
-export type HostResult = {
-  count: number;
+export type DailyCounts = JsonObject<HostCounts>;
+
+export type DailyResults = JsonObject<HostResults>;
+
+export type HostCounts = {
+  totalCount: number;
+  records: JsonObject<HostRecord>;
+};
+
+export type HostResults = {
+  totalCount: number;
   values: ValueResults;
-  locations: JsonObject<LocationResult>;
+  locations: JsonObject<LocationResults>;
+};
+
+export type HostRecord = {
+  name: string;
+  count: number;
 };
 
 export type ValueResults = {
@@ -19,7 +33,8 @@ export type ValueResults = {
   max: JsonObject<number>;
 };
 
-export type LocationResult = {
+export type LocationResults = {
+  location: GeoPoint;
   count: number;
   stats: PingStats;
 };
@@ -30,12 +45,7 @@ export type PingStats = {
   max: number;
 };
 
-export type DailyResultsMap = JsonObject<DailyResults>;
-
-export type DailyCounts = JsonObject<JsonObject<number>>;
-
-export type DailyResults = JsonObject<HostResult>;
-
-export type MonthlyCounts = JsonObject<number>;
-
-export type MonthlyResults = HostResult;
+export type GeoPoint = {
+  lat: number;
+  lon: number;
+};
