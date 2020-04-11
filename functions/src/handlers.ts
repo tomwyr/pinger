@@ -1,6 +1,6 @@
 import { Intervals } from "./constants";
 import { PingerStore } from "./pinger_store";
-import { DailyCounts, DailyResults, HostCounts, HostResults, LocationResults, Session } from "./types";
+import { DailyCounts, DailyResults, HostCounts, HostResults, LocationResults, MonthlyCounts, MonthlyResults, Session } from "./types";
 
 const pingerStore = new PingerStore();
 
@@ -73,7 +73,7 @@ export async function refreshMonthlyCounts() {
 
 async function _createMonthlyCounts(
   dailyCounts: DailyCounts
-): Promise<HostCounts> {
+): Promise<MonthlyCounts> {
   const monthAgoKey = _getTodayDateKey(-30);
   const monthlyCounts: HostCounts = { totalCount: 0, records: {} };
   Object.entries(dailyCounts).forEach(([dateKey, dayCounts]) => {
@@ -91,7 +91,10 @@ async function _createMonthlyCounts(
       });
     }
   });
-  return monthlyCounts;
+  return {
+    totalCount: monthlyCounts.totalCount,
+    records: Object.values(monthlyCounts.records),
+  };
 }
 
 export async function refreshMonthlyResults() {
@@ -116,7 +119,7 @@ export async function refreshMonthlyResults() {
 function _createMonthlyResults(
   dailyResults: DailyResults,
   monthAgoKey: string
-): HostResults {
+): MonthlyResults {
   const monthlyResults: HostResults = {
     totalCount: 0,
     values: { min: {}, mean: {}, max: {} },
@@ -129,7 +132,11 @@ function _createMonthlyResults(
       _addDayToMonthlyResults(monthlyResults, dayResults);
     }
   });
-  return monthlyResults;
+  return {
+    totalCount: monthlyResults.totalCount,
+    values: monthlyResults.values,
+    locations: Object.values(monthlyResults.locations),
+  };
 }
 
 function _addDayToMonthlyResults(

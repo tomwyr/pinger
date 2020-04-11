@@ -1,6 +1,6 @@
 import admin = require("firebase-admin");
 import { Collections, Paths } from "./constants";
-import { DailyCounts, DailyResults, HostCounts, HostResults, JsonObject } from "./types";
+import { DailyCounts, DailyResults, JsonObject, MonthlyCounts, MonthlyResults } from "./types";
 
 export class PingerStore {
   _firestoreInstance!: FirebaseFirestore.Firestore;
@@ -59,14 +59,14 @@ export class PingerStore {
       .delete();
   }
 
-  async setMonthlyCounts(monthlyCounts: HostCounts) {
+  async setMonthlyCounts(monthlyCounts: MonthlyCounts) {
     await this._firestore
       .collection(Collections.countsMonthly)
       .doc(Paths.all)
       .set(monthlyCounts);
   }
 
-  async setMonthlyResults(host: string, monthlyResults: HostResults) {
+  async setMonthlyResults(host: string, monthlyResults: MonthlyResults) {
     await this._firestore
       .collection(Collections.resultsMonthly)
       .doc(host)

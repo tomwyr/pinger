@@ -11,6 +11,17 @@ export type DailyCounts = JsonObject<HostCounts>;
 
 export type DailyResults = JsonObject<HostResults>;
 
+export type MonthlyCounts = {
+  totalCount: number;
+  records: Array<HostRecord>;
+};
+
+export type MonthlyResults = {
+  totalCount: number;
+  values: ValueResults;
+  locations: Array<LocationResults>;
+};
+
 export type HostCounts = {
   totalCount: number;
   records: JsonObject<HostRecord>;
