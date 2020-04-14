@@ -14,15 +14,15 @@ function _updateTodayDailyCounts(dailyCounts: DailyCounts, session: Session) {
   const todayKey = _getTodayDateKey();
   const todayCounts = dailyCounts[todayKey] ?? {
     totalCount: 0,
-    records: {},
+    pingCounts: {},
   };
-  const record = todayCounts.records[session.host] ?? {
-    name: session.host,
+  const pingCount = todayCounts.pingCounts[session.host] ?? {
+    host: session.host,
     count: 0,
   };
-  record.count += session.count;
+  pingCount.count += session.count;
   todayCounts.totalCount += session.count;
-  todayCounts.records[session.host] = record;
+  todayCounts.pingCounts[session.host] = pingCount;
   dailyCounts[todayKey] = todayCounts;
 }
 
@@ -39,8 +39,8 @@ function _updateTodayDailyResults(
   const todayKey = _getTodayDateKey();
   const todayResults = dailyResults[todayKey] ?? {
     totalCount: 0,
-    values: { min: {}, mean: {}, max: {} },
-    locations: {},
+    valueResults: { min: {}, mean: {}, max: {} },
+    locationResults: {},
   };
   _addSessionToTodayValuesResults(session, todayResults);
   if (session.location) {
@@ -55,13 +55,13 @@ function _addSessionToTodayValuesResults(
   session: Session,
   todayResults: HostResults
 ) {
-  const values = todayResults.values;
+  const results = todayResults.valueResults;
   const stats = session.stats;
   const count = session.count;
   todayResults.totalCount += count;
-  values.min[stats.min] = (values.min[stats.min] ?? 0) + count;
-  values.mean[stats.mean] = (values.mean[stats.mean] ?? 0) + count;
-  values.max[stats.max] = (values.max[stats.max] ?? 0) + count;
+  results.min[stats.min] = (results.min[stats.min] ?? 0) + count;
+  results.mean[stats.mean] = (results.mean[stats.mean] ?? 0) + count;
+  results.max[stats.max] = (results.max[stats.max] ?? 0) + count;
 }
 
 export async function refreshMonthlyCounts() {
@@ -75,25 +75,25 @@ async function _createMonthlyCounts(
   dailyCounts: DailyCounts
 ): Promise<MonthlyCounts> {
   const monthAgoKey = _getTodayDateKey(-30);
-  const monthlyCounts: HostCounts = { totalCount: 0, records: {} };
+  const monthlyCounts: HostCounts = { totalCount: 0, pingCounts: {} };
   Object.entries(dailyCounts).forEach(([dateKey, dayCounts]) => {
     if (dateKey <= monthAgoKey) {
       delete dailyCounts[dateKey];
     } else {
-      Object.entries(dayCounts.records).forEach(([host, record]) => {
-        const monthlyRecord = monthlyCounts.records[host] ?? {
-          name: host,
+      Object.entries(dayCounts.pingCounts).forEach(([host, dayCount]) => {
+        const monthlyCount = monthlyCounts.pingCounts[host] ?? {
+          host: host,
           count: 0,
         };
-        monthlyRecord.count += record.count;
-        monthlyCounts.totalCount += record.count;
-        monthlyCounts.records[host] = monthlyRecord;
+        monthlyCount.count += dayCount.count;
+        monthlyCounts.totalCount += dayCount.count;
+        monthlyCounts.pingCounts[host] = monthlyCount;
       });
     }
   });
   return {
     totalCount: monthlyCounts.totalCount,
-    records: Object.values(monthlyCounts.records),
+    pingCounts: Object.values(monthlyCounts.pingCounts),
   };
 }
 
@@ -122,8 +122,8 @@ function _createMonthlyResults(
 ): MonthlyResults {
   const monthlyResults: HostResults = {
     totalCount: 0,
-    values: { min: {}, mean: {}, max: {} },
-    locations: {},
+    valueResults: { min: {}, mean: {}, max: {} },
+    locationResults: {},
   };
   Object.entries(dailyResults).forEach(([dateKey, dayResults]) => {
     if (dateKey <= monthAgoKey) {
@@ -134,8 +134,8 @@ function _createMonthlyResults(
   });
   return {
     totalCount: monthlyResults.totalCount,
-    values: monthlyResults.values,
-    locations: Object.values(monthlyResults.locations),
+    valueResults: monthlyResults.valueResults,
+    locationResults: Object.values(monthlyResults.locationResults),
   };
 }
 
@@ -143,8 +143,8 @@ function _addDayToMonthlyResults(
   monthlyResults: HostResults,
   dayResults: HostResults
 ) {
-  const dayValues = dayResults.values;
-  const monthlyValues = monthlyResults.values;
+  const dayValues = dayResults.valueResults;
+  const monthlyValues = monthlyResults.valueResults;
   monthlyResults.totalCount += dayResults.totalCount;
   Object.entries(dayValues.min).forEach(([ping, count]) => {
     monthlyValues.min[ping] = (monthlyValues.min[ping] ?? 0) + count;
@@ -155,7 +155,7 @@ function _addDayToMonthlyResults(
   Object.entries(dayValues.max).forEach(([ping, count]) => {
     monthlyValues.max[ping] = (monthlyValues.max[ping] ?? 0) + count;
   });
-  Object.entries(dayResults.locations).forEach(
+  Object.entries(dayResults.locationResults).forEach(
     ([locationKey, locationResults]) => {
       _addDayToMonthlyLocationResults(
         locationKey,
@@ -171,7 +171,7 @@ function _addDayToMonthlyLocationResults(
   dayResults: LocationResults,
   monthlyResults: HostResults
 ) {
-  const monthResults = monthlyResults.locations[locationKey] ?? {
+  const monthResults = monthlyResults.locationResults[locationKey] ?? {
     count: 0,
     stats: { min: 0, mean: 0, max: 0 },
     location: dayResults.location,
@@ -188,7 +188,7 @@ function _addDayToMonthlyLocationResults(
   monthStats.max =
     (monthStats.max * monthCount + dayStats.max * dayCount) / totalCount;
   monthResults.count = totalCount;
-  monthlyResults.locations[locationKey] = monthResults;
+  monthlyResults.locationResults[locationKey] = monthResults;
 }
 
 function _getTodayDateKey(daysDelta: number = 0): string {

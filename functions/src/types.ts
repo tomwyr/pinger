@@ -13,28 +13,28 @@ export type DailyResults = JsonObject<HostResults>;
 
 export type MonthlyCounts = {
   totalCount: number;
-  records: Array<HostRecord>;
+  pingCounts: Array<PingCount>;
 };
 
 export type MonthlyResults = {
   totalCount: number;
-  values: ValueResults;
-  locations: Array<LocationResults>;
+  valueResults: ValueResults;
+  locationResults: Array<LocationResults>;
 };
 
 export type HostCounts = {
   totalCount: number;
-  records: JsonObject<HostRecord>;
+  pingCounts: JsonObject<PingCount>;
 };
 
 export type HostResults = {
   totalCount: number;
-  values: ValueResults;
-  locations: JsonObject<LocationResults>;
+  valueResults: ValueResults;
+  locationResults: JsonObject<LocationResults>;
 };
 
-export type HostRecord = {
-  name: string;
+export type PingCount = {
+  host: string;
   count: number;
 };
 
