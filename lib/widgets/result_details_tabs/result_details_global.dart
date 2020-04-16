@@ -12,7 +12,7 @@ class ResultDetailsGlobal extends StatefulWidget {
   final bool isSharingLocation;
   final VoidCallback onShareLocationPressed;
   final PingResult userResult;
-  final PingGlobalResults globalResults;
+  final GlobalHostResults globalResults;
 
   const ResultDetailsGlobal({
     Key key,
@@ -116,9 +116,9 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
       Text("/", style: TextStyle(color: Colors.grey));
 
   List<MapDot> _getMapData() {
-    return widget.globalResults.geoStats
+    return widget.globalResults.locationResults
         .map((it) =>
-            MapDot(it.position, _resultTypeData.getStatsValue(it.stats)))
+            MapDot(it.location, _resultTypeData.getStatsValue(it.stats)))
         .toList();
   }
 
@@ -152,13 +152,15 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
   }
 
   double _getGraphLabelsInterval(int labelCount) {
-    final data = _resultTypeData.graphData;
-    return (data.last.ping - data.first.ping) / labelCount;
+    final data = _resultTypeData.graphData.keys.toList()
+      ..sort((e1, e2) => e1.compareTo(e2));
+    return (data.last - data.first) / labelCount;
   }
 
   List<FlSpot> _getGraphData() {
-    return _resultTypeData.graphData
-        .map((it) => FlSpot(it.ping, it.percentage))
+    final totalCount = widget.globalResults.totalCount;
+    return _resultTypeData.graphData.entries
+        .map((it) => FlSpot(it.key.toDouble(), it.value / totalCount))
         .toList();
   }
 
@@ -192,28 +194,28 @@ enum UserResultType { min, mean, max }
 
 class UserResultTypeData {
   final String typeButtonLabel;
-  final List<PingGroup> graphData;
+  final Map<int, int> graphData;
   final double Function(PingStats) getStatsValue;
 
   factory UserResultTypeData.forType(UserResultType type, PingResult userResult,
-      PingGlobalResults globalResults) {
+      GlobalHostResults globalResults) {
     switch (type) {
       case UserResultType.min:
         return UserResultTypeData(
           typeButtonLabel: "Min",
-          graphData: globalResults.groupStats.min,
+          graphData: globalResults.valueResults.min,
           getStatsValue: (stats) => stats.min,
         );
       case UserResultType.mean:
         return UserResultTypeData(
           typeButtonLabel: "Mean",
-          graphData: globalResults.groupStats.mean,
+          graphData: globalResults.valueResults.mean,
           getStatsValue: (stats) => stats.mean,
         );
       case UserResultType.max:
         return UserResultTypeData(
           typeButtonLabel: "Max",
-          graphData: globalResults.groupStats.max,
+          graphData: globalResults.valueResults.max,
           getStatsValue: (stats) => stats.max,
         );
     }

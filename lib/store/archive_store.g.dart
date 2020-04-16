@@ -9,35 +9,62 @@ part of 'archive_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ArchiveStore on ArchiveStoreBase, Store {
-  final _$resultsAtom = Atom(name: 'ArchiveStoreBase.results');
+  final _$localResultsAtom = Atom(name: 'ArchiveStoreBase.localResults');
 
   @override
-  List<PingResult> get results {
-    _$resultsAtom.context.enforceReadPolicy(_$resultsAtom);
-    _$resultsAtom.reportObserved();
-    return super.results;
+  List<PingResult> get localResults {
+    _$localResultsAtom.context.enforceReadPolicy(_$localResultsAtom);
+    _$localResultsAtom.reportObserved();
+    return super.localResults;
   }
 
   @override
-  set results(List<PingResult> value) {
-    _$resultsAtom.context.conditionallyRunInAction(() {
-      super.results = value;
-      _$resultsAtom.reportChanged();
-    }, _$resultsAtom, name: '${_$resultsAtom.name}_set');
+  set localResults(List<PingResult> value) {
+    _$localResultsAtom.context.conditionallyRunInAction(() {
+      super.localResults = value;
+      _$localResultsAtom.reportChanged();
+    }, _$localResultsAtom, name: '${_$localResultsAtom.name}_set');
   }
 
-  final _$deleteResultAsyncAction = AsyncAction('deleteResult');
+  final _$globalResultsAtom = Atom(name: 'ArchiveStoreBase.globalResults');
 
   @override
-  Future<void> deleteResult(int resultId) {
-    return _$deleteResultAsyncAction.run(() => super.deleteResult(resultId));
+  Map<String, GlobalHostResults> get globalResults {
+    _$globalResultsAtom.context.enforceReadPolicy(_$globalResultsAtom);
+    _$globalResultsAtom.reportObserved();
+    return super.globalResults;
   }
 
-  final _$saveResultAsyncAction = AsyncAction('saveResult');
+  @override
+  set globalResults(Map<String, GlobalHostResults> value) {
+    _$globalResultsAtom.context.conditionallyRunInAction(() {
+      super.globalResults = value;
+      _$globalResultsAtom.reportChanged();
+    }, _$globalResultsAtom, name: '${_$globalResultsAtom.name}_set');
+  }
+
+  final _$fetchGlobalResultsAsyncAction = AsyncAction('fetchGlobalResults');
 
   @override
-  Future<int> saveResult(PingResult result) {
-    return _$saveResultAsyncAction.run(() => super.saveResult(result));
+  Future<void> fetchGlobalResults(String host) {
+    return _$fetchGlobalResultsAsyncAction
+        .run(() => super.fetchGlobalResults(host));
+  }
+
+  final _$deleteLocalResultAsyncAction = AsyncAction('deleteLocalResult');
+
+  @override
+  Future<void> deleteLocalResult(int resultId) {
+    return _$deleteLocalResultAsyncAction
+        .run(() => super.deleteLocalResult(resultId));
+  }
+
+  final _$saveLocalResultAsyncAction = AsyncAction('saveLocalResult');
+
+  @override
+  Future<int> saveLocalResult(PingResult result) {
+    return _$saveLocalResultAsyncAction
+        .run(() => super.saveLocalResult(result));
   }
 
   final _$ArchiveStoreBaseActionController =
@@ -55,7 +82,8 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'results: ${results.toString()}';
+    final string =
+        'localResults: ${localResults.toString()},globalResults: ${globalResults.toString()}';
     return '{$string}';
   }
 }

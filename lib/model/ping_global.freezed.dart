@@ -8,363 +8,507 @@ part of 'ping_global.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-PingGlobalResults _$PingGlobalResultsFromJson(Map<String, dynamic> json) {
-  return _PingGlobalResults.fromJson(json);
+GlobalPingCounts _$GlobalPingCountsFromJson(Map<String, dynamic> json) {
+  return _GlobalPingCounts.fromJson(json);
 }
 
-class _$PingGlobalResultsTearOff {
-  const _$PingGlobalResultsTearOff();
+class _$GlobalPingCountsTearOff {
+  const _$GlobalPingCountsTearOff();
 
-  _PingGlobalResults call(
-      {@required List<PingGeoStats> geoStats,
-      @required PingGroupStats groupStats}) {
-    return _PingGlobalResults(
-      geoStats: geoStats,
-      groupStats: groupStats,
+  _GlobalPingCounts call(
+      {@required int totalCount, @required List<PingCount> pingCounts}) {
+    return _GlobalPingCounts(
+      totalCount: totalCount,
+      pingCounts: pingCounts,
     );
   }
 }
 
 // ignore: unused_element
-const $PingGlobalResults = _$PingGlobalResultsTearOff();
+const $GlobalPingCounts = _$GlobalPingCountsTearOff();
 
-mixin _$PingGlobalResults {
-  List<PingGeoStats> get geoStats;
-  PingGroupStats get groupStats;
+mixin _$GlobalPingCounts {
+  int get totalCount;
+  List<PingCount> get pingCounts;
 
   Map<String, dynamic> toJson();
-  $PingGlobalResultsCopyWith<PingGlobalResults> get copyWith;
+  $GlobalPingCountsCopyWith<GlobalPingCounts> get copyWith;
 }
 
-abstract class $PingGlobalResultsCopyWith<$Res> {
-  factory $PingGlobalResultsCopyWith(
-          PingGlobalResults value, $Res Function(PingGlobalResults) then) =
-      _$PingGlobalResultsCopyWithImpl<$Res>;
-  $Res call({List<PingGeoStats> geoStats, PingGroupStats groupStats});
-
-  $PingGroupStatsCopyWith<$Res> get groupStats;
+abstract class $GlobalPingCountsCopyWith<$Res> {
+  factory $GlobalPingCountsCopyWith(
+          GlobalPingCounts value, $Res Function(GlobalPingCounts) then) =
+      _$GlobalPingCountsCopyWithImpl<$Res>;
+  $Res call({int totalCount, List<PingCount> pingCounts});
 }
 
-class _$PingGlobalResultsCopyWithImpl<$Res>
-    implements $PingGlobalResultsCopyWith<$Res> {
-  _$PingGlobalResultsCopyWithImpl(this._value, this._then);
+class _$GlobalPingCountsCopyWithImpl<$Res>
+    implements $GlobalPingCountsCopyWith<$Res> {
+  _$GlobalPingCountsCopyWithImpl(this._value, this._then);
 
-  final PingGlobalResults _value;
+  final GlobalPingCounts _value;
   // ignore: unused_field
-  final $Res Function(PingGlobalResults) _then;
+  final $Res Function(GlobalPingCounts) _then;
 
   @override
   $Res call({
-    Object geoStats = freezed,
-    Object groupStats = freezed,
+    Object totalCount = freezed,
+    Object pingCounts = freezed,
   }) {
     return _then(_value.copyWith(
-      geoStats: geoStats == freezed
-          ? _value.geoStats
-          : geoStats as List<PingGeoStats>,
-      groupStats: groupStats == freezed
-          ? _value.groupStats
-          : groupStats as PingGroupStats,
+      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      pingCounts: pingCounts == freezed
+          ? _value.pingCounts
+          : pingCounts as List<PingCount>,
     ));
   }
-
-  @override
-  $PingGroupStatsCopyWith<$Res> get groupStats {
-    if (_value.groupStats == null) {
-      return null;
-    }
-    return $PingGroupStatsCopyWith<$Res>(_value.groupStats, (value) {
-      return _then(_value.copyWith(groupStats: value));
-    });
-  }
 }
 
-abstract class _$PingGlobalResultsCopyWith<$Res>
-    implements $PingGlobalResultsCopyWith<$Res> {
-  factory _$PingGlobalResultsCopyWith(
-          _PingGlobalResults value, $Res Function(_PingGlobalResults) then) =
-      __$PingGlobalResultsCopyWithImpl<$Res>;
+abstract class _$GlobalPingCountsCopyWith<$Res>
+    implements $GlobalPingCountsCopyWith<$Res> {
+  factory _$GlobalPingCountsCopyWith(
+          _GlobalPingCounts value, $Res Function(_GlobalPingCounts) then) =
+      __$GlobalPingCountsCopyWithImpl<$Res>;
   @override
-  $Res call({List<PingGeoStats> geoStats, PingGroupStats groupStats});
-
-  @override
-  $PingGroupStatsCopyWith<$Res> get groupStats;
+  $Res call({int totalCount, List<PingCount> pingCounts});
 }
 
-class __$PingGlobalResultsCopyWithImpl<$Res>
-    extends _$PingGlobalResultsCopyWithImpl<$Res>
-    implements _$PingGlobalResultsCopyWith<$Res> {
-  __$PingGlobalResultsCopyWithImpl(
-      _PingGlobalResults _value, $Res Function(_PingGlobalResults) _then)
-      : super(_value, (v) => _then(v as _PingGlobalResults));
+class __$GlobalPingCountsCopyWithImpl<$Res>
+    extends _$GlobalPingCountsCopyWithImpl<$Res>
+    implements _$GlobalPingCountsCopyWith<$Res> {
+  __$GlobalPingCountsCopyWithImpl(
+      _GlobalPingCounts _value, $Res Function(_GlobalPingCounts) _then)
+      : super(_value, (v) => _then(v as _GlobalPingCounts));
 
   @override
-  _PingGlobalResults get _value => super._value as _PingGlobalResults;
+  _GlobalPingCounts get _value => super._value as _GlobalPingCounts;
 
   @override
   $Res call({
-    Object geoStats = freezed,
-    Object groupStats = freezed,
+    Object totalCount = freezed,
+    Object pingCounts = freezed,
   }) {
-    return _then(_PingGlobalResults(
-      geoStats: geoStats == freezed
-          ? _value.geoStats
-          : geoStats as List<PingGeoStats>,
-      groupStats: groupStats == freezed
-          ? _value.groupStats
-          : groupStats as PingGroupStats,
+    return _then(_GlobalPingCounts(
+      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      pingCounts: pingCounts == freezed
+          ? _value.pingCounts
+          : pingCounts as List<PingCount>,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_PingGlobalResults implements _PingGlobalResults {
-  _$_PingGlobalResults({@required this.geoStats, @required this.groupStats})
-      : assert(geoStats != null),
-        assert(groupStats != null);
+class _$_GlobalPingCounts implements _GlobalPingCounts {
+  _$_GlobalPingCounts({@required this.totalCount, @required this.pingCounts})
+      : assert(totalCount != null),
+        assert(pingCounts != null);
 
-  factory _$_PingGlobalResults.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingGlobalResultsFromJson(json);
+  factory _$_GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
+      _$_$_GlobalPingCountsFromJson(json);
 
   @override
-  final List<PingGeoStats> geoStats;
+  final int totalCount;
   @override
-  final PingGroupStats groupStats;
+  final List<PingCount> pingCounts;
 
   @override
   String toString() {
-    return 'PingGlobalResults(geoStats: $geoStats, groupStats: $groupStats)';
+    return 'GlobalPingCounts(totalCount: $totalCount, pingCounts: $pingCounts)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingGlobalResults &&
-            (identical(other.geoStats, geoStats) ||
+        (other is _GlobalPingCounts &&
+            (identical(other.totalCount, totalCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.geoStats, geoStats)) &&
-            (identical(other.groupStats, groupStats) ||
+                    .equals(other.totalCount, totalCount)) &&
+            (identical(other.pingCounts, pingCounts) ||
                 const DeepCollectionEquality()
-                    .equals(other.groupStats, groupStats)));
+                    .equals(other.pingCounts, pingCounts)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(geoStats) ^
-      const DeepCollectionEquality().hash(groupStats);
+      const DeepCollectionEquality().hash(totalCount) ^
+      const DeepCollectionEquality().hash(pingCounts);
 
   @override
-  _$PingGlobalResultsCopyWith<_PingGlobalResults> get copyWith =>
-      __$PingGlobalResultsCopyWithImpl<_PingGlobalResults>(this, _$identity);
+  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith =>
+      __$GlobalPingCountsCopyWithImpl<_GlobalPingCounts>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingGlobalResultsToJson(this);
+    return _$_$_GlobalPingCountsToJson(this);
   }
 }
 
-abstract class _PingGlobalResults implements PingGlobalResults {
-  factory _PingGlobalResults(
-      {@required List<PingGeoStats> geoStats,
-      @required PingGroupStats groupStats}) = _$_PingGlobalResults;
+abstract class _GlobalPingCounts implements GlobalPingCounts {
+  factory _GlobalPingCounts(
+      {@required int totalCount,
+      @required List<PingCount> pingCounts}) = _$_GlobalPingCounts;
 
-  factory _PingGlobalResults.fromJson(Map<String, dynamic> json) =
-      _$_PingGlobalResults.fromJson;
+  factory _GlobalPingCounts.fromJson(Map<String, dynamic> json) =
+      _$_GlobalPingCounts.fromJson;
 
   @override
-  List<PingGeoStats> get geoStats;
+  int get totalCount;
   @override
-  PingGroupStats get groupStats;
+  List<PingCount> get pingCounts;
   @override
-  _$PingGlobalResultsCopyWith<_PingGlobalResults> get copyWith;
+  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith;
 }
 
-PingGeoStats _$PingGeoStatsFromJson(Map<String, dynamic> json) {
-  return _PingGeoStats.fromJson(json);
+PingCount _$PingCountFromJson(Map<String, dynamic> json) {
+  return _PingCount.fromJson(json);
 }
 
-class _$PingGeoStatsTearOff {
-  const _$PingGeoStatsTearOff();
+class _$PingCountTearOff {
+  const _$PingCountTearOff();
 
-  _PingGeoStats call(
-      {@required GeoPosition position, @required PingStats stats}) {
-    return _PingGeoStats(
-      position: position,
-      stats: stats,
+  _PingCount call({@required String host, @required int count}) {
+    return _PingCount(
+      host: host,
+      count: count,
     );
   }
 }
 
 // ignore: unused_element
-const $PingGeoStats = _$PingGeoStatsTearOff();
+const $PingCount = _$PingCountTearOff();
 
-mixin _$PingGeoStats {
-  GeoPosition get position;
-  PingStats get stats;
+mixin _$PingCount {
+  String get host;
+  int get count;
 
   Map<String, dynamic> toJson();
-  $PingGeoStatsCopyWith<PingGeoStats> get copyWith;
+  $PingCountCopyWith<PingCount> get copyWith;
 }
 
-abstract class $PingGeoStatsCopyWith<$Res> {
-  factory $PingGeoStatsCopyWith(
-          PingGeoStats value, $Res Function(PingGeoStats) then) =
-      _$PingGeoStatsCopyWithImpl<$Res>;
-  $Res call({GeoPosition position, PingStats stats});
-
-  $GeoPositionCopyWith<$Res> get position;
-  $PingStatsCopyWith<$Res> get stats;
+abstract class $PingCountCopyWith<$Res> {
+  factory $PingCountCopyWith(PingCount value, $Res Function(PingCount) then) =
+      _$PingCountCopyWithImpl<$Res>;
+  $Res call({String host, int count});
 }
 
-class _$PingGeoStatsCopyWithImpl<$Res> implements $PingGeoStatsCopyWith<$Res> {
-  _$PingGeoStatsCopyWithImpl(this._value, this._then);
+class _$PingCountCopyWithImpl<$Res> implements $PingCountCopyWith<$Res> {
+  _$PingCountCopyWithImpl(this._value, this._then);
 
-  final PingGeoStats _value;
+  final PingCount _value;
   // ignore: unused_field
-  final $Res Function(PingGeoStats) _then;
+  final $Res Function(PingCount) _then;
 
   @override
   $Res call({
-    Object position = freezed,
-    Object stats = freezed,
+    Object host = freezed,
+    Object count = freezed,
   }) {
     return _then(_value.copyWith(
-      position: position == freezed ? _value.position : position as GeoPosition,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
+      host: host == freezed ? _value.host : host as String,
+      count: count == freezed ? _value.count : count as int,
     ));
   }
-
-  @override
-  $GeoPositionCopyWith<$Res> get position {
-    if (_value.position == null) {
-      return null;
-    }
-    return $GeoPositionCopyWith<$Res>(_value.position, (value) {
-      return _then(_value.copyWith(position: value));
-    });
-  }
-
-  @override
-  $PingStatsCopyWith<$Res> get stats {
-    if (_value.stats == null) {
-      return null;
-    }
-    return $PingStatsCopyWith<$Res>(_value.stats, (value) {
-      return _then(_value.copyWith(stats: value));
-    });
-  }
 }
 
-abstract class _$PingGeoStatsCopyWith<$Res>
-    implements $PingGeoStatsCopyWith<$Res> {
-  factory _$PingGeoStatsCopyWith(
-          _PingGeoStats value, $Res Function(_PingGeoStats) then) =
-      __$PingGeoStatsCopyWithImpl<$Res>;
+abstract class _$PingCountCopyWith<$Res> implements $PingCountCopyWith<$Res> {
+  factory _$PingCountCopyWith(
+          _PingCount value, $Res Function(_PingCount) then) =
+      __$PingCountCopyWithImpl<$Res>;
   @override
-  $Res call({GeoPosition position, PingStats stats});
-
-  @override
-  $GeoPositionCopyWith<$Res> get position;
-  @override
-  $PingStatsCopyWith<$Res> get stats;
+  $Res call({String host, int count});
 }
 
-class __$PingGeoStatsCopyWithImpl<$Res> extends _$PingGeoStatsCopyWithImpl<$Res>
-    implements _$PingGeoStatsCopyWith<$Res> {
-  __$PingGeoStatsCopyWithImpl(
-      _PingGeoStats _value, $Res Function(_PingGeoStats) _then)
-      : super(_value, (v) => _then(v as _PingGeoStats));
+class __$PingCountCopyWithImpl<$Res> extends _$PingCountCopyWithImpl<$Res>
+    implements _$PingCountCopyWith<$Res> {
+  __$PingCountCopyWithImpl(_PingCount _value, $Res Function(_PingCount) _then)
+      : super(_value, (v) => _then(v as _PingCount));
 
   @override
-  _PingGeoStats get _value => super._value as _PingGeoStats;
+  _PingCount get _value => super._value as _PingCount;
 
   @override
   $Res call({
-    Object position = freezed,
-    Object stats = freezed,
+    Object host = freezed,
+    Object count = freezed,
   }) {
-    return _then(_PingGeoStats(
-      position: position == freezed ? _value.position : position as GeoPosition,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
+    return _then(_PingCount(
+      host: host == freezed ? _value.host : host as String,
+      count: count == freezed ? _value.count : count as int,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_PingGeoStats implements _PingGeoStats {
-  _$_PingGeoStats({@required this.position, @required this.stats})
-      : assert(position != null),
-        assert(stats != null);
+class _$_PingCount implements _PingCount {
+  _$_PingCount({@required this.host, @required this.count})
+      : assert(host != null),
+        assert(count != null);
 
-  factory _$_PingGeoStats.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingGeoStatsFromJson(json);
+  factory _$_PingCount.fromJson(Map<String, dynamic> json) =>
+      _$_$_PingCountFromJson(json);
 
   @override
-  final GeoPosition position;
+  final String host;
   @override
-  final PingStats stats;
+  final int count;
 
   @override
   String toString() {
-    return 'PingGeoStats(position: $position, stats: $stats)';
+    return 'PingCount(host: $host, count: $count)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingGeoStats &&
-            (identical(other.position, position) ||
-                const DeepCollectionEquality()
-                    .equals(other.position, position)) &&
-            (identical(other.stats, stats) ||
-                const DeepCollectionEquality().equals(other.stats, stats)));
+        (other is _PingCount &&
+            (identical(other.host, host) ||
+                const DeepCollectionEquality().equals(other.host, host)) &&
+            (identical(other.count, count) ||
+                const DeepCollectionEquality().equals(other.count, count)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(position) ^
-      const DeepCollectionEquality().hash(stats);
+      const DeepCollectionEquality().hash(host) ^
+      const DeepCollectionEquality().hash(count);
 
   @override
-  _$PingGeoStatsCopyWith<_PingGeoStats> get copyWith =>
-      __$PingGeoStatsCopyWithImpl<_PingGeoStats>(this, _$identity);
+  _$PingCountCopyWith<_PingCount> get copyWith =>
+      __$PingCountCopyWithImpl<_PingCount>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingGeoStatsToJson(this);
+    return _$_$_PingCountToJson(this);
   }
 }
 
-abstract class _PingGeoStats implements PingGeoStats {
-  factory _PingGeoStats(
-      {@required GeoPosition position,
-      @required PingStats stats}) = _$_PingGeoStats;
+abstract class _PingCount implements PingCount {
+  factory _PingCount({@required String host, @required int count}) =
+      _$_PingCount;
 
-  factory _PingGeoStats.fromJson(Map<String, dynamic> json) =
-      _$_PingGeoStats.fromJson;
+  factory _PingCount.fromJson(Map<String, dynamic> json) =
+      _$_PingCount.fromJson;
 
   @override
-  GeoPosition get position;
+  String get host;
   @override
-  PingStats get stats;
+  int get count;
   @override
-  _$PingGeoStatsCopyWith<_PingGeoStats> get copyWith;
+  _$PingCountCopyWith<_PingCount> get copyWith;
 }
 
-PingGroupStats _$PingGroupStatsFromJson(Map<String, dynamic> json) {
-  return _PingGlobalStats.fromJson(json);
+GlobalHostResults _$GlobalHostResultsFromJson(Map<String, dynamic> json) {
+  return _GlobalHostResults.fromJson(json);
 }
 
-class _$PingGroupStatsTearOff {
-  const _$PingGroupStatsTearOff();
+class _$GlobalHostResultsTearOff {
+  const _$GlobalHostResultsTearOff();
 
-  _PingGlobalStats call(
-      {@required List<PingGroup> min,
-      @required List<PingGroup> mean,
-      @required List<PingGroup> max}) {
-    return _PingGlobalStats(
+  _GlobalHostResults call(
+      {@required int totalCount,
+      @required ValueResults valueResults,
+      @required List<LocationResults> locationResults}) {
+    return _GlobalHostResults(
+      totalCount: totalCount,
+      valueResults: valueResults,
+      locationResults: locationResults,
+    );
+  }
+}
+
+// ignore: unused_element
+const $GlobalHostResults = _$GlobalHostResultsTearOff();
+
+mixin _$GlobalHostResults {
+  int get totalCount;
+  ValueResults get valueResults;
+  List<LocationResults> get locationResults;
+
+  Map<String, dynamic> toJson();
+  $GlobalHostResultsCopyWith<GlobalHostResults> get copyWith;
+}
+
+abstract class $GlobalHostResultsCopyWith<$Res> {
+  factory $GlobalHostResultsCopyWith(
+          GlobalHostResults value, $Res Function(GlobalHostResults) then) =
+      _$GlobalHostResultsCopyWithImpl<$Res>;
+  $Res call(
+      {int totalCount,
+      ValueResults valueResults,
+      List<LocationResults> locationResults});
+
+  $ValueResultsCopyWith<$Res> get valueResults;
+}
+
+class _$GlobalHostResultsCopyWithImpl<$Res>
+    implements $GlobalHostResultsCopyWith<$Res> {
+  _$GlobalHostResultsCopyWithImpl(this._value, this._then);
+
+  final GlobalHostResults _value;
+  // ignore: unused_field
+  final $Res Function(GlobalHostResults) _then;
+
+  @override
+  $Res call({
+    Object totalCount = freezed,
+    Object valueResults = freezed,
+    Object locationResults = freezed,
+  }) {
+    return _then(_value.copyWith(
+      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      valueResults: valueResults == freezed
+          ? _value.valueResults
+          : valueResults as ValueResults,
+      locationResults: locationResults == freezed
+          ? _value.locationResults
+          : locationResults as List<LocationResults>,
+    ));
+  }
+
+  @override
+  $ValueResultsCopyWith<$Res> get valueResults {
+    if (_value.valueResults == null) {
+      return null;
+    }
+    return $ValueResultsCopyWith<$Res>(_value.valueResults, (value) {
+      return _then(_value.copyWith(valueResults: value));
+    });
+  }
+}
+
+abstract class _$GlobalHostResultsCopyWith<$Res>
+    implements $GlobalHostResultsCopyWith<$Res> {
+  factory _$GlobalHostResultsCopyWith(
+          _GlobalHostResults value, $Res Function(_GlobalHostResults) then) =
+      __$GlobalHostResultsCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int totalCount,
+      ValueResults valueResults,
+      List<LocationResults> locationResults});
+
+  @override
+  $ValueResultsCopyWith<$Res> get valueResults;
+}
+
+class __$GlobalHostResultsCopyWithImpl<$Res>
+    extends _$GlobalHostResultsCopyWithImpl<$Res>
+    implements _$GlobalHostResultsCopyWith<$Res> {
+  __$GlobalHostResultsCopyWithImpl(
+      _GlobalHostResults _value, $Res Function(_GlobalHostResults) _then)
+      : super(_value, (v) => _then(v as _GlobalHostResults));
+
+  @override
+  _GlobalHostResults get _value => super._value as _GlobalHostResults;
+
+  @override
+  $Res call({
+    Object totalCount = freezed,
+    Object valueResults = freezed,
+    Object locationResults = freezed,
+  }) {
+    return _then(_GlobalHostResults(
+      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      valueResults: valueResults == freezed
+          ? _value.valueResults
+          : valueResults as ValueResults,
+      locationResults: locationResults == freezed
+          ? _value.locationResults
+          : locationResults as List<LocationResults>,
+    ));
+  }
+}
+
+@JsonSerializable()
+class _$_GlobalHostResults implements _GlobalHostResults {
+  _$_GlobalHostResults(
+      {@required this.totalCount,
+      @required this.valueResults,
+      @required this.locationResults})
+      : assert(totalCount != null),
+        assert(valueResults != null),
+        assert(locationResults != null);
+
+  factory _$_GlobalHostResults.fromJson(Map<String, dynamic> json) =>
+      _$_$_GlobalHostResultsFromJson(json);
+
+  @override
+  final int totalCount;
+  @override
+  final ValueResults valueResults;
+  @override
+  final List<LocationResults> locationResults;
+
+  @override
+  String toString() {
+    return 'GlobalHostResults(totalCount: $totalCount, valueResults: $valueResults, locationResults: $locationResults)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GlobalHostResults &&
+            (identical(other.totalCount, totalCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalCount, totalCount)) &&
+            (identical(other.valueResults, valueResults) ||
+                const DeepCollectionEquality()
+                    .equals(other.valueResults, valueResults)) &&
+            (identical(other.locationResults, locationResults) ||
+                const DeepCollectionEquality()
+                    .equals(other.locationResults, locationResults)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(totalCount) ^
+      const DeepCollectionEquality().hash(valueResults) ^
+      const DeepCollectionEquality().hash(locationResults);
+
+  @override
+  _$GlobalHostResultsCopyWith<_GlobalHostResults> get copyWith =>
+      __$GlobalHostResultsCopyWithImpl<_GlobalHostResults>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_GlobalHostResultsToJson(this);
+  }
+}
+
+abstract class _GlobalHostResults implements GlobalHostResults {
+  factory _GlobalHostResults(
+      {@required int totalCount,
+      @required ValueResults valueResults,
+      @required List<LocationResults> locationResults}) = _$_GlobalHostResults;
+
+  factory _GlobalHostResults.fromJson(Map<String, dynamic> json) =
+      _$_GlobalHostResults.fromJson;
+
+  @override
+  int get totalCount;
+  @override
+  ValueResults get valueResults;
+  @override
+  List<LocationResults> get locationResults;
+  @override
+  _$GlobalHostResultsCopyWith<_GlobalHostResults> get copyWith;
+}
+
+ValueResults _$ValueResultsFromJson(Map<String, dynamic> json) {
+  return _ValueResults.fromJson(json);
+}
+
+class _$ValueResultsTearOff {
+  const _$ValueResultsTearOff();
+
+  _ValueResults call(
+      {@required Map<int, int> min,
+      @required Map<int, int> mean,
+      @required Map<int, int> max}) {
+    return _ValueResults(
       min: min,
       mean: mean,
       max: max,
@@ -373,31 +517,30 @@ class _$PingGroupStatsTearOff {
 }
 
 // ignore: unused_element
-const $PingGroupStats = _$PingGroupStatsTearOff();
+const $ValueResults = _$ValueResultsTearOff();
 
-mixin _$PingGroupStats {
-  List<PingGroup> get min;
-  List<PingGroup> get mean;
-  List<PingGroup> get max;
+mixin _$ValueResults {
+  Map<int, int> get min;
+  Map<int, int> get mean;
+  Map<int, int> get max;
 
   Map<String, dynamic> toJson();
-  $PingGroupStatsCopyWith<PingGroupStats> get copyWith;
+  $ValueResultsCopyWith<ValueResults> get copyWith;
 }
 
-abstract class $PingGroupStatsCopyWith<$Res> {
-  factory $PingGroupStatsCopyWith(
-          PingGroupStats value, $Res Function(PingGroupStats) then) =
-      _$PingGroupStatsCopyWithImpl<$Res>;
-  $Res call({List<PingGroup> min, List<PingGroup> mean, List<PingGroup> max});
+abstract class $ValueResultsCopyWith<$Res> {
+  factory $ValueResultsCopyWith(
+          ValueResults value, $Res Function(ValueResults) then) =
+      _$ValueResultsCopyWithImpl<$Res>;
+  $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
 }
 
-class _$PingGroupStatsCopyWithImpl<$Res>
-    implements $PingGroupStatsCopyWith<$Res> {
-  _$PingGroupStatsCopyWithImpl(this._value, this._then);
+class _$ValueResultsCopyWithImpl<$Res> implements $ValueResultsCopyWith<$Res> {
+  _$ValueResultsCopyWithImpl(this._value, this._then);
 
-  final PingGroupStats _value;
+  final ValueResults _value;
   // ignore: unused_field
-  final $Res Function(PingGroupStats) _then;
+  final $Res Function(ValueResults) _then;
 
   @override
   $Res call({
@@ -406,31 +549,30 @@ class _$PingGroupStatsCopyWithImpl<$Res>
     Object max = freezed,
   }) {
     return _then(_value.copyWith(
-      min: min == freezed ? _value.min : min as List<PingGroup>,
-      mean: mean == freezed ? _value.mean : mean as List<PingGroup>,
-      max: max == freezed ? _value.max : max as List<PingGroup>,
+      min: min == freezed ? _value.min : min as Map<int, int>,
+      mean: mean == freezed ? _value.mean : mean as Map<int, int>,
+      max: max == freezed ? _value.max : max as Map<int, int>,
     ));
   }
 }
 
-abstract class _$PingGlobalStatsCopyWith<$Res>
-    implements $PingGroupStatsCopyWith<$Res> {
-  factory _$PingGlobalStatsCopyWith(
-          _PingGlobalStats value, $Res Function(_PingGlobalStats) then) =
-      __$PingGlobalStatsCopyWithImpl<$Res>;
+abstract class _$ValueResultsCopyWith<$Res>
+    implements $ValueResultsCopyWith<$Res> {
+  factory _$ValueResultsCopyWith(
+          _ValueResults value, $Res Function(_ValueResults) then) =
+      __$ValueResultsCopyWithImpl<$Res>;
   @override
-  $Res call({List<PingGroup> min, List<PingGroup> mean, List<PingGroup> max});
+  $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
 }
 
-class __$PingGlobalStatsCopyWithImpl<$Res>
-    extends _$PingGroupStatsCopyWithImpl<$Res>
-    implements _$PingGlobalStatsCopyWith<$Res> {
-  __$PingGlobalStatsCopyWithImpl(
-      _PingGlobalStats _value, $Res Function(_PingGlobalStats) _then)
-      : super(_value, (v) => _then(v as _PingGlobalStats));
+class __$ValueResultsCopyWithImpl<$Res> extends _$ValueResultsCopyWithImpl<$Res>
+    implements _$ValueResultsCopyWith<$Res> {
+  __$ValueResultsCopyWithImpl(
+      _ValueResults _value, $Res Function(_ValueResults) _then)
+      : super(_value, (v) => _then(v as _ValueResults));
 
   @override
-  _PingGlobalStats get _value => super._value as _PingGlobalStats;
+  _ValueResults get _value => super._value as _ValueResults;
 
   @override
   $Res call({
@@ -438,41 +580,40 @@ class __$PingGlobalStatsCopyWithImpl<$Res>
     Object mean = freezed,
     Object max = freezed,
   }) {
-    return _then(_PingGlobalStats(
-      min: min == freezed ? _value.min : min as List<PingGroup>,
-      mean: mean == freezed ? _value.mean : mean as List<PingGroup>,
-      max: max == freezed ? _value.max : max as List<PingGroup>,
+    return _then(_ValueResults(
+      min: min == freezed ? _value.min : min as Map<int, int>,
+      mean: mean == freezed ? _value.mean : mean as Map<int, int>,
+      max: max == freezed ? _value.max : max as Map<int, int>,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_PingGlobalStats implements _PingGlobalStats {
-  _$_PingGlobalStats(
-      {@required this.min, @required this.mean, @required this.max})
+class _$_ValueResults implements _ValueResults {
+  _$_ValueResults({@required this.min, @required this.mean, @required this.max})
       : assert(min != null),
         assert(mean != null),
         assert(max != null);
 
-  factory _$_PingGlobalStats.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingGlobalStatsFromJson(json);
+  factory _$_ValueResults.fromJson(Map<String, dynamic> json) =>
+      _$_$_ValueResultsFromJson(json);
 
   @override
-  final List<PingGroup> min;
+  final Map<int, int> min;
   @override
-  final List<PingGroup> mean;
+  final Map<int, int> mean;
   @override
-  final List<PingGroup> max;
+  final Map<int, int> max;
 
   @override
   String toString() {
-    return 'PingGroupStats(min: $min, mean: $mean, max: $max)';
+    return 'ValueResults(min: $min, mean: $mean, max: $max)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingGlobalStats &&
+        (other is _ValueResults &&
             (identical(other.min, min) ||
                 const DeepCollectionEquality().equals(other.min, min)) &&
             (identical(other.mean, mean) ||
@@ -489,172 +630,435 @@ class _$_PingGlobalStats implements _PingGlobalStats {
       const DeepCollectionEquality().hash(max);
 
   @override
-  _$PingGlobalStatsCopyWith<_PingGlobalStats> get copyWith =>
-      __$PingGlobalStatsCopyWithImpl<_PingGlobalStats>(this, _$identity);
+  _$ValueResultsCopyWith<_ValueResults> get copyWith =>
+      __$ValueResultsCopyWithImpl<_ValueResults>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingGlobalStatsToJson(this);
+    return _$_$_ValueResultsToJson(this);
   }
 }
 
-abstract class _PingGlobalStats implements PingGroupStats {
-  factory _PingGlobalStats(
-      {@required List<PingGroup> min,
-      @required List<PingGroup> mean,
-      @required List<PingGroup> max}) = _$_PingGlobalStats;
+abstract class _ValueResults implements ValueResults {
+  factory _ValueResults(
+      {@required Map<int, int> min,
+      @required Map<int, int> mean,
+      @required Map<int, int> max}) = _$_ValueResults;
 
-  factory _PingGlobalStats.fromJson(Map<String, dynamic> json) =
-      _$_PingGlobalStats.fromJson;
+  factory _ValueResults.fromJson(Map<String, dynamic> json) =
+      _$_ValueResults.fromJson;
 
   @override
-  List<PingGroup> get min;
+  Map<int, int> get min;
   @override
-  List<PingGroup> get mean;
+  Map<int, int> get mean;
   @override
-  List<PingGroup> get max;
+  Map<int, int> get max;
   @override
-  _$PingGlobalStatsCopyWith<_PingGlobalStats> get copyWith;
+  _$ValueResultsCopyWith<_ValueResults> get copyWith;
 }
 
-PingGroup _$PingGroupFromJson(Map<String, dynamic> json) {
-  return _PingGroup.fromJson(json);
+LocationResults _$LocationResultsFromJson(Map<String, dynamic> json) {
+  return _LocationResults.fromJson(json);
 }
 
-class _$PingGroupTearOff {
-  const _$PingGroupTearOff();
+class _$LocationResultsTearOff {
+  const _$LocationResultsTearOff();
 
-  _PingGroup call({@required double ping, @required double percentage}) {
-    return _PingGroup(
-      ping: ping,
-      percentage: percentage,
+  _LocationResults call(
+      {@required int count,
+      @required GeoPosition location,
+      @required PingStats stats}) {
+    return _LocationResults(
+      count: count,
+      location: location,
+      stats: stats,
     );
   }
 }
 
 // ignore: unused_element
-const $PingGroup = _$PingGroupTearOff();
+const $LocationResults = _$LocationResultsTearOff();
 
-mixin _$PingGroup {
-  double get ping;
-  double get percentage;
+mixin _$LocationResults {
+  int get count;
+  GeoPosition get location;
+  PingStats get stats;
 
   Map<String, dynamic> toJson();
-  $PingGroupCopyWith<PingGroup> get copyWith;
+  $LocationResultsCopyWith<LocationResults> get copyWith;
 }
 
-abstract class $PingGroupCopyWith<$Res> {
-  factory $PingGroupCopyWith(PingGroup value, $Res Function(PingGroup) then) =
-      _$PingGroupCopyWithImpl<$Res>;
-  $Res call({double ping, double percentage});
+abstract class $LocationResultsCopyWith<$Res> {
+  factory $LocationResultsCopyWith(
+          LocationResults value, $Res Function(LocationResults) then) =
+      _$LocationResultsCopyWithImpl<$Res>;
+  $Res call({int count, GeoPosition location, PingStats stats});
+
+  $GeoPositionCopyWith<$Res> get location;
+  $PingStatsCopyWith<$Res> get stats;
 }
 
-class _$PingGroupCopyWithImpl<$Res> implements $PingGroupCopyWith<$Res> {
-  _$PingGroupCopyWithImpl(this._value, this._then);
+class _$LocationResultsCopyWithImpl<$Res>
+    implements $LocationResultsCopyWith<$Res> {
+  _$LocationResultsCopyWithImpl(this._value, this._then);
 
-  final PingGroup _value;
+  final LocationResults _value;
   // ignore: unused_field
-  final $Res Function(PingGroup) _then;
+  final $Res Function(LocationResults) _then;
 
   @override
   $Res call({
-    Object ping = freezed,
-    Object percentage = freezed,
+    Object count = freezed,
+    Object location = freezed,
+    Object stats = freezed,
   }) {
     return _then(_value.copyWith(
-      ping: ping == freezed ? _value.ping : ping as double,
-      percentage:
-          percentage == freezed ? _value.percentage : percentage as double,
+      count: count == freezed ? _value.count : count as int,
+      location: location == freezed ? _value.location : location as GeoPosition,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
     ));
+  }
+
+  @override
+  $GeoPositionCopyWith<$Res> get location {
+    if (_value.location == null) {
+      return null;
+    }
+    return $GeoPositionCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value));
+    });
+  }
+
+  @override
+  $PingStatsCopyWith<$Res> get stats {
+    if (_value.stats == null) {
+      return null;
+    }
+    return $PingStatsCopyWith<$Res>(_value.stats, (value) {
+      return _then(_value.copyWith(stats: value));
+    });
   }
 }
 
-abstract class _$PingGroupCopyWith<$Res> implements $PingGroupCopyWith<$Res> {
-  factory _$PingGroupCopyWith(
-          _PingGroup value, $Res Function(_PingGroup) then) =
-      __$PingGroupCopyWithImpl<$Res>;
+abstract class _$LocationResultsCopyWith<$Res>
+    implements $LocationResultsCopyWith<$Res> {
+  factory _$LocationResultsCopyWith(
+          _LocationResults value, $Res Function(_LocationResults) then) =
+      __$LocationResultsCopyWithImpl<$Res>;
   @override
-  $Res call({double ping, double percentage});
+  $Res call({int count, GeoPosition location, PingStats stats});
+
+  @override
+  $GeoPositionCopyWith<$Res> get location;
+  @override
+  $PingStatsCopyWith<$Res> get stats;
 }
 
-class __$PingGroupCopyWithImpl<$Res> extends _$PingGroupCopyWithImpl<$Res>
-    implements _$PingGroupCopyWith<$Res> {
-  __$PingGroupCopyWithImpl(_PingGroup _value, $Res Function(_PingGroup) _then)
-      : super(_value, (v) => _then(v as _PingGroup));
+class __$LocationResultsCopyWithImpl<$Res>
+    extends _$LocationResultsCopyWithImpl<$Res>
+    implements _$LocationResultsCopyWith<$Res> {
+  __$LocationResultsCopyWithImpl(
+      _LocationResults _value, $Res Function(_LocationResults) _then)
+      : super(_value, (v) => _then(v as _LocationResults));
 
   @override
-  _PingGroup get _value => super._value as _PingGroup;
+  _LocationResults get _value => super._value as _LocationResults;
 
   @override
   $Res call({
-    Object ping = freezed,
-    Object percentage = freezed,
+    Object count = freezed,
+    Object location = freezed,
+    Object stats = freezed,
   }) {
-    return _then(_PingGroup(
-      ping: ping == freezed ? _value.ping : ping as double,
-      percentage:
-          percentage == freezed ? _value.percentage : percentage as double,
+    return _then(_LocationResults(
+      count: count == freezed ? _value.count : count as int,
+      location: location == freezed ? _value.location : location as GeoPosition,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_PingGroup implements _PingGroup {
-  _$_PingGroup({@required this.ping, @required this.percentage})
-      : assert(ping != null),
-        assert(percentage != null);
+class _$_LocationResults implements _LocationResults {
+  _$_LocationResults(
+      {@required this.count, @required this.location, @required this.stats})
+      : assert(count != null),
+        assert(location != null),
+        assert(stats != null);
 
-  factory _$_PingGroup.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingGroupFromJson(json);
+  factory _$_LocationResults.fromJson(Map<String, dynamic> json) =>
+      _$_$_LocationResultsFromJson(json);
 
   @override
-  final double ping;
+  final int count;
   @override
-  final double percentage;
+  final GeoPosition location;
+  @override
+  final PingStats stats;
 
   @override
   String toString() {
-    return 'PingGroup(ping: $ping, percentage: $percentage)';
+    return 'LocationResults(count: $count, location: $location, stats: $stats)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingGroup &&
-            (identical(other.ping, ping) ||
-                const DeepCollectionEquality().equals(other.ping, ping)) &&
-            (identical(other.percentage, percentage) ||
+        (other is _LocationResults &&
+            (identical(other.count, count) ||
+                const DeepCollectionEquality().equals(other.count, count)) &&
+            (identical(other.location, location) ||
                 const DeepCollectionEquality()
-                    .equals(other.percentage, percentage)));
+                    .equals(other.location, location)) &&
+            (identical(other.stats, stats) ||
+                const DeepCollectionEquality().equals(other.stats, stats)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(ping) ^
-      const DeepCollectionEquality().hash(percentage);
+      const DeepCollectionEquality().hash(count) ^
+      const DeepCollectionEquality().hash(location) ^
+      const DeepCollectionEquality().hash(stats);
 
   @override
-  _$PingGroupCopyWith<_PingGroup> get copyWith =>
-      __$PingGroupCopyWithImpl<_PingGroup>(this, _$identity);
+  _$LocationResultsCopyWith<_LocationResults> get copyWith =>
+      __$LocationResultsCopyWithImpl<_LocationResults>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingGroupToJson(this);
+    return _$_$_LocationResultsToJson(this);
   }
 }
 
-abstract class _PingGroup implements PingGroup {
-  factory _PingGroup({@required double ping, @required double percentage}) =
-      _$_PingGroup;
+abstract class _LocationResults implements LocationResults {
+  factory _LocationResults(
+      {@required int count,
+      @required GeoPosition location,
+      @required PingStats stats}) = _$_LocationResults;
 
-  factory _PingGroup.fromJson(Map<String, dynamic> json) =
-      _$_PingGroup.fromJson;
+  factory _LocationResults.fromJson(Map<String, dynamic> json) =
+      _$_LocationResults.fromJson;
 
   @override
-  double get ping;
+  int get count;
   @override
-  double get percentage;
+  GeoPosition get location;
   @override
-  _$PingGroupCopyWith<_PingGroup> get copyWith;
+  PingStats get stats;
+  @override
+  _$LocationResultsCopyWith<_LocationResults> get copyWith;
+}
+
+GlobalSessionResult _$GlobalSessionResultFromJson(Map<String, dynamic> json) {
+  return _GlobalSessionResult.fromJson(json);
+}
+
+class _$GlobalSessionResultTearOff {
+  const _$GlobalSessionResultTearOff();
+
+  _GlobalSessionResult call(
+      {@required int count,
+      @required String host,
+      @required PingStats stats,
+      GeoPosition location}) {
+    return _GlobalSessionResult(
+      count: count,
+      host: host,
+      stats: stats,
+      location: location,
+    );
+  }
+}
+
+// ignore: unused_element
+const $GlobalSessionResult = _$GlobalSessionResultTearOff();
+
+mixin _$GlobalSessionResult {
+  int get count;
+  String get host;
+  PingStats get stats;
+  GeoPosition get location;
+
+  Map<String, dynamic> toJson();
+  $GlobalSessionResultCopyWith<GlobalSessionResult> get copyWith;
+}
+
+abstract class $GlobalSessionResultCopyWith<$Res> {
+  factory $GlobalSessionResultCopyWith(
+          GlobalSessionResult value, $Res Function(GlobalSessionResult) then) =
+      _$GlobalSessionResultCopyWithImpl<$Res>;
+  $Res call({int count, String host, PingStats stats, GeoPosition location});
+
+  $PingStatsCopyWith<$Res> get stats;
+  $GeoPositionCopyWith<$Res> get location;
+}
+
+class _$GlobalSessionResultCopyWithImpl<$Res>
+    implements $GlobalSessionResultCopyWith<$Res> {
+  _$GlobalSessionResultCopyWithImpl(this._value, this._then);
+
+  final GlobalSessionResult _value;
+  // ignore: unused_field
+  final $Res Function(GlobalSessionResult) _then;
+
+  @override
+  $Res call({
+    Object count = freezed,
+    Object host = freezed,
+    Object stats = freezed,
+    Object location = freezed,
+  }) {
+    return _then(_value.copyWith(
+      count: count == freezed ? _value.count : count as int,
+      host: host == freezed ? _value.host : host as String,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
+      location: location == freezed ? _value.location : location as GeoPosition,
+    ));
+  }
+
+  @override
+  $PingStatsCopyWith<$Res> get stats {
+    if (_value.stats == null) {
+      return null;
+    }
+    return $PingStatsCopyWith<$Res>(_value.stats, (value) {
+      return _then(_value.copyWith(stats: value));
+    });
+  }
+
+  @override
+  $GeoPositionCopyWith<$Res> get location {
+    if (_value.location == null) {
+      return null;
+    }
+    return $GeoPositionCopyWith<$Res>(_value.location, (value) {
+      return _then(_value.copyWith(location: value));
+    });
+  }
+}
+
+abstract class _$GlobalSessionResultCopyWith<$Res>
+    implements $GlobalSessionResultCopyWith<$Res> {
+  factory _$GlobalSessionResultCopyWith(_GlobalSessionResult value,
+          $Res Function(_GlobalSessionResult) then) =
+      __$GlobalSessionResultCopyWithImpl<$Res>;
+  @override
+  $Res call({int count, String host, PingStats stats, GeoPosition location});
+
+  @override
+  $PingStatsCopyWith<$Res> get stats;
+  @override
+  $GeoPositionCopyWith<$Res> get location;
+}
+
+class __$GlobalSessionResultCopyWithImpl<$Res>
+    extends _$GlobalSessionResultCopyWithImpl<$Res>
+    implements _$GlobalSessionResultCopyWith<$Res> {
+  __$GlobalSessionResultCopyWithImpl(
+      _GlobalSessionResult _value, $Res Function(_GlobalSessionResult) _then)
+      : super(_value, (v) => _then(v as _GlobalSessionResult));
+
+  @override
+  _GlobalSessionResult get _value => super._value as _GlobalSessionResult;
+
+  @override
+  $Res call({
+    Object count = freezed,
+    Object host = freezed,
+    Object stats = freezed,
+    Object location = freezed,
+  }) {
+    return _then(_GlobalSessionResult(
+      count: count == freezed ? _value.count : count as int,
+      host: host == freezed ? _value.host : host as String,
+      stats: stats == freezed ? _value.stats : stats as PingStats,
+      location: location == freezed ? _value.location : location as GeoPosition,
+    ));
+  }
+}
+
+@JsonSerializable()
+class _$_GlobalSessionResult implements _GlobalSessionResult {
+  _$_GlobalSessionResult(
+      {@required this.count,
+      @required this.host,
+      @required this.stats,
+      this.location})
+      : assert(count != null),
+        assert(host != null),
+        assert(stats != null);
+
+  factory _$_GlobalSessionResult.fromJson(Map<String, dynamic> json) =>
+      _$_$_GlobalSessionResultFromJson(json);
+
+  @override
+  final int count;
+  @override
+  final String host;
+  @override
+  final PingStats stats;
+  @override
+  final GeoPosition location;
+
+  @override
+  String toString() {
+    return 'GlobalSessionResult(count: $count, host: $host, stats: $stats, location: $location)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GlobalSessionResult &&
+            (identical(other.count, count) ||
+                const DeepCollectionEquality().equals(other.count, count)) &&
+            (identical(other.host, host) ||
+                const DeepCollectionEquality().equals(other.host, host)) &&
+            (identical(other.stats, stats) ||
+                const DeepCollectionEquality().equals(other.stats, stats)) &&
+            (identical(other.location, location) ||
+                const DeepCollectionEquality()
+                    .equals(other.location, location)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(count) ^
+      const DeepCollectionEquality().hash(host) ^
+      const DeepCollectionEquality().hash(stats) ^
+      const DeepCollectionEquality().hash(location);
+
+  @override
+  _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith =>
+      __$GlobalSessionResultCopyWithImpl<_GlobalSessionResult>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_GlobalSessionResultToJson(this);
+  }
+}
+
+abstract class _GlobalSessionResult implements GlobalSessionResult {
+  factory _GlobalSessionResult(
+      {@required int count,
+      @required String host,
+      @required PingStats stats,
+      GeoPosition location}) = _$_GlobalSessionResult;
+
+  factory _GlobalSessionResult.fromJson(Map<String, dynamic> json) =
+      _$_GlobalSessionResult.fromJson;
+
+  @override
+  int get count;
+  @override
+  String get host;
+  @override
+  PingStats get stats;
+  @override
+  GeoPosition get location;
+  @override
+  _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith;
 }

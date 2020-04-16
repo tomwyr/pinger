@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/fake_data.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/ping_page.dart';
@@ -54,6 +53,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
       vsync: this,
       length: ResultDetailsTab.values.length,
     );
+    _archiveStore.fetchGlobalResults(widget.result.host.name);
   }
 
   @override
@@ -90,7 +90,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
         IconButton(
           icon: Icon(Icons.delete, color: Colors.black),
           onPressed: () async {
-            await _archiveStore.deleteResult(widget.result.id);
+            await _archiveStore.deleteLocalResult(widget.result.id);
             pop();
           },
         ),
@@ -156,14 +156,14 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
             isSharingLocation: _checkIsSharingLocation(),
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
-            globalResults: FakeData.globalResults,
+            globalResults: _archiveStore.globalResults[widget.result.host.name],
           ),
         ),
         ResultDetailsInfo(result: widget.result),
         Observer(
           builder: (_) {
             return ResultDetailsMore(
-              results: _archiveStore.results
+              results: _archiveStore.localResults
                   .where((it) =>
                       it.host.name == widget.result.host.name &&
                       it.id != widget.result.id)

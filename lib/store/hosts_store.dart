@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/host_stats.dart';
+import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
 part 'hosts_store.g.dart';
@@ -11,40 +11,49 @@ part 'hosts_store.g.dart';
 @singleton
 class HostsStore extends HostsStoreBase with _$HostsStore {
   final PingerPrefs _pingerPrefs;
+  final PingerApi _pingerApi;
 
-  HostsStore(this._pingerPrefs);
+  HostsStore(this._pingerPrefs, this._pingerApi);
 }
 
 abstract class HostsStoreBase with Store {
   PingerPrefs get _pingerPrefs;
+  PingerApi get _pingerApi;
 
-  final List<HostItem> _fakeHosts = [
-    HostItem("youtube.com", Random().nextDouble()),
-    HostItem("google.com", Random().nextDouble()),
-    HostItem("reddit.com", Random().nextDouble()),
-    HostItem("twitch.tv", Random().nextDouble()),
-    HostItem("facebook.com", Random().nextDouble()),
-    HostItem("netflix.com", Random().nextDouble()),
-    HostItem("twitter.com", Random().nextDouble()),
-    HostItem("gmail.com", Random().nextDouble()),
-    HostItem("wikipedia.org", Random().nextDouble()),
-    HostItem("flutter.dev", Random().nextDouble()),
-  ]..sort((h1, h2) => h2.popularity.compareTo(h1.popularity));
+  @observable
+  String _searchQuery = "";
+
+  @observable
+  List<HostItem> _hostItems;
 
   @observable
   List<HostStats> stats;
 
   @observable
-  List<HostItem> hosts;
-
-  @observable
   bool isLoading = false;
 
-  StreamSubscription _lastSearch;
+  @computed
+  List<HostItem> get searchResults {
+    if (_hostItems == null) return null;
+    return _searchQuery.isEmpty
+        ? _hostItems.toList()
+        : _hostItems.where((it) => it.name.contains(_searchQuery)).toList();
+  }
 
   @action
-  void init() {
+  Future<void> init() async {
+    isLoading = true;
     stats = _pingerPrefs.getHostsStats();
+    _hostItems = await _fetchSearchItems();
+    isLoading = false;
+  }
+
+  Future<List<HostItem>> _fetchSearchItems() async {
+    final counts = await _pingerApi.getPingCounts();
+    return counts.pingCounts
+        .map((it) => HostItem(it.host, it.count / counts.totalCount))
+        .toList()
+          ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
   }
 
   @action
@@ -64,14 +73,7 @@ abstract class HostsStoreBase with Store {
   }
 
   @action
-  Future<void> search(String query) async {
-    _lastSearch?.cancel();
-    isLoading = true;
-    _lastSearch = Future.delayed(Duration(seconds: 1)).asStream().listen((_) {
-      hosts = _fakeHosts.where((it) => it.name.contains(query)).toList();
-      isLoading = false;
-    });
-  }
+  void search(String query) => _searchQuery = query;
 }
 
 class HostItem {

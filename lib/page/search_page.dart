@@ -76,17 +76,14 @@ class _SearchPageState extends State<SearchPage> {
             ),
           Expanded(
             child: Observer(builder: (_) {
-              final hosts = _hostsStore.hosts;
-              if (_inputController.text.isEmpty)
-                return Center(child: Text("Type something"));
+              final results = _hostsStore.searchResults;
               if (_hostsStore.isLoading)
                 return Center(child: CircularProgressIndicator());
-              if (hosts == null) return Center(child: Text("Type something"));
-              if (hosts.isEmpty)
+              if (results.isEmpty)
                 return Center(child: Text("No results for given query"));
               return ListView.builder(
-                itemCount: hosts.length,
-                itemBuilder: (_, index) => _buildHostItem(hosts[index]),
+                itemCount: results.length,
+                itemBuilder: (_, index) => _buildHostItem(results[index]),
               );
             }),
           ),
@@ -96,9 +93,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onQueryChanged(String query) {
-    if (query.isNotEmpty) {
-      _hostsStore.search(query);
-    }
+    _hostsStore.search(query);
     rebuild();
   }
 

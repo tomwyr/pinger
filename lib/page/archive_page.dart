@@ -44,7 +44,7 @@ class _ArchivePageState extends State<ArchivePage>
       child: Scaffold(
         appBar: _buildAppBar(),
         body: Observer(
-          builder: (_) => _buildBody(_archiveStore.results),
+          builder: (_) => _buildBody(_archiveStore.localResults),
         ),
       ),
     );

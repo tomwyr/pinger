@@ -9,6 +9,47 @@ part of 'hosts_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HostsStore on HostsStoreBase, Store {
+  Computed<List<HostItem>> _$searchResultsComputed;
+
+  @override
+  List<HostItem> get searchResults => (_$searchResultsComputed ??=
+          Computed<List<HostItem>>(() => super.searchResults))
+      .value;
+
+  final _$_searchQueryAtom = Atom(name: 'HostsStoreBase._searchQuery');
+
+  @override
+  String get _searchQuery {
+    _$_searchQueryAtom.context.enforceReadPolicy(_$_searchQueryAtom);
+    _$_searchQueryAtom.reportObserved();
+    return super._searchQuery;
+  }
+
+  @override
+  set _searchQuery(String value) {
+    _$_searchQueryAtom.context.conditionallyRunInAction(() {
+      super._searchQuery = value;
+      _$_searchQueryAtom.reportChanged();
+    }, _$_searchQueryAtom, name: '${_$_searchQueryAtom.name}_set');
+  }
+
+  final _$_hostItemsAtom = Atom(name: 'HostsStoreBase._hostItems');
+
+  @override
+  List<HostItem> get _hostItems {
+    _$_hostItemsAtom.context.enforceReadPolicy(_$_hostItemsAtom);
+    _$_hostItemsAtom.reportObserved();
+    return super._hostItems;
+  }
+
+  @override
+  set _hostItems(List<HostItem> value) {
+    _$_hostItemsAtom.context.conditionallyRunInAction(() {
+      super._hostItems = value;
+      _$_hostItemsAtom.reportChanged();
+    }, _$_hostItemsAtom, name: '${_$_hostItemsAtom.name}_set');
+  }
+
   final _$statsAtom = Atom(name: 'HostsStoreBase.stats');
 
   @override
@@ -24,23 +65,6 @@ mixin _$HostsStore on HostsStoreBase, Store {
       super.stats = value;
       _$statsAtom.reportChanged();
     }, _$statsAtom, name: '${_$statsAtom.name}_set');
-  }
-
-  final _$hostsAtom = Atom(name: 'HostsStoreBase.hosts');
-
-  @override
-  List<HostItem> get hosts {
-    _$hostsAtom.context.enforceReadPolicy(_$hostsAtom);
-    _$hostsAtom.reportObserved();
-    return super.hosts;
-  }
-
-  @override
-  set hosts(List<HostItem> value) {
-    _$hostsAtom.context.conditionallyRunInAction(() {
-      super.hosts = value;
-      _$hostsAtom.reportChanged();
-    }, _$hostsAtom, name: '${_$hostsAtom.name}_set');
   }
 
   final _$isLoadingAtom = Atom(name: 'HostsStoreBase.isLoading');
@@ -60,6 +84,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
     }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
+  final _$initAsyncAction = AsyncAction('init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$incrementStatsAsyncAction = AsyncAction('incrementStats');
 
   @override
@@ -67,21 +98,14 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return _$incrementStatsAsyncAction.run(() => super.incrementStats(host));
   }
 
-  final _$searchAsyncAction = AsyncAction('search');
-
-  @override
-  Future<void> search(String query) {
-    return _$searchAsyncAction.run(() => super.search(query));
-  }
-
   final _$HostsStoreBaseActionController =
       ActionController(name: 'HostsStoreBase');
 
   @override
-  void init() {
+  void search(String query) {
     final _$actionInfo = _$HostsStoreBaseActionController.startAction();
     try {
-      return super.init();
+      return super.search(query);
     } finally {
       _$HostsStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -90,7 +114,7 @@ mixin _$HostsStore on HostsStoreBase, Store {
   @override
   String toString() {
     final string =
-        'stats: ${stats.toString()},hosts: ${hosts.toString()},isLoading: ${isLoading.toString()}';
+        'stats: ${stats.toString()},isLoading: ${isLoading.toString()},searchResults: ${searchResults.toString()}';
     return '{$string}';
   }
 }

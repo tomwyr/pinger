@@ -31,7 +31,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
 
   //Eager singletons must be registered in the right order
   g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));
-  g.registerSingleton<ArchiveStore>(ArchiveStore(g<PingerPrefs>()));
+  g.registerSingleton<ArchiveStore>(
+      ArchiveStore(g<PingerPrefs>(), g<PingerApi>()));
   g.registerSingleton<FavoritesStore>(FavoritesStore(g<PingerPrefs>()));
   g.registerSingleton<HostsStore>(HostsStore(g<PingerPrefs>(), g<PingerApi>()));
   g.registerSingleton<SettingsStore>(SettingsStore(g<PingerPrefs>()));
@@ -39,10 +40,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       LocationStore(g<Geolocator>(), g<SettingsStore>()));
   g.registerSingleton<PingStore>(PingStore(
     g<PingerPrefs>(),
+    g<PingerApi>(),
     g<PingService>(),
     g<SettingsStore>(),
     g<ArchiveStore>(),
     g<HostsStore>(),
+    g<LocationStore>(),
   ));
   g.registerSingleton<NotificationStore>(
       NotificationStore(g<SettingsStore>(), g<PingStore>()));

@@ -6,46 +6,72 @@ part 'ping_global.freezed.dart';
 part 'ping_global.g.dart';
 
 @freezed
-abstract class PingGlobalResults with _$PingGlobalResults {
-  factory PingGlobalResults({
-    @required List<PingGeoStats> geoStats,
-    @required PingGroupStats groupStats,
-  }) = _PingGlobalResults;
+abstract class GlobalPingCounts with _$GlobalPingCounts {
+  factory GlobalPingCounts({
+    @required int totalCount,
+    @required List<PingCount> pingCounts,
+  }) = _GlobalPingCounts;
 
-  factory PingGlobalResults.fromJson(Map<String, dynamic> json) =>
-      _$PingGlobalResultsFromJson(json);
+  factory GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
+      _$GlobalPingCountsFromJson(json);
 }
 
 @freezed
-abstract class PingGeoStats with _$PingGeoStats {
-  factory PingGeoStats({
-    @required GeoPosition position,
+abstract class PingCount with _$PingCount {
+  factory PingCount({
+    @required String host,
+    @required int count,
+  }) = _PingCount;
+
+  factory PingCount.fromJson(Map<String, dynamic> json) =>
+      _$PingCountFromJson(json);
+}
+
+@freezed
+abstract class GlobalHostResults with _$GlobalHostResults {
+  factory GlobalHostResults({
+    @required int totalCount,
+    @required ValueResults valueResults,
+    @required List<LocationResults> locationResults,
+  }) = _GlobalHostResults;
+
+  factory GlobalHostResults.fromJson(Map<String, dynamic> json) =>
+      _$GlobalHostResultsFromJson(json);
+}
+
+@freezed
+abstract class ValueResults with _$ValueResults {
+  factory ValueResults({
+    @required Map<int, int> min,
+    @required Map<int, int> mean,
+    @required Map<int, int> max,
+  }) = _ValueResults;
+
+  factory ValueResults.fromJson(Map<String, dynamic> json) =>
+      _$ValueResultsFromJson(json);
+}
+
+@freezed
+abstract class LocationResults with _$LocationResults {
+  factory LocationResults({
+    @required int count,
+    @required GeoPosition location,
     @required PingStats stats,
-  }) = _PingGeoStats;
+  }) = _LocationResults;
 
-  factory PingGeoStats.fromJson(Map<String, dynamic> json) =>
-      _$PingGeoStatsFromJson(json);
+  factory LocationResults.fromJson(Map<String, dynamic> json) =>
+      _$LocationResultsFromJson(json);
 }
 
 @freezed
-abstract class PingGroupStats with _$PingGroupStats {
-  factory PingGroupStats({
-    @required List<PingGroup> min,
-    @required List<PingGroup> mean,
-    @required List<PingGroup> max,
-  }) = _PingGlobalStats;
+abstract class GlobalSessionResult with _$GlobalSessionResult {
+  factory GlobalSessionResult({
+    @required int count,
+    @required String host,
+    @required PingStats stats,
+    GeoPosition location,
+  }) = _GlobalSessionResult;
 
-  factory PingGroupStats.fromJson(Map<String, dynamic> json) =>
-      _$PingGroupStatsFromJson(json);
-}
-
-@freezed
-abstract class PingGroup with _$PingGroup {
-  factory PingGroup({
-    @required double ping,
-    @required double percentage,
-  }) = _PingGroup;
-
-  factory PingGroup.fromJson(Map<String, dynamic> json) =>
-      _$PingGroupFromJson(json);
+  factory GlobalSessionResult.fromJson(Map<String, dynamic> json) =>
+      _$GlobalSessionResultFromJson(json);
 }
