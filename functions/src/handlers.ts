@@ -6,23 +6,23 @@ const pingerStore = new PingerStore();
 
 export async function updateDailyCounts(session: Session) {
   const dailyCounts = await pingerStore.getDailyCounts();
-  _updateTodayDailyCounts(dailyCounts, session);
+  _updateTodayDailyCounts(dailyCounts, session.host);
   await pingerStore.setDailyCounts(dailyCounts);
 }
 
-function _updateTodayDailyCounts(dailyCounts: DailyCounts, session: Session) {
+function _updateTodayDailyCounts(dailyCounts: DailyCounts, host: string) {
   const todayKey = _getTodayDateKey();
   const todayCounts = dailyCounts[todayKey] ?? {
     totalCount: 0,
     pingCounts: {},
   };
-  const pingCount = todayCounts.pingCounts[session.host] ?? {
-    host: session.host,
+  const pingCount = todayCounts.pingCounts[host] ?? {
+    host: host,
     count: 0,
   };
-  pingCount.count += session.count;
-  todayCounts.totalCount += session.count;
-  todayCounts.pingCounts[session.host] = pingCount;
+  pingCount.count += 1;
+  todayCounts.totalCount += 1;
+  todayCounts.pingCounts[host] = pingCount;
   dailyCounts[todayKey] = todayCounts;
 }
 
