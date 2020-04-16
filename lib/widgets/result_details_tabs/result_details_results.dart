@@ -9,7 +9,7 @@ import 'package:pinger/widgets/switch_toggle_buttons.dart';
 enum ResultsViewType { list, chart }
 
 class ResultDetailsResults extends StatefulWidget {
-  final List<double> values;
+  final List<int> values;
   final PingStats stats;
   final Widget Function(List<Widget> slivers) scrollBuilder;
 
@@ -163,7 +163,10 @@ class _ResultDetailsResultsState extends State<ResultDetailsResults> {
           colors: [Colors.lightBlue],
           spots: List.generate(
             widget.values.length,
-            (index) => FlSpot(index.toDouble(), widget.values[index]),
+            (index) => FlSpot(
+              index.toDouble(),
+              widget.values[index].toDouble(),
+            ),
           ),
         ),
       ],
@@ -189,14 +192,13 @@ class ResultDetailsItem extends StatelessWidget {
 
   factory ResultDetailsItem({
     Key key,
-    @required List<double> values,
+    @required List<int> values,
     @required int index,
   }) {
-    final result = values[index]?.round();
+    final result = values[index];
     final prevResult = values.reversed
         .skip(values.length - index)
-        .firstWhere((it) => it != null, orElse: () => null)
-        ?.round();
+        .firstWhere((it) => it != null, orElse: () => null);
     final delta =
         result != null && prevResult != null ? result - prevResult : null;
     return ResultDetailsItem._(
@@ -267,7 +269,7 @@ class ResultDetailsItem extends StatelessWidget {
 }
 
 class ResultDetailsSummary extends StatelessWidget {
-  final List<double> values;
+  final List<int> values;
   final PingStats stats;
 
   const ResultDetailsSummary({
@@ -296,11 +298,10 @@ class ResultDetailsSummary extends StatelessWidget {
             _buildSummaryItem("Total", "$totalCount", 1.0),
           ]),
           Row(children: <Widget>[
+            _buildSummaryItem("Min", "${stats.min} ms", stats.min / stats.max),
             _buildSummaryItem(
-                "Min", "${stats.min.round()} ms", stats.min / stats.max),
-            _buildSummaryItem(
-                "Mean", "${stats.mean.round()} ms", stats.mean / stats.max),
-            _buildSummaryItem("Max", "${stats.max.round()} ms", 1.0),
+                "Mean", "${stats.mean} ms", stats.mean / stats.max),
+            _buildSummaryItem("Max", "${stats.max} ms", 1.0),
           ])
         ] else ...[
           Row(children: <Widget>[

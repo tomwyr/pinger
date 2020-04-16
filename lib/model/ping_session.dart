@@ -10,7 +10,7 @@ abstract class PingSession with _$PingSession {
     @required PingHost host,
     @required PingStatus status,
     @required PingSettings settings,
-    List<double> values,
+    List<int> values,
     DateTime startTime,
   }) = _PingSession;
 

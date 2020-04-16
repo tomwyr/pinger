@@ -205,7 +205,7 @@ abstract class PingStoreBase with Store {
   }
 
   void _onPingResult(double value) {
-    final values = currentSession.values.toList()..add(value);
+    final values = currentSession.values.toList()..add(value.round());
     currentSession = currentSession.copyWith(values: values);
   }
 

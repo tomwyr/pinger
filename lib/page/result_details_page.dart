@@ -355,7 +355,10 @@ class ResultDetailsCollapsingTile extends StatelessWidget {
                 colors: [Colors.lightBlue],
                 spots: List.generate(
                   result.values.length,
-                  (index) => FlSpot(index.toDouble(), result.values[index]),
+                  (index) => FlSpot(
+                    index.toDouble(),
+                    result.values[index].toDouble(),
+                  ),
                 ),
               ),
             ],
@@ -406,7 +409,7 @@ class ResultDetailsCollapsingTile extends StatelessWidget {
     ];
   }
 
-  Widget _buildLabel(double value, Size size) {
+  Widget _buildLabel(int value, Size size) {
     return SizedBox.fromSize(
       size: size,
       child: Center(
@@ -418,7 +421,7 @@ class ResultDetailsCollapsingTile extends StatelessWidget {
             color: Colors.pink[100],
           ),
           child: Text(
-            " ${value.round()} ms",
+            " $value ms",
             style: TextStyle(color: Colors.pink, fontSize: 12.0),
           ),
         ),

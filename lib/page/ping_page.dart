@@ -180,10 +180,9 @@ class _PingPageState extends State<PingPage> with PingerAppBar {
     );
   }
 
-  String _getValueLabel(double value) =>
-      value != null ? "${value.round()} ms" : "-";
+  String _getValueLabel(int value) => value != null ? "$value ms" : "-";
 
-  String _getDeltaLabel(List<double> values) {
+  String _getDeltaLabel(List<int> values) {
     if (values.length > 1 && values.last != null) {
       final previous = values.reversed
           .skip(1)

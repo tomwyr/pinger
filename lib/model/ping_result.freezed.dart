@@ -21,7 +21,7 @@ class _$PingResultTearOff {
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
-      @required List<double> values,
+      @required List<int> values,
       @required PingStats stats}) {
     return _PingResult(
       id: id,
@@ -44,7 +44,7 @@ mixin _$PingResult {
   PingSettings get settings;
   DateTime get startTime;
   Duration get duration;
-  List<double> get values;
+  List<int> get values;
   PingStats get stats;
 
   Map<String, dynamic> toJson();
@@ -61,7 +61,7 @@ abstract class $PingResultCopyWith<$Res> {
       PingSettings settings,
       DateTime startTime,
       Duration duration,
-      List<double> values,
+      List<int> values,
       PingStats stats});
 
   $PingHostCopyWith<$Res> get host;
@@ -94,7 +94,7 @@ class _$PingResultCopyWithImpl<$Res> implements $PingResultCopyWith<$Res> {
       startTime:
           startTime == freezed ? _value.startTime : startTime as DateTime,
       duration: duration == freezed ? _value.duration : duration as Duration,
-      values: values == freezed ? _value.values : values as List<double>,
+      values: values == freezed ? _value.values : values as List<int>,
       stats: stats == freezed ? _value.stats : stats as PingStats,
     ));
   }
@@ -141,7 +141,7 @@ abstract class _$PingResultCopyWith<$Res> implements $PingResultCopyWith<$Res> {
       PingSettings settings,
       DateTime startTime,
       Duration duration,
-      List<double> values,
+      List<int> values,
       PingStats stats});
 
   @override
@@ -179,7 +179,7 @@ class __$PingResultCopyWithImpl<$Res> extends _$PingResultCopyWithImpl<$Res>
       startTime:
           startTime == freezed ? _value.startTime : startTime as DateTime,
       duration: duration == freezed ? _value.duration : duration as Duration,
-      values: values == freezed ? _value.values : values as List<double>,
+      values: values == freezed ? _value.values : values as List<int>,
       stats: stats == freezed ? _value.stats : stats as PingStats,
     ));
   }
@@ -216,7 +216,7 @@ class _$_PingResult implements _PingResult {
   @override
   final Duration duration;
   @override
-  final List<double> values;
+  final List<int> values;
   @override
   final PingStats stats;
 
@@ -276,7 +276,7 @@ abstract class _PingResult implements PingResult {
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
-      @required List<double> values,
+      @required List<int> values,
       @required PingStats stats}) = _$_PingResult;
 
   factory _PingResult.fromJson(Map<String, dynamic> json) =
@@ -293,7 +293,7 @@ abstract class _PingResult implements PingResult {
   @override
   Duration get duration;
   @override
-  List<double> get values;
+  List<int> get values;
   @override
   PingStats get stats;
   @override
@@ -441,8 +441,7 @@ PingStats _$PingStatsFromJson(Map<String, dynamic> json) {
 class _$PingStatsTearOff {
   const _$PingStatsTearOff();
 
-  _PingStats call(
-      {@required double min, @required double max, @required double mean}) {
+  _PingStats call({@required int min, @required int max, @required int mean}) {
     return _PingStats(
       min: min,
       max: max,
@@ -455,9 +454,9 @@ class _$PingStatsTearOff {
 const $PingStats = _$PingStatsTearOff();
 
 mixin _$PingStats {
-  double get min;
-  double get max;
-  double get mean;
+  int get min;
+  int get max;
+  int get mean;
 
   Map<String, dynamic> toJson();
   $PingStatsCopyWith<PingStats> get copyWith;
@@ -466,7 +465,7 @@ mixin _$PingStats {
 abstract class $PingStatsCopyWith<$Res> {
   factory $PingStatsCopyWith(PingStats value, $Res Function(PingStats) then) =
       _$PingStatsCopyWithImpl<$Res>;
-  $Res call({double min, double max, double mean});
+  $Res call({int min, int max, int mean});
 }
 
 class _$PingStatsCopyWithImpl<$Res> implements $PingStatsCopyWith<$Res> {
@@ -483,9 +482,9 @@ class _$PingStatsCopyWithImpl<$Res> implements $PingStatsCopyWith<$Res> {
     Object mean = freezed,
   }) {
     return _then(_value.copyWith(
-      min: min == freezed ? _value.min : min as double,
-      max: max == freezed ? _value.max : max as double,
-      mean: mean == freezed ? _value.mean : mean as double,
+      min: min == freezed ? _value.min : min as int,
+      max: max == freezed ? _value.max : max as int,
+      mean: mean == freezed ? _value.mean : mean as int,
     ));
   }
 }
@@ -495,7 +494,7 @@ abstract class _$PingStatsCopyWith<$Res> implements $PingStatsCopyWith<$Res> {
           _PingStats value, $Res Function(_PingStats) then) =
       __$PingStatsCopyWithImpl<$Res>;
   @override
-  $Res call({double min, double max, double mean});
+  $Res call({int min, int max, int mean});
 }
 
 class __$PingStatsCopyWithImpl<$Res> extends _$PingStatsCopyWithImpl<$Res>
@@ -513,9 +512,9 @@ class __$PingStatsCopyWithImpl<$Res> extends _$PingStatsCopyWithImpl<$Res>
     Object mean = freezed,
   }) {
     return _then(_PingStats(
-      min: min == freezed ? _value.min : min as double,
-      max: max == freezed ? _value.max : max as double,
-      mean: mean == freezed ? _value.mean : mean as double,
+      min: min == freezed ? _value.min : min as int,
+      max: max == freezed ? _value.max : max as int,
+      mean: mean == freezed ? _value.mean : mean as int,
     ));
   }
 }
@@ -532,11 +531,11 @@ class _$_PingStats implements _PingStats {
       _$_$_PingStatsFromJson(json);
 
   @override
-  final double min;
+  final int min;
   @override
-  final double max;
+  final int max;
   @override
-  final double mean;
+  final int mean;
 
   @override
   String toString() {
@@ -574,19 +573,19 @@ class _$_PingStats implements _PingStats {
 
 abstract class _PingStats implements PingStats {
   const factory _PingStats(
-      {@required double min,
-      @required double max,
-      @required double mean}) = _$_PingStats;
+      {@required int min,
+      @required int max,
+      @required int mean}) = _$_PingStats;
 
   factory _PingStats.fromJson(Map<String, dynamic> json) =
       _$_PingStats.fromJson;
 
   @override
-  double get min;
+  int get min;
   @override
-  double get max;
+  int get max;
   @override
-  double get mean;
+  int get mean;
   @override
   _$PingStatsCopyWith<_PingStats> get copyWith;
 }

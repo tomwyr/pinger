@@ -21,8 +21,7 @@ _$_PingResult _$_$_PingResultFromJson(Map<String, dynamic> json) {
     duration: json['duration'] == null
         ? null
         : Duration(microseconds: json['duration'] as int),
-    values:
-        (json['values'] as List)?.map((e) => (e as num)?.toDouble())?.toList(),
+    values: (json['values'] as List)?.map((e) => e as int)?.toList(),
     stats: json['stats'] == null
         ? null
         : PingStats.fromJson(json['stats'] as Map<String, dynamic>),
@@ -55,9 +54,9 @@ Map<String, dynamic> _$_$_PingHostToJson(_$_PingHost instance) =>
 
 _$_PingStats _$_$_PingStatsFromJson(Map<String, dynamic> json) {
   return _$_PingStats(
-    min: (json['min'] as num)?.toDouble(),
-    max: (json['max'] as num)?.toDouble(),
-    mean: (json['mean'] as num)?.toDouble(),
+    min: json['min'] as int,
+    max: json['max'] as int,
+    mean: json['mean'] as int,
   );
 }
 

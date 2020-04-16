@@ -117,8 +117,10 @@ class _ResultDetailsGlobalState extends State<ResultDetailsGlobal> {
 
   List<MapDot> _getMapData() {
     return widget.globalResults.locationResults
-        .map((it) =>
-            MapDot(it.location, _resultTypeData.getStatsValue(it.stats)))
+        .map((it) => MapDot(
+              it.location,
+              _resultTypeData.getStatsValue(it.stats).toDouble(),
+            ))
         .toList();
   }
 
@@ -195,7 +197,7 @@ enum UserResultType { min, mean, max }
 class UserResultTypeData {
   final String typeButtonLabel;
   final Map<int, int> graphData;
-  final double Function(PingStats) getStatsValue;
+  final int Function(PingStats) getStatsValue;
 
   factory UserResultTypeData.forType(UserResultType type, PingResult userResult,
       GlobalHostResults globalResults) {

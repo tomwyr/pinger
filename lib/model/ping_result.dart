@@ -14,7 +14,7 @@ abstract class PingResult with _$PingResult {
     @required PingSettings settings,
     @required DateTime startTime,
     @required Duration duration,
-    @required List<double> values,
+    @required List<int> values,
     @required PingStats stats,
   }) = _PingResult;
 
@@ -36,24 +36,28 @@ abstract class PingHost with _$PingHost {
 @freezed
 abstract class PingStats with _$PingStats {
   const factory PingStats({
-    @required double min,
-    @required double max,
-    @required double mean,
+    @required int min,
+    @required int max,
+    @required int mean,
   }) = _PingStats;
 
-  static PingStats fromValues(List<double> values) {
+  static PingStats fromValues(List<int> values) {
     if (values?.isNotEmpty != true || values.every((it) => it == null))
       throw ArgumentError(
           "Ping values have to contain at least one non-null result.");
-    double min = double.infinity;
-    double max = double.negativeInfinity;
-    double sum = 0.0;
+    int min = double.maxFinite.toInt();
+    int max = 0;
+    int sum = 0;
     values.where((it) => it != null).forEach((it) {
       sum += it;
       min = math.min(min, it);
       max = math.max(max, it);
     });
-    return PingStats(min: min, max: max, mean: sum / values.length);
+    return PingStats(
+      min: min.toInt(),
+      max: max.toInt(),
+      mean: sum ~/ values.length,
+    );
   }
 
   factory PingStats.fromJson(Map<String, dynamic> json) =>

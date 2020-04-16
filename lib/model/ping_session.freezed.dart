@@ -16,7 +16,7 @@ class _$PingSessionTearOff {
       {@required PingHost host,
       @required PingStatus status,
       @required PingSettings settings,
-      List<double> values,
+      List<int> values,
       DateTime startTime}) {
     return _PingSession(
       host: host,
@@ -35,7 +35,7 @@ mixin _$PingSession {
   PingHost get host;
   PingStatus get status;
   PingSettings get settings;
-  List<double> get values;
+  List<int> get values;
   DateTime get startTime;
 
   $PingSessionCopyWith<PingSession> get copyWith;
@@ -49,7 +49,7 @@ abstract class $PingSessionCopyWith<$Res> {
       {PingHost host,
       PingStatus status,
       PingSettings settings,
-      List<double> values,
+      List<int> values,
       DateTime startTime});
 
   $PingHostCopyWith<$Res> get host;
@@ -76,7 +76,7 @@ class _$PingSessionCopyWithImpl<$Res> implements $PingSessionCopyWith<$Res> {
       status: status == freezed ? _value.status : status as PingStatus,
       settings:
           settings == freezed ? _value.settings : settings as PingSettings,
-      values: values == freezed ? _value.values : values as List<double>,
+      values: values == freezed ? _value.values : values as List<int>,
       startTime:
           startTime == freezed ? _value.startTime : startTime as DateTime,
     ));
@@ -113,7 +113,7 @@ abstract class _$PingSessionCopyWith<$Res>
       {PingHost host,
       PingStatus status,
       PingSettings settings,
-      List<double> values,
+      List<int> values,
       DateTime startTime});
 
   @override
@@ -144,7 +144,7 @@ class __$PingSessionCopyWithImpl<$Res> extends _$PingSessionCopyWithImpl<$Res>
       status: status == freezed ? _value.status : status as PingStatus,
       settings:
           settings == freezed ? _value.settings : settings as PingSettings,
-      values: values == freezed ? _value.values : values as List<double>,
+      values: values == freezed ? _value.values : values as List<int>,
       startTime:
           startTime == freezed ? _value.startTime : startTime as DateTime,
     ));
@@ -169,7 +169,7 @@ class _$_PingSession implements _PingSession {
   @override
   final PingSettings settings;
   @override
-  final List<double> values;
+  final List<int> values;
   @override
   final DateTime startTime;
 
@@ -227,7 +227,7 @@ abstract class _PingSession implements PingSession {
       {@required PingHost host,
       @required PingStatus status,
       @required PingSettings settings,
-      List<double> values,
+      List<int> values,
       DateTime startTime}) = _$_PingSession;
 
   @override
@@ -237,7 +237,7 @@ abstract class _PingSession implements PingSession {
   @override
   PingSettings get settings;
   @override
-  List<double> get values;
+  List<int> get values;
   @override
   DateTime get startTime;
   @override

@@ -120,7 +120,10 @@ class PingResultSummaryChart extends StatelessWidget {
               colors: [Colors.lightBlue],
               spots: List.generate(
                 results.values.length,
-                (index) => FlSpot(index.toDouble(), results.values[index]),
+                (index) => FlSpot(
+                  index.toDouble(),
+                  results.values[index].toDouble(),
+                ),
               ),
             ),
           ],
@@ -129,10 +132,10 @@ class PingResultSummaryChart extends StatelessWidget {
     );
   }
 
-  BarChartGroupData _buildBarData(int index, double value) {
+  BarChartGroupData _buildBarData(int index, int value) {
     return BarChartGroupData(x: index, barRods: [
       BarChartRodData(
-        y: value,
+        y: value.toDouble(),
         width: barWidth,
         color: Colors.lightBlue.withOpacity(0.25),
         borderRadius: BorderRadius.zero,

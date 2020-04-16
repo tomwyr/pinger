@@ -103,7 +103,7 @@ abstract class NotificationStoreBase with Store {
   void _showStartedNotification(PingSession session) {
     final body = session.values.isNotEmpty
         ? session.values.last != null
-            ? "Last result: ${session.values.last.round()} ms"
+            ? "Last result: ${session.values.last} ms"
             : "Last result: -"
         : "...";
     _showNotification("Ping started", body);
@@ -116,7 +116,7 @@ abstract class NotificationStoreBase with Store {
 
   void _showDoneNotification(PingSession session) {
     final body = session.stats != null
-        ? "Min: ${session.stats.min.round()} ms | Mean: ${session.stats.mean.round()} ms | Max: ${session.stats.max.round()} ms"
+        ? "Min: ${session.stats.min} ms | Mean: ${session.stats.mean} ms | Max: ${session.stats.max} ms"
         : "";
     _showNotification("Ping done", body);
   }
