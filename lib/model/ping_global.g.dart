@@ -20,7 +20,7 @@ Map<String, dynamic> _$_$_GlobalPingCountsToJson(
         _$_GlobalPingCounts instance) =>
     <String, dynamic>{
       'totalCount': instance.totalCount,
-      'pingCounts': instance.pingCounts,
+      'pingCounts': instance.pingCounts?.map((e) => e?.toJson())?.toList(),
     };
 
 _$_PingCount _$_$_PingCountFromJson(Map<String, dynamic> json) {
@@ -54,8 +54,9 @@ Map<String, dynamic> _$_$_GlobalHostResultsToJson(
         _$_GlobalHostResults instance) =>
     <String, dynamic>{
       'totalCount': instance.totalCount,
-      'valueResults': instance.valueResults,
-      'locationResults': instance.locationResults,
+      'valueResults': instance.valueResults?.toJson(),
+      'locationResults':
+          instance.locationResults?.map((e) => e?.toJson())?.toList(),
     };
 
 _$_ValueResults _$_$_ValueResultsFromJson(Map<String, dynamic> json) {
@@ -94,8 +95,8 @@ _$_LocationResults _$_$_LocationResultsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_LocationResultsToJson(_$_LocationResults instance) =>
     <String, dynamic>{
       'count': instance.count,
-      'location': instance.location,
-      'stats': instance.stats,
+      'location': instance.location?.toJson(),
+      'stats': instance.stats?.toJson(),
     };
 
 _$_GlobalSessionResult _$_$_GlobalSessionResultFromJson(
@@ -117,6 +118,6 @@ Map<String, dynamic> _$_$_GlobalSessionResultToJson(
     <String, dynamic>{
       'count': instance.count,
       'host': instance.host,
-      'stats': instance.stats,
-      'location': instance.location,
+      'stats': instance.stats?.toJson(),
+      'location': instance.location?.toJson(),
     };

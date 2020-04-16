@@ -31,12 +31,12 @@ _$_PingResult _$_$_PingResultFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_PingResultToJson(_$_PingResult instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'host': instance.host,
-      'settings': instance.settings,
+      'host': instance.host?.toJson(),
+      'settings': instance.settings?.toJson(),
       'startTime': instance.startTime?.toIso8601String(),
       'duration': instance.duration?.inMicroseconds,
       'values': instance.values,
-      'stats': instance.stats,
+      'stats': instance.stats?.toJson(),
     };
 
 _$_PingHost _$_$_PingHostFromJson(Map<String, dynamic> json) {

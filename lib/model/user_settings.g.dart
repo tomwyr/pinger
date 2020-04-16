@@ -22,8 +22,8 @@ _$_UserSettings _$_$_UserSettingsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_UserSettingsToJson(_$_UserSettings instance) =>
     <String, dynamic>{
-      'pingSettings': instance.pingSettings,
-      'shareSettings': instance.shareSettings,
+      'pingSettings': instance.pingSettings?.toJson(),
+      'shareSettings': instance.shareSettings?.toJson(),
       'showSystemNotification': instance.showSystemNotification,
       'nightModeEnabled': instance.nightModeEnabled,
       'rememberHost': instance.rememberHost,
