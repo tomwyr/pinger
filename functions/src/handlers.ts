@@ -197,7 +197,7 @@ function _getTodayDateKey(daysDelta: number = 0): string {
     date = new Date(date.getTime() + daysDelta * Intervals.secondsPerDay);
   }
   return (
-    date.getMonth().toString().padStart(2, "0") +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
     "." +
     date.getDate().toString().padStart(2, "0")
   );
