@@ -58,11 +58,11 @@ android {
 
     flavorDimensions "app"
     productFlavors {
-        test {
+        tst {
             dimension "app"
-            applicationIdSuffix ".test"
-            versionNameSuffix "-test"
-            resValue "string" "app_name" "[test] Pinger"
+            applicationIdSuffix ".tst"
+            versionNameSuffix "-tst"
+            resValue "string" "app_name" "[tst] Pinger"
         }
         dev {
             dimension "app"
