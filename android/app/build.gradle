@@ -62,17 +62,17 @@ android {
             dimension "app"
             applicationIdSuffix ".tst"
             versionNameSuffix "-tst"
-            resValue "string" "app_name" "[tst] Pinger"
+            resValue "string", "app_name", "[tst] Pinger"
         }
         dev {
             dimension "app"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            resValue "string" "app_name" "[dev] Pinger"
+            resValue "string", "app_name", "[dev] Pinger"
         }
         prod {
             dimension "app"
-            resValue "string" "app_name" "Pinger"
+            resValue "string", "app_name", "Pinger"
         }
     }
 }
