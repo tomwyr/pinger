@@ -14,6 +14,9 @@ abstract class GlobalPingCounts with _$GlobalPingCounts {
 
   factory GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
       _$GlobalPingCountsFromJson(json);
+
+  factory GlobalPingCounts.empty() =>
+      GlobalPingCounts(totalCount: 0, pingCounts: []);
 }
 
 @freezed
@@ -37,6 +40,12 @@ abstract class GlobalHostResults with _$GlobalHostResults {
 
   factory GlobalHostResults.fromJson(Map<String, dynamic> json) =>
       _$GlobalHostResultsFromJson(json);
+
+  factory GlobalHostResults.empty() => GlobalHostResults(
+        totalCount: 0,
+        valueResults: ValueResults(min: {}, mean: {}, max: {}),
+        locationResults: [],
+      );
 }
 
 @freezed

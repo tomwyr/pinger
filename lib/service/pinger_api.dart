@@ -16,13 +16,17 @@ class PingerApi {
   Future<GlobalPingCounts> getPingCounts() async {
     final countsSnap =
         await _firestore.collection(_countsPath).document(_allPath).get();
-    return GlobalPingCounts.fromJson(countsSnap.data);
+    return countsSnap.data != null
+        ? GlobalPingCounts.fromJson(countsSnap.data)
+        : GlobalPingCounts.empty();
   }
 
   Future<GlobalHostResults> getHostResults(String host) async {
     final resultsSnap =
         await _firestore.collection(_resultsPath).document(host).get();
-    return GlobalHostResults.fromJson(resultsSnap.data);
+    return resultsSnap.data != null
+        ? GlobalHostResults.fromJson(resultsSnap.data)
+        : GlobalHostResults.empty();
   }
 
   Future<void> saveSessionResult(GlobalSessionResult result) async {
