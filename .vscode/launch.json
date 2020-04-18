@@ -5,9 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter",
+            "name": "test",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["--flavor", "test"]
+        },
+        {
+            "name": "dev",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "dev"]
+        },
+        {
+            "name": "prod",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "prod"]
         }
     ]
 }
