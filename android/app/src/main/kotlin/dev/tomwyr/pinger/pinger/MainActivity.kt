@@ -1,4 +1,4 @@
-package dev.tomwyr.pinger
+package com.tomwyr.pinger
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
