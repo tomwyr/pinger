@@ -1,5 +1,7 @@
 default_platform(:ios)
 
+appId = ENV['APP_ID']
+
 platform :ios do
     lane :setup_code_signing do
         create_keychain(
@@ -10,12 +12,12 @@ platform :ios do
         )
 
         match(
-            git_url: "https://github.com/tomwyr/pinger-ios-signing.git",
+            git_url: ENV['GIT_URL'],
             git_basic_authorization: ENV['GIT_BASIC_AUTHORIZATION'],
             keychain_name: ENV['KEYCHAIN_NAME'],
             keychain_password: ENV['KEYCHAIN_PASSWORD'],
             type: "adhoc",
-            app_identifier: "com.tomwyr.pinger.dev",
+            app_identifier: appId,
             readonly: true,
         )
         
@@ -23,8 +25,8 @@ platform :ios do
             xcodeproj: "Runner.xcodeproj",
             target_filter: "Runner",
             build_configuration: "Release",
-            profile: ENV["sigh_com.tomwyr.pinger.dev_adhoc_profile-path"],
-            code_signing_identity: "Apple Distribution: Tomasz Wyrowinski (SP32VN9AD9)",
+            profile: ENV['sigh_#{appId}_adhoc_profile-path'],
+            code_signing_identity: ENV['IOS_SIGNING_IDENTITY'],
         )
 
         update_code_signing_settings(
@@ -36,19 +38,19 @@ platform :ios do
     lane :build_and_publish do
         build_app(
             workspace: "Runner.xcworkspace",
-            scheme: "dev",
+            scheme: ENV['APP_FLAVOR'],
             export_method: "ad-hoc",
             output_name: "Runner.ipa",
             export_options: {
                 provisioningProfiles: {
-                    "com.tomwyr.pinger.dev" => "match AdHoc com.tomwyr.pinger.dev"
+                    appId => ENV['sigh_#{appId}_adhoc_profile-name']
                 }
             },
         )
 
         firebase_app_distribution(
-            app: "1:19662603391:ios:ebe2f5ff1246910bbd2b4a",
-            groups: "testers",
+            app: ENV['FIREBASE_APP_ID'],
+            groups: ENV['FIREBASE_GROUPS'],
             firebase_cli_token: ENV['FIREBASE_TOKEN'],
         )
     end
