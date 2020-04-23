@@ -1,0 +1,12 @@
+default_platform(:android)
+
+platform :android do
+    lane :publish do
+        firebase_app_distribution(
+            app: "1:19662603391:android:d82f1b46633823fabd2b4a",
+            groups: "testers",
+            firebase_cli_token: ENV['FIREBASE_TOKEN'],
+            apk_path: "../build/app/outputs/apk/dev/release/app-dev-release.apk",
+        )
+    end
+end
