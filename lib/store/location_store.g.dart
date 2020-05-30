@@ -13,20 +13,18 @@ mixin _$LocationStore on LocationStoreBase, Store {
 
   @override
   bool get hasPermission {
-    _$hasPermissionAtom.context.enforceReadPolicy(_$hasPermissionAtom);
-    _$hasPermissionAtom.reportObserved();
+    _$hasPermissionAtom.reportRead();
     return super.hasPermission;
   }
 
   @override
   set hasPermission(bool value) {
-    _$hasPermissionAtom.context.conditionallyRunInAction(() {
+    _$hasPermissionAtom.reportWrite(value, super.hasPermission, () {
       super.hasPermission = value;
-      _$hasPermissionAtom.reportChanged();
-    }, _$hasPermissionAtom, name: '${_$hasPermissionAtom.name}_set');
+    });
   }
 
-  final _$initAsyncAction = AsyncAction('init');
+  final _$initAsyncAction = AsyncAction('LocationStoreBase.init');
 
   @override
   Future<void> init() {
@@ -34,7 +32,7 @@ mixin _$LocationStore on LocationStoreBase, Store {
   }
 
   final _$_requestPermissionIfGotEnabledAsyncAction =
-      AsyncAction('_requestPermissionIfGotEnabled');
+      AsyncAction('LocationStoreBase._requestPermissionIfGotEnabled');
 
   @override
   Future<void> _requestPermissionIfGotEnabled() {
@@ -42,7 +40,8 @@ mixin _$LocationStore on LocationStoreBase, Store {
         .run(() => super._requestPermissionIfGotEnabled());
   }
 
-  final _$getCurrentPositionAsyncAction = AsyncAction('getCurrentPosition');
+  final _$getCurrentPositionAsyncAction =
+      AsyncAction('LocationStoreBase.getCurrentPosition');
 
   @override
   Future<GeoPosition> getCurrentPosition() {
@@ -52,7 +51,8 @@ mixin _$LocationStore on LocationStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'hasPermission: ${hasPermission.toString()}';
-    return '{$string}';
+    return '''
+hasPermission: ${hasPermission}
+    ''';
   }
 }

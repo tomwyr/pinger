@@ -14,7 +14,8 @@ mixin _$NotificationStore on NotificationStoreBase, Store {
 
   @override
   void init() {
-    final _$actionInfo = _$NotificationStoreBaseActionController.startAction();
+    final _$actionInfo = _$NotificationStoreBaseActionController.startAction(
+        name: 'NotificationStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -24,7 +25,8 @@ mixin _$NotificationStore on NotificationStoreBase, Store {
 
   @override
   String toString() {
-    final string = '';
-    return '{$string}';
+    return '''
+
+    ''';
   }
 }

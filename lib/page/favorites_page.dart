@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/model/host_stats.dart';
+import 'package:pinger/page/hosts_page.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -20,37 +20,24 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: CloseButton(),
-        title: Text("Favorite hosts"),
-      ),
-      body: Observer(builder: (_) {
-        final favoriteHosts = _favoritesStore.items;
-        final stats = _hostsStore.stats;
-        return ListView.builder(
-          itemCount: favoriteHosts.length,
-          itemBuilder: (_, index) {
-            final item = favoriteHosts[index];
-            return ListTile(
-              title: Text(item),
-              trailing: Text(_getFavoriteValueLabel(item, stats)),
-              onTap: () {
-                _pingStore.initSession(item);
-                pushReplacement(PingPage());
-              },
-            );
-          },
-        );
-      }),
-    );
-  }
-
-  String _getFavoriteValueLabel(String host, List<HostStats> stats) {
-    final pingCount = stats
-            .firstWhere((it) => it.host == host, orElse: () => null)
-            ?.pingCount ??
-        0;
-    return "$pingCount x";
+    return Observer(builder: (_) {
+      final stats = _hostsStore.stats;
+      final hosts = _favoritesStore.items.toList()
+        ..sort((e1, e2) {
+          if (!stats.containsKey(e1)) return 1;
+          if (!stats.containsKey(e2)) return -1;
+          return stats[e2].pingCount.compareTo(stats[e1].pingCount);
+        });
+      return HostsPage(
+        title: "Favorites",
+        hosts: hosts,
+        getTrailingLabel: (it) => "${stats[it]?.pingCount ?? 0} x",
+        removeHosts: _favoritesStore.removeFavorites,
+        onHostSelected: (it) {
+          _pingStore.initSession(it);
+          push(PingPage());
+        },
+      );
+    });
   }
 }

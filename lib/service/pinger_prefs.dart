@@ -85,12 +85,18 @@ class PingerPrefs {
     }
   }
 
-  Future<void> removeFavoriteHost(String host) async {
+  // Future<void> removeFavoriteHost(String host) async {
+  //   final allHosts = getFavoriteHosts();
+  //   if (allHosts.contains(host)) {
+  //     allHosts.remove(host);
+  //     await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
+  //   }
+  // }
+
+  Future<void> removeFavoriteHosts(List<String> hosts) async {
     final allHosts = getFavoriteHosts();
-    if (allHosts.contains(host)) {
-      allHosts.remove(host);
-      await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
-    }
+    hosts.forEach(allHosts.remove);
+    await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
   }
 
   List<HostStats> getHostsStats() {
@@ -107,6 +113,12 @@ class PingerPrefs {
   Future<void> saveHostsStats(List<HostStats> stats) async {
     final jsonStringList = stats.map((it) => jsonEncode(it.toJson())).toList();
     await _sharedPrefs.setStringList(_hostsStatsKey, jsonStringList);
+  }
+
+  Future<void> removeHostsStats(List<String> hosts) async {
+    final allStats = getHostsStats();
+    hosts.forEach((it) => allStats.removeWhere((stats) => stats.host == it));
+    await saveHostsStats(allStats);
   }
 
   String getLastHost() => _sharedPrefs.getString(_lastHostKey);

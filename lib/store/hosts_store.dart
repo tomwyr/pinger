@@ -27,7 +27,7 @@ abstract class HostsStoreBase with Store {
   List<HostItem> _hostItems;
 
   @observable
-  List<HostStats> stats;
+  Map<String, HostStats> stats;
 
   @observable
   bool isLoading = false;
@@ -43,7 +43,7 @@ abstract class HostsStoreBase with Store {
   @action
   Future<void> init() async {
     isLoading = true;
-    stats = _pingerPrefs.getHostsStats();
+    _emitStats();
     _hostItems = await _fetchSearchItems();
     isLoading = false;
   }
@@ -58,18 +58,27 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> incrementStats(String host) async {
-    final hostsStats = stats.toList();
+    final hostsStats = stats.values.toList();
     final index = hostsStats.indexWhere((it) => it.host == host);
-    final updatedStats = index != -1
-        ? hostsStats[index].copyWith(
-            pingCount: hostsStats[index].pingCount + 1,
-            pingTime: DateTime.now(),
-          )
-        : HostStats(host: host, pingCount: 1, pingTime: DateTime.now());
+    final updatedStats = HostStats(
+      host: host,
+      pingTime: DateTime.now(),
+      pingCount: (index == -1 ? 0 : hostsStats[index].pingCount) + 1,
+    );
     if (index != -1) hostsStats.removeAt(index);
-    hostsStats.add(updatedStats);
+    hostsStats.insert(0, updatedStats);
     await _pingerPrefs.saveHostsStats(hostsStats);
-    stats = hostsStats;
+    _emitStats();
+  }
+
+  @action
+  Future<void> removeStats(List<String> hosts) async {
+    await _pingerPrefs.removeHostsStats(hosts);
+    _emitStats();
+  }
+
+  void _emitStats() {
+    stats = {for (var it in _pingerPrefs.getHostsStats()) it.host: it};
   }
 
   @action

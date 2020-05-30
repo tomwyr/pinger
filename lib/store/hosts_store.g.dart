@@ -13,89 +13,90 @@ mixin _$HostsStore on HostsStoreBase, Store {
 
   @override
   List<HostItem> get searchResults => (_$searchResultsComputed ??=
-          Computed<List<HostItem>>(() => super.searchResults))
+          Computed<List<HostItem>>(() => super.searchResults,
+              name: 'HostsStoreBase.searchResults'))
       .value;
 
   final _$_searchQueryAtom = Atom(name: 'HostsStoreBase._searchQuery');
 
   @override
   String get _searchQuery {
-    _$_searchQueryAtom.context.enforceReadPolicy(_$_searchQueryAtom);
-    _$_searchQueryAtom.reportObserved();
+    _$_searchQueryAtom.reportRead();
     return super._searchQuery;
   }
 
   @override
   set _searchQuery(String value) {
-    _$_searchQueryAtom.context.conditionallyRunInAction(() {
+    _$_searchQueryAtom.reportWrite(value, super._searchQuery, () {
       super._searchQuery = value;
-      _$_searchQueryAtom.reportChanged();
-    }, _$_searchQueryAtom, name: '${_$_searchQueryAtom.name}_set');
+    });
   }
 
   final _$_hostItemsAtom = Atom(name: 'HostsStoreBase._hostItems');
 
   @override
   List<HostItem> get _hostItems {
-    _$_hostItemsAtom.context.enforceReadPolicy(_$_hostItemsAtom);
-    _$_hostItemsAtom.reportObserved();
+    _$_hostItemsAtom.reportRead();
     return super._hostItems;
   }
 
   @override
   set _hostItems(List<HostItem> value) {
-    _$_hostItemsAtom.context.conditionallyRunInAction(() {
+    _$_hostItemsAtom.reportWrite(value, super._hostItems, () {
       super._hostItems = value;
-      _$_hostItemsAtom.reportChanged();
-    }, _$_hostItemsAtom, name: '${_$_hostItemsAtom.name}_set');
+    });
   }
 
   final _$statsAtom = Atom(name: 'HostsStoreBase.stats');
 
   @override
-  List<HostStats> get stats {
-    _$statsAtom.context.enforceReadPolicy(_$statsAtom);
-    _$statsAtom.reportObserved();
+  Map<String, HostStats> get stats {
+    _$statsAtom.reportRead();
     return super.stats;
   }
 
   @override
-  set stats(List<HostStats> value) {
-    _$statsAtom.context.conditionallyRunInAction(() {
+  set stats(Map<String, HostStats> value) {
+    _$statsAtom.reportWrite(value, super.stats, () {
       super.stats = value;
-      _$statsAtom.reportChanged();
-    }, _$statsAtom, name: '${_$statsAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: 'HostsStoreBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
-  final _$initAsyncAction = AsyncAction('init');
+  final _$initAsyncAction = AsyncAction('HostsStoreBase.init');
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
   }
 
-  final _$incrementStatsAsyncAction = AsyncAction('incrementStats');
+  final _$incrementStatsAsyncAction =
+      AsyncAction('HostsStoreBase.incrementStats');
 
   @override
   Future<void> incrementStats(String host) {
     return _$incrementStatsAsyncAction.run(() => super.incrementStats(host));
+  }
+
+  final _$removeStatsAsyncAction = AsyncAction('HostsStoreBase.removeStats');
+
+  @override
+  Future<void> removeStats(List<String> hosts) {
+    return _$removeStatsAsyncAction.run(() => super.removeStats(hosts));
   }
 
   final _$HostsStoreBaseActionController =
@@ -103,7 +104,8 @@ mixin _$HostsStore on HostsStoreBase, Store {
 
   @override
   void search(String query) {
-    final _$actionInfo = _$HostsStoreBaseActionController.startAction();
+    final _$actionInfo = _$HostsStoreBaseActionController.startAction(
+        name: 'HostsStoreBase.search');
     try {
       return super.search(query);
     } finally {
@@ -113,8 +115,10 @@ mixin _$HostsStore on HostsStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'stats: ${stats.toString()},isLoading: ${isLoading.toString()},searchResults: ${searchResults.toString()}';
-    return '{$string}';
+    return '''
+stats: ${stats},
+isLoading: ${isLoading},
+searchResults: ${searchResults}
+    ''';
   }
 }

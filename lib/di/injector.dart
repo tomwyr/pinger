@@ -28,7 +28,7 @@ abstract class Injector {
       GetIt.instance.get<T>(instanceName: instanceName);
 }
 
-@registerModule
+@module
 abstract class InjectorModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

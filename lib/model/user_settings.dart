@@ -9,8 +9,8 @@ abstract class UserSettings with _$UserSettings {
     PingSettings pingSettings,
     ShareSettings shareSettings,
     bool showSystemNotification,
-    bool nightModeEnabled,
     bool rememberHost,
+    bool nightMode,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

@@ -13,71 +13,67 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   bool get isArchived =>
-      (_$isArchivedComputed ??= Computed<bool>(() => super.isArchived)).value;
+      (_$isArchivedComputed ??= Computed<bool>(() => super.isArchived,
+              name: 'PingStoreBase.isArchived'))
+          .value;
+  Computed<bool> _$didChangeSettingsComputed;
+
+  @override
+  bool get didChangeSettings => (_$didChangeSettingsComputed ??= Computed<bool>(
+          () => super.didChangeSettings,
+          name: 'PingStoreBase.didChangeSettings'))
+      .value;
 
   final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
 
   @override
   Duration get pingDuration {
-    _$pingDurationAtom.context.enforceReadPolicy(_$pingDurationAtom);
-    _$pingDurationAtom.reportObserved();
+    _$pingDurationAtom.reportRead();
     return super.pingDuration;
   }
 
   @override
   set pingDuration(Duration value) {
-    _$pingDurationAtom.context.conditionallyRunInAction(() {
+    _$pingDurationAtom.reportWrite(value, super.pingDuration, () {
       super.pingDuration = value;
-      _$pingDurationAtom.reportChanged();
-    }, _$pingDurationAtom, name: '${_$pingDurationAtom.name}_set');
+    });
   }
 
   final _$currentSessionAtom = Atom(name: 'PingStoreBase.currentSession');
 
   @override
   PingSession get currentSession {
-    _$currentSessionAtom.context.enforceReadPolicy(_$currentSessionAtom);
-    _$currentSessionAtom.reportObserved();
+    _$currentSessionAtom.reportRead();
     return super.currentSession;
   }
 
   @override
   set currentSession(PingSession value) {
-    _$currentSessionAtom.context.conditionallyRunInAction(() {
+    _$currentSessionAtom.reportWrite(value, super.currentSession, () {
       super.currentSession = value;
-      _$currentSessionAtom.reportChanged();
-    }, _$currentSessionAtom, name: '${_$currentSessionAtom.name}_set');
+    });
   }
 
   final _$_archivedIdAtom = Atom(name: 'PingStoreBase._archivedId');
 
   @override
   int get _archivedId {
-    _$_archivedIdAtom.context.enforceReadPolicy(_$_archivedIdAtom);
-    _$_archivedIdAtom.reportObserved();
+    _$_archivedIdAtom.reportRead();
     return super._archivedId;
   }
 
   @override
   set _archivedId(int value) {
-    _$_archivedIdAtom.context.conditionallyRunInAction(() {
+    _$_archivedIdAtom.reportWrite(value, super._archivedId, () {
       super._archivedId = value;
-      _$_archivedIdAtom.reportChanged();
-    }, _$_archivedIdAtom, name: '${_$_archivedIdAtom.name}_set');
+    });
   }
 
-  final _$saveResultAsyncAction = AsyncAction('saveResult');
+  final _$saveResultAsyncAction = AsyncAction('PingStoreBase.saveResult');
 
   @override
   Future<void> saveResult() {
     return _$saveResultAsyncAction.run(() => super.saveResult());
-  }
-
-  final _$deleteResultAsyncAction = AsyncAction('deleteResult');
-
-  @override
-  Future<void> deleteResult() {
-    return _$deleteResultAsyncAction.run(() => super.deleteResult());
   }
 
   final _$PingStoreBaseActionController =
@@ -85,7 +81,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void init() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -95,7 +92,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void initSession(String host) {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.initSession');
     try {
       return super.initSession(host);
     } finally {
@@ -104,10 +102,22 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
-  void clearSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+  void updateSettings(PingSettings settings) {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.updateSettings');
     try {
-      return super.clearSession();
+      return super.updateSettings(settings);
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearSettings() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.clearSettings');
+    try {
+      return super.clearSettings();
     } finally {
       _$PingStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -115,7 +125,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void startQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.startQuickCheck');
     try {
       return super.startQuickCheck();
     } finally {
@@ -125,7 +136,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void stopQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.stopQuickCheck');
     try {
       return super.stopQuickCheck();
     } finally {
@@ -135,7 +147,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void startSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.startSession');
     try {
       return super.startSession();
     } finally {
@@ -145,7 +158,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void pauseSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.pauseSession');
     try {
       return super.pauseSession();
     } finally {
@@ -155,7 +169,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void resumeSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.resumeSession');
     try {
       return super.resumeSession();
     } finally {
@@ -165,7 +180,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void stopSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.stopSession');
     try {
       return super.stopSession();
     } finally {
@@ -175,7 +191,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void restart() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction();
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.restart');
     try {
       return super.restart();
     } finally {
@@ -185,8 +202,11 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'pingDuration: ${pingDuration.toString()},currentSession: ${currentSession.toString()},isArchived: ${isArchived.toString()}';
-    return '{$string}';
+    return '''
+pingDuration: ${pingDuration},
+currentSession: ${currentSession},
+isArchived: ${isArchived},
+didChangeSettings: ${didChangeSettings}
+    ''';
   }
 }

@@ -15,8 +15,8 @@ _$_UserSettings _$_$_UserSettingsFromJson(Map<String, dynamic> json) {
         ? null
         : ShareSettings.fromJson(json['shareSettings'] as Map<String, dynamic>),
     showSystemNotification: json['showSystemNotification'] as bool,
-    nightModeEnabled: json['nightModeEnabled'] as bool,
     rememberHost: json['rememberHost'] as bool,
+    nightMode: json['nightMode'] as bool,
   );
 }
 
@@ -25,8 +25,8 @@ Map<String, dynamic> _$_$_UserSettingsToJson(_$_UserSettings instance) =>
       'pingSettings': instance.pingSettings?.toJson(),
       'shareSettings': instance.shareSettings?.toJson(),
       'showSystemNotification': instance.showSystemNotification,
-      'nightModeEnabled': instance.nightModeEnabled,
       'rememberHost': instance.rememberHost,
+      'nightMode': instance.nightMode,
     };
 
 _$_ShareSettings _$_$_ShareSettingsFromJson(Map<String, dynamic> json) {

@@ -27,3 +27,19 @@ enum PingStatus {
   sessionPaused,
   sessionDone,
 }
+
+extension PingStatusExtensions on PingStatus {
+  bool get isNull => this == null;
+  bool get isInitial => this == PingStatus.initial;
+  bool get isStarted =>
+      this == PingStatus.quickCheckStarted || this == PingStatus.sessionStarted;
+  bool get isDone =>
+      this == PingStatus.quickCheckDone || this == PingStatus.sessionDone;
+  bool get isQuickCheck =>
+      this == PingStatus.quickCheckStarted || this == PingStatus.quickCheckDone;
+  bool get isQuickCheckDone => this == PingStatus.quickCheckDone;
+  bool get isSession =>
+      this == PingStatus.sessionStarted ||
+      this == PingStatus.sessionPaused ||
+      this == PingStatus.sessionDone;
+}

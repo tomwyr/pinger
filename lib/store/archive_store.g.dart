@@ -13,37 +13,34 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
 
   @override
   List<PingResult> get localResults {
-    _$localResultsAtom.context.enforceReadPolicy(_$localResultsAtom);
-    _$localResultsAtom.reportObserved();
+    _$localResultsAtom.reportRead();
     return super.localResults;
   }
 
   @override
   set localResults(List<PingResult> value) {
-    _$localResultsAtom.context.conditionallyRunInAction(() {
+    _$localResultsAtom.reportWrite(value, super.localResults, () {
       super.localResults = value;
-      _$localResultsAtom.reportChanged();
-    }, _$localResultsAtom, name: '${_$localResultsAtom.name}_set');
+    });
   }
 
   final _$globalResultsAtom = Atom(name: 'ArchiveStoreBase.globalResults');
 
   @override
   Map<String, GlobalHostResults> get globalResults {
-    _$globalResultsAtom.context.enforceReadPolicy(_$globalResultsAtom);
-    _$globalResultsAtom.reportObserved();
+    _$globalResultsAtom.reportRead();
     return super.globalResults;
   }
 
   @override
   set globalResults(Map<String, GlobalHostResults> value) {
-    _$globalResultsAtom.context.conditionallyRunInAction(() {
+    _$globalResultsAtom.reportWrite(value, super.globalResults, () {
       super.globalResults = value;
-      _$globalResultsAtom.reportChanged();
-    }, _$globalResultsAtom, name: '${_$globalResultsAtom.name}_set');
+    });
   }
 
-  final _$fetchGlobalResultsAsyncAction = AsyncAction('fetchGlobalResults');
+  final _$fetchGlobalResultsAsyncAction =
+      AsyncAction('ArchiveStoreBase.fetchGlobalResults');
 
   @override
   Future<void> fetchGlobalResults(String host) {
@@ -51,7 +48,8 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
         .run(() => super.fetchGlobalResults(host));
   }
 
-  final _$deleteLocalResultAsyncAction = AsyncAction('deleteLocalResult');
+  final _$deleteLocalResultAsyncAction =
+      AsyncAction('ArchiveStoreBase.deleteLocalResult');
 
   @override
   Future<void> deleteLocalResult(int resultId) {
@@ -59,7 +57,8 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
         .run(() => super.deleteLocalResult(resultId));
   }
 
-  final _$saveLocalResultAsyncAction = AsyncAction('saveLocalResult');
+  final _$saveLocalResultAsyncAction =
+      AsyncAction('ArchiveStoreBase.saveLocalResult');
 
   @override
   Future<int> saveLocalResult(PingResult result) {
@@ -72,7 +71,8 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
 
   @override
   void init() {
-    final _$actionInfo = _$ArchiveStoreBaseActionController.startAction();
+    final _$actionInfo = _$ArchiveStoreBaseActionController.startAction(
+        name: 'ArchiveStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -82,8 +82,9 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'localResults: ${localResults.toString()},globalResults: ${globalResults.toString()}';
-    return '{$string}';
+    return '''
+localResults: ${localResults},
+globalResults: ${globalResults}
+    ''';
   }
 }

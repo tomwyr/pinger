@@ -13,20 +13,18 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
 
   @override
   UserSettings get userSettings {
-    _$userSettingsAtom.context.enforceReadPolicy(_$userSettingsAtom);
-    _$userSettingsAtom.reportObserved();
+    _$userSettingsAtom.reportRead();
     return super.userSettings;
   }
 
   @override
   set userSettings(UserSettings value) {
-    _$userSettingsAtom.context.conditionallyRunInAction(() {
+    _$userSettingsAtom.reportWrite(value, super.userSettings, () {
       super.userSettings = value;
-      _$userSettingsAtom.reportChanged();
-    }, _$userSettingsAtom, name: '${_$userSettingsAtom.name}_set');
+    });
   }
 
-  final _$updateAsyncAction = AsyncAction('update');
+  final _$updateAsyncAction = AsyncAction('SettingsStoreBase.update');
 
   @override
   Future<void> update(UserSettings settings) {
@@ -38,7 +36,8 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
 
   @override
   void init() {
-    final _$actionInfo = _$SettingsStoreBaseActionController.startAction();
+    final _$actionInfo = _$SettingsStoreBaseActionController.startAction(
+        name: 'SettingsStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -48,7 +47,8 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'userSettings: ${userSettings.toString()}';
-    return '{$string}';
+    return '''
+userSettings: ${userSettings}
+    ''';
   }
 }

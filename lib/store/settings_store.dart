@@ -29,7 +29,7 @@ abstract class SettingsStoreBase with Store {
   }
 
   UserSettings _createDefaultSettings() => UserSettings(
-        nightModeEnabled: false,
+        nightMode: false,
         rememberHost: true,
         showSystemNotification: false,
         shareSettings: ShareSettings(

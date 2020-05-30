@@ -13,31 +13,31 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
 
   @override
   List<String> get items {
-    _$itemsAtom.context.enforceReadPolicy(_$itemsAtom);
-    _$itemsAtom.reportObserved();
+    _$itemsAtom.reportRead();
     return super.items;
   }
 
   @override
   set items(List<String> value) {
-    _$itemsAtom.context.conditionallyRunInAction(() {
+    _$itemsAtom.reportWrite(value, super.items, () {
       super.items = value;
-      _$itemsAtom.reportChanged();
-    }, _$itemsAtom, name: '${_$itemsAtom.name}_set');
+    });
   }
 
-  final _$addFavoriteAsyncAction = AsyncAction('addFavorite');
+  final _$addFavoriteAsyncAction =
+      AsyncAction('FavoritesStoreBase.addFavorite');
 
   @override
   Future<void> addFavorite(String host) {
     return _$addFavoriteAsyncAction.run(() => super.addFavorite(host));
   }
 
-  final _$removeFavoriteAsyncAction = AsyncAction('removeFavorite');
+  final _$removeFavoritesAsyncAction =
+      AsyncAction('FavoritesStoreBase.removeFavorites');
 
   @override
-  Future<void> removeFavorite(String host) {
-    return _$removeFavoriteAsyncAction.run(() => super.removeFavorite(host));
+  Future<void> removeFavorites(List<String> hosts) {
+    return _$removeFavoritesAsyncAction.run(() => super.removeFavorites(hosts));
   }
 
   final _$FavoritesStoreBaseActionController =
@@ -45,7 +45,8 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
 
   @override
   void init() {
-    final _$actionInfo = _$FavoritesStoreBaseActionController.startAction();
+    final _$actionInfo = _$FavoritesStoreBaseActionController.startAction(
+        name: 'FavoritesStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -55,7 +56,8 @@ mixin _$FavoritesStore on FavoritesStoreBase, Store {
 
   @override
   String toString() {
-    final string = 'items: ${items.toString()}';
-    return '{$string}';
+    return '''
+items: ${items}
+    ''';
   }
 }

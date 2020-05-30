@@ -66,6 +66,10 @@ abstract class PingStoreBase with Store {
   @computed
   bool get isArchived => _archivedId != null;
 
+  @computed
+  bool get didChangeSettings =>
+      currentSession.settings != _settingsStore.userSettings.pingSettings;
+
   @action
   void init() {
     final lastHost = _pingerPrefs.getLastHost();
@@ -86,9 +90,7 @@ abstract class PingStoreBase with Store {
 
   void _updateStatsIfDidStart() {
     final status = currentSession.status;
-    if (_lastStatus == PingStatus.initial &&
-        (status == PingStatus.sessionStarted ||
-            status == PingStatus.quickCheckStarted)) {
+    if (_lastStatus.isInitial && status.isStarted) {
       _hostsStore.incrementStats(currentSession.host.name);
     }
     _lastStatus = status;
@@ -108,10 +110,8 @@ abstract class PingStoreBase with Store {
   }
 
   bool _shouldShareResult() {
-    final status = currentSession?.status;
-    final isSessionShareable = (status == PingStatus.sessionDone ||
-            status == PingStatus.quickCheckDone) &&
-        currentSession.values.length >= 10;
+    final isSessionShareable =
+        currentSession.status.isDone && currentSession.values.length >= 10;
     final isSharingEnabled =
         _settingsStore.userSettings.shareSettings.shareResults;
     return isSessionShareable && isSharingEnabled && !_didShareResult;
@@ -127,11 +127,11 @@ abstract class PingStoreBase with Store {
 
   @action
   void initSession(String host) {
-    _stopPing();
     currentSession = PingSession(
       host: PingHost(name: host),
       status: PingStatus.initial,
-      settings: _settingsStore.userSettings.pingSettings,
+      settings:
+          currentSession?.settings ?? _settingsStore.userSettings.pingSettings,
     );
     pingDuration = Duration.zero;
     _archivedId = null;
@@ -139,12 +139,13 @@ abstract class PingStoreBase with Store {
   }
 
   @action
-  void clearSession() {
-    _stopPing();
-    currentSession = null;
-    pingDuration = null;
-    _archivedId = null;
-    _didShareResult = false;
+  void updateSettings(PingSettings settings) {
+    currentSession = currentSession.copyWith(settings: settings);
+  }
+
+  @action
+  void clearSettings() {
+    updateSettings(_settingsStore.userSettings.pingSettings);
   }
 
   @action
@@ -155,7 +156,7 @@ abstract class PingStoreBase with Store {
       startTime: DateTime.now(),
       values: [],
     );
-    _startPing();
+    _startPing(settings: currentSession.settings.copyWith(count: null));
   }
 
   @action
@@ -205,7 +206,7 @@ abstract class PingStoreBase with Store {
   }
 
   void _onPingResult(double value) {
-    final values = currentSession.values.toList()..add(value.round());
+    final values = currentSession.values.toList()..add(value?.round());
     currentSession = currentSession.copyWith(values: values);
   }
 
@@ -218,7 +219,7 @@ abstract class PingStoreBase with Store {
   @action
   void stopSession() {
     _stopPing();
-    currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
+    initSession(currentSession.host.name);
   }
 
   void _stopPing() {
@@ -241,11 +242,5 @@ abstract class PingStoreBase with Store {
       duration: _timer.elapsed,
     );
     _archivedId = await _archiveStore.saveLocalResult(result);
-  }
-
-  @action
-  Future<void> deleteResult() async {
-    await _archiveStore.deleteLocalResult(_archivedId);
-    _archivedId = null;
   }
 }

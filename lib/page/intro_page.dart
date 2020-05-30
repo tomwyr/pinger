@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/resources.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -27,45 +28,48 @@ class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(height: 64.0),
-          Spacer(),
-          _buildItemsPager(),
-          Spacer(),
-          _buildCloseButton(),
-          Container(height: 24.0),
-          _buildItemsIndicator(),
-          Container(height: 48.0),
-        ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            children: <Widget>[
+              Spacer(),
+              _buildItemsPager(),
+              Spacer(),
+              _buildItemsIndicator(),
+              Spacer(),
+              _buildButtons(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildItemsPager() {
     return Container(
-      height: 320.0,
+      height: 360.0,
       child: PageView(
         controller: _pageController,
         onPageChanged: (it) => setState(() => _currentItem = it),
         children: <Widget>[
           _buildItem(
-            Images.introMagnifier,
+            Images.undrawSearching,
             "Select host",
             "Either pick one of the search results or enter your own host and confirm your choice",
           ),
           _buildItem(
-            Images.introGear,
+            Images.undrawSettings,
             "Adjust settings",
             "Change host monitoring preferences and behavior of entire application",
           ),
           _buildItem(
-            Images.introWaves,
+            Images.undrawSignalSearching,
             "Ping host",
             "Either perform a quick ping by long pressing play button or tap it to start ping session",
           ),
           _buildItem(
-            Images.introBinders,
+            Images.undrawCollecting,
             "Save results",
             "Archive ping results to review them later and compare them with rest of the world",
           ),
@@ -76,31 +80,26 @@ class _IntroPageState extends State<IntroPage> {
 
   Widget _buildItem(AssetImage image, String title, String description) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 48.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image(image: image, width: 150, height: 150),
+          Image(image: image, width: 200.0, height: 200.0),
           Container(height: 40.0),
-          Text(title, style: TextStyle(fontSize: 18.0)),
-          Container(height: 40.0),
-          Text(description, textAlign: TextAlign.center),
+          Text(
+            title,
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          Container(height: 16.0),
+          Text(
+            description,
+            style: TextStyle(fontSize: 18.0),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
-  }
-
-  Widget _buildCloseButton() {
-    return (_currentItem < _itemCount - 1)
-        ? FlatButton(
-            child: Text("Skip"),
-            onPressed: pop,
-          )
-        : RaisedButton(
-            child: Text("Got it!"),
-            onPressed: pop,
-          );
   }
 
   Widget _buildItemsIndicator() {
@@ -109,21 +108,15 @@ class _IntroPageState extends State<IntroPage> {
       children: List<Widget>.generate(
         _itemCount,
         (it) => GestureDetector(
-          onTap: () => _onItemDotTap(it),
-          child: SizedBox(
-            height: 48.0,
-            width: 32.0,
-            child: Align(
-              alignment: Alignment.center,
-              child: SizedBox.fromSize(
-                size: Size.square(it == _currentItem ? 24.0 : 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.lightBlue,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
+          onTap: () => _moveToPage(it),
+          child: Container(
+            margin: const EdgeInsets.all(8.0),
+            height: 16.0,
+            width: it == _currentItem ? 32.0 : 16.0,
+            decoration: BoxDecoration(
+              color:
+                  it == _currentItem ? R.colors.secondary : R.colors.grayLight,
+              borderRadius: BorderRadius.circular(8.0),
             ),
           ),
         ),
@@ -131,7 +124,54 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
-  void _onItemDotTap(int index) {
+  Widget _buildButtons() {
+    return SizedBox(
+      height: 64.0,
+      child: Align(
+        alignment: Alignment.center,
+        child: (_currentItem < _itemCount - 1)
+            ? Row(children: <Widget>[
+                ButtonTheme.fromButtonThemeData(
+                  data: R.themes.flatButton,
+                  child: FlatButton(child: Text("SKIP"), onPressed: pop),
+                ),
+                Spacer(),
+                SizedBox.fromSize(
+                  size: Size.square(64.0),
+                  child: RaisedButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: _onNextPressed,
+                    child: Icon(Icons.arrow_forward, size: 32.0),
+                  ),
+                ),
+              ])
+            : IntrinsicWidth(
+                child: ButtonTheme.fromButtonThemeData(
+                  data: R.themes.raisedButton,
+                  child: RaisedButton(
+                    onPressed: pop,
+                    child: Row(children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          "Get started",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: Size.square(32.0),
+                        child: Icon(Icons.arrow_forward, size: 24.0),
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  void _onNextPressed() => _moveToPage(_currentItem + 1);
+
+  void _moveToPage(int index) {
     _pageController.animateToPage(
       index,
       duration: Duration(milliseconds: 300),

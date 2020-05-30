@@ -27,8 +27,8 @@ abstract class ArchiveStoreBase with Store {
 
   @action
   void init() {
-    localResults = _pingerPrefs.getArchiveResults();
     globalResults = {};
+    _emitLocalResults();
   }
 
   @action
@@ -42,14 +42,18 @@ abstract class ArchiveStoreBase with Store {
   @action
   Future<void> deleteLocalResult(int resultId) async {
     await _pingerPrefs.deleteArchiveResult(resultId);
-    final entryIndex = localResults.indexWhere((it) => it.id == resultId);
-    localResults = localResults.toList()..removeAt(entryIndex);
+    _emitLocalResults();
   }
 
   @action
   Future<int> saveLocalResult(PingResult result) async {
     final resultId = await _pingerPrefs.saveArchiveResult(result);
-    localResults = localResults.toList()..add(result.copyWith(id: resultId));
+    _emitLocalResults();
     return resultId;
+  }
+
+  void _emitLocalResults() {
+    localResults = _pingerPrefs.getArchiveResults()
+      ..sort((e1, e2) => e2.startTime.compareTo(e1.startTime));
   }
 }
