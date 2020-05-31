@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/widgets/session/session_summary_section.dart';
 import 'package:pinger/widgets/session/session_values_chart.dart';
-import 'package:pinger/widgets/session/session_values_item.dart';
+import 'package:pinger/widgets/session/session_values_list.dart';
 import 'package:pinger/widgets/view_type_button.dart';
 import 'package:pinger/widgets/view_types.dart';
 
@@ -26,31 +27,16 @@ class ResultDetailsResultsTab extends StatefulWidget {
 }
 
 class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
-  ValueNotifier<PingValuesType> _viewType;
-  @override
-  void initState() {
-    super.initState();
-    _viewType = ValueNotifier(PingValuesType.list);
-  }
-
-  @override
-  void dispose() {
-    _viewType.dispose();
-    super.dispose();
-  }
+  PingValuesType _viewType = PingValuesType.list;
 
   @override
   Widget build(BuildContext context) {
     return widget.scrollBuilder(<Widget>[
       _buildCommonSection(),
-      ValueListenableBuilder<PingValuesType>(
-        valueListenable: _viewType,
-        builder: (_, value, __) => value == PingValuesType.list
-            ? _buildResultsList()
-            : value == PingValuesType.chart
-                ? _buildResultsChart(context)
-                : throw ArgumentError("Unhandled results view type: $value."),
-      ),
+      if (_viewType == PingValuesType.list)
+        _buildResultsList()
+      else if (_viewType == PingValuesType.chart)
+        _buildResultsChart()
     ]);
   }
 
@@ -68,19 +54,16 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
               stats: widget.stats,
             ),
             Container(height: 16.0),
-            ValueListenableBuilder<PingValuesType>(
-              valueListenable: _viewType,
-              builder: (_, __, ___) => Row(children: <Widget>[
-                Text(
-                  "Results",
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                _buildTypeButton(PingValuesType.list, "List"),
-                Container(width: 8.0),
-                _buildTypeButton(PingValuesType.chart, "Chart"),
-              ]),
-            ),
+            Row(children: <Widget>[
+              Text(
+                "Results",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
+              _buildTypeButton(PingValuesType.list, "List"),
+              Container(width: 8.0),
+              _buildTypeButton(PingValuesType.chart, "Chart"),
+            ]),
           ],
         ),
       ),
@@ -90,37 +73,41 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
   Widget _buildTypeButton(PingValuesType type, String label) {
     return ViewTypeButton(
       label: label,
-      selected: _viewType.value == type,
-      onPressed: () => _viewType.value = type,
+      selected: _viewType == type,
+      onPressed: () {
+        if (_viewType != type) setState(() => _viewType = type);
+      },
     );
   }
 
   Widget _buildResultsList() {
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (_, index) => SessionValuesItem.reversed(
-            values: widget.values,
-            index: index,
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: SizedBox(
+        // Constrain with finite height to prevent layout
+        // error and to obtain actual box constraints.
+        height: 0.0,
+        child: LayoutBuilder(
+          builder: (_, constraints) => SizedBox(
+            width: double.infinity,
+            height: constraints.maxHeight,
+            child: SessionValuesList(
+              values: widget.values,
+              shouldFollowHead: false,
+            ),
           ),
-          childCount: widget.values.length,
         ),
       ),
     );
   }
 
-  Widget _buildResultsChart(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(16.0),
-      sliver: SliverFillRemaining(
-        hasScrollBody: false,
+  Widget _buildResultsChart() {
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: double.infinity,
-            minHeight: 192.0,
-            maxHeight: 256.0,
-          ),
+          constraints: BoxConstraints(minHeight: 128.0),
           child: SessionValuesChart(
             values: widget.values,
             stats: widget.stats,

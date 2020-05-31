@@ -56,7 +56,8 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
           else if (widget.viewType == PingValuesType.list)
             Expanded(
               child: SessionValuesList(
-                session: widget.session,
+                shouldFollowHead: widget.session.status.isStarted,
+                values: widget.session.values,
               ),
             )
           else if (widget.viewType == PingValuesType.chart)

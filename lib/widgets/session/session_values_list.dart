@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/session/session_values_item.dart';
 import 'package:pinger/widgets/session/session_values_scrollable.dart';
 
 class SessionValuesList extends StatefulWidget {
-  final PingSession session;
+  final List<int> values;
+  final bool shouldFollowHead;
 
-  const SessionValuesList({Key key, @required this.session}) : super(key: key);
+  const SessionValuesList({
+    Key key,
+    @required this.values,
+    @required this.shouldFollowHead,
+  }) : super(key: key);
 
   @override
   _SessionValuesListState createState() => _SessionValuesListState();
@@ -17,8 +21,8 @@ class _SessionValuesListState extends State<SessionValuesList>
   final _listKey = GlobalKey<AnimatedListState>();
   final _insertDuration = const Duration(milliseconds: 500);
 
-  ValueNotifier<bool> _didReachHead;
   ScrollController _scroller;
+  ValueNotifier<bool> _didReachHead;
 
   @override
   void initState() {
@@ -37,7 +41,7 @@ class _SessionValuesListState extends State<SessionValuesList>
   @override
   void didUpdateWidget(SessionValuesList old) {
     super.didUpdateWidget(old);
-    final lengthDiff = widget.session.values.length - old.session.values.length;
+    final lengthDiff = widget.values.length - old.values.length;
     for (var i = 0; i < lengthDiff; i++) {
       _listKey.currentState.insertItem(0, duration: _insertDuration);
     }
@@ -60,17 +64,17 @@ class _SessionValuesListState extends State<SessionValuesList>
     return SessionValuesScrollable(
       axis: Axis.vertical,
       didReachHead: _didReachHead,
-      shouldFollowHead: widget.session.status.isStarted,
+      shouldFollowHead: widget.shouldFollowHead,
       moveToHeadValue: _animateToHead,
       child: AnimatedList(
         key: _listKey,
         controller: _scroller,
-        initialItemCount: widget.session.values.length,
+        initialItemCount: widget.values.length,
         itemBuilder: (_, index, animation) => SizeTransition(
           sizeFactor: animation,
           axisAlignment: 1.0,
           child: SessionValuesItem.reversed(
-            values: widget.session.values,
+            values: widget.values,
             index: index,
           ),
         ),
