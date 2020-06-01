@@ -110,8 +110,9 @@ abstract class PingStoreBase with Store {
   }
 
   bool _shouldShareResult() {
-    final isSessionShareable =
-        currentSession.status.isDone && currentSession.values.length >= 10;
+    final isSessionShareable = currentSession.status.isDone &&
+        currentSession.values.length >= 10 &&
+        currentSession.stats != null;
     final isSharingEnabled =
         _settingsStore.userSettings.shareSettings.shareResults;
     return isSessionShareable && isSharingEnabled && !_didShareResult;

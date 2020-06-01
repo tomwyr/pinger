@@ -42,17 +42,17 @@ abstract class PingStats with _$PingStats {
   }) = _PingStats;
 
   static PingStats fromValues(List<int> values) {
-    if (values?.isNotEmpty != true || values.every((it) => it == null))
-      throw ArgumentError(
-          "Ping values have to contain at least one non-null result.");
+    bool hasValue = false;
     int min = double.maxFinite.toInt();
     int max = 0;
     int sum = 0;
     values.where((it) => it != null).forEach((it) {
+      if (!hasValue) hasValue = true;
       sum += it;
       min = math.min(min, it);
       max = math.max(max, it);
     });
+    if (!hasValue) return null;
     return PingStats(
       min: min.toInt(),
       max: max.toInt(),
