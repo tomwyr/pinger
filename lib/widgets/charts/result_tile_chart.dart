@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class ResultTileChart extends StatelessWidget {
@@ -48,10 +49,9 @@ class ResultTileChart extends StatelessWidget {
             preventCurveOverShooting: true,
             colors: [R.colors.secondary],
             barWidth: 1.0,
-            spots: List.generate(
-              values.length,
-              (index) => FlSpot(index.toDouble(), values[index]?.toDouble()),
-            ),
+            spots: values
+                .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+                .toList(),
           ),
         ],
       )),

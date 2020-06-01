@@ -22,3 +22,10 @@ extension StateExtensions<T extends StatefulWidget> on State<T> {
   // ignore: invalid_use_of_protected_member
   void rebuild() => setState(() {});
 }
+
+extension ListExtensions<E> on List<E> {
+  Iterable<T> mapIndexed<T>(T f(int i, E e)) {
+    int index = -1;
+    return map((e) => f(++index, e));
+  }
+}

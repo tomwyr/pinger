@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class ResultSummaryChart extends StatelessWidget {
@@ -46,25 +47,17 @@ class ResultSummaryChart extends StatelessWidget {
             gradientTo: const Offset(0.0, 1.0),
           ),
           colors: [R.colors.primaryLight],
-          spots: List.generate(
-            values.length,
-            (index) => FlSpot(index.toDouble(), values[index]?.toDouble()),
-          ),
+          spots: values
+              .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+              .toList(),
         ),
+        // Add invisible line to prevent chart from being cut if there are values on the edges
         LineChartBarData(
-          dotData: FlDotData(
-            show: true,
-            getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
-              color: R.colors.gray,
-              strokeWidth: 0.0,
-            ),
-            checkToShowDot: (it, _) => false,
-          ),
           colors: [R.colors.none],
-          spots: List.generate(
-            values.length,
-            (index) => FlSpot(index.toDouble(), values[minIndex].toDouble()),
-          ),
+          spots: values
+              .mapIndexed(
+                  (i, _) => FlSpot(i.toDouble(), values[minIndex].toDouble()))
+              .toList(),
         ),
       ],
     ));

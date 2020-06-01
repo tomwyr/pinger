@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class PingResultsChart extends StatelessWidget {
@@ -83,45 +84,40 @@ class PingResultsChart extends StatelessWidget {
                 .toList(),
           ),
         ),
-        lineBarsData: values.isNotEmpty
-            ? [
-                LineChartBarData(
-                  dotData: FlDotData(
-                    show: true,
-                    getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
-                      color: R.colors.secondary,
-                      strokeWidth: 0.0,
-                    ),
-                  ),
-                  isCurved: true,
-                  preventCurveOverShooting: true,
-                  colors: [R.colors.primaryLight],
-                  spots: List.generate(
-                    values.length,
-                    (index) =>
-                        FlSpot(index.toDouble(), values[index]?.toDouble()),
-                  ),
+        lineBarsData: [
+          if (values.isNotEmpty)
+            LineChartBarData(
+              dotData: FlDotData(
+                show: true,
+                getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
+                  color: R.colors.secondary,
+                  strokeWidth: 0.0,
                 ),
-                LineChartBarData(
-                  dotData: FlDotData(
-                    show: true,
-                    checkToShowDot: (it, __) => it.isNotNull(),
-                    getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
-                      color: R.colors.gray,
-                      strokeWidth: 0.0,
-                    ),
-                  ),
-                  colors: [R.colors.none],
-                  spots: List.generate(
-                    values.length,
-                    (index) => FlSpot(
-                      index.toDouble(),
-                      values[index] == null ? 0.0 : null,
-                    ),
-                  ),
+              ),
+              isCurved: true,
+              preventCurveOverShooting: true,
+              colors: [R.colors.primaryLight],
+              spots: values
+                  .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+                  .toList(),
+            ),
+          if (values.isNotEmpty)
+            LineChartBarData(
+              dotData: FlDotData(
+                show: true,
+                checkToShowDot: (it, __) => it.isNotNull(),
+                getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
+                  color: R.colors.gray,
+                  strokeWidth: 0.0,
                 ),
-              ]
-            : [],
+              ),
+              colors: [R.colors.none],
+              spots: values
+                  .mapIndexed(
+                      (i, e) => FlSpot(i.toDouble(), e == null ? 0.0 : null))
+                  .toList(),
+            ),
+        ],
       ),
     );
   }
