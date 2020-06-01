@@ -20,8 +20,9 @@ class ResultDetailsSummaryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final meanLineTop =
-        padding + height * (1 - result.stats.mean / result.stats.max);
+    final meanHeightRatio = (result.stats.mean - result.stats.min) /
+        (result.stats.max - result.stats.min);
+    final meanLineTop = padding + height * (1 - meanHeightRatio);
     return SizedBox(
       height: height + 2 * padding,
       child: LayoutBuilder(

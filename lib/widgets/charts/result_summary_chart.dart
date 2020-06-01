@@ -34,10 +34,36 @@ class ResultSummaryChart extends StatelessWidget {
           ),
           isCurved: true,
           preventCurveOverShooting: true,
+          belowBarData: BarAreaData(
+            show: true,
+            colors: [
+              R.colors.primaryLight.withOpacity(0.7),
+              R.colors.primaryLight.withOpacity(0.2),
+              R.colors.primaryLight.withOpacity(0.0),
+            ],
+            gradientColorStops: [0.0, 0.7, 1.0],
+            gradientFrom: const Offset(0.0, 0.0),
+            gradientTo: const Offset(0.0, 1.0),
+          ),
           colors: [R.colors.primaryLight],
           spots: List.generate(
             values.length,
-            (index) => FlSpot(index.toDouble(), values[index].toDouble()),
+            (index) => FlSpot(index.toDouble(), values[index]?.toDouble()),
+          ),
+        ),
+        LineChartBarData(
+          dotData: FlDotData(
+            show: true,
+            getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
+              color: R.colors.gray,
+              strokeWidth: 0.0,
+            ),
+            checkToShowDot: (it, _) => false,
+          ),
+          colors: [R.colors.none],
+          spots: List.generate(
+            values.length,
+            (index) => FlSpot(index.toDouble(), values[minIndex].toDouble()),
           ),
         ),
       ],

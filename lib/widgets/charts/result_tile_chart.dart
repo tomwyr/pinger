@@ -50,7 +50,7 @@ class ResultTileChart extends StatelessWidget {
             barWidth: 1.0,
             spots: List.generate(
               values.length,
-              (index) => FlSpot(index.toDouble(), values[index].toDouble()),
+              (index) => FlSpot(index.toDouble(), values[index]?.toDouble()),
             ),
           ),
         ],

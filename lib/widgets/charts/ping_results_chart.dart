@@ -83,25 +83,45 @@ class PingResultsChart extends StatelessWidget {
                 .toList(),
           ),
         ),
-        lineBarsData: [
-          if (values.isNotEmpty)
-            LineChartBarData(
-              dotData: FlDotData(
-                show: true,
-                getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
-                  color: R.colors.secondary,
-                  strokeWidth: 0.0,
+        lineBarsData: values.isNotEmpty
+            ? [
+                LineChartBarData(
+                  dotData: FlDotData(
+                    show: true,
+                    getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
+                      color: R.colors.secondary,
+                      strokeWidth: 0.0,
+                    ),
+                  ),
+                  isCurved: true,
+                  preventCurveOverShooting: true,
+                  colors: [R.colors.primaryLight],
+                  spots: List.generate(
+                    values.length,
+                    (index) =>
+                        FlSpot(index.toDouble(), values[index]?.toDouble()),
+                  ),
                 ),
-              ),
-              isCurved: true,
-              preventCurveOverShooting: true,
-              colors: [R.colors.primaryLight],
-              spots: List.generate(
-                values.length,
-                (index) => FlSpot(index.toDouble(), values[index].toDouble()),
-              ),
-            ),
-        ],
+                LineChartBarData(
+                  dotData: FlDotData(
+                    show: true,
+                    checkToShowDot: (it, __) => it.isNotNull(),
+                    getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(
+                      color: R.colors.gray,
+                      strokeWidth: 0.0,
+                    ),
+                  ),
+                  colors: [R.colors.none],
+                  spots: List.generate(
+                    values.length,
+                    (index) => FlSpot(
+                      index.toDouble(),
+                      values[index] == null ? 0.0 : null,
+                    ),
+                  ),
+                ),
+              ]
+            : [],
       ),
     );
   }
