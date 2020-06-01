@@ -30,7 +30,7 @@ class ResultDetailsHeader extends StatelessWidget {
             height: minExtent,
             margin: const EdgeInsets.symmetric(horizontal: 48.0),
             child: Center(
-              child: Text("Result details", style: R.styles.appBarTitle),
+              child: Text("Result", style: R.styles.appBarTitle),
             ),
           ),
         ),
