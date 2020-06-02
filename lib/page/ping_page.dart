@@ -195,7 +195,7 @@ class _PingPageState extends State<PingPage> {
         child: SessionPingButton(
           session: session,
           pingDuration: _pingStore.pingDuration,
-          isArchived: _pingStore.isArchived,
+          canArchive: _pingStore.canArchive,
           onQuickCheckStart: _pingStore.startQuickCheck,
           onQuickCheckStop: _pingStore.stopQuickCheck,
           onSessionStart: _pingStore.startSession,

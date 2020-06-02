@@ -180,7 +180,7 @@ class _$_PingSession implements _PingSession {
   PingStats get stats {
     if (_didstats == false) {
       _didstats = true;
-      _stats = PingStats.fromValues(values);
+      _stats = values != null ? PingStats.fromValues(values) : null;
     }
     return _stats;
   }

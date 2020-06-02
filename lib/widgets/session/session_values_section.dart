@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/session/session_ping_gauge.dart';
@@ -25,6 +27,8 @@ class SessionValuesSection extends StatefulWidget {
 }
 
 class _SessionValuesSectionState extends State<SessionValuesSection> {
+  final _chartSafeHeight = 48.0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,12 +66,17 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
             )
           else if (widget.viewType == PingValuesType.chart)
             Expanded(
-              child: SessionValuesChart(
-                values: widget.session.values,
-                stats: widget.session.stats,
-                shouldFollowHead: widget.session.status.isStarted,
+              child: LayoutBuilder(
+                builder: (_, constraints) => OverflowBox(
+                  maxHeight: max(constraints.maxHeight, _chartSafeHeight),
+                  child: SessionValuesChart(
+                    values: widget.session.values,
+                    stats: widget.session.stats,
+                    shouldFollowHead: widget.session.status.isStarted,
+                  ),
+                ),
               ),
-            )
+            ),
         ],
       ),
     );

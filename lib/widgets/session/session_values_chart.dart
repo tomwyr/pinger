@@ -155,9 +155,9 @@ class _SessionValuesChartState extends State<SessionValuesChart>
               valueListenable: _startX,
               builder: (_, value, __) => PingResultsChart(
                 values: widget.values,
-                maxValue: widget.stats.max,
+                maxValue: widget.stats?.max,
                 dotsCount: _visibleDotsCount,
-                startX: _startX.value,
+                startX: value,
                 valueLabelSize: _valueLabelSize,
                 valueLabelMargin: _valueLabelMargin,
               ),

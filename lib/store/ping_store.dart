@@ -64,7 +64,7 @@ abstract class PingStoreBase with Store {
   int _archivedId;
 
   @computed
-  bool get isArchived => _archivedId != null;
+  bool get canArchive => _archivedId == null && currentSession.stats != null;
 
   @computed
   bool get didChangeSettings =>

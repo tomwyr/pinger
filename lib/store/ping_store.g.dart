@@ -9,12 +9,12 @@ part of 'ping_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PingStore on PingStoreBase, Store {
-  Computed<bool> _$isArchivedComputed;
+  Computed<bool> _$canArchiveComputed;
 
   @override
-  bool get isArchived =>
-      (_$isArchivedComputed ??= Computed<bool>(() => super.isArchived,
-              name: 'PingStoreBase.isArchived'))
+  bool get canArchive =>
+      (_$canArchiveComputed ??= Computed<bool>(() => super.canArchive,
+              name: 'PingStoreBase.canArchive'))
           .value;
   Computed<bool> _$didChangeSettingsComputed;
 
@@ -205,7 +205,7 @@ mixin _$PingStore on PingStoreBase, Store {
     return '''
 pingDuration: ${pingDuration},
 currentSession: ${currentSession},
-isArchived: ${isArchived},
+canArchive: ${canArchive},
 didChangeSettings: ${didChangeSettings}
     ''';
   }

@@ -15,7 +15,7 @@ abstract class PingSession with _$PingSession {
   }) = _PingSession;
 
   @late
-  PingStats get stats => PingStats.fromValues(values);
+  PingStats get stats => values != null ? PingStats.fromValues(values) : null;
 }
 
 enum PingStatus {

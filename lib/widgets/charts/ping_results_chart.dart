@@ -34,7 +34,7 @@ class PingResultsChart extends StatelessWidget {
         minX: startX - 0.5,
         maxX: startX + dotsCount - 0.5,
         minY: 0.0,
-        maxY: maxY,
+        maxY: maxY ?? 0.0,
         clipData: FlClipData.horizontal(),
         axisTitleData: FlAxisTitleData(show: false),
         borderData: FlBorderData(show: false),
@@ -74,13 +74,15 @@ class PingResultsChart extends StatelessWidget {
             tooltipBottomMargin: 32.0,
             tooltipBgColor: R.colors.canvas.withOpacity(0.85),
             getTooltipItems: (it) => it
-                .map((spot) => LineTooltipItem(
-                    spot.y.toInt().toString(),
-                    TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: R.colors.secondary,
-                    )))
+                .map((spot) => values[spot.spotIndex] != null
+                    ? LineTooltipItem(
+                        spot.y.toInt().toString(),
+                        TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: R.colors.secondary,
+                        ))
+                    : null)
                 .toList(),
           ),
         ),

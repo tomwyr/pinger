@@ -5,7 +5,7 @@ import 'package:pinger/resources.dart';
 class SessionPingButton extends StatefulWidget {
   final PingSession session;
   final Duration pingDuration;
-  final bool isArchived;
+  final bool canArchive;
   final VoidCallback onQuickCheckStart;
   final VoidCallback onQuickCheckStop;
   final VoidCallback onSessionStart;
@@ -19,7 +19,7 @@ class SessionPingButton extends StatefulWidget {
     Key key,
     @required this.session,
     @required this.pingDuration,
-    @required this.isArchived,
+    @required this.canArchive,
     @required this.onQuickCheckStart,
     @required this.onQuickCheckStop,
     @required this.onSessionStart,
@@ -55,9 +55,8 @@ class _SessionPingButtonState extends State<SessionPingButton> {
 
   @override
   Widget build(BuildContext context) {
-    final isExpanded = !widget.isArchived &&
-        (widget.session.status == PingStatus.sessionPaused ||
-            widget.session.status == PingStatus.sessionDone);
+    final isExpanded = widget.session.status == PingStatus.sessionPaused ||
+        (widget.session.status == PingStatus.sessionDone && widget.canArchive);
     return SizedBox(
       height: _normalButtonSize,
       width: _contentWidth,

@@ -130,7 +130,7 @@ class _PingGaugeArcState extends State<PingGaugeArc>
       ).chain(CurveTween(curve: Curves.easeInOut)).animate(_animator);
       _dotValueAnim = Tween<double>(
         begin: _dotValueAnim.value,
-        end: widget.value ?? old.value,
+        end: widget.value ?? old.value ?? _dotValueAnim.value,
       ).chain(CurveTween(curve: Curves.easeOutCubic)).animate(_animator);
       _animator.forward(from: 0.0);
     }
