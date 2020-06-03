@@ -132,10 +132,23 @@ function _createMonthlyResults(
       _addDayToMonthlyResults(monthlyResults, dayResults);
     }
   });
+  const roundedLocationResults = Object.values(
+    monthlyResults.locationResults
+  ).map((it) => {
+    return {
+      count: it.count,
+      location: it.location,
+      stats: {
+        min: Math.round(it.stats.min),
+        mean: Math.round(it.stats.mean),
+        max: Math.round(it.stats.max),
+      },
+    };
+  });
   return {
     totalCount: monthlyResults.totalCount,
     valueResults: monthlyResults.valueResults,
-    locationResults: Object.values(monthlyResults.locationResults),
+    locationResults: roundedLocationResults,
   };
 }
 
