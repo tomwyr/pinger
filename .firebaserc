@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pinger-855aa"
+    "default": "pinger-855aa",
+    "dev": "pinger-dev-86e02"
   }
 }
