@@ -14,6 +14,7 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/widgets/home_host_suggestions.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   final HostsStore _hostsStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
+  final SettingsStore _settingsStore = Injector.resolve();
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +48,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Observer(builder: (_) {
-        final stats = _hostsStore.stats;
-        final favorites = _favoritesStore.items;
-        final session = _pingStore.currentSession;
-        final hasNoSuggestions =
-            stats.isEmpty && favorites.isEmpty && session == null;
-        return hasNoSuggestions
-            ? _buildNoSuggestions()
-            : Builder(
-                builder: (context) => HomeHostSuggestions(
-                  session: session,
-                  favorites: favorites,
-                  stats: stats,
-                  searchBar: _buildSearchBar(),
-                  onItemPressed: (it) => _onHostItemPressed(context, it),
-                ),
-              );
-      }),
+      body: Observer(
+        builder: (context) {
+          if (!_settingsStore.didShowIntro) {
+            return _buildIntroContent(_settingsStore.notifyDidShowIntro);
+          }
+          return HomeHostSuggestions(
+            session: _pingStore.currentSession,
+            favorites: _favoritesStore.items,
+            popular: _hostsStore.hosts?.take(3)?.map((it) => it.name)?.toList(),
+            stats: _hostsStore.stats,
+            searchBar: _buildSearchBar(),
+            onItemPressed: (it) => _onHostItemPressed(context, it),
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildNoSuggestions() {
+  Widget _buildIntroContent(VoidCallback onIntroDone) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 16.0),
       child: Column(children: <Widget>[
         _buildSearchBar(),
         Spacer(),
@@ -91,8 +90,13 @@ class _HomePageState extends State<HomePage> {
           data: R.themes.raisedButton,
           child: RaisedButton(
             child: Text("Show intro"),
-            onPressed: () => push(IntroPage()),
+            onPressed: () => push(IntroPage()).then((_) => onIntroDone()),
           ),
+        ),
+        Container(height: 8.0),
+        ButtonTheme.fromButtonThemeData(
+          data: R.themes.flatButton,
+          child: FlatButton(child: Text("SKIP"), onPressed: onIntroDone),
         ),
       ]),
     );

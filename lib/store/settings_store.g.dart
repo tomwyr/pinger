@@ -24,11 +24,37 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     });
   }
 
-  final _$updateAsyncAction = AsyncAction('SettingsStoreBase.update');
+  final _$didShowIntroAtom = Atom(name: 'SettingsStoreBase.didShowIntro');
 
   @override
-  Future<void> update(UserSettings settings) {
-    return _$updateAsyncAction.run(() => super.update(settings));
+  bool get didShowIntro {
+    _$didShowIntroAtom.reportRead();
+    return super.didShowIntro;
+  }
+
+  @override
+  set didShowIntro(bool value) {
+    _$didShowIntroAtom.reportWrite(value, super.didShowIntro, () {
+      super.didShowIntro = value;
+    });
+  }
+
+  final _$updateSettingsAsyncAction =
+      AsyncAction('SettingsStoreBase.updateSettings');
+
+  @override
+  Future<void> updateSettings(UserSettings settings) {
+    return _$updateSettingsAsyncAction
+        .run(() => super.updateSettings(settings));
+  }
+
+  final _$notifyDidShowIntroAsyncAction =
+      AsyncAction('SettingsStoreBase.notifyDidShowIntro');
+
+  @override
+  Future<void> notifyDidShowIntro() {
+    return _$notifyDidShowIntroAsyncAction
+        .run(() => super.notifyDidShowIntro());
   }
 
   final _$SettingsStoreBaseActionController =
@@ -48,7 +74,8 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   @override
   String toString() {
     return '''
-userSettings: ${userSettings}
+userSettings: ${userSettings},
+didShowIntro: ${didShowIntro}
     ''';
   }
 }

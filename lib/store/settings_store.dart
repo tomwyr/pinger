@@ -18,8 +18,12 @@ abstract class SettingsStoreBase with Store {
   @observable
   UserSettings userSettings;
 
+  @observable
+  bool didShowIntro;
+
   @action
   void init() {
+    didShowIntro = _pingerPrefs.getDidShowIntro() ?? false;
     var settings = _pingerPrefs.getUserSettings();
     if (settings == null) {
       settings = _createDefaultSettings();
@@ -45,8 +49,14 @@ abstract class SettingsStoreBase with Store {
       );
 
   @action
-  Future<void> update(UserSettings settings) async {
+  Future<void> updateSettings(UserSettings settings) async {
     await _pingerPrefs.saveUserSettings(settings);
     userSettings = settings;
+  }
+
+  @action
+  Future<void> notifyDidShowIntro() async {
+    await _pingerPrefs.setDidShowIntro(true);
+    didShowIntro = true;
   }
 }

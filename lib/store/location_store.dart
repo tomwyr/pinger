@@ -46,7 +46,7 @@ abstract class LocationStoreBase with Store {
       await _updatePermissionStatus();
       if (!hasPermission) {
         shareSettings = shareSettings.copyWith(attachLocation: false);
-        await _settingsStore.update(
+        await _settingsStore.updateSettings(
           _settingsStore.userSettings.copyWith(
             shareSettings: shareSettings,
           ),

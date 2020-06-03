@@ -24,7 +24,7 @@ abstract class HostsStoreBase with Store {
   String _searchQuery = "";
 
   @observable
-  List<HostItem> _hostItems;
+  List<HostItem> hosts;
 
   @observable
   Map<String, HostStats> stats;
@@ -34,17 +34,17 @@ abstract class HostsStoreBase with Store {
 
   @computed
   List<HostItem> get searchResults {
-    if (_hostItems == null) return null;
+    if (hosts == null) return null;
     return _searchQuery.isEmpty
-        ? _hostItems.toList()
-        : _hostItems.where((it) => it.name.contains(_searchQuery)).toList();
+        ? hosts.toList()
+        : hosts.where((it) => it.name.contains(_searchQuery)).toList();
   }
 
   @action
   Future<void> init() async {
     isLoading = true;
     _emitStats();
-    _hostItems = await _fetchSearchItems();
+    hosts = await _fetchSearchItems();
     isLoading = false;
   }
 

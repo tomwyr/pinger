@@ -32,18 +32,18 @@ mixin _$HostsStore on HostsStoreBase, Store {
     });
   }
 
-  final _$_hostItemsAtom = Atom(name: 'HostsStoreBase._hostItems');
+  final _$hostsAtom = Atom(name: 'HostsStoreBase.hosts');
 
   @override
-  List<HostItem> get _hostItems {
-    _$_hostItemsAtom.reportRead();
-    return super._hostItems;
+  List<HostItem> get hosts {
+    _$hostsAtom.reportRead();
+    return super.hosts;
   }
 
   @override
-  set _hostItems(List<HostItem> value) {
-    _$_hostItemsAtom.reportWrite(value, super._hostItems, () {
-      super._hostItems = value;
+  set hosts(List<HostItem> value) {
+    _$hostsAtom.reportWrite(value, super.hosts, () {
+      super.hosts = value;
     });
   }
 
@@ -116,6 +116,7 @@ mixin _$HostsStore on HostsStoreBase, Store {
   @override
   String toString() {
     return '''
+hosts: ${hosts},
 stats: ${stats},
 isLoading: ${isLoading},
 searchResults: ${searchResults}

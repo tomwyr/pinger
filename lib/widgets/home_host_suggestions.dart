@@ -17,6 +17,7 @@ class HomeHostSuggestions extends StatefulWidget {
   final ValueChanged<String> onItemPressed;
   final PingSession session;
   final List<String> favorites;
+  final List<String> popular;
   final Map<String, HostStats> stats;
 
   const HomeHostSuggestions({
@@ -25,6 +26,7 @@ class HomeHostSuggestions extends StatefulWidget {
     @required this.onItemPressed,
     @required this.session,
     @required this.favorites,
+    @required this.popular,
     @required this.stats,
   }) : super(key: key);
 
@@ -98,6 +100,17 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           onMorePressed: () => push(RecentsPage()),
         ),
       ),
+      if (widget.popular?.isNotEmpty == true) ...[
+        SliverToBoxAdapter(child: Container(height: 32.0)),
+        SliverToBoxAdapter(
+          child: HomeHostsSection(
+            title: "Popular",
+            hosts: widget.popular,
+            itemLimit: widget.popular.length,
+            onItemPressed: widget.onItemPressed,
+          ),
+        ),
+      ],
       SliverToBoxAdapter(child: Container(height: 24.0)),
     ];
   }

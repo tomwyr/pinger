@@ -75,9 +75,11 @@ abstract class PingStoreBase with Store {
     final lastHost = _pingerPrefs.getLastHost();
     if (lastHost != null) initSession(lastHost);
     autorun((_) {
-      _cacheCurrentHost();
-      _updateStatsIfDidStart();
-      _shareResultIfPossible();
+      if (currentSession != null) {
+        _cacheCurrentHost();
+        _updateStatsIfDidStart();
+        _shareResultIfPossible();
+      }
     });
   }
 

@@ -14,6 +14,7 @@ class PingerPrefs {
   final String _favoriteHostsKey = 'favoriteHosts';
   final String _hostsStatsKey = 'hostsStats';
   final String _lastHostKey = 'lastHost';
+  final String _didShowIntroKey = 'didShowIntro';
 
   final SharedPreferences _sharedPrefs;
 
@@ -125,4 +126,9 @@ class PingerPrefs {
 
   Future<void> setLastHost(String host) =>
       _sharedPrefs.setString(_lastHostKey, host);
+
+  bool getDidShowIntro() => _sharedPrefs.getBool(_didShowIntroKey);
+
+  Future<void> setDidShowIntro(bool value) =>
+      _sharedPrefs.setBool(_didShowIntroKey, value);
 }

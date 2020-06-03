@@ -183,7 +183,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
   }
 
   void _enableShareSettings() {
-    _settingsStore.update(
+    _settingsStore.updateSettings(
       _settingsStore.userSettings.copyWith(
         shareSettings: ShareSettings(
           shareResults: true,

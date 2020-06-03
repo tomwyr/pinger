@@ -50,7 +50,7 @@ class HomeHostsSection extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
         ),
-        if (onMorePressed != null)
+        if (hosts.isNotEmpty && onMorePressed != null)
           GestureDetector(
             onTap: onMorePressed,
             child: Text(

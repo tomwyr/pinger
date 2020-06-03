@@ -30,21 +30,21 @@ class _SettingsPageState extends State<SettingsPage> {
           children: <Widget>[
             PingSettingsSection(
               settings: settings.pingSettings,
-              onChanged: (it) => _settingsStore.update(
+              onChanged: (it) => _settingsStore.updateSettings(
                 settings.copyWith(pingSettings: it),
               ),
             ),
             Container(height: 24.0),
             ShareSettingsSection(
               settings: settings.shareSettings,
-              onChanged: (it) => _settingsStore.update(
+              onChanged: (it) => _settingsStore.updateSettings(
                 settings.copyWith(shareSettings: it),
               ),
             ),
             Container(height: 24.0),
             OtherSettingsSection(
               settings: settings,
-              onChanged: _settingsStore.update,
+              onChanged: _settingsStore.updateSettings,
             ),
             Container(height: 48.0),
             SettingsFooterSection(

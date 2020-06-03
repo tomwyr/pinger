@@ -68,7 +68,7 @@ abstract class NotificationStoreBase with Store {
               IOSFlutterLocalNotificationsPlugin>()
           .requestPermissions(badge: true, alert: true, sound: true);
       if (!hasPermission) {
-        await settingsStore.update(settingsStore.userSettings.copyWith(
+        await settingsStore.updateSettings(settingsStore.userSettings.copyWith(
           showSystemNotification: false,
         ));
       }
