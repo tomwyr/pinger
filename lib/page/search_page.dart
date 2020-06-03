@@ -191,16 +191,14 @@ class _SearchPageState extends State<SearchPage> {
   AppBar _buildSearchBar() {
     return AppBar(
       leading: Icon(Icons.search, color: R.colors.gray),
-      title: Expanded(
-        child: TextField(
-          autofocus: true,
-          controller: _inputController,
-          onChanged: _onQueryChanged,
-          style: TextStyle(fontSize: 18.0),
-          decoration: InputDecoration(
-            hintText: "Search host to ping",
-            border: OutlineInputBorder(borderSide: BorderSide.none),
-          ),
+      title: TextField(
+        autofocus: true,
+        controller: _inputController,
+        onChanged: _onQueryChanged,
+        style: TextStyle(fontSize: 18.0),
+        decoration: InputDecoration(
+          hintText: "Search host to ping",
+          border: OutlineInputBorder(borderSide: BorderSide.none),
         ),
       ),
       actions: <Widget>[
