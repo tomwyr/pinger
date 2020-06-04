@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
-class SpinKitThreeBounce extends StatefulWidget {
-  const SpinKitThreeBounce({
+class ThreeBounce extends StatefulWidget {
+  const ThreeBounce({
     Key key,
     this.color,
     this.size = 48.0,
@@ -16,10 +16,10 @@ class SpinKitThreeBounce extends StatefulWidget {
   final Duration duration;
 
   @override
-  _SpinKitThreeBounceState createState() => _SpinKitThreeBounceState();
+  _ThreeBounceState createState() => _ThreeBounceState();
 }
 
-class _SpinKitThreeBounceState extends State<SpinKitThreeBounce>
+class _ThreeBounceState extends State<ThreeBounce>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 

@@ -24,6 +24,21 @@ mixin _$PingStore on PingStoreBase, Store {
           name: 'PingStoreBase.didChangeSettings'))
       .value;
 
+  final _$didInitAtom = Atom(name: 'PingStoreBase.didInit');
+
+  @override
+  bool get didInit {
+    _$didInitAtom.reportRead();
+    return super.didInit;
+  }
+
+  @override
+  set didInit(bool value) {
+    _$didInitAtom.reportWrite(value, super.didInit, () {
+      super.didInit = value;
+    });
+  }
+
   final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
 
   @override
@@ -203,6 +218,7 @@ mixin _$PingStore on PingStoreBase, Store {
   @override
   String toString() {
     return '''
+didInit: ${didInit},
 pingDuration: ${pingDuration},
 currentSession: ${currentSession},
 canArchive: ${canArchive},

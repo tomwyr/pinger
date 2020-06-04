@@ -34,7 +34,7 @@ abstract class SettingsStoreBase with Store {
 
   UserSettings _createDefaultSettings() => UserSettings(
         nightMode: false,
-        rememberHost: true,
+        restoreHost: true,
         showSystemNotification: false,
         shareSettings: ShareSettings(
           shareResults: true,

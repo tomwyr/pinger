@@ -54,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
       _inputController.clear();
       _onQueryChanged("");
     } else {
-      pushReplacement(HomePage());
+      pop();
     }
   }
 
@@ -67,33 +67,27 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        pushReplacement(HomePage());
-        return false;
-      },
-      child: Scaffold(
-        appBar: _buildSearchBar(),
-        body: Column(children: <Widget>[
-          if (_inputController.text.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-              child: HostTile(
-                host: _inputController.text,
-                type: HostTileType.highlighted,
-                onPressed: () => _onItemSelected(_inputController.text),
-              ),
+    return Scaffold(
+      appBar: _buildSearchBar(),
+      body: Column(children: <Widget>[
+        if (_inputController.text.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+            child: HostTile(
+              host: _inputController.text,
+              type: HostTileType.highlighted,
+              onPressed: () => _onItemSelected(_inputController.text),
             ),
-          Expanded(
-            child: Observer(builder: (_) {
-              if (_hostsStore.isLoading) return _buildSearchInProgress();
-              final results = _hostsStore.searchResults;
-              if (results.isEmpty) return _buildNoResults();
-              return _buildResultsList(results);
-            }),
           ),
-        ]),
-      ),
+        Expanded(
+          child: Observer(builder: (_) {
+            if (_hostsStore.isLoading) return _buildSearchInProgress();
+            final results = _hostsStore.searchResults;
+            if (results.isEmpty) return _buildNoResults();
+            return _buildResultsList(results);
+          }),
+        ),
+      ]),
     );
   }
 
@@ -108,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SpinKitThreeBounce(color: R.colors.secondary),
+                ThreeBounce(color: R.colors.secondary),
                 Container(height: 40.0),
                 Text(
                   "Looking for hosts ...",

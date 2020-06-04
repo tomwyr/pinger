@@ -9,7 +9,7 @@ abstract class UserSettings with _$UserSettings {
     PingSettings pingSettings,
     ShareSettings shareSettings,
     bool showSystemNotification,
-    bool rememberHost,
+    bool restoreHost,
     bool nightMode,
   }) = _UserSettings;
 

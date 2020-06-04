@@ -75,12 +75,12 @@ class OtherSettingsSection extends StatelessWidget {
       children: <Widget>[
         SettingsHeaderItem(title: "Other"),
         SwitchSettingItem(
-          label: "Remember host",
+          label: "Restore host",
           description:
               "Application will automatically proceed to new session with latest host",
-          value: settings.rememberHost,
+          value: settings.restoreHost,
           onChanged: (it) => onChanged(settings.copyWith(
-            rememberHost: it,
+            restoreHost: it,
           )),
         ),
         SwitchSettingItem(

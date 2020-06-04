@@ -32,42 +32,36 @@ class _PingPageState extends State<PingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        pushReplacement(HomePage());
-        return false;
-      },
-      child: Scaffold(
-        body: SafeArea(
-          child: Observer(builder: (_) {
-            final session = _pingStore.currentSession;
-            final sessionDuration = _pingStore.pingDuration;
-            final isFavorite = _favoritesStore.isFavorite(session.host.name);
-            final didChangeSettings = _pingStore.didChangeSettings;
-            final isExpanded =
-                session.status.isInitial || session.status.isQuickCheckDone;
-            return Column(children: <Widget>[
-              _buildHeader(
-                session,
-                isFavorite,
-                isExpanded,
-                didChangeSettings,
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: AnimatedSwitcher(
-                    duration: _animDuration,
-                    child: session.status.isInitial
-                        ? _buildStartPrompt()
-                        : _buildResults(session, sessionDuration, isExpanded),
-                  ),
+    return Scaffold(
+      body: SafeArea(
+        child: Observer(builder: (_) {
+          final session = _pingStore.currentSession;
+          final sessionDuration = _pingStore.pingDuration;
+          final isFavorite = _favoritesStore.isFavorite(session.host.name);
+          final didChangeSettings = _pingStore.didChangeSettings;
+          final isExpanded =
+              session.status.isInitial || session.status.isQuickCheckDone;
+          return Column(children: <Widget>[
+            _buildHeader(
+              session,
+              isFavorite,
+              isExpanded,
+              didChangeSettings,
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: AnimatedSwitcher(
+                  duration: _animDuration,
+                  child: session.status.isInitial
+                      ? _buildStartPrompt()
+                      : _buildResults(session, sessionDuration, isExpanded),
                 ),
               ),
-              _buildPingButton(session),
-            ]);
-          }),
-        ),
+            ),
+            _buildPingButton(session),
+          ]);
+        }),
       ),
     );
   }

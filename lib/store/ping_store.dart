@@ -55,6 +55,9 @@ abstract class PingStoreBase with Store {
   bool _didShareResult = false;
 
   @observable
+  bool didInit = false;
+
+  @observable
   Duration pingDuration;
 
   @observable
@@ -72,8 +75,8 @@ abstract class PingStoreBase with Store {
 
   @action
   void init() {
-    final lastHost = _pingerPrefs.getLastHost();
-    if (lastHost != null) initSession(lastHost);
+    final host = _pingerPrefs.getLastHost();
+    if (host != null) initSession(host);
     autorun((_) {
       if (currentSession != null) {
         _cacheCurrentHost();
@@ -81,10 +84,11 @@ abstract class PingStoreBase with Store {
         _shareResultIfPossible();
       }
     });
+    didInit = true;
   }
 
   void _cacheCurrentHost() async {
-    final host = _settingsStore.userSettings.rememberHost
+    final host = _settingsStore.userSettings.restoreHost
         ? currentSession?.host?.name
         : null;
     await _pingerPrefs.setLastHost(host);

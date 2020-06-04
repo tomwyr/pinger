@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
     return TextField(
       style: TextStyle(fontSize: 18.0),
       readOnly: true,
-      onTap: () => pushReplacement(SearchPage()),
+      onTap: () => push(SearchPage()),
       decoration: InputDecoration(
         hintText: "Search host to ping",
         contentPadding: const EdgeInsets.symmetric(vertical: 12.0),

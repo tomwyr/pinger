@@ -19,13 +19,13 @@ class _$UserSettingsTearOff {
       {PingSettings pingSettings,
       ShareSettings shareSettings,
       bool showSystemNotification,
-      bool rememberHost,
+      bool restoreHost,
       bool nightMode}) {
     return _UserSettings(
       pingSettings: pingSettings,
       shareSettings: shareSettings,
       showSystemNotification: showSystemNotification,
-      rememberHost: rememberHost,
+      restoreHost: restoreHost,
       nightMode: nightMode,
     );
   }
@@ -38,7 +38,7 @@ mixin _$UserSettings {
   PingSettings get pingSettings;
   ShareSettings get shareSettings;
   bool get showSystemNotification;
-  bool get rememberHost;
+  bool get restoreHost;
   bool get nightMode;
 
   Map<String, dynamic> toJson();
@@ -53,7 +53,7 @@ abstract class $UserSettingsCopyWith<$Res> {
       {PingSettings pingSettings,
       ShareSettings shareSettings,
       bool showSystemNotification,
-      bool rememberHost,
+      bool restoreHost,
       bool nightMode});
 
   $PingSettingsCopyWith<$Res> get pingSettings;
@@ -72,7 +72,7 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
     Object pingSettings = freezed,
     Object shareSettings = freezed,
     Object showSystemNotification = freezed,
-    Object rememberHost = freezed,
+    Object restoreHost = freezed,
     Object nightMode = freezed,
   }) {
     return _then(_value.copyWith(
@@ -85,8 +85,8 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
           : showSystemNotification as bool,
-      rememberHost:
-          rememberHost == freezed ? _value.rememberHost : rememberHost as bool,
+      restoreHost:
+          restoreHost == freezed ? _value.restoreHost : restoreHost as bool,
       nightMode: nightMode == freezed ? _value.nightMode : nightMode as bool,
     ));
   }
@@ -122,7 +122,7 @@ abstract class _$UserSettingsCopyWith<$Res>
       {PingSettings pingSettings,
       ShareSettings shareSettings,
       bool showSystemNotification,
-      bool rememberHost,
+      bool restoreHost,
       bool nightMode});
 
   @override
@@ -145,7 +145,7 @@ class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
     Object pingSettings = freezed,
     Object shareSettings = freezed,
     Object showSystemNotification = freezed,
-    Object rememberHost = freezed,
+    Object restoreHost = freezed,
     Object nightMode = freezed,
   }) {
     return _then(_UserSettings(
@@ -158,8 +158,8 @@ class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
           : showSystemNotification as bool,
-      rememberHost:
-          rememberHost == freezed ? _value.rememberHost : rememberHost as bool,
+      restoreHost:
+          restoreHost == freezed ? _value.restoreHost : restoreHost as bool,
       nightMode: nightMode == freezed ? _value.nightMode : nightMode as bool,
     ));
   }
@@ -171,7 +171,7 @@ class _$_UserSettings implements _UserSettings {
       {this.pingSettings,
       this.shareSettings,
       this.showSystemNotification,
-      this.rememberHost,
+      this.restoreHost,
       this.nightMode});
 
   factory _$_UserSettings.fromJson(Map<String, dynamic> json) =>
@@ -184,13 +184,13 @@ class _$_UserSettings implements _UserSettings {
   @override
   final bool showSystemNotification;
   @override
-  final bool rememberHost;
+  final bool restoreHost;
   @override
   final bool nightMode;
 
   @override
   String toString() {
-    return 'UserSettings(pingSettings: $pingSettings, shareSettings: $shareSettings, showSystemNotification: $showSystemNotification, rememberHost: $rememberHost, nightMode: $nightMode)';
+    return 'UserSettings(pingSettings: $pingSettings, shareSettings: $shareSettings, showSystemNotification: $showSystemNotification, restoreHost: $restoreHost, nightMode: $nightMode)';
   }
 
   @override
@@ -206,9 +206,9 @@ class _$_UserSettings implements _UserSettings {
             (identical(other.showSystemNotification, showSystemNotification) ||
                 const DeepCollectionEquality().equals(
                     other.showSystemNotification, showSystemNotification)) &&
-            (identical(other.rememberHost, rememberHost) ||
+            (identical(other.restoreHost, restoreHost) ||
                 const DeepCollectionEquality()
-                    .equals(other.rememberHost, rememberHost)) &&
+                    .equals(other.restoreHost, restoreHost)) &&
             (identical(other.nightMode, nightMode) ||
                 const DeepCollectionEquality()
                     .equals(other.nightMode, nightMode)));
@@ -220,7 +220,7 @@ class _$_UserSettings implements _UserSettings {
       const DeepCollectionEquality().hash(pingSettings) ^
       const DeepCollectionEquality().hash(shareSettings) ^
       const DeepCollectionEquality().hash(showSystemNotification) ^
-      const DeepCollectionEquality().hash(rememberHost) ^
+      const DeepCollectionEquality().hash(restoreHost) ^
       const DeepCollectionEquality().hash(nightMode);
 
   @override
@@ -238,7 +238,7 @@ abstract class _UserSettings implements UserSettings {
       {PingSettings pingSettings,
       ShareSettings shareSettings,
       bool showSystemNotification,
-      bool rememberHost,
+      bool restoreHost,
       bool nightMode}) = _$_UserSettings;
 
   factory _UserSettings.fromJson(Map<String, dynamic> json) =
@@ -251,7 +251,7 @@ abstract class _UserSettings implements UserSettings {
   @override
   bool get showSystemNotification;
   @override
-  bool get rememberHost;
+  bool get restoreHost;
   @override
   bool get nightMode;
   @override
