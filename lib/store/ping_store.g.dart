@@ -9,13 +9,13 @@ part of 'ping_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PingStore on PingStoreBase, Store {
-  Computed<bool> _$canArchiveComputed;
+  Computed<bool> _$canArchiveResultComputed;
 
   @override
-  bool get canArchive =>
-      (_$canArchiveComputed ??= Computed<bool>(() => super.canArchive,
-              name: 'PingStoreBase.canArchive'))
-          .value;
+  bool get canArchiveResult => (_$canArchiveResultComputed ??= Computed<bool>(
+          () => super.canArchiveResult,
+          name: 'PingStoreBase.canArchiveResult'))
+      .value;
   Computed<bool> _$didChangeSettingsComputed;
 
   @override
@@ -69,6 +69,21 @@ mixin _$PingStore on PingStoreBase, Store {
     });
   }
 
+  final _$prevStatusAtom = Atom(name: 'PingStoreBase.prevStatus');
+
+  @override
+  PingStatus get prevStatus {
+    _$prevStatusAtom.reportRead();
+    return super.prevStatus;
+  }
+
+  @override
+  set prevStatus(PingStatus value) {
+    _$prevStatusAtom.reportWrite(value, super.prevStatus, () {
+      super.prevStatus = value;
+    });
+  }
+
   final _$_archivedIdAtom = Atom(name: 'PingStoreBase._archivedId');
 
   @override
@@ -84,11 +99,11 @@ mixin _$PingStore on PingStoreBase, Store {
     });
   }
 
-  final _$saveResultAsyncAction = AsyncAction('PingStoreBase.saveResult');
+  final _$archiveResultAsyncAction = AsyncAction('PingStoreBase.archiveResult');
 
   @override
-  Future<void> saveResult() {
-    return _$saveResultAsyncAction.run(() => super.saveResult());
+  Future<void> archiveResult() {
+    return _$archiveResultAsyncAction.run(() => super.archiveResult());
   }
 
   final _$PingStoreBaseActionController =
@@ -221,7 +236,8 @@ mixin _$PingStore on PingStoreBase, Store {
 didInit: ${didInit},
 pingDuration: ${pingDuration},
 currentSession: ${currentSession},
-canArchive: ${canArchive},
+prevStatus: ${prevStatus},
+canArchiveResult: ${canArchiveResult},
 didChangeSettings: ${didChangeSettings}
     ''';
   }

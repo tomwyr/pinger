@@ -64,10 +64,14 @@ abstract class PingStoreBase with Store {
   PingSession currentSession;
 
   @observable
+  PingStatus prevStatus;
+
+  @observable
   int _archivedId;
 
   @computed
-  bool get canArchive => _archivedId == null && currentSession.stats != null;
+  bool get canArchiveResult =>
+      _archivedId == null && currentSession.stats != null;
 
   @computed
   bool get didChangeSettings =>
@@ -80,7 +84,7 @@ abstract class PingStoreBase with Store {
     autorun((_) {
       if (currentSession != null) {
         _cacheCurrentHost();
-        _updateStatsIfDidStart();
+        _handleStatusChange();
         _shareResultIfPossible();
       }
     });
@@ -94,8 +98,9 @@ abstract class PingStoreBase with Store {
     await _pingerPrefs.setLastHost(host);
   }
 
-  void _updateStatsIfDidStart() {
+  void _handleStatusChange() {
     final status = currentSession.status;
+    if (_lastStatus != status) prevStatus = _lastStatus;
     if (_lastStatus.isInitial && status.isStarted) {
       _hostsStore.incrementStats(currentSession.host.name);
     }
@@ -239,7 +244,7 @@ abstract class PingStoreBase with Store {
   void restart() => initSession(currentSession.host.name);
 
   @action
-  Future<void> saveResult() async {
+  Future<void> archiveResult() async {
     final result = PingResult(
       host: currentSession.host,
       settings: currentSession.settings,

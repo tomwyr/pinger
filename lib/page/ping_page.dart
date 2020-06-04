@@ -4,7 +4,6 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
-import 'package:pinger/page/home_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/ping_store.dart';
@@ -37,17 +36,14 @@ class _PingPageState extends State<PingPage> {
         child: Observer(builder: (_) {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
+          final canArchive = _pingStore.canArchiveResult;
           final isFavorite = _favoritesStore.isFavorite(session.host.name);
           final didChangeSettings = _pingStore.didChangeSettings;
-          final isExpanded =
-              session.status.isInitial || session.status.isQuickCheckDone;
+          final status = session.status;
+          final isExpanded = status.isInitial || status.isQuickCheckDone;
+          final prevStatus = _pingStore.prevStatus;
           return Column(children: <Widget>[
-            _buildHeader(
-              session,
-              isFavorite,
-              isExpanded,
-              didChangeSettings,
-            ),
+            _buildHeader(session, isFavorite, isExpanded, didChangeSettings),
             Expanded(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -59,7 +55,10 @@ class _PingPageState extends State<PingPage> {
                 ),
               ),
             ),
-            _buildPingButton(session),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24.0, top: 12.0),
+              child: _buildPingButton(status, prevStatus, canArchive),
+            ),
           ]);
         }),
       ),
@@ -182,24 +181,33 @@ class _PingPageState extends State<PingPage> {
     ]);
   }
 
-  Widget _buildPingButton(PingSession session) {
-    return Observer(
-      builder: (_) => Padding(
-        padding: const EdgeInsets.only(bottom: 24.0, top: 12.0),
-        child: SessionPingButton(
-          session: session,
-          pingDuration: _pingStore.pingDuration,
-          canArchive: _pingStore.canArchive,
-          onQuickCheckStart: _pingStore.startQuickCheck,
-          onQuickCheckStop: _pingStore.stopQuickCheck,
-          onSessionStart: _pingStore.startSession,
-          onSessionPause: _pingStore.pauseSession,
-          onSessionResume: _pingStore.resumeSession,
-          onSessionStop: _pingStore.stopSession,
-          onRestart: _pingStore.restart,
-          onResultArchive: _pingStore.saveResult,
-        ),
-      ),
+  Widget _buildPingButton(
+      PingStatus status, PingStatus prevStatus, bool canArchive) {
+    final showArchive = status.isDone || prevStatus.isDone;
+    return SessionPingButton(
+      isExpanded:
+          status.isSessionPaused || (status.isSessionDone && canArchive),
+      primaryIcon: status.isQuickCheckStarted
+          ? Icons.lens
+          : status.isSessionDone
+              ? Icons.undo
+              : status.isSessionStarted ? Icons.pause : Icons.play_arrow,
+      secondaryIcon: showArchive ? Icons.archive : Icons.stop,
+      onPrimaryPressed: status.isSessionDone
+          ? _pingStore.restart
+          : status.isSessionPaused
+              ? _pingStore.resumeSession
+              : status.isSessionStarted
+                  ? _pingStore.pauseSession
+                  : _pingStore.startSession,
+      onPrimaryLongPressStart: status.isInitial || status.isQuickCheckDone
+          ? _pingStore.startQuickCheck
+          : null,
+      onPrimaryLongPressEnd:
+          status.isQuickCheckStarted ? _pingStore.stopQuickCheck : null,
+      onSecondaryPressed: !showArchive
+          ? _pingStore.stopSession
+          : canArchive ? _pingStore.archiveResult : null,
     );
   }
 }
