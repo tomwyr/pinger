@@ -47,7 +47,8 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
     if (notification is ScrollUpdateNotification) {
       _lastScrollUpdate = notification;
     } else if (notification is ScrollEndNotification) {
-      if (widget.scrollController.offset > 0.0 &&
+      if (_lastScrollUpdate != null &&
+          widget.scrollController.offset > 0.0 &&
           widget.scrollController.offset < widget.collapsedOffset) {
         _isSnapping = true;
         _scheduleSnapScroll(_lastScrollUpdate.scrollDelta > 0.0);

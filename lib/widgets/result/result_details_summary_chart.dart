@@ -77,38 +77,35 @@ class ResultDetailsSummaryChart extends StatelessWidget {
     return [
       Positioned(
         top: 0.0,
-        left: width * (indexMax / (pingCount - 1)) - labelSize.width / 2,
+        left: width * (indexMax / (pingCount - 1)),
         child: _buildLabel(result.stats.max, labelSize),
       ),
       Positioned(
         top: meanLineTop - labelSize.height / 2,
-        left: 0.0,
-        right: 0.0,
+        left: width / 2,
         child: _buildLabel(result.stats.mean, labelSize),
       ),
       Positioned(
         bottom: 0.0,
-        left: width * (indexMin / (pingCount - 1)) - labelSize.width / 2,
+        left: width * (indexMin / (pingCount - 1)),
         child: _buildLabel(result.stats.min, labelSize),
       ),
     ];
   }
 
   Widget _buildLabel(int value, Size size) {
-    return SizedBox.fromSize(
-      size: size,
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6.0),
-            border: Border.all(color: R.colors.primaryLight),
-            color: R.colors.canvas,
-          ),
-          child: Text(
-            " $value ms",
-            style: TextStyle(color: R.colors.secondary, fontSize: 12.0),
-          ),
+    return FractionalTranslation(
+      translation: Offset(-0.5, 0.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.0),
+          border: Border.all(color: R.colors.primaryLight),
+          color: R.colors.canvas,
+        ),
+        child: Text(
+          "$value ms",
+          style: TextStyle(color: R.colors.secondary, fontSize: 12.0),
         ),
       ),
     );

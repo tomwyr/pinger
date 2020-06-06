@@ -25,19 +25,33 @@ class SessionHostHeader extends StatelessWidget {
       isExpanded: isExpanded,
       duration: animDuration,
       title: "Session",
-      host: Row(
+      builder: (_, expansion, content) => Padding(
+        padding: EdgeInsets.only(
+          left: 32.0 * expansion,
+          right: 12.0 + 20 * expansion,
+        ),
+        child: content,
+      ),
+      content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Container(width: 8.0),
           HostIconTile(isRaised: isExpanded),
           Container(width: 20.0),
-          TweenAnimationBuilder<double>(
-            duration: animDuration,
-            tween: Tween(begin: fontSize, end: fontSize),
-            builder: (_, value, __) => Text(
-              session.host.name,
-              style: TextStyle(fontSize: value),
+          Flexible(
+            child: TweenAnimationBuilder<double>(
+              duration: animDuration,
+              tween: Tween(begin: fontSize, end: fontSize),
+              builder: (_, value, __) => Text(
+                session.host.name,
+                maxLines: 1,
+                softWrap: false,
+                overflow: TextOverflow.fade,
+                style: TextStyle(fontSize: value),
+              ),
             ),
           ),
+          Container(width: 8.0),
         ],
       ),
       bottom: Column(

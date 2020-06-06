@@ -17,21 +17,28 @@ class ResultsGroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       borderSide: R.styles.outlineButtonBorder,
       highlightedBorderColor: R.styles.outlineButtonBorder.color,
       onPressed: onPressed,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Spacer(),
           HostIconTile(),
-          Container(height: 24.0),
-          Text(host),
+          Spacer(),
+          Text(
+            host,
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+          ),
           Container(height: 12.0),
           Text(
             "$resultsCount results",
             style: TextStyle(fontSize: 12.0, color: R.colors.gray),
           ),
+          Spacer(),
         ],
       ),
     );

@@ -74,9 +74,16 @@ class ResultTile extends StatelessWidget {
     return type == ResultTileType.regular
         ? Row(children: <Widget>[
             HostIconTile(),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 12.0),
-              child: Text(result.host.name),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 18.0, right: 12.0),
+                child: Text(
+                  result.host.name,
+                  maxLines: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
             ),
           ])
         : Row(children: <Widget>[

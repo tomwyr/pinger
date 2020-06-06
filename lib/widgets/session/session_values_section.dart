@@ -31,13 +31,13 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(height: 24.0),
-          Row(children: <Widget>[
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(height: 24.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Row(children: <Widget>[
             Text(
               "Results",
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -51,21 +51,29 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
               _buildTypeButton(PingValuesType.chart, "Chart"),
             ],
           ]),
-          Container(height: 32.0),
-          if (widget.viewType == PingValuesType.gauge)
-            SessionPingGauge(
+        ),
+        if (widget.viewType == PingValuesType.gauge)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 0.0),
+            child: SessionPingGauge(
               session: widget.session,
               duration: widget.sessionDuration,
-            )
-          else if (widget.viewType == PingValuesType.list)
-            Expanded(
+            ),
+          )
+        else if (widget.viewType == PingValuesType.list)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
               child: SessionValuesList(
                 shouldFollowHead: widget.session.status.isStarted,
                 values: widget.session.values,
               ),
-            )
-          else if (widget.viewType == PingValuesType.chart)
-            Expanded(
+            ),
+          )
+        else if (widget.viewType == PingValuesType.chart)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 0.0),
               child: LayoutBuilder(
                 builder: (_, constraints) => OverflowBox(
                   maxHeight: max(constraints.maxHeight, _chartSafeHeight),
@@ -77,8 +85,8 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 

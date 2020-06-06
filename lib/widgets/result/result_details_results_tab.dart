@@ -83,17 +83,20 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
   Widget _buildResultsList() {
     return SliverFillRemaining(
       hasScrollBody: false,
-      child: SizedBox(
-        // Constrain with finite height to prevent layout
-        // error and to obtain actual box constraints.
-        height: 0.0,
-        child: LayoutBuilder(
-          builder: (_, constraints) => SizedBox(
-            width: double.infinity,
-            height: constraints.maxHeight,
-            child: SessionValuesList(
-              values: widget.values,
-              shouldFollowHead: false,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: SizedBox(
+          // Constrain with finite height to prevent layout
+          // error and to obtain actual box constraints.
+          height: 0.0,
+          child: LayoutBuilder(
+            builder: (_, constraints) => SizedBox(
+              width: double.infinity,
+              height: constraints.maxHeight,
+              child: SessionValuesList(
+                values: widget.values,
+                shouldFollowHead: false,
+              ),
             ),
           ),
         ),
@@ -105,7 +108,7 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: 128.0),
           child: SessionValuesChart(

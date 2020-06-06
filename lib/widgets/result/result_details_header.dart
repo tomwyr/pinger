@@ -51,8 +51,10 @@ class ResultDetailsHeader extends StatelessWidget {
         Container(height: 16.0 * expansion),
         Container(
           height: kToolbarHeight * (1 + expansion),
-          margin: const EdgeInsets.symmetric(horizontal: 48.0),
-          padding: const EdgeInsets.only(right: 12.0),
+          margin: EdgeInsets.only(
+            left: 56.0 - 32.0 * expansion,
+            right: 72.0 - 48.0 * expansion,
+          ),
           child: _buildHostTile(),
         ),
         Container(height: 16.0),
@@ -95,6 +97,9 @@ class ResultDetailsHeader extends StatelessWidget {
           children: <Widget>[
             Text(
               result.host.name,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.fade,
               style: TextStyle(fontSize: 18.0 + 6.0 * expansion),
             ),
           ],

@@ -160,20 +160,17 @@ class _PingPageState extends State<PingPage> {
         ),
       ),
       Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ValueListenableBuilder<PingValuesType>(
-            valueListenable: _viewType,
-            builder: (_, value, __) => FadeOut(
-              duration: _animDuration,
-              visible: !isExpanded,
-              hasFixedHeight: value == PingValuesType.gauge,
-              child: SessionValuesSection(
-                session: session,
-                sessionDuration: sessionDuration,
-                viewType: value,
-                onViewTypeChanged: (it) => _viewType.value = it,
-              ),
+        child: ValueListenableBuilder<PingValuesType>(
+          valueListenable: _viewType,
+          builder: (_, value, __) => FadeOut(
+            duration: _animDuration,
+            visible: !isExpanded,
+            hasFixedHeight: value == PingValuesType.gauge,
+            child: SessionValuesSection(
+              session: session,
+              sessionDuration: sessionDuration,
+              viewType: value,
+              onViewTypeChanged: (it) => _viewType.value = it,
             ),
           ),
         ),

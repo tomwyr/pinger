@@ -68,6 +68,7 @@ class _SessionValuesListState extends State<SessionValuesList>
       moveToHeadValue: _animateToHead,
       child: AnimatedList(
         key: _listKey,
+        padding: const EdgeInsets.all(16.0),
         controller: _scroller,
         initialItemCount: widget.values.length,
         itemBuilder: (_, index, animation) => SizeTransition(

@@ -25,6 +25,7 @@ class ResultSummaryChart extends StatelessWidget {
       lineTouchData: LineTouchData(enabled: false),
       lineBarsData: [
         LineChartBarData(
+          isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (_, __, ___, ____) => FlDotCirclePainter(

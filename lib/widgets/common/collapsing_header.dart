@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 
+typedef Widget CollapsingHeaderBuilder(
+  BuildContext context,
+  double expansion,
+  Widget content,
+);
+
 class CollapsingHeader extends StatefulWidget {
   final bool isExpanded;
   final String title;
-  final Widget host;
+  final Widget content;
   final Widget bottom;
   final Duration duration;
+  final CollapsingHeaderBuilder builder;
 
   const CollapsingHeader({
     Key key,
     @required this.isExpanded,
     @required this.title,
-    @required this.host,
+    @required this.content,
     @required this.bottom,
     @required this.duration,
+    this.builder,
   }) : super(key: key);
 
   @override
@@ -83,11 +91,25 @@ class _CollapsingHeaderState extends State<CollapsingHeader>
                   centerTitle: true,
                 ),
               ),
-              AlignTransition(
-                alignment: _alignAnim,
-                child: SizedBox(
-                  height: kToolbarHeight,
-                  child: widget.host,
+              AnimatedBuilder(
+                animation: _animator,
+                builder: (_, child) => Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 56.0 * (1 - _animator.value),
+                  ),
+                  child: Align(
+                    alignment: _alignAnim.value,
+                    child: SizedBox(
+                      height: kToolbarHeight,
+                      child: widget.builder != null
+                          ? widget.builder(
+                              context,
+                              _animator.value,
+                              widget.content,
+                            )
+                          : widget.content,
+                    ),
+                  ),
                 ),
               ),
             ]),
