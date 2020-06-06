@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class GlobalDistributionChart extends StatelessWidget {
-  final double highlightX;
+  final int highlightIndex;
   final double minX;
   final double maxX;
   final double minY;
@@ -14,7 +14,7 @@ class GlobalDistributionChart extends StatelessWidget {
 
   const GlobalDistributionChart._({
     Key key,
-    @required this.highlightX,
+    @required this.highlightIndex,
     @required this.minX,
     @required this.maxX,
     @required this.minY,
@@ -32,31 +32,36 @@ class GlobalDistributionChart extends StatelessWidget {
         .map((it) => FlSpot(it.key.toDouble(), it.value / dataCount * 100))
         .toList()
           ..sort((e1, e2) => e1.x.compareTo(e2.x));
-    _insertUserResultSpot(userResult, spots);
-    final xStep = (spots.last.x - spots.first.x) / 10;
+    final highlightIndex = _insertUserResultSpot(userResult, spots);
     return GlobalDistributionChart._(
       key: key,
-      highlightX: userResult.toDouble(),
-      minX: max(0, spots.first.x - xStep),
-      maxX: spots.last.x + xStep,
+      highlightIndex: highlightIndex,
+      minX: spots.first.x,
+      maxX: spots.last.x,
       minY: 0.0,
       maxY: (spots.map((it) => it.y).fold(0.0, max) / 10).ceil() * 10.0,
       spots: spots,
     );
   }
 
-  static void _insertUserResultSpot(int userResult, List<FlSpot> spots) {
-    final index = spots.indexWhere((it) => it.x >= userResult) ?? 0;
-    var value = spots[index].y.toDouble();
-    // Skip interpolation if user result lies exactly at
-    // index or entry at index is last element of data.
-    if (spots[index].x != userResult &&
-        index != 0 &&
-        index != spots.length - 1) {
+  static int _insertUserResultSpot(int result, List<FlSpot> spots) {
+    var spot = FlSpot.nullSpot;
+    var index = spots.indexWhere((it) => it.x >= result);
+    if (index == 0) {
+      spot = spots.first;
+    } else if (index == -1) {
+      index = spots.length - 1;
+      spot = spots.last;
+    } else if (spots[index].x == result) {
+      spot = spots[index];
+    } else {
       final s1 = spots[index - 1], s2 = spots[index];
-      value = s1.y + (s2.y - s1.y) * (userResult - s1.x) / (s2.x - s1.x);
+      final x = result.toDouble().clamp(spots.first.x, spots.last.x);
+      final y = s1.y + (s2.y - s1.y) * (result - s1.x) / (s2.x - s1.x);
+      spot = FlSpot(x, y);
     }
-    spots.insert(index, FlSpot(userResult.toDouble(), value));
+    spots.insert(index, spot);
+    return index;
   }
 
   @override
@@ -100,7 +105,7 @@ class GlobalDistributionChart extends StatelessWidget {
           ),
           dotData: FlDotData(
             show: true,
-            checkToShowDot: (spot, _) => spot.x == highlightX,
+            checkToShowDot: (spot, data) => spot == data.spots[highlightIndex],
             getDotPainter: (spot, __, ___, ____) => FlDotCirclePainter(
               color: R.colors.secondary,
               strokeWidth: 0.0,
@@ -108,6 +113,7 @@ class GlobalDistributionChart extends StatelessWidget {
           ),
           isCurved: true,
           curveSmoothness: 0.2,
+          preventCurveOverShooting: true,
           colors: [R.colors.primaryLight],
           spots: spots,
         ),

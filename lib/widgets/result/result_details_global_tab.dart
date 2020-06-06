@@ -88,11 +88,13 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
                     minWidth: double.infinity,
                     minHeight: 96.0,
                   ),
-                  child: GlobalDistributionChart(
-                    data: _groupChartData(),
-                    dataCount: widget.globalResults.totalCount,
-                    userResult: userResult,
-                  ),
+                  child: _resultTypeData.values.length > 1
+                      ? GlobalDistributionChart(
+                          data: _groupChartData(),
+                          dataCount: widget.globalResults.totalCount,
+                          userResult: userResult,
+                        )
+                      : null,
                 ),
               ),
             ),
