@@ -37,7 +37,7 @@ class _PingPageState extends State<PingPage> {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
           final canArchive = _pingStore.canArchiveResult;
-          final isFavorite = _favoritesStore.isFavorite(session.host.name);
+          final isFavorite = _favoritesStore.isFavorite(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
           final isExpanded = status.isInitial || status.isQuickCheckDone;
@@ -78,7 +78,7 @@ class _PingPageState extends State<PingPage> {
           enabled: true,
           active: false,
           onPressed: () => pushReplacement(SearchPage(
-            initialQuery: session.host.name,
+            initialQuery: session.host,
           )),
         ),
         SessionHostButton(
@@ -87,8 +87,8 @@ class _PingPageState extends State<PingPage> {
           enabled: true,
           active: isFavorite,
           onPressed: () => isFavorite
-              ? _favoritesStore.removeFavorites([session.host.name])
-              : _favoritesStore.addFavorite(session.host.name),
+              ? _favoritesStore.removeFavorites([session.host])
+              : _favoritesStore.addFavorite(session.host),
         ),
         SessionHostButton(
           icon: Icons.tune,

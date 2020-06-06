@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class HostIconTile extends StatelessWidget {
-  static const _googleFavicon = "https://www.google.com/favicon.ico";
-
   final String url;
   final Duration duration;
   final Color shadowColor;
@@ -17,7 +15,7 @@ class HostIconTile extends StatelessWidget {
 
   HostIconTile({
     Key key,
-    String url = _googleFavicon,
+    @required String url,
     bool isRaised = true,
   }) : this._(
           key: key,
@@ -28,7 +26,7 @@ class HostIconTile extends StatelessWidget {
 
   HostIconTile.expansion({
     Key key,
-    String url = _googleFavicon,
+    @required String url,
     @required double expansion,
   }) : this._(
           key: key,

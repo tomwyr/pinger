@@ -92,9 +92,8 @@ abstract class PingStoreBase with Store {
   }
 
   void _cacheCurrentHost() async {
-    final host = _settingsStore.userSettings.restoreHost
-        ? currentSession?.host?.name
-        : null;
+    final host =
+        _settingsStore.userSettings.restoreHost ? currentSession?.host : null;
     await _pingerPrefs.setLastHost(host);
   }
 
@@ -102,7 +101,7 @@ abstract class PingStoreBase with Store {
     final status = currentSession.status;
     if (_lastStatus != status) prevStatus = _lastStatus;
     if (_lastStatus.isInitial && status.isStarted) {
-      _hostsStore.incrementStats(currentSession.host.name);
+      _hostsStore.incrementStats(currentSession.host);
     }
     _lastStatus = status;
   }
@@ -111,7 +110,7 @@ abstract class PingStoreBase with Store {
     if (_shouldShareResult()) {
       final result = GlobalSessionResult(
         count: currentSession.values.length,
-        host: currentSession.host.name,
+        host: currentSession.host,
         stats: currentSession.stats,
         location: await _getResultLocation(),
       );
@@ -140,7 +139,7 @@ abstract class PingStoreBase with Store {
   @action
   void initSession(String host) {
     currentSession = PingSession(
-      host: PingHost(name: host),
+      host: host,
       status: PingStatus.initial,
       settings:
           currentSession?.settings ?? _settingsStore.userSettings.pingSettings,
@@ -210,7 +209,7 @@ abstract class PingStoreBase with Store {
 
   void _startPing({PingSettings settings, VoidCallback onDone}) {
     _pingSub = _pingService
-        .ping(currentSession.host.name, settings ?? currentSession.settings)
+        .ping(currentSession.host, settings ?? currentSession.settings)
         .listen(_onPingResult, onDone: onDone);
     _timer.start();
     _timerSub = Stream.periodic(Duration(seconds: 1))
@@ -231,7 +230,7 @@ abstract class PingStoreBase with Store {
   @action
   void stopSession() {
     _stopPing();
-    initSession(currentSession.host.name);
+    initSession(currentSession.host);
   }
 
   void _stopPing() {
@@ -241,7 +240,7 @@ abstract class PingStoreBase with Store {
   }
 
   @action
-  void restart() => initSession(currentSession.host.name);
+  void restart() => initSession(currentSession.host);
 
   @action
   Future<void> archiveResult() async {

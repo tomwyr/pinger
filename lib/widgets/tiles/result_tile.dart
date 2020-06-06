@@ -78,7 +78,7 @@ class ResultTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 18.0, right: 12.0),
                 child: Text(
-                  result.host.name,
+                  result.host,
                   maxLines: 1,
                   softWrap: false,
                   overflow: TextOverflow.fade,

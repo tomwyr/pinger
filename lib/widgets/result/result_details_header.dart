@@ -96,7 +96,7 @@ class ResultDetailsHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              result.host.name,
+              result.host,
               maxLines: 1,
               softWrap: false,
               overflow: TextOverflow.fade,

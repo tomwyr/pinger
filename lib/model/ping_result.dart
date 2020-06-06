@@ -10,7 +10,7 @@ part 'ping_result.g.dart';
 abstract class PingResult with _$PingResult {
   factory PingResult({
     int id,
-    @required PingHost host,
+    @required String host,
     @required PingSettings settings,
     @required DateTime startTime,
     @required Duration duration,
@@ -20,17 +20,6 @@ abstract class PingResult with _$PingResult {
 
   factory PingResult.fromJson(Map<String, dynamic> json) =>
       _$PingResultFromJson(json);
-}
-
-@freezed
-abstract class PingHost with _$PingHost {
-  factory PingHost({
-    @required String name,
-    String ip,
-  }) = _PingHost;
-
-  factory PingHost.fromJson(Map<String, dynamic> json) =>
-      _$PingHostFromJson(json);
 }
 
 @freezed

@@ -7,7 +7,7 @@ part 'ping_session.freezed.dart';
 @freezed
 abstract class PingSession with _$PingSession {
   factory PingSession({
-    @required PingHost host,
+    @required String host,
     @required PingStatus status,
     @required PingSettings settings,
     List<int> values,

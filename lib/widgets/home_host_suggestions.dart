@@ -70,7 +70,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           bottomItem: widget.session != null
               ? HomeHostsSection(
                   title: "Current",
-                  hosts: [widget.session.host.name],
+                  hosts: [widget.session.host],
                   itemLimit: 1,
                   tileType: HostTileType.highlighted,
                   onItemPressed: widget.onItemPressed,

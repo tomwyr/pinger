@@ -51,7 +51,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
       vsync: this,
       length: ResultDetailsTab.values.length,
     );
-    _archiveStore.fetchGlobalResults(widget.result.host.name);
+    _archiveStore.fetchGlobalResults(widget.result.host);
   }
 
   @override
@@ -152,7 +152,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
             isSharingLocation: _checkIsSharingLocation(),
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
-            globalResults: _archiveStore.globalResults[widget.result.host.name],
+            globalResults: _archiveStore.globalResults[widget.result.host],
           ),
         ),
         ResultDetailsInfoTab(result: widget.result),
@@ -160,13 +160,12 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
           builder: (_) => ResultDetailsMoreTab(
             results: _archiveStore.localResults
                 .where((it) =>
-                    it.host.name == widget.result.host.name &&
-                    it.id != widget.result.id)
+                    it.host == widget.result.host && it.id != widget.result.id)
                 .toList(),
             onItemSelected: (item) =>
                 pushReplacement(ResultDetailsPage(result: item)),
             onStartPingPressed: () {
-              _pingStore.initSession(widget.result.host.name);
+              _pingStore.initSession(widget.result.host);
               pushReplacement(PingPage());
             },
           ),

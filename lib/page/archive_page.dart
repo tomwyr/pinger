@@ -93,7 +93,7 @@ class _ArchivePageState extends State<ArchivePage> {
         return _buildResultsList(results, ResultTileType.regular);
       case ArchiveViewType.host:
         final hostResults =
-            results.where((it) => it.host.name == _selectedHost).toList();
+            results.where((it) => it.host == _selectedHost).toList();
         return _buildResultsList(hostResults, ResultTileType.detailed);
     }
     throw StateError("Unrecognized $ArchiveViewType selected: $_viewType.");
@@ -134,7 +134,7 @@ class _ArchivePageState extends State<ArchivePage> {
   List<MapEntry<String, int>> _groupHosts(List<PingResult> results) {
     final map = <String, int>{};
     results.forEach((it) => map.update(
-          it.host.name,
+          it.host,
           (value) => ++value,
           ifAbsent: () => 1,
         ));

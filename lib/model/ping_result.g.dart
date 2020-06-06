@@ -9,9 +9,7 @@ part of 'ping_result.dart';
 _$_PingResult _$_$_PingResultFromJson(Map<String, dynamic> json) {
   return _$_PingResult(
     id: json['id'] as int,
-    host: json['host'] == null
-        ? null
-        : PingHost.fromJson(json['host'] as Map<String, dynamic>),
+    host: json['host'] as String,
     settings: json['settings'] == null
         ? null
         : PingSettings.fromJson(json['settings'] as Map<String, dynamic>),
@@ -31,25 +29,12 @@ _$_PingResult _$_$_PingResultFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_PingResultToJson(_$_PingResult instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'host': instance.host?.toJson(),
+      'host': instance.host,
       'settings': instance.settings?.toJson(),
       'startTime': instance.startTime?.toIso8601String(),
       'duration': instance.duration?.inMicroseconds,
       'values': instance.values,
       'stats': instance.stats?.toJson(),
-    };
-
-_$_PingHost _$_$_PingHostFromJson(Map<String, dynamic> json) {
-  return _$_PingHost(
-    name: json['name'] as String,
-    ip: json['ip'] as String,
-  );
-}
-
-Map<String, dynamic> _$_$_PingHostToJson(_$_PingHost instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'ip': instance.ip,
     };
 
 _$_PingStats _$_$_PingStatsFromJson(Map<String, dynamic> json) {

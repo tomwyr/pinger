@@ -43,7 +43,7 @@ class SessionHostHeader extends StatelessWidget {
               duration: animDuration,
               tween: Tween(begin: fontSize, end: fontSize),
               builder: (_, value, __) => Text(
-                session.host.name,
+                session.host,
                 maxLines: 1,
                 softWrap: false,
                 overflow: TextOverflow.fade,
@@ -54,29 +54,12 @@ class SessionHostHeader extends StatelessWidget {
           Container(width: 8.0),
         ],
       ),
-      bottom: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (session.host.ip != null)
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                session.host.ip,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: R.colors.gray,
-                ),
-              ),
-            ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: buttons,
-            ),
-          ),
-        ],
+      bottom: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 24.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: buttons,
+        ),
       ),
     );
   }

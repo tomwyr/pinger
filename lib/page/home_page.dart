@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
     if (status.isNull || status.isInitial || status.isDone) {
       _pingStore.initSession(host);
       push(PingPage());
-    } else if (_pingStore.currentSession.host.name == host) {
+    } else if (_pingStore.currentSession.host == host) {
       push(PingPage());
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(

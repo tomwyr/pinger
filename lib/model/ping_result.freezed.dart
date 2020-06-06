@@ -17,7 +17,7 @@ class _$PingResultTearOff {
 
   _PingResult call(
       {int id,
-      @required PingHost host,
+      @required String host,
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
@@ -40,7 +40,7 @@ const $PingResult = _$PingResultTearOff();
 
 mixin _$PingResult {
   int get id;
-  PingHost get host;
+  String get host;
   PingSettings get settings;
   DateTime get startTime;
   Duration get duration;
@@ -57,14 +57,13 @@ abstract class $PingResultCopyWith<$Res> {
       _$PingResultCopyWithImpl<$Res>;
   $Res call(
       {int id,
-      PingHost host,
+      String host,
       PingSettings settings,
       DateTime startTime,
       Duration duration,
       List<int> values,
       PingStats stats});
 
-  $PingHostCopyWith<$Res> get host;
   $PingSettingsCopyWith<$Res> get settings;
   $PingStatsCopyWith<$Res> get stats;
 }
@@ -88,7 +87,7 @@ class _$PingResultCopyWithImpl<$Res> implements $PingResultCopyWith<$Res> {
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as int,
-      host: host == freezed ? _value.host : host as PingHost,
+      host: host == freezed ? _value.host : host as String,
       settings:
           settings == freezed ? _value.settings : settings as PingSettings,
       startTime:
@@ -97,16 +96,6 @@ class _$PingResultCopyWithImpl<$Res> implements $PingResultCopyWith<$Res> {
       values: values == freezed ? _value.values : values as List<int>,
       stats: stats == freezed ? _value.stats : stats as PingStats,
     ));
-  }
-
-  @override
-  $PingHostCopyWith<$Res> get host {
-    if (_value.host == null) {
-      return null;
-    }
-    return $PingHostCopyWith<$Res>(_value.host, (value) {
-      return _then(_value.copyWith(host: value));
-    });
   }
 
   @override
@@ -137,15 +126,13 @@ abstract class _$PingResultCopyWith<$Res> implements $PingResultCopyWith<$Res> {
   @override
   $Res call(
       {int id,
-      PingHost host,
+      String host,
       PingSettings settings,
       DateTime startTime,
       Duration duration,
       List<int> values,
       PingStats stats});
 
-  @override
-  $PingHostCopyWith<$Res> get host;
   @override
   $PingSettingsCopyWith<$Res> get settings;
   @override
@@ -173,7 +160,7 @@ class __$PingResultCopyWithImpl<$Res> extends _$PingResultCopyWithImpl<$Res>
   }) {
     return _then(_PingResult(
       id: id == freezed ? _value.id : id as int,
-      host: host == freezed ? _value.host : host as PingHost,
+      host: host == freezed ? _value.host : host as String,
       settings:
           settings == freezed ? _value.settings : settings as PingSettings,
       startTime:
@@ -208,7 +195,7 @@ class _$_PingResult implements _PingResult {
   @override
   final int id;
   @override
-  final PingHost host;
+  final String host;
   @override
   final PingSettings settings;
   @override
@@ -272,7 +259,7 @@ class _$_PingResult implements _PingResult {
 abstract class _PingResult implements PingResult {
   factory _PingResult(
       {int id,
-      @required PingHost host,
+      @required String host,
       @required PingSettings settings,
       @required DateTime startTime,
       @required Duration duration,
@@ -285,7 +272,7 @@ abstract class _PingResult implements PingResult {
   @override
   int get id;
   @override
-  PingHost get host;
+  String get host;
   @override
   PingSettings get settings;
   @override
@@ -298,140 +285,6 @@ abstract class _PingResult implements PingResult {
   PingStats get stats;
   @override
   _$PingResultCopyWith<_PingResult> get copyWith;
-}
-
-PingHost _$PingHostFromJson(Map<String, dynamic> json) {
-  return _PingHost.fromJson(json);
-}
-
-class _$PingHostTearOff {
-  const _$PingHostTearOff();
-
-  _PingHost call({@required String name, String ip}) {
-    return _PingHost(
-      name: name,
-      ip: ip,
-    );
-  }
-}
-
-// ignore: unused_element
-const $PingHost = _$PingHostTearOff();
-
-mixin _$PingHost {
-  String get name;
-  String get ip;
-
-  Map<String, dynamic> toJson();
-  $PingHostCopyWith<PingHost> get copyWith;
-}
-
-abstract class $PingHostCopyWith<$Res> {
-  factory $PingHostCopyWith(PingHost value, $Res Function(PingHost) then) =
-      _$PingHostCopyWithImpl<$Res>;
-  $Res call({String name, String ip});
-}
-
-class _$PingHostCopyWithImpl<$Res> implements $PingHostCopyWith<$Res> {
-  _$PingHostCopyWithImpl(this._value, this._then);
-
-  final PingHost _value;
-  // ignore: unused_field
-  final $Res Function(PingHost) _then;
-
-  @override
-  $Res call({
-    Object name = freezed,
-    Object ip = freezed,
-  }) {
-    return _then(_value.copyWith(
-      name: name == freezed ? _value.name : name as String,
-      ip: ip == freezed ? _value.ip : ip as String,
-    ));
-  }
-}
-
-abstract class _$PingHostCopyWith<$Res> implements $PingHostCopyWith<$Res> {
-  factory _$PingHostCopyWith(_PingHost value, $Res Function(_PingHost) then) =
-      __$PingHostCopyWithImpl<$Res>;
-  @override
-  $Res call({String name, String ip});
-}
-
-class __$PingHostCopyWithImpl<$Res> extends _$PingHostCopyWithImpl<$Res>
-    implements _$PingHostCopyWith<$Res> {
-  __$PingHostCopyWithImpl(_PingHost _value, $Res Function(_PingHost) _then)
-      : super(_value, (v) => _then(v as _PingHost));
-
-  @override
-  _PingHost get _value => super._value as _PingHost;
-
-  @override
-  $Res call({
-    Object name = freezed,
-    Object ip = freezed,
-  }) {
-    return _then(_PingHost(
-      name: name == freezed ? _value.name : name as String,
-      ip: ip == freezed ? _value.ip : ip as String,
-    ));
-  }
-}
-
-@JsonSerializable()
-class _$_PingHost implements _PingHost {
-  _$_PingHost({@required this.name, this.ip}) : assert(name != null);
-
-  factory _$_PingHost.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingHostFromJson(json);
-
-  @override
-  final String name;
-  @override
-  final String ip;
-
-  @override
-  String toString() {
-    return 'PingHost(name: $name, ip: $ip)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _PingHost &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.ip, ip) ||
-                const DeepCollectionEquality().equals(other.ip, ip)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(ip);
-
-  @override
-  _$PingHostCopyWith<_PingHost> get copyWith =>
-      __$PingHostCopyWithImpl<_PingHost>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$_$_PingHostToJson(this);
-  }
-}
-
-abstract class _PingHost implements PingHost {
-  factory _PingHost({@required String name, String ip}) = _$_PingHost;
-
-  factory _PingHost.fromJson(Map<String, dynamic> json) = _$_PingHost.fromJson;
-
-  @override
-  String get name;
-  @override
-  String get ip;
-  @override
-  _$PingHostCopyWith<_PingHost> get copyWith;
 }
 
 PingStats _$PingStatsFromJson(Map<String, dynamic> json) {

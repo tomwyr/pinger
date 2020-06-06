@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/page/home_page.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -59,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void _onItemSelected(String host) {
-    if (host != _pingStore.currentSession?.host?.name) {
+    if (host != _pingStore.currentSession?.host) {
       _pingStore.initSession(host);
     }
     pushReplacement(PingPage());

@@ -25,9 +25,8 @@ class ResultDetailsInfoTab extends StatelessWidget {
                 "Date",
                 FormatUtils.getTimestampLabel(result.startTime, showTime: true),
               ),
-              _buildItem("Host IP", result.host.ip ?? "-"),
               _buildItem(
-                  "Total time", FormatUtils.getDurationLabel(result.duration)),
+                  "Duration", FormatUtils.getDurationLabel(result.duration)),
               Container(height: 24.0),
               _buildHeader("Settings"),
               _buildItem("Count", "${result.settings.count} x"),
