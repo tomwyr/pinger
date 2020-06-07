@@ -1,36 +1,53 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
-typedef UrlWrapper = String Function(String);
-
+@singleton
 class FaviconService {
-  static final UrlWrapper google =
-      (url) => "https://www.google.com/s2/favicons?domain=$url";
+  static const Set<String> _validFormats = {
+    'image/png',
+    'image/vnd.microsoft.icon',
+  };
 
-  static final UrlWrapper faviconKit =
-      (url) => "https://api.faviconkit.com/$url";
-
+  final Map<String, Future<Uint8List>> _icons = {};
+  final String baseUrl;
   final Duration expiryTime;
-  final UrlWrapper urlWrapper;
 
-  FaviconService({
-    @required this.urlWrapper,
-    this.expiryTime = const Duration(days: 7),
-  });
+  FaviconService(this.baseUrl, this.expiryTime);
 
-  Future<Uint8List> load(String url) async {
+  @factoryMethod
+  factory FaviconService.create() => FaviconService(
+        "https://api.faviconkit.com/",
+        const Duration(days: 7),
+      );
+
+  Future<Uint8List> load(String url) =>
+      _icons.putIfAbsent(url, () => _loadIcon(url));
+
+  Future<Uint8List> _loadIcon(String url) async {
     final dir = await path.getApplicationDocumentsDirectory();
     final file = File("${dir.path}/$url");
-    if (await _isIconValid(file)) {
-      return await file.readAsBytes();
-    } else {
-      final bytes = (await http.get(urlWrapper(url))).bodyBytes;
-      await file.writeAsBytes(bytes);
-      return bytes;
+    if (!await _isIconValid(file)) {
+      await _tryFetchIcon(url).then(file.writeAsBytes);
+    }
+    return await file.readAsBytes();
+  }
+
+  Future<Uint8List> _tryFetchIcon(String url) async {
+    try {
+      final response = await http.get("$baseUrl$url");
+      final contentType = response.headers['content-type'];
+      if (response.statusCode != 200) {
+        throw FaviconError.SERVER_ERROR;
+      } else if (!_validFormats.contains(contentType)) {
+        throw FaviconError.INVALID_FORMAT;
+      }
+      return response.bodyBytes;
+    } on SocketException {
+      throw FaviconError.COULD_NOT_CONNECT;
     }
   }
 
@@ -41,4 +58,10 @@ class FaviconService {
     }
     return false;
   }
+}
+
+enum FaviconError {
+  SERVER_ERROR,
+  INVALID_FORMAT,
+  COULD_NOT_CONNECT,
 }
