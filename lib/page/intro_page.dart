@@ -15,15 +15,16 @@ class _IntroPageState extends State<IntroPage> {
   );
   final _bottomContentHeight = 160.0;
   final _nextButtonSize = 64.0;
-  final _pageProgress = ValueNotifier(0.0);
   final _itemCount = 4;
   int _currentItem = 0;
   double _pageWidth;
+  ValueNotifier<double> _pageProgress;
   PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _pageProgress = ValueNotifier(0.0);
     _pageController = PageController(initialPage: _currentItem)
       ..addListener(_updateProgress);
   }

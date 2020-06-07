@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
@@ -24,6 +25,7 @@ class _SearchPageState extends State<SearchPage> {
   final HostsStore _hostsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
 
+  ValueNotifier<String> _highlightHost;
   TextEditingController _inputController;
 
   @override
@@ -34,18 +36,21 @@ class _SearchPageState extends State<SearchPage> {
       text: query,
       selection: TextSelection(baseOffset: 0, extentOffset: query.length),
     ));
+    _highlightHost = ValueNotifier(query);
     _hostsStore.search(query);
   }
 
   @override
   void dispose() {
     _inputController.dispose();
+    _highlightHost.dispose();
     super.dispose();
   }
 
   void _onQueryChanged(String query) {
     _hostsStore.search(query);
-    rebuild();
+    _highlightHost.value =
+        query.endsWith(".") ? query.substring(0, query.length - 1) : query;
   }
 
   void _onClearPressed() {
@@ -68,18 +73,22 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildSearchBar(),
-      body: Column(children: <Widget>[
-        if (_inputController.text.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-            child: HostTile(
-              host: _inputController.text,
-              loadIcon: false,
-              type: HostTileType.highlighted,
-              onPressed: () => _onItemSelected(_inputController.text),
+      body: ValueListenableBuilder<String>(
+        valueListenable: _highlightHost,
+        builder: (_, value, child) => Column(children: <Widget>[
+          if (value.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+              child: HostTile(
+                host: value,
+                loadIcon: false,
+                type: HostTileType.highlighted,
+                onPressed: () => _onItemSelected(value),
+              ),
             ),
-          ),
-        Expanded(
+          child,
+        ]),
+        child: Expanded(
           child: Observer(builder: (_) {
             if (_hostsStore.isLoading) return _buildSearchInProgress();
             final results = _hostsStore.searchResults;
@@ -87,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
             return _buildResultsList(results);
           }),
         ),
-      ]),
+      ),
     );
   }
 
@@ -190,6 +199,11 @@ class _SearchPageState extends State<SearchPage> {
         controller: _inputController,
         onChanged: _onQueryChanged,
         style: TextStyle(fontSize: 18.0),
+        inputFormatters: [
+          WhitelistingTextInputFormatter(RegExp(r"^[A-Za-z0-9-\.]+")),
+          BlacklistingTextInputFormatter(RegExp(r"^\.")),
+          BlacklistingTextInputFormatter("..", replacementString: "."),
+        ],
         decoration: InputDecoration(
           hintText: "Search host to ping",
           border: OutlineInputBorder(borderSide: BorderSide.none),
