@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Ignore resize caused by hiding keyboard 
+      // Ignore resize caused by hiding keyboard
       // when navigating back from search page.
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -53,17 +53,23 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Observer(
         builder: (context) {
-          if (!_settingsStore.didShowIntro) {
-            return _buildIntroContent(_settingsStore.notifyDidShowIntro);
-          }
-          return HomeHostSuggestions(
-            session: _pingStore.currentSession,
-            favorites: _favoritesStore.items,
-            popular: _hostsStore.hosts?.take(3)?.map((it) => it.name)?.toList(),
-            stats: _hostsStore.stats,
-            searchBar: _buildSearchBar(),
-            onItemPressed: (it) => _onHostItemPressed(context, it),
-          );
+          final shouldShowIntroPrompt = !_settingsStore.didShowIntro &&
+              _pingStore.currentSession == null &&
+              _favoritesStore.items.isEmpty &&
+              _hostsStore.stats.isEmpty;
+          return shouldShowIntroPrompt
+              ? _buildIntroContent(_settingsStore.notifyDidShowIntro)
+              : HomeHostSuggestions(
+                  session: _pingStore.currentSession,
+                  favorites: _favoritesStore.items,
+                  popular: _hostsStore.hosts
+                      ?.take(3)
+                      ?.map((it) => it.name)
+                      ?.toList(),
+                  stats: _hostsStore.stats,
+                  searchBar: _buildSearchBar(),
+                  onItemPressed: (it) => _onHostItemPressed(context, it),
+                );
         },
       ),
     );
