@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/host_stats.dart';
+import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
@@ -12,13 +14,15 @@ part 'hosts_store.g.dart';
 class HostsStore extends HostsStoreBase with _$HostsStore {
   final PingerPrefs _pingerPrefs;
   final PingerApi _pingerApi;
+  final FaviconService _faviconService;
 
-  HostsStore(this._pingerPrefs, this._pingerApi);
+  HostsStore(this._pingerPrefs, this._pingerApi, this._faviconService);
 }
 
 abstract class HostsStoreBase with Store {
   PingerPrefs get _pingerPrefs;
   PingerApi get _pingerApi;
+  FaviconService get _faviconService;
 
   @observable
   String _searchQuery = "";
@@ -83,6 +87,8 @@ abstract class HostsStoreBase with Store {
 
   @action
   void search(String query) => _searchQuery = query;
+
+  Favicon getFavicon(String url) => Favicon(_faviconService.load(url));
 }
 
 class HostItem {
@@ -90,4 +96,10 @@ class HostItem {
   final double popularity;
 
   HostItem(this.name, this.popularity);
+}
+
+class Favicon {
+  final Future<Uint8List> data;
+
+  Favicon(this.data);
 }

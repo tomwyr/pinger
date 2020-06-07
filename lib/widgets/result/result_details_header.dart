@@ -86,6 +86,7 @@ class ResultDetailsHeader extends StatelessWidget {
         size: Size.square(kToolbarHeight),
         child: Center(
           child: HostIconTile.expansion(
+            host: result.host,
             expansion: expansion,
           ),
         ),

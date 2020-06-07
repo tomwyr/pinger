@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/model/ping_session.dart';
-import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/collapsing_header.dart';
 import 'package:pinger/widgets/tiles/host_icon_tile.dart';
 
@@ -36,7 +35,7 @@ class SessionHostHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(width: 8.0),
-          HostIconTile(isRaised: isExpanded),
+          HostIconTile(host: session.host, isRaised: isExpanded),
           Container(width: 20.0),
           Flexible(
             child: TweenAnimationBuilder<double>(

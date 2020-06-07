@@ -25,7 +25,7 @@ class ResultsGroupTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Spacer(),
-          HostIconTile(),
+          HostIconTile(host: host),
           Spacer(),
           Text(
             host,

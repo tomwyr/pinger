@@ -13,6 +13,7 @@ class HostTile extends StatelessWidget {
   const HostTile({
     Key key,
     @required this.host,
+    this.loadIcon = true,
     this.onPressed,
     this.onLongPress,
     this.trailing,
@@ -20,6 +21,7 @@ class HostTile extends StatelessWidget {
   }) : super(key: key);
 
   final String host;
+  final bool loadIcon;
   final VoidCallback onPressed;
   final VoidCallback onLongPress;
   final Widget trailing;
@@ -39,7 +41,7 @@ class HostTile extends StatelessWidget {
               ? R.colors.secondary.withOpacity(0.5)
               : R.colors.grayLight,
       child: Row(children: <Widget>[
-        HostIconTile(),
+        HostIconTile(host: loadIcon ? host : null),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 18.0, right: 12.0),

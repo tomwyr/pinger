@@ -55,7 +55,7 @@ class _ArchivePageState extends State<ArchivePage> {
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                HostIconTile(isRaised: false),
+                HostIconTile(host: _selectedHost, isRaised: false),
                 Container(width: 12.0),
                 Text(
                   _selectedHost,

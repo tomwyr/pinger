@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
@@ -30,11 +31,16 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
 
   //Eager singletons must be registered in the right order
+  g.registerSingleton<FaviconService>(FaviconService.create());
   g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));
   g.registerSingleton<SettingsStore>(SettingsStore(g<PingerPrefs>()));
   g.registerSingleton<ArchiveStore>(
       ArchiveStore(g<PingerPrefs>(), g<PingerApi>()));
-  g.registerSingleton<HostsStore>(HostsStore(g<PingerPrefs>(), g<PingerApi>()));
+  g.registerSingleton<HostsStore>(HostsStore(
+    g<PingerPrefs>(),
+    g<PingerApi>(),
+    g<FaviconService>(),
+  ));
   g.registerSingleton<LocationStore>(
       LocationStore(g<Geolocator>(), g<SettingsStore>()));
   g.registerSingleton<PingStore>(PingStore(

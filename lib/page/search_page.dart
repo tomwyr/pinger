@@ -74,6 +74,7 @@ class _SearchPageState extends State<SearchPage> {
             padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
             child: HostTile(
               host: _inputController.text,
+              loadIcon: false,
               type: HostTileType.highlighted,
               onPressed: () => _onItemSelected(_inputController.text),
             ),
