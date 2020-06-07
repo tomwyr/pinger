@@ -25,37 +25,45 @@ class ScrollEdgeGradient extends StatefulWidget {
 class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   ScrollController _scroller;
   ValueNotifier<ScrollExtent> _extent;
+  BoxConstraints _lastConstraints;
 
   @override
   void initState() {
     super.initState();
     _extent = ValueNotifier(null);
-    _scroller = ScrollController()..addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _onScroll());
+    _scroller = ScrollController()..addListener(_updateExtent);
   }
 
   @override
   void dispose() {
-    _scroller
-      ..removeListener(_onScroll)
-      ..dispose();
+    _scroller.dispose();
     super.dispose();
   }
 
-  void _onScroll() {
+  void _updateExtent() {
     _extent.value = ScrollExtent(
       _scroller.position.extentBefore,
       _scroller.position.extentAfter,
     );
   }
 
+  void _checkNeedsExtentUpdate(BoxConstraints constraints) {
+    if (constraints != _lastConstraints) {
+      _lastConstraints = constraints;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _updateExtent());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      widget.builder(_scroller),
-      if (widget.top) _buildGradient(AxisDirection.down),
-      if (widget.bottom) _buildGradient(AxisDirection.up),
-    ]);
+    return LayoutBuilder(builder: (_, constraints) {
+      _checkNeedsExtentUpdate(constraints);
+      return Stack(children: <Widget>[
+        Positioned.fill(child: widget.builder(_scroller)),
+        if (widget.top) _buildGradient(AxisDirection.down),
+        if (widget.bottom) _buildGradient(AxisDirection.up),
+      ]);
+    });
   }
 
   Widget _buildGradient(AxisDirection direction) {

@@ -8,6 +8,7 @@ import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/widgets/common/flex_child_scroll_view.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/three_bounce.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
@@ -128,28 +129,33 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildNoResults() {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
-      builder: (controller) => SingleChildScrollView(
+      builder: (controller) => FlexChildScrollView(
         controller: controller,
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(height: 24.0),
               Image(
                 image: Images.undrawVoid,
                 width: 144.0,
                 height: 144.0,
               ),
-              Container(height: 36.0),
+              Container(height: 48.0),
               Text(
                 "No results found",
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Container(height: 24.0),
-              Text(
-                "We could not find anything for given query but you can still use it as host",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
+              Container(height: 16.0),
+              Text(
+                "We could not find anything for given query but you can still use it as host",
+                style: TextStyle(fontSize: 18.0),
+                textAlign: TextAlign.center,
+              ),
+              Container(height: 24.0),
             ],
           ),
         ),
