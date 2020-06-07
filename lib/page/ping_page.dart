@@ -32,6 +32,9 @@ class _PingPageState extends State<PingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Ignore resize caused by hiding keyboard
+      // when navigating back from search page.
+      resizeToAvoidBottomPadding: false,
       body: SafeArea(
         child: Observer(builder: (_) {
           final session = _pingStore.currentSession;
