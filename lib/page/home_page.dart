@@ -62,10 +62,8 @@ class _HomePageState extends State<HomePage> {
               : HomeHostSuggestions(
                   session: _pingStore.currentSession,
                   favorites: _favoritesStore.items,
-                  popular: _hostsStore.hosts
-                      ?.take(3)
-                      ?.map((it) => it.name)
-                      ?.toList(),
+                  popular:
+                      _hostsStore.hosts.take(5).map((it) => it.name).toList(),
                   stats: _hostsStore.stats,
                   searchBar: _buildSearchBar(),
                   onItemPressed: (it) => _onHostItemPressed(context, it),

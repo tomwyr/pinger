@@ -28,7 +28,7 @@ abstract class HostsStoreBase with Store {
   String _searchQuery = "";
 
   @observable
-  List<HostItem> hosts;
+  List<HostItem> hosts = [];
 
   @observable
   Map<String, HostStats> stats;
