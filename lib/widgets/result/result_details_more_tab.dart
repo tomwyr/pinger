@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/common/separated_sliver_list.dart';
 import 'package:pinger/widgets/result/result_details_prompt_tab.dart';
 import 'package:pinger/widgets/tiles/result_tile.dart';
@@ -25,31 +27,39 @@ class ResultDetailsMoreTab extends StatefulWidget {
 class _ResultDetailsMoreTabState extends State<ResultDetailsMoreTab> {
   @override
   Widget build(BuildContext context) {
-    return CollapsingTabLayoutItem(slivers: <Widget>[
-      if (widget.results.isEmpty)
-        ResultDetailsPromptTab(
-          image: Images.undrawEmpty,
-          title: "There’s nothing here yet",
-          description:
-              "Other results will show up here once you finish at least one ping for this host",
-          buttonLabel: "Start now",
-          onButtonPressed: widget.onStartPingPressed,
-        )
-      else
-        SliverPadding(
-          padding: const EdgeInsets.all(16.0),
-          sliver: SeparatedSliverList(
-            itemCount: widget.results.length,
-            itemBuilder: (_, index) {
-              final item = widget.results[index];
-              return ResultTile(
-                result: item,
-                onPressed: () => widget.onItemSelected(item),
-              );
-            },
-            separatorBuilder: (_, __) => Divider(),
-          ),
-        )
-    ]);
+    return ScrollEdgeGradient(
+      color: R.colors.canvas,
+      sliverOverlap: kToolbarHeight + kTextTabBarHeight,
+      builder: (controller) => CollapsingTabLayoutItem(
+        controller: controller,
+        slivers: <Widget>[
+          if (widget.results.isEmpty)
+            ResultDetailsPromptTab(
+              image: Images.undrawEmpty,
+              title: "There’s nothing here yet",
+              description:
+                  "Other results will show up here once you finish at least one ping for this host",
+              buttonLabel: "Start now",
+              onButtonPressed: widget.onStartPingPressed,
+            )
+          else
+            SliverPadding(
+              padding: const EdgeInsets.all(16.0),
+              sliver: SeparatedSliverList(
+                itemCount: widget.results.length,
+                itemBuilder: (_, index) {
+                  final item = widget.results[index];
+                  return ResultTile(
+                    result: item,
+                    type: ResultTileType.detailed,
+                    onPressed: () => widget.onItemSelected(item),
+                  );
+                },
+                separatorBuilder: (_, __) => Divider(),
+              ),
+            )
+        ],
+      ),
+    );
   }
 }

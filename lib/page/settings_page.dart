@@ -3,7 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/intro_page.dart';
+import 'package:pinger/resources.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/settings/settings_sections.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -25,32 +27,36 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Observer(builder: (_) {
         final settings = _settingsStore.userSettings;
         if (settings == null) return Container();
-        return ListView(
-          padding: const EdgeInsets.fromLTRB(32.0, 16.0, 24.0, 16.0),
-          children: <Widget>[
-            PingSettingsSection(
-              settings: settings.pingSettings,
-              onChanged: (it) => _settingsStore.updateSettings(
-                settings.copyWith(pingSettings: it),
+        return ScrollEdgeGradient(
+          color: R.colors.canvas,
+          builder: (controller) => ListView(
+            controller: controller,
+            padding: const EdgeInsets.fromLTRB(32.0, 16.0, 24.0, 16.0),
+            children: <Widget>[
+              PingSettingsSection(
+                settings: settings.pingSettings,
+                onChanged: (it) => _settingsStore.updateSettings(
+                  settings.copyWith(pingSettings: it),
+                ),
               ),
-            ),
-            Container(height: 24.0),
-            ShareSettingsSection(
-              settings: settings.shareSettings,
-              onChanged: (it) => _settingsStore.updateSettings(
-                settings.copyWith(shareSettings: it),
+              Container(height: 24.0),
+              ShareSettingsSection(
+                settings: settings.shareSettings,
+                onChanged: (it) => _settingsStore.updateSettings(
+                  settings.copyWith(shareSettings: it),
+                ),
               ),
-            ),
-            Container(height: 24.0),
-            OtherSettingsSection(
-              settings: settings,
-              onChanged: _settingsStore.updateSettings,
-            ),
-            Container(height: 48.0),
-            SettingsFooterSection(
-              onShowIntroPressed: () => push(IntroPage()),
-            ),
-          ],
+              Container(height: 24.0),
+              OtherSettingsSection(
+                settings: settings,
+                onChanged: _settingsStore.updateSettings,
+              ),
+              Container(height: 48.0),
+              SettingsFooterSection(
+                onShowIntroPressed: () => push(IntroPage()),
+              ),
+            ],
+          ),
         );
       }),
     );

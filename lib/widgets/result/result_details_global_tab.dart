@@ -67,41 +67,72 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ..._buildValueSection(userResult),
-            ..._buildGlobalSection(
-              "Results by location",
-              "Ping value for others was ${_calcTypeMeanValue()} ms",
-              DottedMap(
-                dots: _getMapDots(),
-                dotColor: ColorTween(
-                  begin: R.colors.pingMin,
-                  end: R.colors.pingMax,
-                ),
-                emptyDotColor: R.colors.gray.withOpacity(0.5),
-              ),
-            ),
-            ..._buildGlobalSection(
-              "Results by frequency",
-              "Your ping was better than ${_calcFrequencyPercent(userResult)}% of others",
-              Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: double.infinity,
-                    minHeight: 96.0,
+            if (_resultTypeData.values.isEmpty) ..._buildNoData(),
+            if (_resultTypeData.values.isNotEmpty)
+              ..._buildGlobalSection(
+                "Results by location",
+                "Ping value for others was ${_calcTypeMeanValue()} ms",
+                DottedMap(
+                  dots: _getMapDots(),
+                  dotColor: ColorTween(
+                    begin: R.colors.pingMin,
+                    end: R.colors.pingMax,
                   ),
-                  child: _resultTypeData.values.length > 1
-                      ? GlobalDistributionChart(
-                          data: _groupChartData(),
-                          dataCount: widget.globalResults.totalCount,
-                          userResult: userResult,
-                        )
-                      : null,
+                  emptyDotColor: R.colors.gray.withOpacity(0.5),
                 ),
               ),
-            ),
+            if (_resultTypeData.values.isNotEmpty)
+              ..._buildGlobalSection(
+                "Results by frequency",
+                "Your ping was better than ${_calcFrequencyPercent(userResult)}% of others",
+                Expanded(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: double.infinity,
+                      minHeight: 96.0,
+                    ),
+                    child: _resultTypeData.values.length > 1
+                        ? GlobalDistributionChart(
+                            data: _groupChartData(),
+                            dataCount: widget.globalResults.totalCount,
+                            userResult: userResult,
+                          )
+                        : null,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _buildNoData() {
+    return [
+      Spacer(),
+      Container(height: 24.0),
+      Center(
+        child: Image(image: Images.undrawEmpty, height: 144.0),
+      ),
+      Container(height: 24.0),
+      Center(
+        child: Text(
+          "There's nothing interesting here",
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(height: 24.0),
+      Center(
+        child: Text(
+          "Check again after some time when there's data available for this host",
+          style: TextStyle(fontSize: 18.0),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(height: 24.0),
+      Spacer(),
+    ];
   }
 
   int _calcTypeMeanValue() {

@@ -11,6 +11,7 @@ import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/result/result_details_global_tab.dart';
 import 'package:pinger/widgets/result/result_details_header.dart';
 import 'package:pinger/widgets/result/result_details_info_tab.dart';
@@ -67,8 +68,8 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
       body: SafeArea(
         child: CollapsingTabLayout(
           collapsedOffset: _collapsedOffset,
-          scrollController: _scrollController,
-          scroller: _scrollLayoutTo,
+          controller: _scrollController,
+          scrollLayout: _scrollLayoutTo,
           appBar: _buildAppBar(),
           tabBarView: _buildTabBarView(),
         ),

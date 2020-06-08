@@ -30,11 +30,15 @@ class ResultDetailsPromptTab extends StatelessWidget {
           Container(height: 40.0),
           Text(
             title,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Container(height: 24.0),
-          Text(description, textAlign: TextAlign.center),
+          Text(
+            description,
+            style: TextStyle(fontSize: 18.0),
+            textAlign: TextAlign.center,
+          ),
           Spacer(),
           Container(height: 40.0),
           ButtonTheme.fromButtonThemeData(

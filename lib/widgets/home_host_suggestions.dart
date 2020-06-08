@@ -100,7 +100,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           onMorePressed: () => push(RecentsPage()),
         ),
       ),
-      if (widget.popular?.isNotEmpty == true) ...[
+      if (widget.popular.isNotEmpty) ...[
         SliverToBoxAdapter(child: Container(height: 32.0)),
         SliverToBoxAdapter(
           child: HomeHostsSection(

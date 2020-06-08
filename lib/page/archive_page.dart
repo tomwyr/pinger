@@ -9,6 +9,7 @@ import 'package:pinger/page/search_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/common/animated_ink_icon.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/tiles/host_icon_tile.dart';
 import 'package:pinger/widgets/tiles/result_tile.dart';
 import 'package:pinger/widgets/tiles/results_group_tile.dart';
@@ -142,36 +143,44 @@ class _ArchivePageState extends State<ArchivePage> {
   }
 
   Widget _buildResultsGroups(List<MapEntry<String, int>> groups) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16.0),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-      ),
-      itemCount: groups.length,
-      itemBuilder: (_, index) => ResultsGroupTile(
-        host: groups[index].key,
-        resultsCount: groups[index].value,
-        onPressed: () => setState(() {
-          _viewType = ArchiveViewType.host;
-          _selectedHost = groups[index].key;
-        }),
+    return ScrollEdgeGradient(
+      color: R.colors.canvas,
+      builder: (controller) => GridView.builder(
+        controller: controller,
+        padding: const EdgeInsets.all(16.0),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+        ),
+        itemCount: groups.length,
+        itemBuilder: (_, index) => ResultsGroupTile(
+          host: groups[index].key,
+          resultsCount: groups[index].value,
+          onPressed: () => setState(() {
+            _viewType = ArchiveViewType.host;
+            _selectedHost = groups[index].key;
+          }),
+        ),
       ),
     );
   }
 
   Widget _buildResultsList(List<PingResult> results, ResultTileType type) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemCount: results.length,
-      itemBuilder: (_, index) => Padding(
-        padding:
-            index == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 16.0),
-        child: ResultTile(
-          result: results[index],
-          type: type,
-          onPressed: () => push(ResultDetailsPage(result: results[index])),
+    return ScrollEdgeGradient(
+      color: R.colors.canvas,
+      builder: (controller) => ListView.builder(
+        controller: controller,
+        padding: const EdgeInsets.all(16.0),
+        itemCount: results.length,
+        itemBuilder: (_, index) => Padding(
+          padding:
+              index == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 16.0),
+          child: ResultTile(
+            result: results[index],
+            type: type,
+            onPressed: () => push(ResultDetailsPage(result: results[index])),
+          ),
         ),
       ),
     );

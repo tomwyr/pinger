@@ -4,16 +4,16 @@ class CollapsingTabLayout extends StatefulWidget {
   final SliverAppBar appBar;
   final TabBarView tabBarView;
   final double collapsedOffset;
-  final ScrollController scrollController;
-  final Future<void> Function(double) scroller;
+  final ScrollController controller;
+  final Future<void> Function(double) scrollLayout;
 
   const CollapsingTabLayout({
     Key key,
     @required this.appBar,
     @required this.tabBarView,
     @required this.collapsedOffset,
-    @required this.scrollController,
-    @required this.scroller,
+    @required this.controller,
+    @required this.scrollLayout,
   }) : super(key: key);
 
   @override
@@ -29,11 +29,12 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
     return NotificationListener(
       onNotification: _onScrollEvent,
       child: NestedScrollView(
-        controller: widget.scrollController,
+        controller: widget.controller,
         headerSliverBuilder: (headerContext, __) => <Widget>[
           SliverOverlapAbsorber(
-            handle:
-                NestedScrollView.sliverOverlapAbsorberHandleFor(headerContext),
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+              headerContext,
+            ),
             sliver: widget.appBar,
           ),
         ],
@@ -48,8 +49,8 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
       _lastScrollUpdate = notification;
     } else if (notification is ScrollEndNotification) {
       if (_lastScrollUpdate != null &&
-          widget.scrollController.offset > 0.0 &&
-          widget.scrollController.offset < widget.collapsedOffset) {
+          widget.controller.offset > 0.0 &&
+          widget.controller.offset < widget.collapsedOffset) {
         _isSnapping = true;
         _scheduleSnapScroll(_lastScrollUpdate.scrollDelta > 0.0);
         return true;
@@ -60,7 +61,7 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
 
   void _scheduleSnapScroll(bool scrollsUpwards) {
     Future(() async {
-      await widget.scroller(scrollsUpwards ? widget.collapsedOffset : 0.0);
+      await widget.scrollLayout(scrollsUpwards ? widget.collapsedOffset : 0.0);
       _lastScrollUpdate = null;
       _isSnapping = false;
     });
@@ -69,13 +70,18 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
 
 class CollapsingTabLayoutItem extends StatelessWidget {
   final List<Widget> slivers;
+  final ScrollController controller;
 
-  const CollapsingTabLayoutItem({Key key, @required this.slivers})
-      : super(key: key);
+  const CollapsingTabLayoutItem({
+    Key key,
+    @required this.slivers,
+    this.controller,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      controller: controller,
       slivers: <Widget>[
         SliverOverlapInjector(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),

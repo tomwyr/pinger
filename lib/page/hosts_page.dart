@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
 
 class HostsPage extends StatefulWidget {
@@ -91,9 +92,14 @@ class _HostsPageState extends State<HostsPage> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-          child: ListView.builder(
+        body: ScrollEdgeGradient(
+          color: R.colors.canvas,
+          builder: (controller) => ListView.builder(
+            controller: controller,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
             itemCount: widget.hosts.length,
             itemBuilder: (_, index) {
               final item = widget.hosts[index];

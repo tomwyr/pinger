@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/resources.dart';
+import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
+import 'package:pinger/widgets/common/transparent_gradient_box.dart';
 import 'package:pinger/widgets/session/session_values_item.dart';
 import 'package:pinger/widgets/session/session_values_scrollable.dart';
 
@@ -66,17 +69,37 @@ class _SessionValuesListState extends State<SessionValuesList>
       didReachHead: _didReachHead,
       shouldFollowHead: widget.shouldFollowHead,
       moveToHeadValue: _animateToHead,
-      child: AnimatedList(
-        key: _listKey,
-        padding: const EdgeInsets.all(16.0),
+      child: ScrollEdgeGradient(
+        color: R.colors.canvas,
         controller: _scroller,
-        initialItemCount: widget.values.length,
-        itemBuilder: (_, index, animation) => SizeTransition(
-          sizeFactor: animation,
-          axisAlignment: 1.0,
-          child: SessionValuesItem.reversed(
-            values: widget.values,
-            index: index,
+        builder: (controller) => AnimatedList(
+          key: _listKey,
+          padding: const EdgeInsets.all(16.0),
+          controller: controller,
+          initialItemCount: widget.values.length,
+          itemBuilder: (_, index, animation) => AnimatedBuilder(
+            animation: animation,
+            builder: (_, child) => Stack(children: <Widget>[
+              ClipRect(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  heightFactor: animation.value,
+                  child: child,
+                ),
+              ),
+              Positioned.fill(
+                child: TransparentGradientBox(
+                  direction: AxisDirection.down,
+                  color: R.colors.canvas.withOpacity(
+                    (animation.value < 0.8) ? 1.0 : (1.0 - animation.value) * 5,
+                  ),
+                ),
+              ),
+            ]),
+            child: SessionValuesItem.reversed(
+              values: widget.values,
+              index: index,
+            ),
           ),
         ),
       ),

@@ -209,6 +209,9 @@ class _SearchPageState extends State<SearchPage> {
           WhitelistingTextInputFormatter(RegExp(r"^[A-Za-z0-9-\.]+")),
           BlacklistingTextInputFormatter(RegExp(r"^\.")),
           BlacklistingTextInputFormatter("..", replacementString: "."),
+          TextInputFormatter.withFunction(
+            (_, value) => value.copyWith(text: value.text.toLowerCase()),
+          )
         ],
         decoration: InputDecoration(
           hintText: "Search host to ping",
