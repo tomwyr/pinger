@@ -211,10 +211,18 @@ abstract class PingStoreBase with Store {
   void _startPing({PingSettings settings, VoidCallback onDone}) {
     _pingSub = _pingService
         .ping(currentSession.host, settings ?? currentSession.settings)
-        .listen(_onPingResult, onDone: onDone);
+        .listen(_onPingResult, onDone: onDone, onError: _onPingError);
     _timer.start();
     _timerSub = Stream.periodic(Duration(seconds: 1))
         .listen((it) => pingDuration = _timer.elapsed);
+  }
+
+  void _onPingError(error, StackTrace stackTrace) async {
+    if (error is PingError) {
+      _onPingResult(null);
+    } else {
+      await Future.error(error, stackTrace);
+    }
   }
 
   void _onPingResult(double value) {
