@@ -4,10 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/archive_page.dart';
 import 'package:pinger/page/intro_page.dart';
-import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/page/settings_page.dart';
 import 'package:pinger/resources.dart';
@@ -15,6 +13,7 @@ import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/widgets/home_host_suggestions.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +21,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
@@ -66,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                       _hostsStore.hosts.take(5).map((it) => it.name).toList(),
                   stats: _hostsStore.stats,
                   searchBar: _buildSearchBar(),
-                  onItemPressed: (it) => _onHostItemPressed(context, it),
+                  onItemPressed: (it) => onHostTap(_pingStore, it),
                 );
         },
       ),
@@ -129,20 +128,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  void _onHostItemPressed(BuildContext context, String host) {
-    final status = _pingStore.currentSession?.status;
-    if (status.isNull || status.isInitial || status.isDone) {
-      _pingStore.initSession(host);
-      push(PingPage());
-    } else if (_pingStore.currentSession.host == host) {
-      push(PingPage());
-    } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Another session in progress"),
-        duration: Duration(seconds: 1),
-      ));
-    }
   }
 }

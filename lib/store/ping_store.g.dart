@@ -209,22 +209,11 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
-  void stopSession() {
+  void restartSession() {
     final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.stopSession');
+        name: 'PingStoreBase.restartSession');
     try {
-      return super.stopSession();
-    } finally {
-      _$PingStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void restart() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.restart');
-    try {
-      return super.restart();
+      return super.restartSession();
     } finally {
       _$PingStoreBaseActionController.endAction(_$actionInfo);
     }

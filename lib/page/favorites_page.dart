@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/page/hosts_page.dart';
-import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage> {
+class _FavoritesPageState extends State<FavoritesPage> with HostTapHandler {
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final HostsStore _hostsStore = Injector.resolve();
@@ -33,10 +32,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         hosts: hosts,
         getTrailingLabel: (it) => "${stats[it]?.pingCount ?? 0} x",
         removeHosts: _favoritesStore.removeFavorites,
-        onHostSelected: (it) {
-          _pingStore.initSession(it);
-          push(PingPage());
-        },
+        onHostSelected: (it) => onHostTap(_pingStore, it),
       );
     });
   }

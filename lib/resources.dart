@@ -101,6 +101,9 @@ class PingerStyles {
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);
+  TextStyle get bottomSheetTitle => TextStyle(fontSize: 24.0);
+  TextStyle get bottomSheetSubitle =>
+      TextStyle(color: R.colors.gray, fontSize: 18.0);
   BorderSide get outlineButtonBorder =>
       BorderSide(color: R.colors.grayLight, width: 1.5);
 }

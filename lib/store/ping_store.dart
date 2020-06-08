@@ -138,6 +138,7 @@ abstract class PingStoreBase with Store {
 
   @action
   void initSession(String host) {
+    _stopPing();
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
@@ -227,12 +228,6 @@ abstract class PingStoreBase with Store {
     currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
   }
 
-  @action
-  void stopSession() {
-    _stopPing();
-    initSession(currentSession.host);
-  }
-
   void _stopPing() {
     _timer?.stop();
     _timerSub?.cancel();
@@ -240,7 +235,7 @@ abstract class PingStoreBase with Store {
   }
 
   @action
-  void restart() => initSession(currentSession.host);
+  void restartSession() => initSession(currentSession.host);
 
   @action
   Future<void> archiveResult() async {

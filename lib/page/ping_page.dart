@@ -5,16 +5,17 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/search_page.dart';
+import 'package:pinger/resources.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/widgets/common/fade_out.dart';
-import 'package:pinger/widgets/pinger_bottom_sheet.dart';
 import 'package:pinger/widgets/session/session_host_button.dart';
 import 'package:pinger/widgets/session/session_host_header.dart';
 import 'package:pinger/widgets/session/session_ping_button.dart';
 import 'package:pinger/widgets/session/session_summary_section.dart';
 import 'package:pinger/widgets/session/session_values_section.dart';
 import 'package:pinger/widgets/settings/settings_sections.dart';
+import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/widgets/view_types.dart';
 
 class PingPage extends StatefulWidget {
@@ -108,8 +109,11 @@ class _PingPageState extends State<PingPage> {
     await PingerBottomSheet.show(
       context,
       rejectLabel: "RESET",
-      title: "Ping settings",
-      subtitle: "Changes will be applied only for current sesion",
+      title: Text("Ping settings", style: R.styles.bottomSheetTitle),
+      subtitle: Text(
+        "Changes will be applied only for current sesion",
+        style: R.styles.bottomSheetSubitle,
+      ),
       onRejectPressed: _pingStore.clearSettings,
       onAcceptPressed: pop,
       builder: (_) => Observer(
@@ -194,7 +198,7 @@ class _PingPageState extends State<PingPage> {
               : status.isSessionStarted ? Icons.pause : Icons.play_arrow,
       secondaryIcon: showArchive ? Icons.archive : Icons.stop,
       onPrimaryPressed: status.isSessionDone
-          ? _pingStore.restart
+          ? _pingStore.restartSession
           : status.isSessionPaused
               ? _pingStore.resumeSession
               : status.isSessionStarted
@@ -206,7 +210,7 @@ class _PingPageState extends State<PingPage> {
       onPrimaryLongPressEnd:
           status.isQuickCheckStarted ? _pingStore.stopQuickCheck : null,
       onSecondaryPressed: !showArchive
-          ? _pingStore.stopSession
+          ? _pingStore.restartSession
           : canArchive ? _pingStore.archiveResult : null,
     );
   }

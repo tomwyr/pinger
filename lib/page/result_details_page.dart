@@ -4,14 +4,13 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
-import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
-import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/result/result_details_global_tab.dart';
 import 'package:pinger/widgets/result/result_details_header.dart';
 import 'package:pinger/widgets/result/result_details_info_tab.dart';
@@ -30,7 +29,7 @@ class ResultDetailsPage extends StatefulWidget {
 }
 
 class _ResultDetailsPageState extends State<ResultDetailsPage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, HostTapHandler {
   static final _collapsingTileHeight = 480.0;
   static final _collapsedHeight = kToolbarHeight + 48.0;
   static final _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
@@ -165,10 +164,7 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
                 .toList(),
             onItemSelected: (item) =>
                 pushReplacement(ResultDetailsPage(result: item)),
-            onStartPingPressed: () {
-              _pingStore.initSession(widget.result.host);
-              pushReplacement(PingPage());
-            },
+            onStartPingPressed: () => onHostTap(_pingStore, widget.result.host),
           ),
         ),
       ],

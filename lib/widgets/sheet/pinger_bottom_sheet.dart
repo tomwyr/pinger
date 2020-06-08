@@ -6,14 +6,14 @@ import 'package:pinger/resources.dart';
 class PingerBottomSheet extends StatelessWidget {
   static Future<T> show<T>(
     BuildContext context, {
-    String title,
-    String subtitle,
+    Widget title,
+    Widget subtitle,
     String rejectLabel,
     VoidCallback onRejectPressed,
     VoidCallback onAcceptPressed,
     ValueGetter<bool> canAccept,
     Duration duration = const Duration(milliseconds: 300),
-    @required Widget builder(VoidCallback rebuild),
+    Widget builder(VoidCallback rebuild),
   }) {
     return showGeneralDialog(
       context: context,
@@ -29,7 +29,7 @@ class PingerBottomSheet extends StatelessWidget {
         onAcceptPressed: onAcceptPressed,
         canAccept: canAccept,
         transition: transition,
-        builder: builder,
+        builder: builder ?? (_) => SizedBox.shrink(),
       ),
     );
   }
@@ -49,8 +49,8 @@ class PingerBottomSheet extends StatelessWidget {
   static final _blurSigma = 3.0;
 
   final Animation<double> transition;
-  final String title;
-  final String subtitle;
+  final Widget title;
+  final Widget subtitle;
   final String rejectLabel;
   final VoidCallback onRejectPressed;
   final VoidCallback onAcceptPressed;
@@ -118,27 +118,17 @@ class PingerBottomSheet extends StatelessWidget {
 
   Widget _buildSheetContent() {
     return StatefulBuilder(
-      builder: (_, setState) => Column(
+      builder: (context, setState) => Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (title != null)
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          if (subtitle != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0),
-              child: Text(
-                subtitle,
-                style: TextStyle(color: R.colors.gray),
-              ),
-            ),
-          builder(() => setState(() {})),
+          if (title != null) title,
+          if (title != null && subtitle != null) Container(height: 8.0),
+          if (subtitle != null) subtitle,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: builder(() => setState(() {})),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -147,7 +137,7 @@ class PingerBottomSheet extends StatelessWidget {
                   data: R.themes.flatButton,
                   child: FlatButton(
                     padding: EdgeInsets.zero,
-                    onPressed: onRejectPressed,
+                    onPressed: onRejectPressed ?? Navigator.of(context).pop,
                     child: Text(rejectLabel),
                   ),
                 ),
@@ -156,8 +146,9 @@ class PingerBottomSheet extends StatelessWidget {
                 size: Size.square(48.0),
                 child: RaisedButton(
                   padding: EdgeInsets.zero,
-                  onPressed:
-                      canAccept == null || canAccept() ? onAcceptPressed : null,
+                  onPressed: canAccept == null || canAccept()
+                      ? onAcceptPressed ?? Navigator.of(context).pop
+                      : null,
                   child: Icon(Icons.check),
                 ),
               ),

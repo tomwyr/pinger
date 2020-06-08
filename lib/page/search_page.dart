@@ -4,10 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
-import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/widgets/common/flex_child_scroll_view.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/three_bounce.dart';
@@ -22,7 +22,7 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
 
@@ -63,13 +63,6 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void _onItemSelected(String host) {
-    if (host != _pingStore.currentSession?.host) {
-      _pingStore.initSession(host);
-    }
-    pushReplacement(PingPage());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +77,7 @@ class _SearchPageState extends State<SearchPage> {
                 host: value,
                 loadIcon: false,
                 type: HostTileType.highlighted,
-                onPressed: () => _onItemSelected(value),
+                onPressed: () => onHostTap(_pingStore, value),
               ),
             ),
           child,
@@ -175,7 +168,7 @@ class _SearchPageState extends State<SearchPage> {
           padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
           child: HostTile(
             host: results[index].name,
-            onPressed: () => _onItemSelected(results[index].name),
+            onPressed: () => onHostTap(_pingStore, results[index].name),
             trailing: Container(
               width: 48.0,
               height: 16.0,

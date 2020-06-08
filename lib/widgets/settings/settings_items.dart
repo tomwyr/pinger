@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/widgets/pinger_bottom_sheet.dart';
+import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
 
 const double _SWITCH_WIDTH = 60.0;
 
@@ -87,10 +87,9 @@ class PingSettingItem extends StatelessWidget {
     ));
     return PingerBottomSheet.show<int>(
       context,
-      title: label,
-      subtitle: "Provide new value",
+      title: Text(label, style: R.styles.bottomSheetTitle),
+      subtitle: Text("Provide new value", style: R.styles.bottomSheetSubitle),
       rejectLabel: "CANCEL",
-      onRejectPressed: Navigator.of(context).pop,
       onAcceptPressed: () {
         final result = int.tryParse(controller.text);
         Navigator.of(context).pop(result);
