@@ -15,6 +15,8 @@ class Images {
   static AssetImage get undrawRunnerStart => const AssetImage("lib/assets/undraw_runner_start.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/undraw_searching.png)
   static AssetImage get undrawSearching => const AssetImage("lib/assets/undraw_searching.png");
+  /// ![](file:///C:/dev/projects/pinger/lib/assets/undraw_server_down.png)
+  static AssetImage get undrawServerDown => const AssetImage("lib/assets/undraw_server_down.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/undraw_settings.png)
   static AssetImage get undrawSettings => const AssetImage("lib/assets/undraw_settings.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/undraw_signal_searching.png)

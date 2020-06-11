@@ -26,7 +26,7 @@ class ResultDetailsPromptTab extends StatelessWidget {
         child: Column(children: <Widget>[
           Spacer(),
           Container(height: 40.0),
-          Image(image: image, height: 144.0),
+          Image(image: image, width: 144.0, height: 144.0),
           Container(height: 40.0),
           Text(
             title,

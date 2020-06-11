@@ -78,7 +78,7 @@ class DottedMapPainter extends CustomPainter {
             value > 0 ? dotRadius : emptyDotRadius,
             paint
               ..color = value > 0
-                  ? dotColor.transform(value / maxValue)
+                  ? dotColor.transform(min(value / maxValue, 1.0))
                   : emptyDotColor,
           );
         }

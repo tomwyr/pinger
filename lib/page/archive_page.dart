@@ -105,7 +105,7 @@ class _ArchivePageState extends State<ArchivePage> {
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
         Spacer(),
-        Image(image: Images.undrawEmpty, height: 144.0),
+        Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
         Container(height: 32.0),
         Text(
           "There't nothing here yet",

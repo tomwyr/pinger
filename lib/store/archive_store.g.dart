@@ -27,13 +27,13 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
   final _$globalResultsAtom = Atom(name: 'ArchiveStoreBase.globalResults');
 
   @override
-  Map<String, GlobalHostResults> get globalResults {
+  Map<String, DataSnap<GlobalHostResults>> get globalResults {
     _$globalResultsAtom.reportRead();
     return super.globalResults;
   }
 
   @override
-  set globalResults(Map<String, GlobalHostResults> value) {
+  set globalResults(Map<String, DataSnap<GlobalHostResults>> value) {
     _$globalResultsAtom.reportWrite(value, super.globalResults, () {
       super.globalResults = value;
     });

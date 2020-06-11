@@ -35,13 +35,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
   final _$hostsAtom = Atom(name: 'HostsStoreBase.hosts');
 
   @override
-  List<HostItem> get hosts {
+  DataSnap<List<HostItem>> get hosts {
     _$hostsAtom.reportRead();
     return super.hosts;
   }
 
   @override
-  set hosts(List<HostItem> value) {
+  set hosts(DataSnap<List<HostItem>> value) {
     _$hostsAtom.reportWrite(value, super.hosts, () {
       super.hosts = value;
     });
@@ -62,26 +62,18 @@ mixin _$HostsStore on HostsStoreBase, Store {
     });
   }
 
-  final _$isLoadingAtom = Atom(name: 'HostsStoreBase.isLoading');
-
-  @override
-  bool get isLoading {
-    _$isLoadingAtom.reportRead();
-    return super.isLoading;
-  }
-
-  @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
-      super.isLoading = value;
-    });
-  }
-
   final _$initAsyncAction = AsyncAction('HostsStoreBase.init');
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
+  }
+
+  final _$fetchHostsAsyncAction = AsyncAction('HostsStoreBase.fetchHosts');
+
+  @override
+  Future<void> fetchHosts() {
+    return _$fetchHostsAsyncAction.run(() => super.fetchHosts());
   }
 
   final _$incrementStatsAsyncAction =
@@ -118,7 +110,6 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return '''
 hosts: ${hosts},
 stats: ${stats},
-isLoading: ${isLoading},
 searchResults: ${searchResults}
     ''';
   }

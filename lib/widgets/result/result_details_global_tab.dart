@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -5,18 +7,21 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/utils/data_snap.dart';
 import 'package:pinger/widgets/charts/global_distribution_chart.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/common/dotted_map.dart';
 import 'package:pinger/widgets/result/result_details_prompt_tab.dart';
+import 'package:pinger/widgets/three_bounce.dart';
 import 'package:pinger/widgets/view_type_button.dart';
 import 'package:pinger/widgets/view_types.dart';
 
-class ResultDetailsGlobalTab extends StatefulWidget {
+class ResultDetailsGlobalTab extends StatelessWidget {
   final bool isSharingLocation;
   final VoidCallback onShareLocationPressed;
   final PingResult userResult;
-  final GlobalHostResults globalResults;
+  final DataSnap<GlobalHostResults> globalResults;
+  final VoidCallback onRefreshPressed;
 
   const ResultDetailsGlobalTab({
     Key key,
@@ -24,95 +29,50 @@ class ResultDetailsGlobalTab extends StatefulWidget {
     @required this.onShareLocationPressed,
     @required this.userResult,
     @required this.globalResults,
+    @required this.onRefreshPressed,
   }) : super(key: key);
-
-  @override
-  _ResultDetailsGlobalTabState createState() => _ResultDetailsGlobalTabState();
-}
-
-class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
-  UserResultType _resultTypeSelection;
-  UserResultTypeData _resultTypeData;
-
-  @override
-  void initState() {
-    super.initState();
-    _changeResultType(UserResultType.mean);
-  }
-
-  void _changeResultType(UserResultType type) {
-    _resultTypeSelection = type;
-    _resultTypeData = UserResultTypeData.forType(
-        type, widget.userResult, widget.globalResults);
-    if (mounted) setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
     return CollapsingTabLayoutItem(slivers: <Widget>[
-      widget.isSharingLocation
-          ? _buildGlobalResults()
-          : _buildShareLocationRequest(),
+      !isSharingLocation
+          ? _buildShareLocationRequest()
+          : globalResults.when(
+              data: _buildResultsData,
+              loading: _buildResultsLoading,
+              error: _buildResultsError,
+            ),
     ]);
   }
 
-  Widget _buildGlobalResults() {
-    final userResult =
-        _resultTypeData.getStatsValue(widget.userResult.stats).toInt();
+  Widget _buildShareLocationRequest() {
+    return ResultDetailsPromptTab(
+      image: Images.undrawTheWorldIsMine,
+      title: "Enable location to see your result compared with others",
+      description:
+          "Your location will be used to match it with your result and to present it for other users.",
+      buttonLabel: "Share location",
+      onButtonPressed: onShareLocationPressed,
+    );
+  }
+
+  Widget _buildResultsData(GlobalHostResults globalResults) {
     return SliverFillRemaining(
       hasScrollBody: false,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 4.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ..._buildValueSection(userResult),
-            if (_resultTypeData.values.isEmpty) ..._buildNoData(),
-            if (_resultTypeData.values.isNotEmpty)
-              ..._buildGlobalSection(
-                "Results by location",
-                "Ping value for others was ${_calcTypeMeanValue()} ms",
-                DottedMap(
-                  dots: _getMapDots(),
-                  dotColor: ColorTween(
-                    begin: R.colors.pingMin,
-                    end: R.colors.pingMax,
-                  ),
-                  emptyDotColor: R.colors.gray.withOpacity(0.5),
-                ),
-              ),
-            if (_resultTypeData.values.isNotEmpty)
-              ..._buildGlobalSection(
-                "Results by frequency",
-                "Your ping was better than ${_calcFrequencyPercent(userResult)}% of others",
-                Expanded(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: double.infinity,
-                      minHeight: 96.0,
-                    ),
-                    child: _resultTypeData.values.length > 1
-                        ? GlobalDistributionChart(
-                            data: _groupChartData(),
-                            dataCount: widget.globalResults.totalCount,
-                            userResult: userResult,
-                          )
-                        : null,
-                  ),
-                ),
-              ),
-          ],
-        ),
+      child: GlobalResultsDataSection(
+        globalResults: globalResults,
+        userResult: userResult,
+        noDataBuilder: (_) => _buildNoData(),
       ),
     );
   }
 
-  List<Widget> _buildNoData() {
-    return [
+  Widget _buildNoData() {
+    return Column(children: <Widget>[
       Spacer(),
       Container(height: 24.0),
       Center(
-        child: Image(image: Images.undrawEmpty, height: 144.0),
+        child: Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
       ),
       Container(height: 24.0),
       Center(
@@ -132,26 +92,141 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
       ),
       Container(height: 24.0),
       Spacer(),
+    ]);
+  }
+
+  Widget _buildResultsLoading() {
+    return SliverFillRemaining(
+      hasScrollBody: false,
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: ThreeBounce(color: R.colors.secondary),
+      ),
+    );
+  }
+
+  Widget _buildResultsError() {
+    return ResultDetailsPromptTab(
+      image: Images.undrawServerDown,
+      title: "Couldn't fetch data",
+      description:
+          "We could not find anything for given query but you can still use it as host",
+      buttonLabel: "Try again",
+      onButtonPressed: onRefreshPressed,
+    );
+  }
+}
+
+class GlobalResultsDataSection extends StatefulWidget {
+  final GlobalHostResults globalResults;
+  final PingResult userResult;
+  final WidgetBuilder noDataBuilder;
+
+  const GlobalResultsDataSection({
+    Key key,
+    @required this.globalResults,
+    @required this.userResult,
+    @required this.noDataBuilder,
+  }) : super(key: key);
+
+  @override
+  _GlobalResultsDataSectionState createState() =>
+      _GlobalResultsDataSectionState();
+}
+
+class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
+  UserResultType _resultType;
+
+  @override
+  void initState() {
+    super.initState();
+    _resultType = UserResultType.mean;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final userValue = _getStatsValue(widget.userResult.stats);
+    final globalValues = _getGlobalValues(widget.globalResults);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ..._buildValueSection(userValue),
+          if (globalValues.isEmpty)
+            widget.noDataBuilder(context)
+          else
+            ..._buildResultsData(userValue, globalValues),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildResultsData(int userValue, Map<int, int> globalValues) {
+    return [
+      ..._buildGlobalSection(
+        "Results by location",
+        "Ping value for others was ${_calcTypeMeanValue(globalValues)} ms",
+        DottedMap(
+          dots: _getMapDots(widget.globalResults),
+          dotColor: ColorTween(
+            begin: R.colors.pingMin,
+            end: R.colors.pingMax,
+          ),
+          emptyDotColor: R.colors.gray.withOpacity(0.5),
+        ),
+      ),
+      ..._buildGlobalSection(
+        "Results by frequency",
+        "Your ping was better than ${_calcFrequencyPercent(userValue, globalValues)}% of others",
+        Expanded(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: double.infinity,
+              minHeight: 96.0,
+            ),
+            child: globalValues.length > 1
+                ? GlobalDistributionChart(
+                    data: _groupChartData(globalValues),
+                    dataCount: widget.globalResults.totalCount,
+                    userResult: userValue,
+                  )
+                : null,
+          ),
+        ),
+      )
     ];
   }
 
-  int _calcTypeMeanValue() {
+  Map<int, int> _getGlobalValues(GlobalHostResults globalResults) {
+    switch (_resultType) {
+      case UserResultType.min:
+        return globalResults.valueResults.min;
+      case UserResultType.mean:
+        return globalResults.valueResults.mean;
+      case UserResultType.max:
+        return globalResults.valueResults.max;
+    }
+    throw StateError("Unhandled $UserResultType: $_resultType.");
+  }
+
+  int _calcTypeMeanValue(Map<int, int> values) {
     int totalPing = 0;
     int totalCount = 0;
-    _resultTypeData.values.forEach((ping, count) {
+    values.forEach((ping, count) {
       totalPing += ping * count;
       totalCount += count;
     });
     return (totalPing / totalCount).round();
   }
 
-  int _calcFrequencyPercent(int userResult) {
+  int _calcFrequencyPercent(int userValue, Map<int, int> globalValues) {
     int lower = 0;
     int higher = 0;
-    _resultTypeData.values.forEach((ping, count) {
-      if (ping < userResult)
+    globalValues.forEach((ping, count) {
+      if (ping < userValue)
         lower += count;
-      else if (ping > userResult)
+      else if (ping > userValue)
         higher += count;
       else {
         lower += count ~/ 2;
@@ -161,7 +236,7 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
     return (100 - lower / (lower + higher) * 100).round();
   }
 
-  List<Widget> _buildValueSection(int userResult) {
+  List<Widget> _buildValueSection(int userValue) {
     return [
       Row(children: <Widget>[
         Text(
@@ -173,7 +248,7 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
       ]),
       Container(height: 4.0),
       Text(
-        "$userResult ms",
+        "$userValue ms",
         style: TextStyle(fontSize: 36.0),
       ),
       Container(height: 4.0),
@@ -189,8 +264,8 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
           UserResultType.mean: "Mean",
           UserResultType.min: "Min",
         }[type],
-        selected: _resultTypeSelection == type,
-        onPressed: () => _changeResultType(type),
+        selected: _resultType == type,
+        onPressed: () => setState(() => _resultType = type),
       ),
     );
   }
@@ -208,73 +283,38 @@ class _ResultDetailsGlobalTabState extends State<ResultDetailsGlobalTab> {
     ];
   }
 
-  List<MapDot> _getMapDots() {
-    return widget.globalResults.locationResults
+  List<MapDot> _getMapDots(GlobalHostResults globalResults) {
+    return globalResults.locationResults
         .map((it) => MapDot(
-              _resultTypeData.getStatsValue(it.stats).toDouble(),
+              _getStatsValue(it.stats).toDouble(),
               it.location.lat,
               it.location.lon,
             ))
         .toList();
   }
 
-  Map<int, int> _groupChartData() {
-    final pings = _resultTypeData.values.keys.toList()..sort();
-    final groupSpan = (pings.last - pings.first) ~/ 10;
+  int _getStatsValue(PingStats stats) {
+    switch (_resultType) {
+      case UserResultType.min:
+        return stats.min;
+      case UserResultType.mean:
+        return stats.mean;
+      case UserResultType.max:
+        return stats.max;
+    }
+    throw StateError("Unhandled $UserResultType: $_resultType.");
+  }
+
+  Map<int, int> _groupChartData(Map<int, int> values) {
+    final pings = values.keys.toList()..sort();
+    final groupsCount = min(10, pings.last - pings.first);
+    final groupSpan = (pings.last - pings.first) ~/ groupsCount;
     final groups = <int, int>{};
-    _resultTypeData.values.forEach((ping, count) {
+    values.forEach((ping, count) {
       final groupKey = ((ping ~/ groupSpan + 0.5) * groupSpan).toInt();
       groups[groupKey] ??= 0;
       groups[groupKey] += count;
     });
     return groups;
   }
-
-  Widget _buildShareLocationRequest() {
-    return ResultDetailsPromptTab(
-      image: Images.undrawTheWorldIsMine,
-      title: "Enable location to see your result compared with others",
-      description:
-          "Your location will be used to match it with your result and to present it for other users.",
-      buttonLabel: "Share location",
-      onButtonPressed: widget.onShareLocationPressed,
-    );
-  }
-}
-
-class UserResultTypeData {
-  final String typeButtonLabel;
-  final Map<int, int> values;
-  final int Function(PingStats) getStatsValue;
-
-  factory UserResultTypeData.forType(UserResultType type, PingResult userResult,
-      GlobalHostResults globalResults) {
-    switch (type) {
-      case UserResultType.min:
-        return UserResultTypeData(
-          typeButtonLabel: "Min",
-          values: globalResults.valueResults.min,
-          getStatsValue: (stats) => stats.min,
-        );
-      case UserResultType.mean:
-        return UserResultTypeData(
-          typeButtonLabel: "Mean",
-          values: globalResults.valueResults.mean,
-          getStatsValue: (stats) => stats.mean,
-        );
-      case UserResultType.max:
-        return UserResultTypeData(
-          typeButtonLabel: "Max",
-          values: globalResults.valueResults.max,
-          getStatsValue: (stats) => stats.max,
-        );
-    }
-    throw ArgumentError("Unrecognized $UserResultType: $type.");
-  }
-
-  UserResultTypeData({
-    @required this.typeButtonLabel,
-    @required this.getStatsValue,
-    @required this.values,
-  });
 }

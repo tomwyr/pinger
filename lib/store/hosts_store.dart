@@ -7,6 +7,7 @@ import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
+import 'package:pinger/utils/data_snap.dart';
 
 part 'hosts_store.g.dart';
 
@@ -28,36 +29,40 @@ abstract class HostsStoreBase with Store {
   String _searchQuery = "";
 
   @observable
-  List<HostItem> hosts = [];
+  DataSnap<List<HostItem>> hosts;
 
   @observable
   Map<String, HostStats> stats;
 
-  @observable
-  bool isLoading = false;
-
   @computed
   List<HostItem> get searchResults {
-    if (hosts == null) return null;
-    return _searchQuery.isEmpty
-        ? hosts.toList()
-        : hosts.where((it) => it.name.contains(_searchQuery)).toList();
+    return hosts.maybeWhen(
+      data: (data) => _searchQuery.isEmpty
+          ? data.toList()
+          : data.where((it) => it.name.contains(_searchQuery)).toList(),
+      orElse: () => null,
+    );
   }
 
   @action
   Future<void> init() async {
-    isLoading = true;
     _emitStats();
-    hosts = await _fetchSearchItems();
-    isLoading = false;
+    await fetchHosts();
   }
 
-  Future<List<HostItem>> _fetchSearchItems() async {
-    final counts = await _pingerApi.getPingCounts();
-    return counts.pingCounts
-        .map((it) => HostItem(it.host, it.count / counts.totalCount))
-        .toList()
-          ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
+  @action
+  Future<void> fetchHosts() async {
+    hosts = DataSnap.loading();
+    try {
+      final counts = await _pingerApi.getPingCounts();
+      final hostsList = counts.pingCounts
+          .map((it) => HostItem(it.host, it.count / counts.totalCount))
+          .toList()
+            ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
+      hosts = DataSnap.data(hostsList);
+    } on ApiError {
+      hosts = DataSnap.error();
+    }
   }
 
   @action

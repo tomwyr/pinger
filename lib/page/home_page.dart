@@ -61,8 +61,10 @@ class _HomePageState extends State<HomePage> with HostTapHandler {
               : HomeHostSuggestions(
                   session: _pingStore.currentSession,
                   favorites: _favoritesStore.items,
-                  popular:
-                      _hostsStore.hosts.take(5).map((it) => it.name).toList(),
+                  popular: _hostsStore.hosts.maybeWhen(
+                    data: (data) => data.take(5).map((it) => it.name).toList(),
+                    orElse: () => [],
+                  ),
                   stats: _hostsStore.stats,
                   searchBar: _buildSearchBar(),
                   onItemPressed: (it) => onHostTap(_pingStore, it),
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> with HostTapHandler {
       child: Column(children: <Widget>[
         _buildSearchBar(),
         Spacer(),
-        Image(image: Images.undrawRoadSign, height: 144.0),
+        Image(image: Images.undrawRoadSign, width: 144.0, height: 144.0),
         Container(height: 24.0),
         Text(
           "Looks like there's nothing here yet",

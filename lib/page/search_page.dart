@@ -83,35 +83,12 @@ class _SearchPageState extends State<SearchPage> with HostTapHandler {
           child,
         ]),
         child: Expanded(
-          child: Observer(builder: (_) {
-            if (_hostsStore.isLoading) return _buildSearchInProgress();
-            final results = _hostsStore.searchResults;
-            if (results.isEmpty) return _buildNoResults();
-            return _buildResultsList(results);
-          }),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSearchInProgress() {
-    return ScrollEdgeGradient(
-      color: R.colors.canvas,
-      builder: (controller) => SingleChildScrollView(
-        controller: controller,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ThreeBounce(color: R.colors.secondary),
-                Container(height: 40.0),
-                Text(
-                  "Looking for hosts ...",
-                  style: TextStyle(fontSize: 18.0),
-                ),
-              ],
+          child: Observer(
+            builder: (_) => _hostsStore.hosts.when(
+              data: (data) =>
+                  data.isEmpty ? _buildEmptyResults() : _buildResultsList(data),
+              loading: _buildSearchInProgress,
+              error: _buildFetchFailed,
             ),
           ),
         ),
@@ -119,7 +96,40 @@ class _SearchPageState extends State<SearchPage> with HostTapHandler {
     );
   }
 
-  Widget _buildNoResults() {
+  Widget _buildSearchInProgress() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: ThreeBounce(color: R.colors.secondary),
+      ),
+    );
+  }
+
+  Widget _buildFetchFailed() {
+    return _buildNoResults(
+      Images.undrawServerDown,
+      "Couldn't fetch data",
+      "Something went wrong when getting the data - try again after some time",
+      action: ButtonTheme.fromButtonThemeData(
+        data: R.themes.raisedButton,
+        child: RaisedButton(
+          onPressed: _hostsStore.fetchHosts,
+          child: Text("Try again"),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyResults() {
+    return _buildNoResults(
+      Images.undrawVoid,
+      "No results found",
+      "We could not find anything for given query but you can still use it as host",
+    );
+  }
+
+  Widget _buildNoResults(AssetImage image, String title, String description,
+      {Widget action}) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
       builder: (controller) => FlexChildScrollView(
@@ -131,23 +141,24 @@ class _SearchPageState extends State<SearchPage> with HostTapHandler {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(height: 24.0),
-              Image(
-                image: Images.undrawVoid,
-                width: 144.0,
-                height: 144.0,
-              ),
+              Image(image: image, width: 144.0, height: 144.0),
               Container(height: 48.0),
               Text(
-                "No results found",
+                title,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               Container(height: 16.0),
               Text(
-                "We could not find anything for given query but you can still use it as host",
+               description,
                 style: TextStyle(fontSize: 18.0),
                 textAlign: TextAlign.center,
               ),
+              if (action != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 48.0),
+                  child: action,
+                ),
               Container(height: 24.0),
             ],
           ),

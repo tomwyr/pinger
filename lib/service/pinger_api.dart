@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pinger/model/ping_global.dart';
 
@@ -14,22 +15,39 @@ class PingerApi {
   PingerApi(this._firestore);
 
   Future<GlobalPingCounts> getPingCounts() async {
-    final countsSnap =
-        await _firestore.collection(_countsPath).document(_allPath).get();
+    final countsDoc = _firestore.collection(_countsPath).document(_allPath);
+    final countsSnap = await _runCall(countsDoc.get);
     return countsSnap.data != null
         ? GlobalPingCounts.fromJson(countsSnap.data)
         : GlobalPingCounts.empty();
   }
 
   Future<GlobalHostResults> getHostResults(String host) async {
-    final resultsSnap =
-        await _firestore.collection(_resultsPath).document(host).get();
+    final hostDoc = _firestore.collection(_resultsPath).document(host);
+    final resultsSnap = await _runCall(hostDoc.get);
     return resultsSnap.data != null
         ? GlobalHostResults.fromJson(resultsSnap.data)
         : GlobalHostResults.empty();
   }
 
   Future<void> saveSessionResult(GlobalSessionResult result) async {
-    await _firestore.collection(_sessionsPath).add(result.toJson());
+    final sessionsCol = _firestore.collection(_sessionsPath);
+    await _runCall(() => sessionsCol.add(result.toJson()));
   }
+
+  Future<T> _runCall<T>(Future<T> call()) async {
+    try {
+      return await call();
+    } on PlatformException catch (e) {
+      switch (e.message) {
+        case "Failed to get document because the client is offline.":
+          throw ApiError.CLIENT_OFFLINE;
+      }
+      rethrow;
+    }
+  }
+}
+
+enum ApiError {
+  CLIENT_OFFLINE,
 }

@@ -134,11 +134,7 @@ class _PingPageState extends State<PingPage> {
       padding: const EdgeInsets.symmetric(horizontal: 48.0),
       child: Column(children: <Widget>[
         Spacer(),
-        Image(
-          image: Images.undrawRunnerStart,
-          width: 144.0,
-          height: 144.0,
-        ),
+        Image(image: Images.undrawRunnerStart, width: 144.0, height: 144.0),
         Spacer(),
         Text(
           "Tap button to start pinging",

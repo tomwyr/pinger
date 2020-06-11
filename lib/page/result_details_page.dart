@@ -153,6 +153,8 @@ class _ResultDetailsPageState extends State<ResultDetailsPage>
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
             globalResults: _archiveStore.globalResults[widget.result.host],
+            onRefreshPressed: () =>
+                _archiveStore.fetchGlobalResults(widget.result.host),
           ),
         ),
         ResultDetailsInfoTab(result: widget.result),

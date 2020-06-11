@@ -115,7 +115,9 @@ abstract class PingStoreBase with Store {
         location: await _getResultLocation(),
       );
       _didShareResult = true;
-      await _pingerApi.saveSessionResult(result);
+      try {
+        await _pingerApi.saveSessionResult(result);
+      } on ApiError {}
     }
   }
 
