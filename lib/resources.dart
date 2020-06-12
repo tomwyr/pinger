@@ -2,19 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Static getters ensure that resources are recreated on hot reload
-
 class R {
   R._();
 
-  static PingerColors get colors => PingerColors();
-  static PingerDimens get dimens => PingerDimens();
-  static PingerThemes get themes => PingerThemes();
-  static PingerStyles get styles => PingerStyles();
+  static Brightness _brightness;
+
+  static PingerColors _colors;
+  static PingerDimens _dimens;
+  static PingerThemes _themes;
+  static PingerStyles _styles;
+
+  static PingerColors get colors => _colors;
+  static PingerDimens get dimens => _dimens;
+  static PingerThemes get themes => _themes;
+  static PingerStyles get styles => _styles;
+
+  static bool load(Brightness brightness) {
+    if (_brightness == brightness) return false;
+    if (brightness == Brightness.dark) {
+      R._colors = PingerDarkColors();
+      R._themes = PingerDarkThemes();
+    } else {
+      R._colors = PingerLightColors();
+      R._themes = PingerLightThemes();
+    }
+    R._dimens = PingerDimens();
+    R._styles = PingerStyles();
+    return true;
+  }
 }
 
-class PingerColors {
-  const PingerColors();
+abstract class PingerColors {
+  PingerColors._();
 
   final primaryDark = const Color(0xFF2F2E41);
   final primary = const Color(0xFF3F3D56);
@@ -37,11 +56,24 @@ class PingerColors {
   final pingMax = const Color(0xFFEB5757);
 }
 
+class PingerLightColors extends PingerColors {
+  PingerLightColors() : super._();
+}
+
+class PingerDarkColors extends PingerColors {
+  PingerDarkColors() : super._();
+
+  @override
+  final canvas = const Color(0xFF333333);
+}
+
 class PingerDimens {
   const PingerDimens();
 }
 
-class PingerThemes {
+abstract class PingerThemes {
+  ThemeMode get mode;
+
   final app = ThemeData(
     fontFamily: GoogleFonts.roboto().fontFamily,
     canvasColor: R.colors.canvas,
@@ -91,6 +123,16 @@ class PingerThemes {
         bodyColor: R.colors.primary,
         displayColor: R.colors.primary,
       );
+}
+
+class PingerLightThemes extends PingerThemes {
+  @override
+  ThemeMode get mode => ThemeMode.light;
+}
+
+class PingerDarkThemes extends PingerThemes {
+  @override
+  ThemeMode get mode => ThemeMode.dark;
 }
 
 class PingerStyles {

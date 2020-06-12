@@ -55,9 +55,6 @@ abstract class PingStoreBase with Store {
   bool _didShareResult = false;
 
   @observable
-  bool didInit = false;
-
-  @observable
   Duration pingDuration;
 
   @observable
@@ -88,7 +85,6 @@ abstract class PingStoreBase with Store {
         _shareResultIfPossible();
       }
     });
-    didInit = true;
   }
 
   void _cacheCurrentHost() async {

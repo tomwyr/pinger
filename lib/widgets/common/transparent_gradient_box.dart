@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TransparentGradientBox extends StatelessWidget {
@@ -53,12 +54,16 @@ class TransparentGradientBox extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [color, color.withOpacity(0.0)],
-            begin: beginAlignment,
-            end: endAlignment,
+      child: TweenAnimationBuilder(
+        tween: ColorTween(begin: color, end: color),
+        duration: kThemeAnimationDuration,
+        builder: (_, value, __) => DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [value, value.withOpacity(0.0)],
+              begin: beginAlignment,
+              end: endAlignment,
+            ),
           ),
         ),
       ),
