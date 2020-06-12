@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 
 class IntroPage extends StatefulWidget {
@@ -8,7 +9,7 @@ class IntroPage extends StatefulWidget {
   _IntroPageState createState() => _IntroPageState();
 }
 
-class _IntroPageState extends State<IntroPage> {
+class _IntroPageState extends BaseState<IntroPage> {
   final _indicatorColor = ColorTween(
     begin: R.colors.secondary,
     end: R.colors.grayLight,

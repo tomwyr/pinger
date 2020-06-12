@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/home_page.dart';
 import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/resources.dart';
@@ -11,7 +12,7 @@ class InitPage extends StatefulWidget {
   InitPageState createState() => InitPageState();
 }
 
-class InitPageState extends State<InitPage> {
+class InitPageState extends BaseState<InitPage> {
   @override
   void initState() {
     super.initState();
@@ -21,7 +22,6 @@ class InitPageState extends State<InitPage> {
       if (hasSession) push(PingPage());
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {

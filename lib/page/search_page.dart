@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
@@ -22,7 +23,7 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> with HostTapHandler {
+class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
 
@@ -150,7 +151,7 @@ class _SearchPageState extends State<SearchPage> with HostTapHandler {
               ),
               Container(height: 16.0),
               Text(
-               description,
+                description,
                 style: TextStyle(fontSize: 18.0),
                 textAlign: TextAlign.center,
               ),

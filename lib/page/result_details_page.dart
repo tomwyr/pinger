@@ -4,6 +4,7 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/location_store.dart';
@@ -28,7 +29,7 @@ class ResultDetailsPage extends StatefulWidget {
   _ResultDetailsPageState createState() => _ResultDetailsPageState();
 }
 
-class _ResultDetailsPageState extends State<ResultDetailsPage>
+class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     with SingleTickerProviderStateMixin, HostTapHandler {
   static final _collapsingTileHeight = 480.0;
   static final _collapsedHeight = kToolbarHeight + 48.0;

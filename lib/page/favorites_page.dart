@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/hosts_page.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -12,7 +13,7 @@ class FavoritesPage extends StatefulWidget {
   _FavoritesPageState createState() => _FavoritesPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage> with HostTapHandler {
+class _FavoritesPageState extends BaseState<FavoritesPage> with HostTapHandler {
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final HostsStore _hostsStore = Injector.resolve();

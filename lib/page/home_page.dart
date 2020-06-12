@@ -5,6 +5,7 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/page/archive_page.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/page/settings_page.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with HostTapHandler {
+class _HomePageState extends BaseState<HomePage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();

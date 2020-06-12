@@ -4,6 +4,7 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/result_details_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/resources.dart';
@@ -21,7 +22,7 @@ class ArchivePage extends StatefulWidget {
   _ArchivePageState createState() => _ArchivePageState();
 }
 
-class _ArchivePageState extends State<ArchivePage> {
+class _ArchivePageState extends BaseState<ArchivePage> {
   final ArchiveStore _archiveStore = Injector.resolve();
 
   ArchiveViewType _viewType = ArchiveViewType.list;

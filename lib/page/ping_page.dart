@@ -4,6 +4,7 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/search_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/favorites_store.dart';
@@ -23,7 +24,7 @@ class PingPage extends StatefulWidget {
   _PingPageState createState() => _PingPageState();
 }
 
-class _PingPageState extends State<PingPage> {
+class _PingPageState extends BaseState<PingPage> {
   final Duration _animDuration = Duration(milliseconds: 500);
   final PingStore _pingStore = Injector.resolve();
   final FavoritesStore _favoritesStore = Injector.resolve();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -13,7 +14,7 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends BaseState<SettingsPage> {
   final SettingsStore _settingsStore = Injector.resolve();
 
   @override

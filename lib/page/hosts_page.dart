@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
@@ -24,7 +25,7 @@ class HostsPage extends StatefulWidget {
   _HostsPageState createState() => _HostsPageState();
 }
 
-class _HostsPageState extends State<HostsPage> {
+class _HostsPageState extends BaseState<HostsPage> {
   List<String> _selection = [];
   bool _isEditing = false;
 
