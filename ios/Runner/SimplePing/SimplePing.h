@@ -122,7 +122,7 @@ typedef NS_ENUM(NSInteger, SimplePingAddressStyle) {
  *      ping).
  */
  
-- (void)sendPingWithData:(nullable NSData *)data;
+- (void)sendPingWithData:(nullable NSData *)data timeout:(uint16_t)timeout;
  
 /*! Stops the object.
  *  \details You should call this when you're done pinging.

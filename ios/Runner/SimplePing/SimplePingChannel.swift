@@ -12,7 +12,7 @@ class SimplePingChannel {
         switch call.method {
         case "ping":
             let args = call.arguments as! Dictionary<String, Any>
-            let executor = SimplePingExecutor(hostName: args["hostName"] as! String, packetSize: args["packetSize"] as! Int)
+            let executor = SimplePingExecutor(hostName: args["hostName"] as! String, packetSize: args["packetSize"] as! Int, timeout: args["timeout"] as! Int)
             executor.send(onSuccess: { (value) in
                 result(value)
             }) { (error) in
@@ -30,12 +30,14 @@ class SimplePingChannel {
 }
 
 class SimplePingExecutor: NSObject, SimplePingDelegate  {
-    init(hostName: String, packetSize: Int) {
+    init(hostName: String, packetSize: Int, timeout: Int) {
         self.simplePing = SimplePing(hostName: hostName)
         self.packetSize = packetSize
+        self.timeout = timeout
     }
     
     private let packetSize: Int
+    private let timeout: Int
     private var simplePing: SimplePing
     private var onSuccess: ((Double) -> Void)? = nil
     private var onFailed: ((Error) -> Void)? = nil
@@ -47,6 +49,7 @@ class SimplePingExecutor: NSObject, SimplePingDelegate  {
             didSend = true
             self.onSuccess = onSuccess
             self.onFailed = onFailed
+            simplePing.delegate = self
             simplePing.start()
         }
     }
@@ -54,7 +57,7 @@ class SimplePingExecutor: NSObject, SimplePingDelegate  {
     func simplePing(_ pinger: SimplePing, didStartWithAddress address: Data) {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let data = String((0..<packetSize).map{ _ in letters.randomElement()! }).data(using: .ascii)
-        simplePing.send(with: data)
+        simplePing.send(with: data, timeout: UInt16(timeout))
         start = Date()
     }
     

@@ -229,7 +229,7 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen) {
     return packet;
 }
  
-- (void)sendPingWithData:(NSData *)data {
+- (void)sendPingWithData:(NSData *)data timeout:(uint16_t)timeout {
     int                     err;
     NSData *                payload;
     NSData *                packet;
@@ -271,14 +271,22 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen) {
         bytesSent = -1;
         err = EBADF;
     } else {
+        CFSocketNativeHandle sock = CFSocketGetNative(self->_socket);
+        struct timeval tv;
+        tv.tv_sec  = 0;
+        tv.tv_usec = timeout * 1000000;
+        setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, (void *)&tv, sizeof(tv));
+        setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv));
+
         bytesSent = sendto(
-            CFSocketGetNative(self.socket),
+            sock,
             packet.bytes,
             packet.length,
             0,
             self.hostAddress.bytes,
             (socklen_t) self.hostAddress.length
         );
+
         err = 0;
         if (bytesSent < 0) {
             err = errno;
