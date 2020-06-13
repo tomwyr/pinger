@@ -2,6 +2,7 @@ import Foundation
 
 class SimplePingChannel {
     private let channelName = "com.tomwyr.pinger/simplePing"
+    private var runningExecutors: Array<SimplePingExecutor> = []
     
     func register(controller: FlutterViewController) {
         let channel = FlutterMethodChannel(name: channelName, binaryMessenger: controller.binaryMessenger)
@@ -13,9 +14,12 @@ class SimplePingChannel {
         case "ping":
             let args = call.arguments as! Dictionary<String, Any>
             let executor = SimplePingExecutor(hostName: args["hostName"] as! String, packetSize: args["packetSize"] as! Int, timeout: args["timeout"] as! Int)
+            runningExecutors.append(executor)
             executor.send(onSuccess: { (value) in
+                self.dropExecutor(executor)
                 result(value)
             }) { (error) in
+                self.dropExecutor(executor)
                 result(FlutterError(
                     code: "SimplePing#ping",
                     message: error.localizedDescription,
@@ -25,6 +29,12 @@ class SimplePingChannel {
             break
         default:
             result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    private func dropExecutor(_ executor: SimplePingExecutor) {
+        if let index = runningExecutors.firstIndex(of: executor) {
+            runningExecutors.remove(at: index)
         }
     }
 }
@@ -42,7 +52,7 @@ class SimplePingExecutor: NSObject, SimplePingDelegate  {
     private var onSuccess: ((Double) -> Void)? = nil
     private var onFailed: ((Error) -> Void)? = nil
     private var didSend: Bool = false
-    private var start: Date? = nil
+    private var sendTime: Date? = nil
     
     func send(onSuccess: @escaping (Double) -> Void, onFailed: @escaping (Error) -> Void) {
         if (!didSend) {
@@ -58,7 +68,6 @@ class SimplePingExecutor: NSObject, SimplePingDelegate  {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let data = String((0..<packetSize).map{ _ in letters.randomElement()! }).data(using: .ascii)
         simplePing.send(with: data, timeout: UInt16(timeout))
-        start = Date()
     }
     
     func simplePing(_ pinger: SimplePing, didFailWithError error: Error) {
@@ -73,8 +82,14 @@ class SimplePingExecutor: NSObject, SimplePingDelegate  {
     
     func simplePing(_ pinger: SimplePing, didReceivePingResponsePacket packet: Data, sequenceNumber: UInt16) {
         simplePing.stop()
-        let result = start!.timeIntervalSinceNow * 1000.0
+        let result = -sendTime!.timeIntervalSinceNow * 1000.0
         onSuccess?(result)
+    }
+    
+    func simplePing(_ pinger: SimplePing, didSendPacket packet: Data, sequenceNumber: UInt16) {
+        if (sendTime == nil) {
+            sendTime = Date()
+        }
     }
 }
 

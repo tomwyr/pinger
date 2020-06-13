@@ -10,6 +10,7 @@ import Flutter
     UIApplication.shared.isStatusBarHidden = false
 
     GeneratedPluginRegistrant.register(with: self)
+    SimplePingChannel().register(controller: window.rootViewController as! FlutterViewController)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
