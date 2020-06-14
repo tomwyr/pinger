@@ -1,19 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pinger/model/user_settings.dart';
 
 @injectable
 class PingService {
+  PingService(this._pingCommand);
+
+  final PingCommand _pingCommand;
+
   Stream<double> ping(String host, PingSettings settings) async* {
-    final args = _parseArgs(settings);
     final count = settings.count ?? double.infinity;
     for (var i = 0; i < count; i++) {
-      final result = await Process.run('ping', [...args, host]);
       try {
-        yield _parseResult(result);
-      } on PingError catch (e, stackTrace) {
+        yield await _pingCommand.execute(host, settings);
+      } catch (e, stackTrace) {
         yield* Future<double>.error(e, stackTrace).asStream();
       }
       // Skip last interval to send done signal immidiately
@@ -21,6 +24,29 @@ class PingService {
         await Future.delayed(Duration(seconds: settings.interval));
       }
     }
+  }
+}
+
+@injectable
+abstract class PingCommand {
+  Future<double> execute(String host, PingSettings settings);
+
+  const PingCommand();
+
+  @factoryMethod
+  factory PingCommand.create() {
+    if (Platform.isAndroid) return BashPingCommand();
+    if (Platform.isIOS) return SimplePingCommand();
+    throw UnsupportedError("Unhandled platform.");
+  }
+}
+
+class BashPingCommand extends PingCommand {
+  @override
+  Future<double> execute(String host, PingSettings settings) async {
+    final args = _parseArgs(settings);
+    final result = await Process.run('ping', [...args, host]);
+    return _parseResult(result);
   }
 
   List<String> _parseArgs(PingSettings settings) {
@@ -44,6 +70,23 @@ class PingService {
       throw PingError.INVALID_FORMAT;
     }
     return double.parse(value);
+  }
+}
+
+class SimplePingCommand extends PingCommand {
+  final MethodChannel _channel = MethodChannel('com.tomwyr.pinger/simplePing');
+
+  @override
+  Future<double> execute(String host, PingSettings settings) async {
+    try {
+      return await _channel.invokeMethod('ping', {
+        'hostName': host,
+        'packetSize': settings.packetSize,
+        'timeout': settings.timeout,
+      });
+    } on PlatformException {
+      throw PingError.REQUEST_FAILED;
+    }
   }
 }
 

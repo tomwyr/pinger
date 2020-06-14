@@ -25,7 +25,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   final injectorModule = _$InjectorModule();
   g.registerFactory<Firestore>(() => injectorModule.firestore);
   g.registerFactory<Geolocator>(() => injectorModule.geolocator);
-  g.registerFactory<PingService>(() => PingService());
+  g.registerFactory<PingCommand>(() => PingCommand.create());
+  g.registerFactory<PingService>(() => PingService(g<PingCommand>()));
   g.registerFactory<PingerApi>(() => PingerApi(g<Firestore>()));
   final sharedPreferences = await injectorModule.prefs;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
