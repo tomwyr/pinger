@@ -86,8 +86,9 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
         child: Expanded(
           child: Observer(
             builder: (_) => _hostsStore.hosts.when(
-              data: (data) =>
-                  data.isEmpty ? _buildEmptyResults() : _buildResultsList(data),
+              data: (_) => _hostsStore.searchResults.isEmpty
+                  ? _buildEmptyResults()
+                  : _buildResultsList(_hostsStore.searchResults),
               loading: _buildSearchInProgress,
               error: _buildFetchFailed,
             ),

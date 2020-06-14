@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:injectable/injectable.dart';
@@ -55,8 +56,9 @@ abstract class HostsStoreBase with Store {
     hosts = DataSnap.loading();
     try {
       final counts = await _pingerApi.getPingCounts();
+      final maxCount = counts.pingCounts.map((it) => it.count).reduce(max);
       final hostsList = counts.pingCounts
-          .map((it) => HostItem(it.host, it.count / counts.totalCount))
+          .map((it) => HostItem(it.host, it.count / maxCount))
           .toList()
             ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
       hosts = DataSnap.data(hostsList);
