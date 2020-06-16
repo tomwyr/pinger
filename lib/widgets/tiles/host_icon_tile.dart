@@ -57,11 +57,12 @@ class HostIconTile extends StatelessWidget {
           child: Center(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              child: snap.hasData
-                  ? snap.data.isNotEmpty
-                      ? Image.memory(snap.data, width: 24.0, height: 24.0)
-                      : SizedBox.shrink()
-                  : Icon(Icons.language, color: R.colors.gray, size: 24.0),
+              child:
+                  snap.hasData && snap.connectionState == ConnectionState.done
+                      ? snap.data.isNotEmpty
+                          ? Image.memory(snap.data, width: 24.0, height: 24.0)
+                          : SizedBox.shrink()
+                      : Icon(Icons.language, color: R.colors.gray, size: 24.0),
             ),
           ),
           builder: (_, value, child) => DecoratedBox(
