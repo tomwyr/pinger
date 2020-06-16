@@ -82,6 +82,7 @@ class ResultTile extends StatelessWidget {
                   maxLines: 1,
                   softWrap: false,
                   overflow: TextOverflow.fade,
+                  style: TextStyle(color: R.colors.primary),
                 ),
               ),
             ),

@@ -35,12 +35,10 @@ class R {
 abstract class PingerColors {
   PingerColors._();
 
-  final primaryDark = const Color(0xFF2F2E41);
   final primary = const Color(0xFF3F3D56);
   final primaryLight = const Color(0xFF575A89);
   final secondary = const Color(0xFFEE6C4D);
   final accent = const Color(0xFFFF6584);
-  final grayDark = const Color(0xFF929292);
   final gray = const Color(0xFFC2C2C2);
   final grayLight = const Color(0xFFF2F2F2);
 
@@ -64,7 +62,20 @@ class PingerDarkColors extends PingerColors {
   PingerDarkColors() : super._();
 
   @override
+  final primary = const Color(0xFF65628a);
+  @override
+  final primaryLight = const Color(0xFF4B4d75);
+  @override
+  final gray = const Color(0xFF757575);
+  @override
+  final grayLight = const Color(0xFF404040);
+
+  @override
   final canvas = const Color(0xFF333333);
+  @override
+  final shadow = const Color(0x22FFFFFF);
+  @override
+  final none = const Color(0x00000000);
 }
 
 class PingerDimens {
@@ -72,7 +83,7 @@ class PingerDimens {
 }
 
 abstract class PingerThemes {
-  ThemeMode get mode;
+  final mode = ThemeMode.light;
 
   final app = ThemeData(
     fontFamily: GoogleFonts.roboto().fontFamily,
@@ -125,14 +136,11 @@ abstract class PingerThemes {
       );
 }
 
-class PingerLightThemes extends PingerThemes {
-  @override
-  ThemeMode get mode => ThemeMode.light;
-}
+class PingerLightThemes extends PingerThemes {}
 
 class PingerDarkThemes extends PingerThemes {
   @override
-  ThemeMode get mode => ThemeMode.dark;
+  final mode = ThemeMode.dark;
 }
 
 class PingerStyles {

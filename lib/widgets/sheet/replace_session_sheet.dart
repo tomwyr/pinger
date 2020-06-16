@@ -24,12 +24,12 @@ class ReplaceSessionSheet {
           ),
           TextSpan(
             text: currentHost,
-            style: subStyle.copyWith(color: R.colors.primary),
+            style: subStyle.copyWith(color: R.colors.primaryLight),
           ),
           TextSpan(text: " and start new one for ", style: subStyle),
           TextSpan(
             text: currentHost,
-            style: subStyle.copyWith(color: R.colors.primary),
+            style: subStyle.copyWith(color: R.colors.primaryLight),
           ),
           TextSpan(text: String.fromCharCode(0x00A0) + "?", style: subStyle),
         ]),
