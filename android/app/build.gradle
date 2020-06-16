@@ -61,13 +61,11 @@ android {
         tst {
             dimension "app"
             applicationIdSuffix ".tst"
-            versionNameSuffix "-tst"
             resValue "string", "app_name", "[tst] Pinger"
         }
         dev {
             dimension "app"
             applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
             resValue "string", "app_name", "[dev] Pinger"
         }
         prod {

@@ -39,6 +39,28 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     });
   }
 
+  final _$appVersionAtom = Atom(name: 'SettingsStoreBase.appVersion');
+
+  @override
+  String get appVersion {
+    _$appVersionAtom.reportRead();
+    return super.appVersion;
+  }
+
+  @override
+  set appVersion(String value) {
+    _$appVersionAtom.reportWrite(value, super.appVersion, () {
+      super.appVersion = value;
+    });
+  }
+
+  final _$initAsyncAction = AsyncAction('SettingsStoreBase.init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   final _$updateSettingsAsyncAction =
       AsyncAction('SettingsStoreBase.updateSettings');
 
@@ -57,25 +79,12 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
         .run(() => super.notifyDidShowIntro());
   }
 
-  final _$SettingsStoreBaseActionController =
-      ActionController(name: 'SettingsStoreBase');
-
-  @override
-  void init() {
-    final _$actionInfo = _$SettingsStoreBaseActionController.startAction(
-        name: 'SettingsStoreBase.init');
-    try {
-      return super.init();
-    } finally {
-      _$SettingsStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
 userSettings: ${userSettings},
-didShowIntro: ${didShowIntro}
+didShowIntro: ${didShowIntro},
+appVersion: ${appVersion}
     ''';
   }
 }

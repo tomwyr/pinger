@@ -5,8 +5,8 @@ class SessionPingButton extends StatelessWidget {
   static final _animDuration = const Duration(milliseconds: 500);
   static final _miniSize = 40.0;
   static final _normalSize = 56.0;
-  static final _margin = 24.0;
-  static final _size = Size(_miniSize + _normalSize + _margin, _normalSize);
+  static final _spacing = 48.0;
+  static final _size = Size(_miniSize + _normalSize + _spacing, _normalSize);
 
   final bool isExpanded;
   final IconData primaryIcon;

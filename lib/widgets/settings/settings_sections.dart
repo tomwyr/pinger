@@ -133,7 +133,7 @@ class ShareSettingsSection extends StatelessWidget {
           label: "Attach location",
           description:
               "Current location will be attached to statistics data to allow present it on global results map",
-          enabled: settings.attachLocation,
+          enabled: settings.shareResults,
           value: settings.attachLocation,
           onChanged: (it) => onChanged(settings.copyWith(
             attachLocation: it,
@@ -145,10 +145,12 @@ class ShareSettingsSection extends StatelessWidget {
 }
 
 class SettingsFooterSection extends StatelessWidget {
+  final String appVersion;
   final VoidCallback onShowIntroPressed;
 
   const SettingsFooterSection({
     Key key,
+    @required this.appVersion,
     @required this.onShowIntroPressed,
   }) : super(key: key);
 
@@ -177,7 +179,7 @@ class SettingsFooterSection extends StatelessWidget {
               ),
               Container(width: 12.0),
               Text(
-                "1.0.5",
+                appVersion,
                 style: TextStyle(fontSize: 18.0, color: R.colors.primary),
               ),
             ],

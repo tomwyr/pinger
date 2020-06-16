@@ -27,6 +27,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
       ),
       body: Observer(builder: (_) {
         final settings = _settingsStore.userSettings;
+        final appVersion = _settingsStore.appVersion;
         if (settings == null) return Container();
         return ScrollEdgeGradient(
           color: R.colors.canvas,
@@ -54,6 +55,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
               ),
               Container(height: 48.0),
               SettingsFooterSection(
+                appVersion: appVersion,
                 onShowIntroPressed: () => push(IntroPage()),
               ),
             ],

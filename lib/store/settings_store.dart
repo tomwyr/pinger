@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:package_info/package_info.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
@@ -21,20 +22,28 @@ abstract class SettingsStoreBase with Store {
   @observable
   bool didShowIntro;
 
+  @observable
+  String appVersion;
+
   @action
-  void init() {
+  Future<void> init() async {
     didShowIntro = _pingerPrefs.getDidShowIntro() ?? false;
+    userSettings = _getUserSettings();
+    appVersion = (await PackageInfo.fromPlatform()).version;
+  }
+
+  UserSettings _getUserSettings() {
     var settings = _pingerPrefs.getUserSettings();
     if (settings == null) {
       settings = _createDefaultSettings();
       _pingerPrefs.saveUserSettings(settings);
     }
-    userSettings = settings;
+    return settings;
   }
 
   UserSettings _createDefaultSettings() => UserSettings(
         nightMode: false,
-        restoreHost: true,
+        restoreHost: false,
         showSystemNotification: false,
         shareSettings: ShareSettings(
           shareResults: true,
@@ -42,9 +51,9 @@ abstract class SettingsStoreBase with Store {
         ),
         pingSettings: PingSettings(
           count: 10,
-          packetSize: 24,
+          packetSize: 56,
           interval: 1,
-          timeout: 30,
+          timeout: 10,
         ),
       );
 
