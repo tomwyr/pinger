@@ -3,6 +3,7 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
+import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
 
 class HostsPage extends StatefulWidget {
@@ -30,12 +31,36 @@ class _HostsPageState extends BaseState<HostsPage> {
   bool _isEditing = false;
 
   void _onEditPressed() {
-    if (_isEditing && _selection.isNotEmpty) {
-      widget.removeHosts(_selection);
-      _selection = [];
+    if (!_isEditing) {
+      setState(() => _isEditing = true);
+    } else if (_selection.isEmpty) {
+      setState(() => _isEditing = false);
+    } else {
+      _showConfirmRemoveSheet(onConfirmed: () {
+        pop();
+        widget.removeHosts(_selection);
+        setState(() {
+          _selection = [];
+          _isEditing = false;
+        });
+      });
     }
-    _isEditing = !_isEditing;
-    rebuild();
+  }
+
+  void _showConfirmRemoveSheet({@required VoidCallback onConfirmed}) {
+    PingerBottomSheet.show(
+      context,
+      title: Text(
+        "Do you want to remove selected hosts?",
+        style: R.styles.bottomSheetTitle,
+      ),
+      subtitle: Text(
+        "This action is irreversible",
+        style: R.styles.bottomSheetSubitle,
+      ),
+      rejectLabel: "CANCEL",
+      onAcceptPressed: onConfirmed,
+    );
   }
 
   void _onItemPressed(String host) {

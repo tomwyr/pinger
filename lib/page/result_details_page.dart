@@ -17,6 +17,7 @@ import 'package:pinger/widgets/result/result_details_header.dart';
 import 'package:pinger/widgets/result/result_details_info_tab.dart';
 import 'package:pinger/widgets/result/result_details_more_tab.dart';
 import 'package:pinger/widgets/result/result_details_results_tab.dart';
+import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
 
 enum ResultDetailsTab { results, global, info, more }
 
@@ -86,10 +87,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.delete),
-          onPressed: () {
-            _archiveStore.deleteLocalResult(widget.result.id);
-            pop();
-          },
+          onPressed: _showConfirmDeleteSheet,
         ),
       ],
       flexibleSpace: LayoutBuilder(
@@ -113,6 +111,26 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
           Tab(text: "More"),
         ],
       ),
+    );
+  }
+
+  void _showConfirmDeleteSheet() {
+    PingerBottomSheet.show(
+      context,
+      title: Text(
+        "Do you want to delete this result?",
+        style: R.styles.bottomSheetTitle,
+      ),
+      subtitle: Text(
+        "This actions is irreversible",
+        style: R.styles.bottomSheetSubitle,
+      ),
+      rejectLabel: "CANCEL",
+      onAcceptPressed: () {
+        pop();
+        pop();
+        _archiveStore.deleteLocalResult(widget.result.id);
+      },
     );
   }
 
