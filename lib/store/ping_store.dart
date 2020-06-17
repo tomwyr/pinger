@@ -137,6 +137,7 @@ abstract class PingStoreBase with Store {
   @action
   void initSession(String host) {
     _stopPing();
+    _didShareResult = false;
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
