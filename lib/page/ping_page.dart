@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
@@ -17,7 +19,7 @@ import 'package:pinger/widgets/session/session_summary_section.dart';
 import 'package:pinger/widgets/session/session_values_section.dart';
 import 'package:pinger/widgets/settings/settings_sections.dart';
 import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
-import 'package:pinger/widgets/view_types.dart';
+import 'package:pinger/widgets/view_type/view_types.dart';
 
 class PingPage extends StatefulWidget {
   @override
@@ -133,23 +135,31 @@ class _PingPageState extends BaseState<PingPage> {
   Widget _buildStartPrompt() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 48.0),
-      child: Column(children: <Widget>[
-        Spacer(),
-        Image(image: Images.undrawRunnerStart, width: 144.0, height: 144.0),
-        Spacer(),
-        Text(
-          "Tap button to start pinging",
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        Container(height: 24.0),
-        Text(
-          "Long press the button to quickly ping the host just a several times",
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
-        ),
-        Spacer(),
-      ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Flexible(
+            child: LayoutBuilder(
+              builder: (_, constraints) => SizedBox(
+                height: min(constraints.maxHeight, 144.0),
+                child: Image(image: Images.undrawRunnerStart),
+              ),
+            ),
+          ),
+          Container(height: 24.0),
+          Text(
+            "Tap button to start pinging",
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          Container(height: 24.0),
+          Text(
+            "Long press the button to quickly ping the host just a several times",
+            style: TextStyle(fontSize: 18.0),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 

@@ -39,7 +39,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
   Widget build(BuildContext context) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
-      top: false,
+      start: false,
       builder: (controller) => CustomScrollView(
         controller: controller,
         slivers: _buildContentSlivers(),

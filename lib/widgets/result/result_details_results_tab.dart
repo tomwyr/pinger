@@ -6,8 +6,8 @@ import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/widgets/session/session_summary_section.dart';
 import 'package:pinger/widgets/session/session_values_chart.dart';
 import 'package:pinger/widgets/session/session_values_list.dart';
-import 'package:pinger/widgets/view_type_button.dart';
-import 'package:pinger/widgets/view_types.dart';
+import 'package:pinger/widgets/view_type/view_type_row.dart';
+import 'package:pinger/widgets/view_type/view_types.dart';
 
 class ResultDetailsResultsTab extends StatefulWidget {
   final List<int> values;
@@ -59,24 +59,20 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
                 "Results",
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
-              Spacer(),
-              _buildTypeButton(PingValuesType.list, "List"),
-              Container(width: 8.0),
-              _buildTypeButton(PingValuesType.chart, "Chart"),
+              Expanded(
+                child: ViewTypeRow(
+                  types: const {
+                    PingValuesType.list: "List",
+                    PingValuesType.chart: "Chart"
+                  },
+                  selection: _viewType,
+                  onChanged: (it) => setState(() => _viewType = it),
+                ),
+              ),
             ]),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTypeButton(PingValuesType type, String label) {
-    return ViewTypeButton(
-      label: label,
-      selected: _viewType == type,
-      onPressed: () {
-        if (_viewType != type) setState(() => _viewType = type);
-      },
     );
   }
 

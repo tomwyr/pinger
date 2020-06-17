@@ -77,9 +77,8 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
 
   Widget _buildIntroContent(VoidCallback onIntroDone) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
-        _buildSearchBar(),
         Spacer(),
         Image(image: Images.undrawRoadSign, width: 144.0, height: 144.0),
         Container(height: 24.0),
@@ -107,6 +106,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
           data: R.themes.flatButton,
           child: FlatButton(child: Text("SKIP"), onPressed: onIntroDone),
         ),
+        Container(height: 16.0),
       ]),
     );
   }

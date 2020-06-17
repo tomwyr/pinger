@@ -6,8 +6,9 @@ class ScrollEdgeGradient extends StatefulWidget {
   final Widget Function(ScrollController) builder;
   final Color color;
   final double extentThreshold;
-  final bool bottom;
-  final bool top;
+  final bool start;
+  final bool end;
+  final Axis axis;
   final double sliverOverlap;
   final ScrollController controller;
 
@@ -16,8 +17,9 @@ class ScrollEdgeGradient extends StatefulWidget {
     @required this.builder,
     @required this.color,
     this.extentThreshold = 48.0,
-    this.bottom = true,
-    this.top = true,
+    this.start = true,
+    this.end = true,
+    this.axis = Axis.vertical,
     this.sliverOverlap = 0.0,
     this.controller,
   }) : super(key: key);
@@ -57,10 +59,13 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   Widget _content;
 
   void _updateContent() {
+    final isVertical = widget.axis == Axis.vertical;
     _content = Stack(children: <Widget>[
       widget.builder(_scroller),
-      if (widget.top) _buildGradient(AxisDirection.down),
-      if (widget.bottom) _buildGradient(AxisDirection.up),
+      if (widget.start)
+        _buildGradient(isVertical ? AxisDirection.down : AxisDirection.right),
+      if (widget.end)
+        _buildGradient(isVertical ? AxisDirection.up : AxisDirection.left),
     ]);
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateExtent());
   }
@@ -80,16 +85,17 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   }
 
   Widget _buildGradient(AxisDirection direction) {
-    final isTop = direction == AxisDirection.down;
+    final isStart =
+        direction == AxisDirection.down || direction == AxisDirection.right;
     return ValueListenableBuilder<ScrollExtent>(
       valueListenable: _extent,
       builder: (_, value, __) => IgnorePointer(
         child: Padding(
-          padding: EdgeInsets.only(top: isTop ? widget.sliverOverlap : 0.0),
+          padding: EdgeInsets.only(top: isStart ? widget.sliverOverlap : 0.0),
           child: Align(
-            alignment: isTop ? Alignment.topCenter : Alignment.bottomCenter,
+            alignment: _getDirectionAlignment(direction),
             child: Opacity(
-              opacity: _calcOpacity(value, isTop),
+              opacity: _calcOpacity(value, isStart),
               child: TransparentGradientBox(
                 color: widget.color,
                 direction: direction,
@@ -100,6 +106,20 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
         ),
       ),
     );
+  }
+
+  Alignment _getDirectionAlignment(AxisDirection direction) {
+    switch (direction) {
+      case AxisDirection.left:
+        return Alignment.centerRight;
+      case AxisDirection.up:
+        return Alignment.bottomCenter;
+      case AxisDirection.right:
+        return Alignment.centerLeft;
+      case AxisDirection.down:
+        return Alignment.topCenter;
+    }
+    throw ArgumentError("Unhandled $AxisDirection: $direction");
   }
 
   double _calcOpacity(ScrollExtent value, bool isTop) {

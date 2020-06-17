@@ -13,8 +13,9 @@ import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/common/dotted_map.dart';
 import 'package:pinger/widgets/result/result_details_prompt_tab.dart';
 import 'package:pinger/widgets/three_bounce.dart';
-import 'package:pinger/widgets/view_type_button.dart';
-import 'package:pinger/widgets/view_types.dart';
+import 'package:pinger/widgets/view_type/view_type_button.dart';
+import 'package:pinger/widgets/view_type/view_type_row.dart';
+import 'package:pinger/widgets/view_type/view_types.dart';
 
 class ResultDetailsGlobalTab extends StatelessWidget {
   final bool isSharingLocation;
@@ -238,14 +239,26 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
 
   List<Widget> _buildValueSection(int userValue) {
     return [
-      Row(children: <Widget>[
-        Text(
-          "Your result",
-          style: TextStyle(fontSize: 18.0, color: R.colors.gray),
-        ),
-        Spacer(),
-        ...UserResultType.values.map(_buildViewTypeButton),
-      ]),
+      SizedBox(
+        height: ViewTypeButton.height,
+        child: Row(children: <Widget>[
+          Text(
+            "Your result",
+            style: TextStyle(fontSize: 18.0, color: R.colors.gray),
+          ),
+          Expanded(
+            child: ViewTypeRow(
+              types: const {
+                UserResultType.max: "Max",
+                UserResultType.mean: "Mean",
+                UserResultType.min: "Min",
+              },
+              selection: _resultType,
+              onChanged: (it) => setState(() => _resultType = it),
+            ),
+          ),
+        ]),
+      ),
       Container(height: 4.0),
       Text(
         "$userValue ms",
@@ -253,21 +266,6 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       ),
       Container(height: 4.0),
     ];
-  }
-
-  Widget _buildViewTypeButton(UserResultType type) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: ViewTypeButton(
-        label: const {
-          UserResultType.max: "Max",
-          UserResultType.mean: "Mean",
-          UserResultType.min: "Min",
-        }[type],
-        selected: _resultType == type,
-        onPressed: () => setState(() => _resultType = type),
-      ),
-    );
   }
 
   List<Widget> _buildGlobalSection(

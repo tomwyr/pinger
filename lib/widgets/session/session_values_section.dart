@@ -5,8 +5,8 @@ import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/session/session_ping_gauge.dart';
 import 'package:pinger/widgets/session/session_values_chart.dart';
 import 'package:pinger/widgets/session/session_values_list.dart';
-import 'package:pinger/widgets/view_type_button.dart';
-import 'package:pinger/widgets/view_types.dart';
+import 'package:pinger/widgets/view_type/view_type_row.dart';
+import 'package:pinger/widgets/view_type/view_types.dart';
 
 class SessionValuesSection extends StatefulWidget {
   final PingSession session;
@@ -49,14 +49,18 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
                   "Results",
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                Spacer(),
-                if (widget.session.status.isSession) ...[
-                  _buildTypeButton(PingValuesType.gauge, "Gauge"),
-                  Container(width: 8.0),
-                  _buildTypeButton(PingValuesType.list, "List"),
-                  Container(width: 8.0),
-                  _buildTypeButton(PingValuesType.chart, "Chart"),
-                ],
+                if (widget.session.status.isSession)
+                  Expanded(
+                    child: ViewTypeRow(
+                      types: const {
+                        PingValuesType.gauge: "Gauge",
+                        PingValuesType.list: "List",
+                        PingValuesType.chart: "Chart",
+                      },
+                      selection: widget.viewType,
+                      onChanged: widget.onViewTypeChanged,
+                    ),
+                  ),
               ]),
             ),
             Expanded(child: _buildViewTypeContent()),
@@ -116,15 +120,5 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
         );
     }
     throw StateError("Unhandled $PingValuesType: ${widget.viewType}.");
-  }
-
-  Widget _buildTypeButton(PingValuesType type, String label) {
-    return ViewTypeButton(
-      label: label,
-      selected: widget.viewType == type,
-      onPressed: () {
-        if (widget.viewType != type) widget.onViewTypeChanged(type);
-      },
-    );
   }
 }
