@@ -9,18 +9,19 @@ part of 'location_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LocationStore on LocationStoreBase, Store {
-  final _$hasPermissionAtom = Atom(name: 'LocationStoreBase.hasPermission');
+  final _$canAccessLocationAtom =
+      Atom(name: 'LocationStoreBase.canAccessLocation');
 
   @override
-  bool get hasPermission {
-    _$hasPermissionAtom.reportRead();
-    return super.hasPermission;
+  bool get canAccessLocation {
+    _$canAccessLocationAtom.reportRead();
+    return super.canAccessLocation;
   }
 
   @override
-  set hasPermission(bool value) {
-    _$hasPermissionAtom.reportWrite(value, super.hasPermission, () {
-      super.hasPermission = value;
+  set canAccessLocation(bool value) {
+    _$canAccessLocationAtom.reportWrite(value, super.canAccessLocation, () {
+      super.canAccessLocation = value;
     });
   }
 
@@ -52,7 +53,7 @@ mixin _$LocationStore on LocationStoreBase, Store {
   @override
   String toString() {
     return '''
-hasPermission: ${hasPermission}
+canAccessLocation: ${canAccessLocation}
     ''';
   }
 }

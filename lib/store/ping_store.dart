@@ -129,7 +129,7 @@ abstract class PingStoreBase with Store {
   Future<GeoPosition> _getResultLocation() async {
     final attachLocation =
         _settingsStore.userSettings.shareSettings.attachLocation;
-    return attachLocation && _locationStore.hasPermission
+    return attachLocation && _locationStore.canAccessLocation
         ? await _locationStore.getCurrentPosition()
         : null;
   }

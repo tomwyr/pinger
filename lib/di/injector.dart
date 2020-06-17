@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:location/location.dart';
 import 'package:pinger/di/injector.iconfig.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/favorites_store.dart';
@@ -33,7 +33,7 @@ abstract class InjectorModule {
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  Geolocator get geolocator => Geolocator();
+  Location get location => Location.instance;
 
   Firestore get firestore => Firestore.instance;
 }

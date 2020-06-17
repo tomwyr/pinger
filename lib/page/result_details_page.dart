@@ -196,7 +196,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     final shareSettings = _settingsStore.userSettings.shareSettings;
     return shareSettings.shareResults &&
         shareSettings.attachLocation &&
-        _locationStore.hasPermission;
+        _locationStore.canAccessLocation;
   }
 
   void _enableShareSettings() {

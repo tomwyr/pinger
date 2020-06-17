@@ -7,7 +7,7 @@
 import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +24,7 @@ import 'package:get_it/get_it.dart';
 Future<void> $initGetIt(GetIt g, {String environment}) async {
   final injectorModule = _$InjectorModule();
   g.registerFactory<Firestore>(() => injectorModule.firestore);
-  g.registerFactory<Geolocator>(() => injectorModule.geolocator);
+  g.registerFactory<Location>(() => injectorModule.location);
   g.registerFactory<PingCommand>(() => PingCommand.create());
   g.registerFactory<PingService>(() => PingService(g<PingCommand>()));
   g.registerFactory<PingerApi>(() => PingerApi(g<Firestore>()));
@@ -43,7 +43,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<FaviconService>(),
   ));
   g.registerSingleton<LocationStore>(
-      LocationStore(g<Geolocator>(), g<SettingsStore>()));
+      LocationStore(g<Location>(), g<SettingsStore>()));
   g.registerSingleton<PingStore>(PingStore(
     g<PingerPrefs>(),
     g<PingerApi>(),
