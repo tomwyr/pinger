@@ -52,7 +52,7 @@ class HostTile extends StatelessWidget {
               overflow: TextOverflow.fade,
               style: TextStyle(
                 color: type == HostTileType.highlighted
-                    ? R.colors.canvas
+                    ? R.colors.white
                     : R.colors.primary,
               ),
             ),

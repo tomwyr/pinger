@@ -56,7 +56,7 @@ class _HostsPageState extends BaseState<HostsPage> {
       ),
       subtitle: Text(
         "This action is irreversible",
-        style: R.styles.bottomSheetSubitle,
+        style: R.styles.bottomSheetSubtitle,
       ),
       rejectLabel: "CANCEL",
       onAcceptPressed: onConfirmed,

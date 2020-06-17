@@ -88,7 +88,7 @@ class PingSettingItem extends StatelessWidget {
     return PingerBottomSheet.show<int>(
       context,
       title: Text(label, style: R.styles.bottomSheetTitle),
-      subtitle: Text("Provide new value", style: R.styles.bottomSheetSubitle),
+      subtitle: Text("Provide new value", style: R.styles.bottomSheetSubtitle),
       rejectLabel: "CANCEL",
       onAcceptPressed: () {
         final result = int.tryParse(controller.text);

@@ -113,7 +113,7 @@ class _PingPageState extends BaseState<PingPage> {
       title: Text("Ping settings", style: R.styles.bottomSheetTitle),
       subtitle: Text(
         "Changes will be applied only for current sesion",
-        style: R.styles.bottomSheetSubitle,
+        style: R.styles.bottomSheetSubtitle,
       ),
       onRejectPressed: _pingStore.clearSettings,
       onAcceptPressed: pop,

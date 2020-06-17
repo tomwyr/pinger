@@ -45,6 +45,7 @@ abstract class PingerColors {
   final canvas = const Color(0xFFFFFFFF);
   final shadow = const Color(0x42000000);
   final none = const Color(0x00FFFFFF);
+  final white = const Color(0xFFFFFFFF);
 
   final pingSuccessful = const Color(0xFF219653);
   final pingFailed = const Color(0xFFEB5757);
@@ -62,7 +63,7 @@ class PingerDarkColors extends PingerColors {
   PingerDarkColors() : super._();
 
   @override
-  final primary = const Color(0xFF65628a);
+  final primary = const Color(0xFFDEDEDE);
   @override
   final primaryLight = const Color(0xFF4B4d75);
   @override
@@ -151,9 +152,10 @@ class PingerStyles {
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);
-  TextStyle get bottomSheetTitle => TextStyle(fontSize: 24.0);
-  TextStyle get bottomSheetSubitle =>
-      TextStyle(color: R.colors.gray, fontSize: 18.0);
+  TextStyle get bottomSheetTitle =>
+      TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  TextStyle get bottomSheetSubtitle =>
+      TextStyle(fontSize: 18.0, color: R.colors.gray);
   BorderSide get outlineButtonBorder =>
       BorderSide(color: R.colors.grayLight, width: 1.5);
 }

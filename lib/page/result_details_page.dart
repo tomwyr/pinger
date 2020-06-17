@@ -123,7 +123,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       ),
       subtitle: Text(
         "This actions is irreversible",
-        style: R.styles.bottomSheetSubitle,
+        style: R.styles.bottomSheetSubtitle,
       ),
       rejectLabel: "CANCEL",
       onAcceptPressed: () {

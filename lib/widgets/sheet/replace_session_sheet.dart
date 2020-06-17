@@ -9,7 +9,7 @@ class ReplaceSessionSheet {
     @required String newHost,
     @required VoidCallback onAcceptPressed,
   }) async {
-    final subStyle = R.styles.bottomSheetSubitle;
+    final subStyle = R.styles.bottomSheetSubtitle;
     await PingerBottomSheet.show(
       context,
       title: Text(

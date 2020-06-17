@@ -51,7 +51,7 @@ class SessionPingButton extends StatelessWidget {
             mini: false,
             raised: true,
             icon: primaryIcon,
-            iconColor: R.colors.canvas,
+            iconColor: R.colors.white,
             backgroundColor: R.colors.secondary,
             onTap: onPrimaryPressed,
             onLongPressStart: onPrimaryLongPressStart,
