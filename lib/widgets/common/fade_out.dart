@@ -3,14 +3,12 @@ import 'package:flutter/widgets.dart';
 class FadeOut extends StatefulWidget {
   final Duration duration;
   final bool visible;
-  final bool hasFixedHeight;
   final Widget child;
 
   const FadeOut({
     Key key,
     @required this.duration,
     @required this.visible,
-    @required this.hasFixedHeight,
     @required this.child,
   }) : super(key: key);
 
@@ -51,13 +49,7 @@ class _FadeOutState extends State<FadeOut> with SingleTickerProviderStateMixin {
       sizeFactor: _animator,
       child: FadeTransition(
         opacity: _animator,
-        child: widget.hasFixedHeight
-            ? OverflowBox(
-                maxHeight: double.infinity,
-                alignment: Alignment.topCenter,
-                child: widget.child,
-              )
-            : widget.child,
+        child: widget.child,
       ),
     );
   }

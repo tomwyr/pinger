@@ -157,7 +157,7 @@ class _PingPageState extends BaseState<PingPage> {
       PingSession session, Duration sessionDuration, bool isExpanded) {
     return Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 8.0),
         child: SessionSummarySection(
           values: session.values,
           stats: session.stats,
@@ -169,7 +169,6 @@ class _PingPageState extends BaseState<PingPage> {
           builder: (_, value, __) => FadeOut(
             duration: _animDuration,
             visible: !isExpanded,
-            hasFixedHeight: value == PingValuesType.gauge,
             child: SessionValuesSection(
               session: session,
               sessionDuration: sessionDuration,

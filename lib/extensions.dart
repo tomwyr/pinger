@@ -28,4 +28,6 @@ extension ListExtensions<E> on List<E> {
     int index = -1;
     return map((e) => f(++index, e));
   }
+
+  E get lastOrNull => isNotEmpty ? last : null;
 }

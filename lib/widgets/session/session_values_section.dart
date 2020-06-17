@@ -27,67 +27,95 @@ class SessionValuesSection extends StatefulWidget {
 }
 
 class _SessionValuesSectionState extends State<SessionValuesSection> {
+  final _headerSafeHeight = 40.0;
+  final _gaugeSafeHeight = 128.0;
+  final _listSafeHeight = 0.0;
   final _chartSafeHeight = 48.0;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(height: 24.0),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Row(children: <Widget>[
-            Text(
-              "Results",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            Spacer(),
-            if (widget.session.status.isSession) ...[
-              _buildTypeButton(PingValuesType.gauge, "Gauge"),
-              Container(width: 8.0),
-              _buildTypeButton(PingValuesType.list, "List"),
-              Container(width: 8.0),
-              _buildTypeButton(PingValuesType.chart, "Chart"),
-            ],
-          ]),
-        ),
-        if (widget.viewType == PingValuesType.gauge)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 0.0),
-            child: SessionPingGauge(
-              session: widget.session,
-              duration: widget.sessionDuration,
-            ),
-          )
-        else if (widget.viewType == PingValuesType.list)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: SessionValuesList(
-                shouldFollowHead: widget.session.status.isStarted,
-                values: widget.session.values,
-              ),
-            ),
-          )
-        else if (widget.viewType == PingValuesType.chart)
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 0.0),
-              child: LayoutBuilder(
-                builder: (_, constraints) => OverflowBox(
-                  maxHeight: max(constraints.maxHeight, _chartSafeHeight),
-                  child: SessionValuesChart(
-                    values: widget.session.values,
-                    stats: widget.session.stats,
-                    shouldFollowHead: widget.session.status.isStarted,
-                  ),
+    return LayoutBuilder(
+      builder: (_, constraints) => OverflowBox(
+        alignment: Alignment.topCenter,
+        maxHeight: max(constraints.maxHeight, _calcSafeHeight()),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: _headerSafeHeight,
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: Row(children: <Widget>[
+                Text(
+                  "Results",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
+                Spacer(),
+                if (widget.session.status.isSession) ...[
+                  _buildTypeButton(PingValuesType.gauge, "Gauge"),
+                  Container(width: 8.0),
+                  _buildTypeButton(PingValuesType.list, "List"),
+                  Container(width: 8.0),
+                  _buildTypeButton(PingValuesType.chart, "Chart"),
+                ],
+              ]),
+            ),
+            Expanded(child: _buildViewTypeContent()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  double _calcSafeHeight() {
+    switch (widget.viewType) {
+      case PingValuesType.gauge:
+        return _headerSafeHeight + _gaugeSafeHeight;
+      case PingValuesType.list:
+        return _headerSafeHeight + _listSafeHeight;
+      case PingValuesType.chart:
+        return _headerSafeHeight + _chartSafeHeight;
+    }
+    throw StateError("Unhandled $PingValuesType: ${widget.viewType}.");
+  }
+
+  Widget _buildViewTypeContent() {
+    switch (widget.viewType) {
+      case PingValuesType.gauge:
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+          child: LayoutBuilder(
+            builder: (_, constraints) => Padding(
+              padding: EdgeInsets.only(
+                  top: (constraints.maxHeight - _gaugeSafeHeight)
+                      .clamp(0.0, 16.0)),
+              child: SessionPingGauge(
+                session: widget.session,
+                duration: widget.sessionDuration,
               ),
             ),
           ),
-      ],
-    );
+        );
+      case PingValuesType.list:
+        return SessionValuesList(
+          shouldFollowHead: widget.session.status.isStarted,
+          values: widget.session.values,
+        );
+      case PingValuesType.chart:
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(32.0, 16.0, 32.0, 0.0),
+          child: LayoutBuilder(
+            builder: (_, constraints) => OverflowBox(
+              maxHeight: max(constraints.maxHeight, _chartSafeHeight),
+              child: SessionValuesChart(
+                values: widget.session.values,
+                stats: widget.session.stats,
+                shouldFollowHead: widget.session.status.isStarted,
+              ),
+            ),
+          ),
+        );
+    }
+    throw StateError("Unhandled $PingValuesType: ${widget.viewType}.");
   }
 
   Widget _buildTypeButton(PingValuesType type, String label) {

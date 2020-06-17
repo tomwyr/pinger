@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
@@ -17,39 +18,50 @@ class SessionPingGauge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      Positioned.fill(
-        child: PingGaugeArc.forSession(session),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: LayoutBuilder(
+        builder: (_, constraints) => SizedBox(
+          height: min(constraints.maxHeight, constraints.maxWidth / 2),
+          child: Stack(children: <Widget>[
+            PingGaugeArc.forSession(session),
+            _buildLabels(),
+          ]),
+        ),
       ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: _buildLabels(),
-      ),
-    ]);
+    );
   }
 
   Widget _buildLabels() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Container(height: 32.0),
-        Text(
+    return Column(children: <Widget>[
+      Spacer(flex: 4),
+      Container(
+        height: 24.0,
+        alignment: Alignment.bottomCenter,
+        child: Text(
           _getDeltaLabel(session.values),
           style: TextStyle(fontSize: 24.0, color: R.colors.gray),
         ),
-        Container(height: 8.0),
-        Text(
-          _getValueLabel(
-              session.values.isNotEmpty ? session.values.last : null),
+      ),
+      Spacer(flex: 1),
+      Container(
+        height: 40.0,
+        alignment: Alignment.center,
+        child: Text(
+          _getValueLabel(session.values.lastOrNull),
           style: TextStyle(fontSize: 36.0),
         ),
-        Container(height: 16.0),
-        Text(
+      ),
+      Spacer(flex: 2),
+      Container(
+        height: 24.0,
+        alignment: Alignment.bottomCenter,
+        child: Text(
           FormatUtils.getDurationLabel(duration),
           style: TextStyle(fontSize: 24.0, color: R.colors.secondary),
         ),
-      ],
-    );
+      ),
+    ]);
   }
 
   String _getDeltaLabel(List<int> values) {
