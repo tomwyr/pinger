@@ -2,33 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class R {
-  R._();
+final R = PingerResources._();
 
-  static Brightness _brightness;
+class PingerResources {
+  PingerResources._();
 
-  static PingerColors _colors;
-  static PingerDimens _dimens;
-  static PingerThemes _themes;
-  static PingerStyles _styles;
+  PingerColors _colors;
+  PingerDimens _dimens;
+  PingerThemes _themes;
+  PingerStyles _styles;
 
-  static PingerColors get colors => _colors;
-  static PingerDimens get dimens => _dimens;
-  static PingerThemes get themes => _themes;
-  static PingerStyles get styles => _styles;
+  PingerColors get colors => _colors;
+  PingerDimens get dimens => _dimens;
+  PingerThemes get themes => _themes;
+  PingerStyles get styles => _styles;
 
-  static bool load(Brightness brightness) {
-    if (_brightness == brightness) return false;
+  void load(Brightness brightness) {
+    _dimens ??= PingerDimens();
+    _styles ??= PingerStyles();
     if (brightness == Brightness.dark) {
-      R._colors = PingerDarkColors();
-      R._themes = PingerDarkThemes();
+      _colors = PingerDarkColors();
+      _themes = PingerDarkThemes();
     } else {
-      R._colors = PingerLightColors();
-      R._themes = PingerLightThemes();
+      _colors = PingerLightColors();
+      _themes = PingerLightThemes();
     }
-    R._dimens = PingerDimens();
-    R._styles = PingerStyles();
-    return true;
   }
 }
 

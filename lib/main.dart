@@ -24,6 +24,8 @@ class PingerApp extends StatefulWidget {
 }
 
 class _PingerAppState extends State<PingerApp> {
+  Brightness _brightness;
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +34,10 @@ class _PingerAppState extends State<PingerApp> {
       final brightness = settingsStore.userSettings.nightMode
           ? Brightness.dark
           : Brightness.light;
-      if (R.load(brightness)) setState(() {});
+      if (brightness != _brightness) {
+        R.load(brightness);
+        setState(() => _brightness = brightness);
+      }
     });
   }
 
@@ -41,7 +46,7 @@ class _PingerAppState extends State<PingerApp> {
     return MaterialApp(
       theme: R.themes.app,
       themeMode: R.themes.mode,
-      title: 'Pinger',
+      title: "Pinger",
       home: InitPage(),
     );
   }
