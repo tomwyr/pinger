@@ -104,13 +104,13 @@ abstract class PingStoreBase with Store {
 
   void _shareResultIfPossible() async {
     if (_shouldShareResult()) {
+      _didShareResult = true;
       final result = GlobalSessionResult(
         count: currentSession.values.length,
         host: currentSession.host,
         stats: currentSession.stats,
         location: await _getResultLocation(),
       );
-      _didShareResult = true;
       try {
         await _pingerApi.saveSessionResult(result);
       } on ApiError {}

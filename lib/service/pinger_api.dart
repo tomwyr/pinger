@@ -42,6 +42,8 @@ class PingerApi {
       switch (e.message) {
         case "Failed to get document because the client is offline.":
           throw ApiError.CLIENT_OFFLINE;
+        case "PERMISSION_DENIED: Missing or insufficient permissions.":
+          throw ApiError.ACCESS_DENIED;
       }
       rethrow;
     }
@@ -50,4 +52,5 @@ class PingerApi {
 
 enum ApiError {
   CLIENT_OFFLINE,
+  ACCESS_DENIED,
 }

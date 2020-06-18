@@ -26,6 +26,7 @@ abstract class LocationStoreBase with Store {
 
   @action
   Future<void> init() async {
+    await _location.changeSettings(accuracy: LocationAccuracy.balanced);
     await _updateAccessStatus();
     autorun((_) {
       if (_settingsStore.userSettings == null) return;

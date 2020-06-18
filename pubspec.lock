@@ -288,14 +288,14 @@ packages:
       name: freezed
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.9"
+    version: "0.11.2"
   freezed_annotation:
     dependency: "direct main"
     description:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.1"
+    version: "0.11.0"
   get_it:
     dependency: "direct main"
     description:
@@ -526,7 +526,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.10"
+    version: "1.6.11"
   path_provider_linux:
     dependency: transitive
     description:
