@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -83,50 +84,40 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
             ),
           child,
         ]),
-        child: Expanded(
-          child: Observer(
-            builder: (_) => _hostsStore.hosts.when(
-              data: (_) => _hostsStore.searchResults.isEmpty
-                  ? _buildEmptyResults()
-                  : _buildResultsList(_hostsStore.searchResults),
-              loading: _buildSearchInProgress,
-              error: _buildFetchFailed,
+        child: Expanded(child: _buildSearchResults()),
+      ),
+    );
+  }
+
+  Widget _buildSearchResults() {
+    return Observer(
+      builder: (_) => _hostsStore.hosts.when(
+        data: (_) => _hostsStore.searchResults.isNotEmpty
+            ? _buildResultsList(_hostsStore.searchResults)
+            : _buildNoResults(
+                Images.undrawVoid,
+                S.current.searchResultsEmptyTitle,
+                S.current.searchResultsEmptyDesc,
+              ),
+        loading: () => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: ThreeBounce(color: R.colors.secondary),
+          ),
+        ),
+        error: () => _buildNoResults(
+          Images.undrawServerDown,
+          S.current.dataFetchFailedTitle,
+          S.current.dataFetchFailedDesc,
+          action: ButtonTheme.fromButtonThemeData(
+            data: R.themes.raisedButton,
+            child: RaisedButton(
+              onPressed: _hostsStore.fetchHosts,
+              child: Text(S.current.tryAgainButtonLabel),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildSearchInProgress() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: ThreeBounce(color: R.colors.secondary),
-      ),
-    );
-  }
-
-  Widget _buildFetchFailed() {
-    return _buildNoResults(
-      Images.undrawServerDown,
-      "Couldn't fetch data",
-      "Something went wrong when getting the data - try again after some time",
-      action: ButtonTheme.fromButtonThemeData(
-        data: R.themes.raisedButton,
-        child: RaisedButton(
-          onPressed: _hostsStore.fetchHosts,
-          child: Text("Try again"),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildEmptyResults() {
-    return _buildNoResults(
-      Images.undrawVoid,
-      "No results found",
-      "We could not find anything for given query but you can still use it as host",
     );
   }
 
@@ -220,7 +211,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
           )
         ],
         decoration: InputDecoration(
-          hintText: "Search host to ping",
+          hintText: S.current.searchHostHint,
           border: OutlineInputBorder(borderSide: BorderSide.none),
         ),
       ),

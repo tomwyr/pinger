@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
@@ -20,19 +21,33 @@ class ResultDetailsInfoTab extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _buildHeader("Info"),
+              _buildHeader(S.current.pingInfoInfoSubtitle),
               _buildItem(
-                "Date",
+                S.current.pingInfoDateLabel,
                 FormatUtils.getTimestampLabel(result.startTime, showTime: true),
               ),
               _buildItem(
-                  "Duration", FormatUtils.getDurationLabel(result.duration)),
+                S.current.pingInfoDurationLabel,
+                FormatUtils.getDurationLabel(result.duration),
+              ),
               Container(height: 24.0),
-              _buildHeader("Settings"),
-              _buildItem("Count", "${result.settings.count} x"),
-              _buildItem("Packet size", "${result.settings.packetSize} B"),
-              _buildItem("Send interval", "${result.settings.interval} s"),
-              _buildItem("Timeout", "${result.settings.timeout} s"),
+              _buildHeader(S.current.pingInfoSettingsSubtitle),
+              _buildItem(
+                S.current.settingsPingCountLabel,
+                "${result.settings.count} ${S.current.settingsPingCountUnit}",
+              ),
+              _buildItem(
+                S.current.settingsPingPacketSizeLabel,
+                "${result.settings.packetSize}  ${S.current.settingsPingPacketSizeUnit}",
+              ),
+              _buildItem(
+                S.current.settingsPingIntervalLabel,
+                "${result.settings.interval}  ${S.current.settingsPingIntervalUnit}",
+              ),
+              _buildItem(
+                S.current.settingsPingTimeoutLabel,
+                "${result.settings.timeout}  ${S.current.settingsPingTimeoutUnit}",
+              ),
             ],
           ),
         ),

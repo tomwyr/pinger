@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/result_details_page.dart';
@@ -69,7 +70,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         : AppBar(
             leading: CloseButton(),
             centerTitle: true,
-            title: Text("Archive"),
+            title: Text(S.current.archivePageTitle),
             actions: <Widget>[
               if (hasResults)
                 AnimatedInkIcon(
@@ -109,13 +110,13 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
         Container(height: 32.0),
         Text(
-          "There't nothing here yet",
+          S.current.nothingToShowTitle,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         Container(height: 32.0),
         Text(
-          "Save results after pinging a host or let the app make it each time automatically in settings",
+          S.current.archiveEmptyDesc,
           style: TextStyle(fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -123,7 +124,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
           child: RaisedButton(
-            child: Text("Start now"),
+            child: Text(S.current.startNowButtonLabel),
             onPressed: () =>
                 pushAndRemoveUntil(SearchPage(), (it) => it.isFirst),
           ),

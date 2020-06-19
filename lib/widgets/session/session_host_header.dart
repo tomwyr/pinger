@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/common/collapsing_header.dart';
 import 'package:pinger/widgets/tiles/host_icon_tile.dart';
@@ -23,7 +24,7 @@ class SessionHostHeader extends StatelessWidget {
     return CollapsingHeader(
       isExpanded: isExpanded,
       duration: animDuration,
-      title: "Session",
+      title: S.current.sessionPageTitle,
       builder: (_, expansion, content) => Padding(
         padding: EdgeInsets.only(
           left: 32.0 * expansion,

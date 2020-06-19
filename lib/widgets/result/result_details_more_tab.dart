@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
@@ -36,10 +37,9 @@ class _ResultDetailsMoreTabState extends State<ResultDetailsMoreTab> {
           if (widget.results.isEmpty)
             ResultDetailsPromptTab(
               image: Images.undrawEmpty,
-              title: "There’s nothing here yet",
-              description:
-                  "Other results will show up here once you finish at least one ping for this host",
-              buttonLabel: "Start now",
+              title: S.current.nothingToShowTitle,
+              description: S.current.resultOtherEmptyDesc,
+              buttonLabel: S.current.startNowButtonLabel,
               onButtonPressed: widget.onStartPingPressed,
             )
           else

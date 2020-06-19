@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/tiles/host_icon_tile.dart';
 
@@ -35,7 +36,7 @@ class ResultsGroupTile extends StatelessWidget {
           ),
           Container(height: 12.0),
           Text(
-            "$resultsCount results",
+            S.current.resultsGroupCount(resultsCount),
             style: TextStyle(fontSize: 12.0, color: R.colors.gray),
           ),
           Spacer(),

@@ -1,8 +1,10 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/init_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -44,6 +46,12 @@ class _PingerAppState extends State<PingerApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        S.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       theme: R.themes.app,
       themeMode: R.themes.mode,
       title: "Pinger",

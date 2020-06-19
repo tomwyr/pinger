@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -80,45 +81,47 @@ abstract class NotificationStoreBase with Store {
     if (!_isSettingEnabled) {
       _clearNotification();
     } else if (!_isCheckingPermission) {
-      final session = pingStore.currentSession;
-      switch (session.status) {
-        case PingStatus.sessionStarted:
-          _showStartedNotification(session);
-          break;
-        case PingStatus.sessionPaused:
-          _showPausedNotification(session);
-          break;
-        case PingStatus.sessionDone:
-          _showDoneNotification(session);
-          break;
-        case PingStatus.initial:
-        case PingStatus.quickCheckDone:
-        case PingStatus.quickCheckStarted:
-          _clearNotification();
-          break;
-      }
+      _showSessionNotification(pingStore.currentSession);
     }
   }
 
-  void _showStartedNotification(PingSession session) {
-    final body = session.values.isNotEmpty
-        ? session.values.last != null
-            ? "Last result: ${session.values.last} ms"
-            : "Last result: -"
-        : "";
-    _showNotification("Ping started", body);
-  }
-
-  void _showPausedNotification(PingSession session) {
-    final body = "Progress: ${session.values.length}/${session.settings.count}";
-    _showNotification("Ping paused", body);
-  }
-
-  void _showDoneNotification(PingSession session) {
-    final body = session.stats != null
-        ? "Min: ${session.stats.min} ms / Mean: ${session.stats.mean} ms / Max: ${session.stats.max} ms"
-        : "";
-    _showNotification("Ping done", body);
+  void _showSessionNotification(PingSession session) {
+    switch (session.status) {
+      case PingStatus.sessionStarted:
+        _showNotification(
+          S.current.notificationStartedTitle,
+          session.values.isNotEmpty
+              ? S.current.notificationStartedBody(session.values.last ?? "-")
+              : "",
+        );
+        break;
+      case PingStatus.sessionPaused:
+        _showNotification(
+          S.current.notificationPausedTitle,
+          S.current.notificationPausedBody(
+            session.values.length,
+            session.settings.count,
+          ),
+        );
+        break;
+      case PingStatus.sessionDone:
+        _showNotification(
+          S.current.notificationDoneTitle,
+          session.stats != null
+              ? S.current.notificationDoneBody(
+                  session.stats.min,
+                  session.stats.mean,
+                  session.stats.max,
+                )
+              : "",
+        );
+        break;
+      case PingStatus.initial:
+      case PingStatus.quickCheckDone:
+      case PingStatus.quickCheckStarted:
+        _clearNotification();
+        break;
+    }
   }
 
   void _showNotification(String title, String body) {

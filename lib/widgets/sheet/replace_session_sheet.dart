@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/sheet/pinger_bottom_sheet.dart';
 
@@ -10,31 +11,34 @@ class ReplaceSessionSheet {
     @required VoidCallback onAcceptPressed,
   }) async {
     final subStyle = R.styles.bottomSheetSubtitle;
+    final subPaths = S.current
+        .replaceSessionSheetSubtitle(currentHost, newHost)
+        .split(RegExp("($currentHost|$newHost)"));
     await PingerBottomSheet.show(
       context,
       title: Text(
-        "Another session running",
+        S.current.replaceSessionSheetTitle,
         style: R.styles.bottomSheetTitle,
       ),
       subtitle: RichText(
         text: TextSpan(children: [
           TextSpan(
-            text: "Do you want to stop current session for ",
+            text: subPaths[0],
             style: subStyle,
           ),
           TextSpan(
             text: currentHost,
             style: subStyle.copyWith(color: R.colors.primaryLight),
           ),
-          TextSpan(text: " and start new one for ", style: subStyle),
+          TextSpan(text: subPaths[1], style: subStyle),
           TextSpan(
-            text: currentHost,
+            text: newHost,
             style: subStyle.copyWith(color: R.colors.primaryLight),
           ),
-          TextSpan(text: String.fromCharCode(0x00A0) + "?", style: subStyle),
+          TextSpan(text: subPaths[2], style: subStyle),
         ]),
       ),
-      rejectLabel: "CANCEL",
+      rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: onAcceptPressed,
     );
   }

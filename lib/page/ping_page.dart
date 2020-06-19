@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/search_page.dart';
@@ -81,7 +82,7 @@ class _PingPageState extends BaseState<PingPage> {
       buttons: [
         SessionHostButton(
           icon: Icons.edit,
-          label: "Edit",
+          label: S.current.sessionEditButtonLabel,
           enabled: true,
           active: false,
           onPressed: () => pushReplacement(SearchPage(
@@ -90,7 +91,7 @@ class _PingPageState extends BaseState<PingPage> {
         ),
         SessionHostButton(
           icon: Icons.bookmark,
-          label: "Favorite",
+          label: S.current.sessionFavoriteButtonLabel,
           enabled: true,
           active: isFavorite,
           onPressed: () => isFavorite
@@ -99,7 +100,7 @@ class _PingPageState extends BaseState<PingPage> {
         ),
         SessionHostButton(
           icon: Icons.tune,
-          label: "Adjust",
+          label: S.current.sessionAdjustButtonLabel,
           enabled: true,
           active: didChangeSettings,
           onPressed: _showSettingsSheet,
@@ -111,10 +112,13 @@ class _PingPageState extends BaseState<PingPage> {
   void _showSettingsSheet() async {
     await PingerBottomSheet.show(
       context,
-      rejectLabel: "RESET",
-      title: Text("Ping settings", style: R.styles.bottomSheetTitle),
+      rejectLabel: S.current.resetButtonLabel,
+      title: Text(
+        S.current.pingSettingsSheetTitle,
+        style: R.styles.bottomSheetTitle,
+      ),
       subtitle: Text(
-        "Changes will be applied only for current sesion",
+        S.current.pingSettingsSheetSubtitle,
         style: R.styles.bottomSheetSubtitle,
       ),
       onRejectPressed: _pingStore.clearSettings,
@@ -148,13 +152,13 @@ class _PingPageState extends BaseState<PingPage> {
           ),
           Container(height: 24.0),
           Text(
-            "Tap button to start pinging",
+            S.current.sessionStartPromptTitle,
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Container(height: 24.0),
           Text(
-            "Long press the button to quickly ping the host just a several times",
+            S.current.sessionStartPromptDesc,
             style: TextStyle(fontSize: 18.0),
             textAlign: TextAlign.center,
           ),

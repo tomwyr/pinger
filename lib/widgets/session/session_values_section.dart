@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/widgets/session/session_ping_gauge.dart';
 import 'package:pinger/widgets/session/session_values_chart.dart';
@@ -46,16 +47,16 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
               padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Row(children: <Widget>[
                 Text(
-                  "Results",
+                  S.current.sessionResultsSubtitle,
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
                 if (widget.session.status.isSession)
                   Expanded(
                     child: ViewTypeRow(
-                      types: const {
-                        PingValuesType.gauge: "Gauge",
-                        PingValuesType.list: "List",
-                        PingValuesType.chart: "Chart",
+                      types: {
+                        PingValuesType.gauge: S.current.viewTypeGaugleLabel,
+                        PingValuesType.list: S.current.viewTypeListLabel,
+                        PingValuesType.chart: S.current.viewTypeChartLabel,
                       },
                       selection: widget.viewType,
                       onChanged: widget.onViewTypeChanged,

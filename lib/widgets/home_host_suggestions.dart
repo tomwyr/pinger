@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/page/favorites_page.dart';
@@ -69,7 +70,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           ),
           bottomItem: widget.session != null
               ? HomeHostsSection(
-                  title: "Current",
+                  title: S.current.homeCurrentSubtitle,
                   hosts: [widget.session.host],
                   itemLimit: 1,
                   tileType: HostTileType.highlighted,
@@ -81,8 +82,8 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
       SliverToBoxAdapter(child: Container(height: 24.0)),
       SliverToBoxAdapter(
         child: HomeHostsSection(
-          title: "Favorites",
-          emptyLabel: "Bookmark pinged hosts to access them easily",
+          title: S.current.homeFavoritesSubtitle,
+          emptyLabel: S.current.homeFavoritesEmptyPlaceholder,
           hosts: widget.favorites,
           itemLimit: 5,
           onItemPressed: widget.onItemPressed,
@@ -92,8 +93,8 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
       SliverToBoxAdapter(child: Container(height: 32.0)),
       SliverToBoxAdapter(
         child: HomeHostsSection(
-          title: "Recents",
-          emptyLabel: "Latest host will show up here after you ping one",
+          title: S.current.homeRecentsSubtitle,
+          emptyLabel: S.current.homeRecentsEmptyPlaceholder,
           hosts: widget.stats.keys.toList(),
           itemLimit: 5,
           onItemPressed: widget.onItemPressed,
@@ -104,7 +105,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
         SliverToBoxAdapter(child: Container(height: 32.0)),
         SliverToBoxAdapter(
           child: HomeHostsSection(
-            title: "Popular",
+            title: S.current.homePopularSubtitle,
             hosts: widget.popular,
             itemLimit: widget.popular.length,
             onItemPressed: widget.onItemPressed,

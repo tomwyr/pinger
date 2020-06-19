@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/settings/settings_items.dart';
@@ -20,38 +21,31 @@ class PingSettingsSection extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        if (showHeader) SettingsHeaderItem(title: "Ping"),
+        if (showHeader)
+          SettingsHeaderItem(title: S.current.settingsPingSectionTitle),
         PingSettingItem(
-          label: "Count",
-          unit: "x",
+          label: S.current.settingsPingCountLabel,
+          unit: S.current.settingsPingCountUnit,
           value: settings.count,
-          onChanged: (it) => onChanged(settings.copyWith(
-            count: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(count: it)),
         ),
         PingSettingItem(
-          label: "Packet size",
-          unit: "B",
+          label: S.current.settingsPingPacketSizeLabel,
+          unit: S.current.settingsPingPacketSizeUnit,
           value: settings.packetSize,
-          onChanged: (it) => onChanged(settings.copyWith(
-            packetSize: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(packetSize: it)),
         ),
         PingSettingItem(
-          label: "Interval",
-          unit: "s",
+          label: S.current.settingsPingIntervalLabel,
+          unit: S.current.settingsPingIntervalUnit,
           value: settings.interval,
-          onChanged: (it) => onChanged(settings.copyWith(
-            interval: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(interval: it)),
         ),
         PingSettingItem(
-          label: "Timeout",
-          unit: "s",
+          label: S.current.settingsPingTimeoutLabel,
+          unit: S.current.settingsPingTimeoutUnit,
           value: settings.timeout,
-          onChanged: (it) => onChanged(settings.copyWith(
-            timeout: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(timeout: it)),
         )
       ],
     );
@@ -73,31 +67,24 @@ class OtherSettingsSection extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SettingsHeaderItem(title: "Other"),
+        SettingsHeaderItem(title: S.current.settingsOtherSectionTitle),
         SwitchSettingItem(
-          label: "Restore host",
-          description:
-              "Application will automatically proceed to new session with latest host",
+          label: S.current.settingsRestoreHostTitle,
+          description: S.current.settingsRestoreHostDesc,
           value: settings.restoreHost,
-          onChanged: (it) => onChanged(settings.copyWith(
-            restoreHost: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(restoreHost: it)),
         ),
         SwitchSettingItem(
-          label: "System notification",
-          description:
-              "Application will show current status of running session in system tray",
+          label: S.current.settingsSystemNotificationTitle,
+          description: S.current.settingsSystemNotificationDesc,
           value: settings.showSystemNotification,
-          onChanged: (it) => onChanged(settings.copyWith(
-            showSystemNotification: it,
-          )),
+          onChanged: (it) =>
+              onChanged(settings.copyWith(showSystemNotification: it)),
         ),
         SwitchSettingItem(
-          label: "Night mode",
+          label: S.current.settingsNightModeTitle,
           value: settings.nightMode,
-          onChanged: (it) => onChanged(settings.copyWith(
-            nightMode: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(nightMode: it)),
         )
       ],
     );
@@ -119,25 +106,19 @@ class ShareSettingsSection extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SettingsHeaderItem(title: "Results"),
+        SettingsHeaderItem(title: S.current.settingsResultsSectionTitle),
         SwitchSettingItem(
-          label: "Share results",
-          description:
-              "Results statistics will be sent to allow other application users to compare their results",
+          label: S.current.settingsShareResultsLabel,
+          description: S.current.settingsShareResultsDesc,
           value: settings.shareResults,
-          onChanged: (it) => onChanged(settings.copyWith(
-            shareResults: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(shareResults: it)),
         ),
         SwitchSettingItem(
-          label: "Attach location",
-          description:
-              "Current location will be attached to statistics data to allow present it on global results map",
+          label: S.current.settingsAttachLocationTitle,
+          description: S.current.settingsAttachLocationDesc,
           enabled: settings.shareResults,
           value: settings.attachLocation,
-          onChanged: (it) => onChanged(settings.copyWith(
-            attachLocation: it,
-          )),
+          onChanged: (it) => onChanged(settings.copyWith(attachLocation: it)),
         ),
       ],
     );
@@ -163,7 +144,7 @@ class SettingsFooterSection extends StatelessWidget {
           child: ButtonTheme.fromButtonThemeData(
             data: R.themes.raisedButton,
             child: RaisedButton(
-              child: Text("Show intro"),
+              child: Text(S.current.showIntroButtonLabel),
               onPressed: onShowIntroPressed,
             ),
           ),
@@ -174,7 +155,7 @@ class SettingsFooterSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Version",
+                S.current.appVersion,
                 style: TextStyle(fontSize: 18.0, color: R.colors.gray),
               ),
               Container(width: 12.0),

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
@@ -49,10 +50,9 @@ class ResultDetailsGlobalTab extends StatelessWidget {
   Widget _buildShareLocationRequest() {
     return ResultDetailsPromptTab(
       image: Images.undrawTheWorldIsMine,
-      title: "Enable location to see your result compared with others",
-      description:
-          "Your location will be used to match it with your result and to present it for other users.",
-      buttonLabel: "Share location",
+      title: S.current.enableLocationPromptTitle,
+      description: S.current.enableLocationPromptDesc,
+      buttonLabel: S.current.shareLocationButtonLabel,
       onButtonPressed: onShareLocationPressed,
     );
   }
@@ -78,7 +78,7 @@ class ResultDetailsGlobalTab extends StatelessWidget {
       Container(height: 24.0),
       Center(
         child: Text(
-          "There's nothing interesting here",
+          S.current.nothingToShowTitle,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
@@ -86,7 +86,7 @@ class ResultDetailsGlobalTab extends StatelessWidget {
       Container(height: 24.0),
       Center(
         child: Text(
-          "Check again after some time when there's data available for this host",
+          S.current.resultGlobalEmptyDesc,
           style: TextStyle(fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -109,10 +109,9 @@ class ResultDetailsGlobalTab extends StatelessWidget {
   Widget _buildResultsError() {
     return ResultDetailsPromptTab(
       image: Images.undrawServerDown,
-      title: "Couldn't fetch data",
-      description:
-          "We could not find anything for given query but you can still use it as host",
-      buttonLabel: "Try again",
+      title: S.current.dataFetchFailedTitle,
+      description: S.current.dataFetchFailedDesc,
+      buttonLabel: S.current.tryAgainButtonLabel,
       onButtonPressed: onRefreshPressed,
     );
   }
@@ -166,8 +165,10 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
   List<Widget> _buildResultsData(int userValue, Map<int, int> globalValues) {
     return [
       ..._buildGlobalSection(
-        "Results by location",
-        "Ping value for others was ${_calcTypeMeanValue(globalValues)} ms",
+        S.current.pingGlobalByLocationSubtitle,
+        S.current.pingGlobalByLocationDesc(
+          _calcTypeMeanValue(globalValues),
+        ),
         DottedMap(
           dots: _getMapDots(widget.globalResults),
           dotColor: ColorTween(
@@ -178,8 +179,10 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         ),
       ),
       ..._buildGlobalSection(
-        "Results by frequency",
-        "Your ping was better than ${_calcFrequencyPercent(userValue, globalValues)}% of others",
+        S.current.pingGlobalByFrequencySubtitle,
+        S.current.pingGlobalByFrequencyDesc(
+          _calcFrequencyPercent(userValue, globalValues),
+        ),
         Expanded(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -243,15 +246,15 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         height: ViewTypeButton.height,
         child: Row(children: <Widget>[
           Text(
-            "Your result",
+            S.current.pingGlobalYourResult,
             style: TextStyle(fontSize: 18.0, color: R.colors.gray),
           ),
           Expanded(
             child: ViewTypeRow(
-              types: const {
-                UserResultType.max: "Max",
-                UserResultType.mean: "Mean",
-                UserResultType.min: "Min",
+              types: {
+                UserResultType.max: S.current.viewTypeMax,
+                UserResultType.mean: S.current.viewTypeMean,
+                UserResultType.min: S.current.viewTypeMin,
               },
               selection: _resultType,
               onChanged: (it) => setState(() => _resultType = it),
@@ -261,7 +264,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       ),
       Container(height: 4.0),
       Text(
-        "$userValue ms",
+        S.current.pingValueLabel(userValue),
         style: TextStyle(fontSize: 36.0),
       ),
       Container(height: 4.0),

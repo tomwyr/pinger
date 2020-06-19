@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
 
@@ -54,7 +55,7 @@ class HomeHostsSection extends StatelessWidget {
           GestureDetector(
             onTap: onMorePressed,
             child: Text(
-              "More",
+              S.current.moreHostsButtonLabel,
               style: TextStyle(color: R.colors.secondary),
             ),
           )
@@ -80,7 +81,7 @@ class HomeHostsSection extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 0.0),
               child: Text(
-                "+ ${hosts.length - itemLimit} more",
+                S.current.moreHostsCountButtonLabel(hosts.length - itemLimit),
                 style: TextStyle(color: R.colors.gray),
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/intro_page.dart';
 import 'package:pinger/resources.dart';
@@ -22,7 +23,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         leading: CloseButton(),
-        title: Text("Settings"),
+        title: Text(S.current.settingsPageTitle),
         centerTitle: true,
       ),
       body: Observer(builder: (_) {

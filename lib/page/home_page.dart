@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/archive_page.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/intro_page.dart';
@@ -39,7 +40,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
           icon: Icon(Icons.settings),
           onPressed: () => push(SettingsPage()),
         ),
-        title: Text("Pinger"),
+        title: Text(S.current.homePageTitle),
         centerTitle: true,
         actions: <Widget>[
           SizedBox.fromSize(
@@ -83,13 +84,13 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         Image(image: Images.undrawRoadSign, width: 144.0, height: 144.0),
         Container(height: 24.0),
         Text(
-          "Looks like there's nothing here yet",
+          S.current.nothingToShowTitle,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         Container(height: 24.0),
         Text(
-          "Use search field above to choose host to ping or see intro explaining app concept",
+          S.current.homeIntroDesc,
           style: TextStyle(fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -97,14 +98,17 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
           child: RaisedButton(
-            child: Text("Show intro"),
+            child: Text(S.current.showIntroButtonLabel),
             onPressed: () => push(IntroPage()).then((_) => onIntroDone()),
           ),
         ),
         Container(height: 8.0),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.flatButton,
-          child: FlatButton(child: Text("SKIP"), onPressed: onIntroDone),
+          child: FlatButton(
+            child: Text(S.current.skipButtonLabel),
+            onPressed: onIntroDone,
+          ),
         ),
         Container(height: 16.0),
       ]),
@@ -117,7 +121,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
       readOnly: true,
       onTap: () => push(SearchPage()),
       decoration: InputDecoration(
-        hintText: "Search host to ping",
+        hintText: S.current.searchHostHint,
         contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
         fillColor: R.colors.grayLight,
         filled: true,

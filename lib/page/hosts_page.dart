@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
@@ -51,14 +52,14 @@ class _HostsPageState extends BaseState<HostsPage> {
     PingerBottomSheet.show(
       context,
       title: Text(
-        "Do you want to remove selected hosts?",
+        S.current.confirmHostRemoveTitle,
         style: R.styles.bottomSheetTitle,
       ),
       subtitle: Text(
-        "This action is irreversible",
+        S.current.confirmRemoveDesc,
         style: R.styles.bottomSheetSubtitle,
       ),
-      rejectLabel: "CANCEL",
+      rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: onConfirmed,
     );
   }
@@ -106,7 +107,7 @@ class _HostsPageState extends BaseState<HostsPage> {
       child: Scaffold(
         appBar: AppBar(
           leading: CloseButton(onPressed: _onBackPressed),
-          title: Text(!_isEditing ? widget.title : "Remove"),
+          title: Text(!_isEditing ? widget.title : S.current.removeHostsTitle),
           centerTitle: true,
           actions: <Widget>[
             SizedBox.fromSize(
@@ -127,37 +128,39 @@ class _HostsPageState extends BaseState<HostsPage> {
               vertical: 16.0,
             ),
             itemCount: widget.hosts.length,
-            itemBuilder: (_, index) {
-              final item = widget.hosts[index];
-              return Padding(
-                padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
-                child: HostTile(
-                  host: item,
-                  type: !_isEditing
-                      ? HostTileType.regular
-                      : _selection.contains(item)
-                          ? HostTileType.removableSelected
-                          : HostTileType.removable,
-                  trailing: !_isEditing
-                      ? Container(
-                          width: 40.0,
-                          child: Text(
-                            widget.getTrailingLabel(item),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: R.colors.gray,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        )
-                      : null,
-                  onPressed: () => _onItemPressed(item),
-                  onLongPress: () => _onItemLongPress(item),
-                ),
-              );
-            },
+            itemBuilder: (_, index) => _buildHostItem(index),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildHostItem(int index) {
+    final item = widget.hosts[index];
+    return Padding(
+      padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
+      child: HostTile(
+        host: item,
+        type: !_isEditing
+            ? HostTileType.regular
+            : _selection.contains(item)
+                ? HostTileType.removableSelected
+                : HostTileType.removable,
+        trailing: !_isEditing
+            ? Container(
+                width: 40.0,
+                child: Text(
+                  widget.getTrailingLabel(item),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: R.colors.gray,
+                    fontSize: 14.0,
+                  ),
+                ),
+              )
+            : null,
+        onPressed: () => _onItemPressed(item),
+        onLongPress: () => _onItemLongPress(item),
       ),
     );
   }

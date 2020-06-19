@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/page/hosts_page.dart';
 import 'package:pinger/store/favorites_store.dart';
@@ -29,9 +30,10 @@ class _FavoritesPageState extends BaseState<FavoritesPage> with HostTapHandler {
           return stats[e2].pingCount.compareTo(stats[e1].pingCount);
         });
       return HostsPage(
-        title: "Favorites",
+        title: S.current.favoritesPageTitle,
         hosts: hosts,
-        getTrailingLabel: (it) => "${stats[it]?.pingCount ?? 0} x",
+        getTrailingLabel: (it) =>
+            S.current.pingCountLabel(stats[it]?.pingCount ?? 0),
         removeHosts: _favoritesStore.removeFavorites,
         onHostSelected: (it) => onHostTap(_pingStore, it),
       );

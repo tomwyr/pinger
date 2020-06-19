@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/page/base_page.dart';
 import 'package:pinger/resources.dart';
 
@@ -96,26 +97,26 @@ class _IntroPageState extends BaseState<IntroPage> {
         _buildItem(
           0,
           Images.undrawSearching,
-          "Select host",
-          "Either pick one of the search results or enter your own host and confirm your choice",
+          S.current.introSelectHostTitle,
+          S.current.introSelectHostDesc,
         ),
         _buildItem(
           1,
           Images.undrawSettings,
-          "Adjust settings",
-          "Change host monitoring preferences and behavior of entire application",
+          S.current.introAdjustSettingsTitle,
+          S.current.introAdjustSettingsDesc,
         ),
         _buildItem(
           2,
           Images.undrawSignalSearching,
-          "Ping host",
-          "Either perform a quick ping by long pressing play button or tap it to start ping session",
+          S.current.introPingHostTitle,
+          S.current.introPingHostDesc,
         ),
         _buildItem(
           3,
           Images.undrawCollecting,
-          "Save results",
-          "Archive ping results to review them later and compare them with rest of the world",
+          S.current.introSaveResultsTitle,
+          S.current.introSaveResultsDesc,
         ),
       ],
     );
@@ -230,7 +231,7 @@ class _IntroPageState extends BaseState<IntroPage> {
         child: ButtonTheme.fromButtonThemeData(
           data: R.themes.flatButton,
           child: FlatButton(
-            child: Text("SKIP"),
+            child: Text(S.current.skipButtonLabel),
             onPressed: value < 1.0 ? pop : null,
           ),
         ),
@@ -266,7 +267,7 @@ class _IntroPageState extends BaseState<IntroPage> {
                       padding: const EdgeInsets.only(right: 12.0),
                       child: Opacity(
                         opacity: expansion,
-                        child: Text("Get started"),
+                        child: Text(S.current.getStartedButtonLabel),
                       ),
                     ),
                   ),

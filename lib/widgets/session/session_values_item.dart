@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
 class SessionValuesItem extends StatelessWidget {
@@ -83,7 +84,7 @@ class SessionValuesItem extends StatelessWidget {
   Widget _buildValue() {
     return Expanded(
       child: Text(
-        result != null ? "$result ms" : "-",
+        result != null ? S.current.pingValueLabel(result) : "-",
         style: TextStyle(fontSize: 18.0),
         textAlign: TextAlign.center,
       ),

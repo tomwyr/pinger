@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
@@ -30,7 +31,10 @@ class ResultDetailsHeader extends StatelessWidget {
             height: minExtent,
             margin: const EdgeInsets.symmetric(horizontal: 48.0),
             child: Center(
-              child: Text("Result", style: R.styles.appBarTitle),
+              child: Text(
+                S.current.resultPageTitle,
+                style: R.styles.appBarTitle,
+              ),
             ),
           ),
         ),
@@ -114,15 +118,15 @@ class ResultDetailsHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         _buildSummaryItem(
-          "Ping count",
+          S.current.pingSummaryCountLabel,
           result.values.length.toString(),
         ),
         _buildSummaryItem(
-          "Duration",
+          S.current.pingSummaryDurationLabel,
           FormatUtils.getDurationLabel(result.duration),
         ),
         _buildSummaryItem(
-          "Date",
+          S.current.pingSummaryDateLabel,
           FormatUtils.getTimestampLabel(result.startTime),
         ),
       ],

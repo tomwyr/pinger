@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/widgets/session/session_summary_section.dart';
 import 'package:pinger/widgets/session/session_values_chart.dart';
@@ -56,14 +57,14 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
             Container(height: 16.0),
             Row(children: <Widget>[
               Text(
-                "Results",
+                S.current.resultResultsSubtitle,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
               Expanded(
                 child: ViewTypeRow(
-                  types: const {
-                    PingValuesType.list: "List",
-                    PingValuesType.chart: "Chart"
+                  types: {
+                    PingValuesType.list: S.current.viewTypeListLabel,
+                    PingValuesType.chart: S.current.viewTypeChartLabel,
                   },
                   selection: _viewType,
                   onChanged: (it) => setState(() => _viewType = it),

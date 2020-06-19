@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 
@@ -22,30 +23,54 @@ class SessionSummarySection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          "Summary",
+          S.current.sessionSummarySubtitle,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         Container(height: 12.0),
         Text(
-          "Progress",
+          S.current.sessionPingCountsSubtitle,
           style: TextStyle(fontWeight: FontWeight.bold, color: R.colors.gray),
         ),
         Container(height: 8.0),
         Row(children: <Widget>[
-          _buildSummaryItem("Success", R.colors.pingSuccessful, successCount),
-          _buildSummaryItem("Failed", R.colors.pingFailed, failedCount),
-          _buildSummaryItem("Total", R.colors.pingTotal, totalCount),
+          _buildSummaryItem(
+            S.current.pingSuccessCountLabel,
+            R.colors.pingSuccessful,
+            successCount,
+          ),
+          _buildSummaryItem(
+            S.current.pingFailedCountLabel,
+            R.colors.pingFailed,
+            failedCount,
+          ),
+          _buildSummaryItem(
+            S.current.pingTotalCountLabel,
+            R.colors.pingTotal,
+            totalCount,
+          ),
         ]),
         Container(height: 12.0),
         Text(
-          "Ping",
+          S.current.sessionPingValuesSubtitle,
           style: TextStyle(fontWeight: FontWeight.bold, color: R.colors.gray),
         ),
         Container(height: 8.0),
         Row(children: <Widget>[
-          _buildSummaryItem("Min", R.colors.pingMin, stats?.min),
-          _buildSummaryItem("Mean", R.colors.pingMean, stats?.mean),
-          _buildSummaryItem("Max", R.colors.pingMax, stats?.max),
+          _buildSummaryItem(
+            S.current.pingMinCountLabel,
+            R.colors.pingMin,
+            stats?.min,
+          ),
+          _buildSummaryItem(
+            S.current.pingMeanCountLabel,
+            R.colors.pingMean,
+            stats?.mean,
+          ),
+          _buildSummaryItem(
+            S.current.pingMaxValueLabel,
+            R.colors.pingMax,
+            stats?.max,
+          ),
         ])
       ],
     );

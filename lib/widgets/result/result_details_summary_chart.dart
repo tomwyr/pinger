@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/widgets/charts/result_summary_chart.dart';
@@ -104,7 +105,7 @@ class ResultDetailsSummaryChart extends StatelessWidget {
           color: R.colors.canvas,
         ),
         child: Text(
-          "$value ms",
+          S.current.pingValueLabel(value),
           style: TextStyle(color: R.colors.secondary, fontSize: 12.0),
         ),
       ),

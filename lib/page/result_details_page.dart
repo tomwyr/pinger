@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/page/base_page.dart';
@@ -105,10 +106,10 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
         labelColor: R.colors.secondary,
         indicatorColor: R.colors.secondary,
         tabs: [
-          Tab(text: "Results"),
-          Tab(text: "Global"),
-          Tab(text: "Info"),
-          Tab(text: "More"),
+          Tab(text: S.current.resultsResultsTabLabel),
+          Tab(text: S.current.resultsGlobalTabLabel),
+          Tab(text: S.current.resultsInfoTabLabel),
+          Tab(text: S.current.resultsMoreTabLabel),
         ],
       ),
     );
@@ -118,14 +119,14 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     PingerBottomSheet.show(
       context,
       title: Text(
-        "Do you want to delete this result?",
+        S.current.confirmResultRemoveTitle,
         style: R.styles.bottomSheetTitle,
       ),
       subtitle: Text(
-        "This actions is irreversible",
+        S.current.confirmRemoveDesc,
         style: R.styles.bottomSheetSubtitle,
       ),
-      rejectLabel: "CANCEL",
+      rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: () {
         pop();
         pop();
