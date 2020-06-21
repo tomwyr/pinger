@@ -43,16 +43,6 @@ class S {
     );
   }
 
-  /// `There't nothing here yet`
-  String get nothingToShowTitle {
-    return Intl.message(
-      'There\'t nothing here yet',
-      name: 'nothingToShowTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Favorites`
   String get favoritesPageTitle {
     return Intl.message(
@@ -73,20 +63,70 @@ class S {
     );
   }
 
-  /// `Search host to ping`
+  /// `Settings`
+  String get settingsPageTitle {
+    return Intl.message(
+      'Settings',
+      name: 'settingsPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recents`
+  String get recentsPageTitle {
+    return Intl.message(
+      'Recents',
+      name: 'recentsPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session`
+  String get sessionPageTitle {
+    return Intl.message(
+      'Session',
+      name: 'sessionPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Results`
+  String get resultPageTitle {
+    return Intl.message(
+      'Results',
+      name: 'resultPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There't nothing here yet`
+  String get nothingToShowTitle {
+    return Intl.message(
+      'There\'t nothing here yet',
+      name: 'nothingToShowTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for host...`
   String get searchHostHint {
     return Intl.message(
-      'Search host to ping',
+      'Search for host...',
       name: 'searchHostHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `Do you want to remove selected hosts?`
+  /// `Remove selected items?`
   String get confirmHostRemoveTitle {
     return Intl.message(
-      'Do you want to remove selected hosts?',
+      'Remove selected items?',
       name: 'confirmHostRemoveTitle',
       desc: '',
       args: [],
@@ -123,6 +163,56 @@ class S {
     );
   }
 
+  /// `Try again`
+  String get tryAgainButtonLabel {
+    return Intl.message(
+      'Try again',
+      name: 'tryAgainButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get started`
+  String get getStartedButtonLabel {
+    return Intl.message(
+      'Get started',
+      name: 'getStartedButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share location`
+  String get shareLocationButtonLabel {
+    return Intl.message(
+      'Share location',
+      name: 'shareLocationButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More`
+  String get moreHostsButtonLabel {
+    return Intl.message(
+      'More',
+      name: 'moreHostsButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ {count} more`
+  String moreHostsCountButtonLabel(Object count) {
+    return Intl.message(
+      '+ $count more',
+      name: 'moreHostsCountButtonLabel',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `SKIP`
   String get skipButtonLabel {
     return Intl.message(
@@ -138,136 +228,6 @@ class S {
     return Intl.message(
       'CANCEL',
       name: 'cancelButtonLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Settings`
-  String get settingsPageTitle {
-    return Intl.message(
-      'Settings',
-      name: 'settingsPageTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Save results after pinging a host or let the app make it each time automatically in settings`
-  String get archiveEmptyDesc {
-    return Intl.message(
-      'Save results after pinging a host or let the app make it each time automatically in settings',
-      name: 'archiveEmptyDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Use search field above to choose host to ping or see intro explaining app concept`
-  String get homeIntroDesc {
-    return Intl.message(
-      'Use search field above to choose host to ping or see intro explaining app concept',
-      name: 'homeIntroDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No results found`
-  String get searchResultsEmptyTitle {
-    return Intl.message(
-      'No results found',
-      name: 'searchResultsEmptyTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `We could not find anything for given query but you can still use it as host`
-  String get searchResultsEmptyDesc {
-    return Intl.message(
-      'We could not find anything for given query but you can still use it as host',
-      name: 'searchResultsEmptyDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Try again`
-  String get tryAgainButtonLabel {
-    return Intl.message(
-      'Try again',
-      name: 'tryAgainButtonLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Do you want to delete this result?`
-  String get confirmResultRemoveTitle {
-    return Intl.message(
-      'Do you want to delete this result?',
-      name: 'confirmResultRemoveTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This actions is irreversible`
-  String get confirmRemoveDesc {
-    return Intl.message(
-      'This actions is irreversible',
-      name: 'confirmRemoveDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `More`
-  String get resultsMoreTabLabel {
-    return Intl.message(
-      'More',
-      name: 'resultsMoreTabLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Info`
-  String get resultsInfoTabLabel {
-    return Intl.message(
-      'Info',
-      name: 'resultsInfoTabLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Global`
-  String get resultsGlobalTabLabel {
-    return Intl.message(
-      'Global',
-      name: 'resultsGlobalTabLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Results`
-  String get resultsResultsTabLabel {
-    return Intl.message(
-      'Results',
-      name: 'resultsResultsTabLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Recents`
-  String get recentsPageTitle {
-    return Intl.message(
-      'Recents',
-      name: 'recentsPageTitle',
       desc: '',
       args: [],
     );
@@ -313,6 +273,116 @@ class S {
     );
   }
 
+  /// `See short intro that presents main functionalities of the app`
+  String get homeIntroTitle {
+    return Intl.message(
+      'See short intro that presents main functionalities of the app',
+      name: 'homeIntroTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or skip intro and start using the app right away`
+  String get homeIntroDesc {
+    return Intl.message(
+      'Or skip intro and start using the app right away',
+      name: 'homeIntroDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save results after pinging a host to see them later here`
+  String get archiveEmptyDesc {
+    return Intl.message(
+      'Save results after pinging a host to see them later here',
+      name: 'archiveEmptyDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No results found`
+  String get searchResultsEmptyTitle {
+    return Intl.message(
+      'No results found',
+      name: 'searchResultsEmptyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are no hosts matching given query - you can still select and try to ping it`
+  String get searchResultsEmptyDesc {
+    return Intl.message(
+      'There are no hosts matching given query - you can still select and try to ping it',
+      name: 'searchResultsEmptyDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete this result?`
+  String get confirmResultRemoveTitle {
+    return Intl.message(
+      'Delete this result?',
+      name: 'confirmResultRemoveTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This action is irreversible`
+  String get confirmRemoveDesc {
+    return Intl.message(
+      'This action is irreversible',
+      name: 'confirmRemoveDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get resultsMoreTabLabel {
+    return Intl.message(
+      'Other',
+      name: 'resultsMoreTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More`
+  String get resultsInfoTabLabel {
+    return Intl.message(
+      'More',
+      name: 'resultsInfoTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Compare`
+  String get resultsGlobalTabLabel {
+    return Intl.message(
+      'Compare',
+      name: 'resultsGlobalTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Results`
+  String get resultsResultsTabLabel {
+    return Intl.message(
+      'Results',
+      name: 'resultsResultsTabLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ping settings`
   String get pingSettingsSheetTitle {
     return Intl.message(
@@ -323,41 +393,31 @@ class S {
     );
   }
 
-  /// `Changes will be applied only for current sesion`
+  /// `Changes will affect only current sesion`
   String get pingSettingsSheetSubtitle {
     return Intl.message(
-      'Changes will be applied only for current sesion',
+      'Changes will affect only current sesion',
       name: 'pingSettingsSheetSubtitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tap button to start pinging`
+  /// `Tap button to start new session`
   String get sessionStartPromptTitle {
     return Intl.message(
-      'Tap button to start pinging',
+      'Tap button to start new session',
       name: 'sessionStartPromptTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Long press the button to quickly ping the host just a several times`
+  /// `Long press button to send as many requests as needed`
   String get sessionStartPromptDesc {
     return Intl.message(
-      'Long press the button to quickly ping the host just a several times',
+      'Long press button to send as many requests as needed',
       name: 'sessionStartPromptDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Get started`
-  String get getStartedButtonLabel {
-    return Intl.message(
-      'Get started',
-      name: 'getStartedButtonLabel',
       desc: '',
       args: [],
     );
@@ -373,10 +433,10 @@ class S {
     );
   }
 
-  /// `Either pick one of the search results or enter your own host and confirm your choice`
+  /// `Either pick one of hosts suggested on home screen, find it among hosts pinged by other users or enter your own`
   String get introSelectHostDesc {
     return Intl.message(
-      'Either pick one of the search results or enter your own host and confirm your choice',
+      'Either pick one of hosts suggested on home screen, find it among hosts pinged by other users or enter your own',
       name: 'introSelectHostDesc',
       desc: '',
       args: [],
@@ -393,10 +453,10 @@ class S {
     );
   }
 
-  /// `Change host monitoring preferences and behavior of entire application`
+  /// `Change ping settings and preferences to adjust app behavior to your needs`
   String get introAdjustSettingsDesc {
     return Intl.message(
-      'Change host monitoring preferences and behavior of entire application',
+      'Change ping settings and preferences to adjust app behavior to your needs',
       name: 'introAdjustSettingsDesc',
       desc: '',
       args: [],
@@ -413,10 +473,10 @@ class S {
     );
   }
 
-  /// `Either perform a quick ping by long pressing play button or tap it to start ping session`
+  /// `Either perform a quick ping by long pressing ping button or tap it to start new session`
   String get introPingHostDesc {
     return Intl.message(
-      'Either perform a quick ping by long pressing play button or tap it to start ping session',
+      'Either perform a quick ping by long pressing ping button or tap it to start new session',
       name: 'introPingHostDesc',
       desc: '',
       args: [],
@@ -433,33 +493,13 @@ class S {
     );
   }
 
-  /// `Archive ping results to review them later and compare them with rest of the world`
+  /// `Archive ping results to get back to them later and compare them with other app users`
   String get introSaveResultsDesc {
     return Intl.message(
-      'Archive ping results to review them later and compare them with rest of the world',
+      'Archive ping results to get back to them later and compare them with other app users',
       name: 'introSaveResultsDesc',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `More`
-  String get moreHostsButtonLabel {
-    return Intl.message(
-      'More',
-      name: 'moreHostsButtonLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `+ {count} more`
-  String moreHostsCountButtonLabel(Object count) {
-    return Intl.message(
-      '+ $count more',
-      name: 'moreHostsCountButtonLabel',
-      desc: '',
-      args: [count],
     );
   }
 
@@ -473,10 +513,10 @@ class S {
     );
   }
 
-  /// `Bookmark pinged hosts to access them easily`
+  /// `Bookmark pinged hosts to quickly access them from here`
   String get homeFavoritesEmptyPlaceholder {
     return Intl.message(
-      'Bookmark pinged hosts to access them easily',
+      'Bookmark pinged hosts to quickly access them from here',
       name: 'homeFavoritesEmptyPlaceholder',
       desc: '',
       args: [],
@@ -493,10 +533,10 @@ class S {
     );
   }
 
-  /// `Latest host will show up here after you ping one`
+  /// `Latest hosts will show up here after they are pinged`
   String get homeRecentsEmptyPlaceholder {
     return Intl.message(
-      'Latest host will show up here after you ping one',
+      'Latest hosts will show up here after they are pinged',
       name: 'homeRecentsEmptyPlaceholder',
       desc: '',
       args: [],
@@ -583,20 +623,20 @@ class S {
     );
   }
 
-  /// `Another session running`
+  /// `Another session in progress`
   String get replaceSessionSheetTitle {
     return Intl.message(
-      'Another session running',
+      'Another session in progress',
       name: 'replaceSessionSheetTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Do you want to stop current session for {currentHost} and start new one for {newHost}?`
+  /// `Stop current session {currentHost} and start new one {newHost}?`
   String replaceSessionSheetSubtitle(Object currentHost, Object newHost) {
     return Intl.message(
-      'Do you want to stop current session for $currentHost and start new one for $newHost?',
+      'Stop current session $currentHost and start new one $newHost?',
       name: 'replaceSessionSheetSubtitle',
       desc: '',
       args: [currentHost, newHost],
@@ -623,21 +663,21 @@ class S {
     );
   }
 
-  /// `Other`
-  String get settingsOtherSectionTitle {
-    return Intl.message(
-      'Other',
-      name: 'settingsOtherSectionTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Results`
   String get settingsResultsSectionTitle {
     return Intl.message(
       'Results',
       name: 'settingsResultsSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get settingsOtherSectionTitle {
+    return Intl.message(
+      'Other',
+      name: 'settingsOtherSectionTitle',
       desc: '',
       args: [],
     );
@@ -663,10 +703,10 @@ class S {
     );
   }
 
-  /// `Results statistics will be sent to allow other application users to compare their results`
+  /// `Session statistics will be shared in order to allow other app users to compare them with their results`
   String get settingsShareResultsDesc {
     return Intl.message(
-      'Results statistics will be sent to allow other application users to compare their results',
+      'Session statistics will be shared in order to allow other app users to compare them with their results',
       name: 'settingsShareResultsDesc',
       desc: '',
       args: [],
@@ -683,10 +723,10 @@ class S {
     );
   }
 
-  /// `Current location will be attached to statistics data to allow present it on global results map`
+  /// `Current location will be attached to session statistics in order to comapre them on global results map`
   String get settingsAttachLocationDesc {
     return Intl.message(
-      'Current location will be attached to statistics data to allow present it on global results map',
+      'Current location will be attached to session statistics in order to comapre them on global results map',
       name: 'settingsAttachLocationDesc',
       desc: '',
       args: [],
@@ -713,30 +753,30 @@ class S {
     );
   }
 
-  /// `Application will show current status of running session in system tray`
+  /// `Current status of running ping sessions will appear in system tray`
   String get settingsSystemNotificationDesc {
     return Intl.message(
-      'Application will show current status of running session in system tray',
+      'Current status of running ping sessions will appear in system tray',
       name: 'settingsSystemNotificationDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Restore host`
+  /// `Remember host`
   String get settingsRestoreHostTitle {
     return Intl.message(
-      'Restore host',
+      'Remember host',
       name: 'settingsRestoreHostTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Application will automatically proceed to new session with latest host`
+  /// `New session will be automatically created for latest pinged host`
   String get settingsRestoreHostDesc {
     return Intl.message(
-      'Application will automatically proceed to new session with latest host',
+      'New session will be automatically created for latest pinged host',
       name: 'settingsRestoreHostDesc',
       desc: '',
       args: [],
@@ -833,10 +873,10 @@ class S {
     );
   }
 
-  /// `Gauge`
+  /// `Meter`
   String get viewTypeGaugleLabel {
     return Intl.message(
-      'Gauge',
+      'Meter',
       name: 'viewTypeGaugleLabel',
       desc: '',
       args: [],
@@ -933,10 +973,10 @@ class S {
     );
   }
 
-  /// `Ping`
+  /// `Statistics`
   String get sessionPingValuesSubtitle {
     return Intl.message(
-      'Ping',
+      'Statistics',
       name: 'sessionPingValuesSubtitle',
       desc: '',
       args: [],
@@ -1003,16 +1043,6 @@ class S {
     );
   }
 
-  /// `Session`
-  String get sessionPageTitle {
-    return Intl.message(
-      'Session',
-      name: 'sessionPageTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Results`
   String get resultResultsSubtitle {
     return Intl.message(
@@ -1023,30 +1053,20 @@ class S {
     );
   }
 
-  /// `Other results will show up here once you finish at least one ping for this host`
+  /// `Other results will show up here once there are more of them for this host`
   String get resultOtherEmptyDesc {
     return Intl.message(
-      'Other results will show up here once you finish at least one ping for this host',
+      'Other results will show up here once there are more of them for this host',
       name: 'resultOtherEmptyDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Result`
-  String get resultPageTitle {
-    return Intl.message(
-      'Result',
-      name: 'resultPageTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Ping count`
+  /// `Requests`
   String get pingSummaryCountLabel {
     return Intl.message(
-      'Ping count',
+      'Requests',
       name: 'pingSummaryCountLabel',
       desc: '',
       args: [],
@@ -1073,21 +1093,11 @@ class S {
     );
   }
 
-  /// `Check again after some time when there's data available for this host`
+  /// `Check again after some time when there is data available for this host`
   String get resultGlobalEmptyDesc {
     return Intl.message(
-      'Check again after some time when there\'s data available for this host',
+      'Check again after some time when there is data available for this host',
       name: 'resultGlobalEmptyDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Share location`
-  String get shareLocationButtonLabel {
-    return Intl.message(
-      'Share location',
-      name: 'shareLocationButtonLabel',
       desc: '',
       args: [],
     );
@@ -1123,10 +1133,10 @@ class S {
     );
   }
 
-  /// `Your location will be used to match it with your result and to present it for other users.`
+  /// `Current location will be attached to session statistics in order to comapre them on global results map`
   String get enableLocationPromptDesc {
     return Intl.message(
-      'Your location will be used to match it with your result and to present it for other users.',
+      'Current location will be attached to session statistics in order to comapre them on global results map',
       name: 'enableLocationPromptDesc',
       desc: '',
       args: [],
@@ -1163,20 +1173,20 @@ class S {
     );
   }
 
-  /// `Ping value for others was {value} ms`
+  /// `Ping value for others is {value} ms`
   String pingGlobalByLocationDesc(Object value) {
     return Intl.message(
-      'Ping value for others was $value ms',
+      'Ping value for others is $value ms',
       name: 'pingGlobalByLocationDesc',
       desc: '',
       args: [value],
     );
   }
 
-  /// `Your ping was better than {value}% of others`
+  /// `Your result is better than {value}% of others`
   String pingGlobalByFrequencyDesc(Object value) {
     return Intl.message(
-      'Your ping was better than $value% of others',
+      'Your result is better than $value% of others',
       name: 'pingGlobalByFrequencyDesc',
       desc: '',
       args: [value],

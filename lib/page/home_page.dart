@@ -84,7 +84,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         Image(image: Images.undrawRoadSign, width: 144.0, height: 144.0),
         Container(height: 24.0),
         Text(
-          S.current.nothingToShowTitle,
+          S.current.homeIntroTitle,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
