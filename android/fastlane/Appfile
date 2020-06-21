@@ -1,2 +1,1 @@
-json_key_file("./service-account-key.json")
 package_name("com.tomwyr.pinger")
