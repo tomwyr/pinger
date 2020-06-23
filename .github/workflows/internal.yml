@@ -11,6 +11,7 @@ jobs:
     name: Publish app for internal testing
     runs-on: macOS-latest
     env:
+      IS_CI: true
       APP_ID: com.tomwyr.pinger.dev
       APP_FLAVOR: dev
       FIREBASE_GROUPS: testers

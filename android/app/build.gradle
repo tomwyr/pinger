@@ -27,10 +27,12 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 def keystoreProperties = new Properties()
-keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
-keystoreProperties.setProperty('keyPassword', System.getenv('SIGNING_PASSWORD'));
-keystoreProperties.setProperty('keyAlias', 'pinger_key');
-keystoreProperties.setProperty('storeFile', 'key.jks');
+if (System.env.IS_CI) {
+    keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
+    keystoreProperties.setProperty('keyPassword', System.getenv('SIGNING_PASSWORD'));
+    keystoreProperties.setProperty('keyAlias', 'pinger_key');
+    keystoreProperties.setProperty('storeFile', 'key.jks');
+}
 
 android {
     compileSdkVersion 28

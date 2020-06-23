@@ -11,6 +11,7 @@ jobs:
     name: Publish app for release
     runs-on: macos-latest
     env:
+      IS_CI: true
       APP_ID: com.tomwyr.pinger
       APP_FLAVOR: prod
     steps:
