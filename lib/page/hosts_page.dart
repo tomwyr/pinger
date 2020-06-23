@@ -31,6 +31,12 @@ class _HostsPageState extends BaseState<HostsPage> {
   List<String> _selection = [];
   bool _isEditing = false;
 
+  @override
+  void didUpdateWidget(HostsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.hosts.isEmpty) Future(pop);
+  }
+
   void _onEditPressed() {
     if (!_isEditing) {
       setState(() => _isEditing = true);

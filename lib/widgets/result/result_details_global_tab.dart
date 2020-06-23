@@ -37,96 +37,50 @@ class ResultDetailsGlobalTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CollapsingTabLayoutItem(slivers: <Widget>[
-      !isSharingLocation
-          ? _buildShareLocationRequest()
-          : globalResults.when(
-              data: _buildResultsData,
-              loading: _buildResultsLoading,
-              error: _buildResultsError,
+      if (isSharingLocation)
+        ResultDetailsPromptTab(
+          image: Images.undrawTheWorldIsMine,
+          title: S.current.enableLocationPromptTitle,
+          description: S.current.enableLocationPromptDesc,
+          buttonLabel: S.current.shareLocationButtonLabel,
+          onButtonPressed: onShareLocationPressed,
+        )
+      else
+        globalResults.when(
+          data: (data) => SliverFillRemaining(
+            hasScrollBody: false,
+            child: GlobalResultsDataSection(
+              globalResults: data,
+              userResult: userResult,
             ),
-    ]);
-  }
-
-  Widget _buildShareLocationRequest() {
-    return ResultDetailsPromptTab(
-      image: Images.undrawTheWorldIsMine,
-      title: S.current.enableLocationPromptTitle,
-      description: S.current.enableLocationPromptDesc,
-      buttonLabel: S.current.shareLocationButtonLabel,
-      onButtonPressed: onShareLocationPressed,
-    );
-  }
-
-  Widget _buildResultsData(GlobalHostResults globalResults) {
-    return SliverFillRemaining(
-      hasScrollBody: false,
-      child: GlobalResultsDataSection(
-        globalResults: globalResults,
-        userResult: userResult,
-        noDataBuilder: (_) => _buildNoData(),
-      ),
-    );
-  }
-
-  Widget _buildNoData() {
-    return Column(children: <Widget>[
-      Spacer(),
-      Container(height: 24.0),
-      Center(
-        child: Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
-      ),
-      Container(height: 24.0),
-      Center(
-        child: Text(
-          S.current.nothingToShowTitle,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+          ),
+          loading: () => SliverFillRemaining(
+            hasScrollBody: false,
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ThreeBounce(color: R.colors.secondary),
+            ),
+          ),
+          error: () => ResultDetailsPromptTab(
+            image: Images.undrawServerDown,
+            title: S.current.dataFetchFailedTitle,
+            description: S.current.dataFetchFailedDesc,
+            buttonLabel: S.current.tryAgainButtonLabel,
+            onButtonPressed: onRefreshPressed,
+          ),
         ),
-      ),
-      Container(height: 24.0),
-      Center(
-        child: Text(
-          S.current.resultGlobalEmptyDesc,
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Container(height: 24.0),
-      Spacer(),
     ]);
-  }
-
-  Widget _buildResultsLoading() {
-    return SliverFillRemaining(
-      hasScrollBody: false,
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: ThreeBounce(color: R.colors.secondary),
-      ),
-    );
-  }
-
-  Widget _buildResultsError() {
-    return ResultDetailsPromptTab(
-      image: Images.undrawServerDown,
-      title: S.current.dataFetchFailedTitle,
-      description: S.current.dataFetchFailedDesc,
-      buttonLabel: S.current.tryAgainButtonLabel,
-      onButtonPressed: onRefreshPressed,
-    );
   }
 }
 
 class GlobalResultsDataSection extends StatefulWidget {
   final GlobalHostResults globalResults;
   final PingResult userResult;
-  final WidgetBuilder noDataBuilder;
 
   const GlobalResultsDataSection({
     Key key,
     @required this.globalResults,
     @required this.userResult,
-    @required this.noDataBuilder,
   }) : super(key: key);
 
   @override
@@ -154,12 +108,40 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         children: <Widget>[
           ..._buildValueSection(userValue),
           if (globalValues.isEmpty)
-            widget.noDataBuilder(context)
+            ..._buildNoData()
           else
             ..._buildResultsData(userValue, globalValues),
         ],
       ),
     );
+  }
+
+  List<Widget> _buildNoData() {
+    return [
+      Spacer(),
+      Container(height: 24.0),
+      Center(
+        child: Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
+      ),
+      Container(height: 24.0),
+      Center(
+        child: Text(
+          S.current.nothingToShowTitle,
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(height: 24.0),
+      Center(
+        child: Text(
+          S.current.resultGlobalEmptyDesc,
+          style: TextStyle(fontSize: 18.0),
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Container(height: 24.0),
+      Spacer(),
+    ];
   }
 
   List<Widget> _buildResultsData(int userValue, Map<int, int> globalValues) {
