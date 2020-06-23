@@ -1,4 +1,4 @@
-name: CI
+name: internal
 
 on:
   push:
@@ -33,11 +33,11 @@ jobs:
       working-directory: ./android
       env:
         FIREBASE_APP_ID: 1:19662603391:android:d82f1b46633823fabd2b4a
-      run: fastlane publish
+      run: fastlane publish_firebase
     # Build and publish iOS
     - name: Build iOS
       run: flutter build ios --flavor dev --no-codesign
-    - name: Prepare code signing
+    - name: Setup code signing
       working-directory: ./ios
       env:
         GIT_URL: https://github.com/tomwyr/pinger-ios-signing.git
@@ -51,4 +51,4 @@ jobs:
       working-directory: ./ios
       env:
         FIREBASE_APP_ID: 1:19662603391:ios:ebe2f5ff1246910bbd2b4a
-      run: fastlane build_and_publish
+      run: fastlane build_and_publish_firebase

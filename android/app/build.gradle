@@ -26,6 +26,12 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
+def keystoreProperties = new Properties()
+keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
+keystoreProperties.setProperty('keyPassword', System.getenv('SIGNING_PASSWORD'));
+keystoreProperties.setProperty('keyAlias', 'pinger_key');
+keystoreProperties.setProperty('storeFile', 'key.jks');
+
 android {
     compileSdkVersion 28
 
@@ -38,7 +44,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.tomwyr.pinger"
         minSdkVersion 16
         targetSdkVersion 28
@@ -48,11 +53,21 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+
     buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+        debug {
             signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
         }
     }
 

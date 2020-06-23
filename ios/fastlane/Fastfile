@@ -35,7 +35,7 @@ platform :ios do
         )
     end
 
-    lane :build_and_publish do
+    lane :build_and_publish_firebase do
         build_app(
             workspace: "Runner.xcworkspace",
             scheme: ENV['APP_FLAVOR'],
