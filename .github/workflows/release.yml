@@ -25,31 +25,31 @@ jobs:
         channel: 'stable'
     - run: flutter pub get
     # Build and publish Android
-    - name: Build Android
-      env:
-        SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
-        SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
-      run: echo $SIGNING_KEY | base64 -d > android/app/key.jks && flutter build appbundle --flavor prod
-    - name: Publish Android
-      working-directory: ./android
-      env:
-        JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
-      run: fastlane publish_play_store
-    # # Build and publish iOS
-    # - name: Build iOS
-    #   run: flutter build ios --flavor dev --no-codesign
-    # - name: Setup code signing
-    #   working-directory: ./ios
+    # - name: Build Android
     #   env:
-    #     GIT_URL: https://github.com/tomwyr/pinger-ios-signing.git
-    #     KEYCHAIN_NAME: pinger-keychain
-    #     KEYCHAIN_PASSWORD: ${{secrets.KEYCHAIN_PASSWORD}}
-    #     MATCH_PASSWORD: ${{secrets.MATCH_PASSWORD}}
-    #     GIT_BASIC_AUTHORIZATION: ${{secrets.GIT_BASIC_AUTHORIZATION}}
-    #     IOS_SIGNING_IDENTITY: ${{secrets.IOS_SIGNING_IDENTITY}}
-    #   run: fastlane setup_code_signing
-    # - name: Archive and publish iOS
-    #   working-directory: ./ios
+    #     SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
+    #     SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
+    #   run: echo $SIGNING_KEY | base64 -d > android/app/key.jks && flutter build appbundle --flavor prod
+    # - name: Publish Android
+    #   working-directory: ./android
     #   env:
-    #     FIREBASE_APP_ID: 1:19662603391:ios:ebe2f5ff1246910bbd2b4a
-    #   run: fastlane build_and_publish_firebase
+    #     JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
+    #   run: fastlane publish_play_store
+    # Build and publish iOS
+    - name: Build iOS
+      run: flutter build ios --flavor prod --no-codesign
+    - name: Archive iOS
+      working-directory: ./ios
+      env:
+        GIT_URL: https://github.com/tomwyr/pinger-ios-signing.git
+        KEYCHAIN_NAME: pinger-keychain
+        KEYCHAIN_PASSWORD: ${{secrets.KEYCHAIN_PASSWORD}}
+        MATCH_PASSWORD: ${{secrets.MATCH_PASSWORD}}
+        GIT_BASIC_AUTHORIZATION: ${{secrets.GIT_BASIC_AUTHORIZATION}}
+        IOS_SIGNING_IDENTITY: ${{secrets.IOS_SIGNING_IDENTITY}}
+        PROFILE_TYPE: appstore
+        EXPORT_METHOD: app-store
+      run: fastlane sign_and_build_app
+    - name: Publish iOS
+      working-directory: ./ios
+      run: fastlane publish_app_store

@@ -1,9 +1,10 @@
 default_platform(:ios)
 
-appId = ENV['APP_ID']
-
 platform :ios do
-    lane :setup_code_signing do
+    lane :sign_and_build_app do
+        appId = ENV['APP_ID']
+        profileType = ENV['PROFILE_TYPE']
+
         create_keychain(
             name: ENV['KEYCHAIN_NAME'],
             password: ENV['KEYCHAIN_PASSWORD'],
@@ -16,7 +17,7 @@ platform :ios do
             git_basic_authorization: ENV['GIT_BASIC_AUTHORIZATION'],
             keychain_name: ENV['KEYCHAIN_NAME'],
             keychain_password: ENV['KEYCHAIN_PASSWORD'],
-            type: "adhoc",
+            type: profileType,
             app_identifier: appId,
             readonly: true,
         )
@@ -25,7 +26,7 @@ platform :ios do
             xcodeproj: "Runner.xcodeproj",
             target_filter: "Runner",
             build_configuration: "Release",
-            profile: ENV['sigh_#{appId}_adhoc_profile-path'],
+            profile: ENV['sigh_#{appId}_#{profileType}_profile-path'],
             code_signing_identity: ENV['IOS_SIGNING_IDENTITY'],
         )
 
@@ -33,25 +34,29 @@ platform :ios do
             use_automatic_signing: false,
             path: "Runner.xcodeproj",
         )
-    end
 
-    lane :build_and_publish_firebase do
         build_app(
             workspace: "Runner.xcworkspace",
             scheme: ENV['APP_FLAVOR'],
-            export_method: "ad-hoc",
+            export_method: ENV['EXPORT_METHOD'],
             output_name: "Runner.ipa",
             export_options: {
                 provisioningProfiles: {
-                    appId => ENV['sigh_#{appId}_adhoc_profile-name']
+                    appId => ENV['sigh_#{appId}_#{profileType}_profile-name']
                 }
             },
         )
+    end
 
+    lane :publish_firebase do
         firebase_app_distribution(
             app: ENV['FIREBASE_APP_ID'],
             groups: ENV['FIREBASE_GROUPS'],
             firebase_cli_token: ENV['FIREBASE_TOKEN'],
         )
+    end
+
+    lane :publish_app_store do
+        upload_to_app_store()
     end
 end

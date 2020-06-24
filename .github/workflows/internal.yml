@@ -38,7 +38,7 @@ jobs:
     # Build and publish iOS
     - name: Build iOS
       run: flutter build ios --flavor dev --no-codesign
-    - name: Setup code signing
+    - name: Archive iOS
       working-directory: ./ios
       env:
         GIT_URL: https://github.com/tomwyr/pinger-ios-signing.git
@@ -47,9 +47,11 @@ jobs:
         MATCH_PASSWORD: ${{secrets.MATCH_PASSWORD}}
         GIT_BASIC_AUTHORIZATION: ${{secrets.GIT_BASIC_AUTHORIZATION}}
         IOS_SIGNING_IDENTITY: ${{secrets.IOS_SIGNING_IDENTITY}}
-      run: fastlane setup_code_signing
-    - name: Archive and publish iOS
+        PROFILE_TYPE: adhoc
+        EXPORT_METHOD: ad-hoc
+      run: fastlane build_app
+    - name: Publish iOS
       working-directory: ./ios
       env:
         FIREBASE_APP_ID: 1:19662603391:ios:ebe2f5ff1246910bbd2b4a
-      run: fastlane build_and_publish_firebase
+      run: fastlane publish_firebase
