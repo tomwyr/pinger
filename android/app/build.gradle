@@ -27,7 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 def keystoreProperties = new Properties()
-if (System.env.IS_CI) {
+if (System.env.IS_RELEASE) {
     keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
     keystoreProperties.setProperty('keyPassword', System.getenv('SIGNING_PASSWORD'));
     keystoreProperties.setProperty('keyAlias', 'pinger_key');
@@ -64,15 +64,6 @@ android {
        }
    }
 
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
-
     flavorDimensions "app"
     productFlavors {
         tst {
@@ -88,6 +79,17 @@ android {
         prod {
             dimension "app"
             resValue "string", "app_name", "Pinger"
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            productFlavors.tst.signingConfig signingConfigs.debug
+            productFlavors.dev.signingConfig signingConfigs.debug
+            productFlavors.prod.signingConfig signingConfigs.release
         }
     }
 }
