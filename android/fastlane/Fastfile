@@ -1,20 +1,20 @@
 default_platform(:android)
 
-flavor = ENV['APP_FLAVOR']
+flavor = ENV["APP_FLAVOR"]
 
 platform :android do
     lane :publish_firebase do
         firebase_app_distribution(
-            app: ENV['FIREBASE_APP_ID'],
-            groups: ENV['FIREBASE_GROUPS'],
-            firebase_cli_token: ENV['FIREBASE_TOKEN'],
+            app: ENV["FIREBASE_APP_ID"],
+            groups: ENV["FIREBASE_GROUPS"],
+            firebase_cli_token: ENV["FIREBASE_TOKEN"],
             apk_path: "../build/app/outputs/apk/#{flavor}/release/app-#{flavor}-release.apk",
         )
     end
 
     lane :publish_play_store do
         upload_to_play_store(
-            json_key_data: ENV['JSON_KEY_DATA'],
+            json_key_data: ENV["JSON_KEY_DATA"],
             aab: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
         )
     end
