@@ -26,6 +26,13 @@ jobs:
           channel: "stable"
       - run: npm install -g firebase-tools
       - run: flutter pub get
+      - name: Decode confidential files
+        env:
+          FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_DEV}}
+          FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_DEV}}
+        run: |
+          echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/dev/google-services.json
+          mkdir -p ios/Config/dev && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/dev/GoogleService-Info.plist
       # Build and publish Android
       - name: Build Android
         run: flutter build apk --flavor dev

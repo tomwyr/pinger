@@ -24,12 +24,20 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
+      - name: Decode confidential files
+        env:
+          SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
+          FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_PROD}}
+          FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_PROD}}
+        run: |
+          echo $SIGNING_KEY | base64 -d > android/app/key.jks
+          echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
+          mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
       # Build and publish Android
       # - name: Build Android
       #   env:
-      #     SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
       #     SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
-      #   run: echo $SIGNING_KEY | base64 -d > android/app/key.jks && flutter build appbundle --flavor prod
+      #   run: flutter build appbundle --flavor prod
       # - name: Publish Android
       #   working-directory: ./android
       #   env:
