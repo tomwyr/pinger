@@ -64,4 +64,5 @@ jobs:
           FASTLANE_USER: ${{secrets.APPLE_ID}}
           FASTLANE_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{secrets.APPLE_APPLICATION_SPECIFIC_PASSWORD}}
+          FASTLANE_SESSION: ${{secrets.SPACEAUTH_SESSION}}
         run: fastlane publish_app_store

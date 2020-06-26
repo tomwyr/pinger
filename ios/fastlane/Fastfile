@@ -57,6 +57,11 @@ platform :ios do
     end
 
     lane :publish_app_store do
-        upload_to_app_store()
+        upload_to_app_store(
+            force: true,
+            skip_metadata: true,
+            skip_screenshots: true,
+            metadata_path: nil,
+        )
     end
 end
