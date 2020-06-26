@@ -60,4 +60,8 @@ jobs:
         run: fastlane sign_and_build_app
       - name: Publish iOS
         working-directory: ./ios
+        env:
+          FASTLANE_USER: ${{secrets.APPLE_ID}}
+          FASTLANE_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{secrets.APPLE_APPLICATION_SPECIFIC_PASSWORD}}
         run: fastlane publish_app_store
