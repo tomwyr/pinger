@@ -84,24 +84,26 @@ class PingerDimens {
 abstract class PingerThemes {
   final mode = ThemeMode.light;
 
-  final app = ThemeData(
-    fontFamily: GoogleFonts.roboto().fontFamily,
-    canvasColor: R.colors.canvas,
-    cursorColor: R.colors.secondary,
-    textSelectionColor: R.colors.primaryLight.withOpacity(0.5),
-    textSelectionHandleColor: R.colors.primaryLight,
-    primaryColor: R.colors.secondary,
-    accentColor: R.colors.secondary,
-    hintColor: R.colors.gray,
-    textTheme: _textTheme,
-    buttonTheme: _buttonTheme,
-    appBarTheme: _appbarTheme,
-  );
+  final app = _appTheme.copyWith(primaryColorBrightness: Brightness.light);
 
   final raisedButton = _buttonTheme.copyWith(minWidth: 216.0);
   final flatButton = _buttonTheme.copyWith(
     colorScheme: ColorScheme.light(primary: R.colors.gray),
   );
+
+  static ThemeData get _appTheme => ThemeData(
+        fontFamily: GoogleFonts.roboto().fontFamily,
+        canvasColor: R.colors.canvas,
+        cursorColor: R.colors.secondary,
+        textSelectionColor: R.colors.primaryLight.withOpacity(0.5),
+        textSelectionHandleColor: R.colors.primaryLight,
+        primaryColor: R.colors.secondary,
+        accentColor: R.colors.secondary,
+        hintColor: R.colors.gray,
+        textTheme: _textTheme,
+        buttonTheme: _buttonTheme,
+        appBarTheme: _appBarTheme,
+      );
 
   static ButtonThemeData get _buttonTheme => ButtonThemeData(
         height: 48.0,
@@ -113,7 +115,7 @@ abstract class PingerThemes {
         ),
       );
 
-  static AppBarTheme get _appbarTheme => AppBarTheme(
+  static AppBarTheme get _appBarTheme => AppBarTheme(
         elevation: 0.0,
         color: R.colors.canvas,
         iconTheme: IconThemeData(color: R.colors.primaryLight),
@@ -140,6 +142,11 @@ class PingerLightThemes extends PingerThemes {}
 class PingerDarkThemes extends PingerThemes {
   @override
   final mode = ThemeMode.dark;
+
+  @override
+  final app = PingerThemes._appTheme.copyWith(
+    primaryColorBrightness: Brightness.dark,
+  );
 }
 
 class PingerStyles {
