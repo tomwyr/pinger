@@ -1,4 +1,4 @@
-name: internal
+name: internal_ios
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [dev]
 
 jobs:
-  build_and_publish_to_firebase:
-    name: Publish app for internal testing
+  build_and_publish_ios_to_firebase:
+    name: Publish iOS app for internal testing
     runs-on: macOS-latest
     env:
       APP_ID: com.tomwyr.pinger.dev
@@ -28,19 +28,8 @@ jobs:
       - run: flutter pub get
       - name: Decode confidential files
         env:
-          FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_DEV}}
           FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_DEV}}
-        run: |
-          echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/dev/google-services.json
-          mkdir -p ios/Config/dev && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/dev/GoogleService-Info.plist
-      # Build and publish Android
-      - name: Build Android
-        run: flutter build apk --flavor dev
-      - name: Publish Android
-        working-directory: ./android
-        env:
-          FIREBASE_APP_ID: 1:19662603391:android:d82f1b46633823fabd2b4a
-        run: fastlane publish_firebase
+        run: mkdir -p ios/Config/dev && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/dev/GoogleService-Info.plist
       # Build and publish iOS
       - name: Build iOS
         run: flutter build ios --flavor dev --no-codesign

@@ -1,4 +1,4 @@
-name: release
+name: release_ios
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [production]
 
 jobs:
-  build_and_publish_to_firebase:
-    name: Publish app for release
+  build_and_publish_ios_to_store:
+    name: Publish iOS app for release
     runs-on: macos-latest
     env:
       IS_RELEASE: true
@@ -26,23 +26,8 @@ jobs:
       - run: flutter pub get
       - name: Decode confidential files
         env:
-          SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
-          FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_PROD}}
           FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_PROD}}
-        run: |
-          echo $SIGNING_KEY | base64 -d > android/app/key.jks
-          echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
-          mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
-      # Build and publish Android
-      - name: Build Android
-        env:
-          SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
-        run: flutter build appbundle --flavor prod
-      - name: Publish Android
-        working-directory: ./android
-        env:
-          JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
-        run: fastlane publish_play_store
+        run: mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
       # Build and publish iOS
       - name: Build iOS
         run: flutter build ios --flavor prod --no-codesign
