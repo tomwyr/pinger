@@ -234,9 +234,9 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
           Expanded(
             child: ViewTypeRow(
               types: {
-                UserResultType.max: S.current.viewTypeMax,
-                UserResultType.mean: S.current.viewTypeMean,
                 UserResultType.min: S.current.viewTypeMin,
+                UserResultType.mean: S.current.viewTypeMean,
+                UserResultType.max: S.current.viewTypeMax,
               },
               selection: _resultType,
               onChanged: (it) => setState(() => _resultType = it),
