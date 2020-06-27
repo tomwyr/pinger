@@ -24,6 +24,8 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
+      - run: bundle update --bundler
+        working-directory: ./ios
       - name: Decode confidential files
         env:
           FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_PROD}}
@@ -42,7 +44,7 @@ jobs:
           IOS_SIGNING_IDENTITY: ${{secrets.IOS_SIGNING_IDENTITY}}
           PROFILE_TYPE: appstore
           EXPORT_METHOD: app-store
-        run: fastlane sign_and_build_app
+        run: bundle exec fastlane sign_and_build_app
       - name: Publish iOS
         working-directory: ./ios
         env:
@@ -50,4 +52,4 @@ jobs:
           FASTLANE_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{secrets.APPLE_APPLICATION_SPECIFIC_PASSWORD}}
           FASTLANE_SESSION: ${{secrets.SPACEAUTH_SESSION}}
-        run: fastlane publish_app_store
+        run: bundle exec fastlane publish_app_store
