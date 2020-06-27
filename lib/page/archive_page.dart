@@ -12,6 +12,7 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/widgets/common/animated_ink_icon.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
+import 'package:pinger/widgets/info_section.dart';
 import 'package:pinger/widgets/tiles/host_icon_tile.dart';
 import 'package:pinger/widgets/tiles/result_tile.dart';
 import 'package:pinger/widgets/tiles/results_group_tile.dart';
@@ -106,21 +107,13 @@ class _ArchivePageState extends BaseState<ArchivePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
-        Spacer(),
-        Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
-        Container(height: 32.0),
-        Text(
-          S.current.nothingToShowTitle,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+        Expanded(
+          child: InfoSection(
+            image: Images.undrawEmpty,
+            title: S.current.nothingToShowTitle,
+            description: S.current.archiveEmptyDesc,
+          ),
         ),
-        Container(height: 32.0),
-        Text(
-          S.current.archiveEmptyDesc,
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
-        ),
-        Spacer(),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
           child: RaisedButton(

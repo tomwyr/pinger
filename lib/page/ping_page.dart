@@ -13,6 +13,7 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/widgets/common/fade_out.dart';
+import 'package:pinger/widgets/info_section.dart';
 import 'package:pinger/widgets/session/session_host_button.dart';
 import 'package:pinger/widgets/session/session_host_header.dart';
 import 'package:pinger/widgets/session/session_ping_button.dart';
@@ -138,31 +139,12 @@ class _PingPageState extends BaseState<PingPage> {
 
   Widget _buildStartPrompt() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 48.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Flexible(
-            child: LayoutBuilder(
-              builder: (_, constraints) => SizedBox(
-                height: min(constraints.maxHeight, 144.0),
-                child: Image(image: Images.undrawRunnerStart),
-              ),
-            ),
-          ),
-          Container(height: 24.0),
-          Text(
-            S.current.sessionStartPromptTitle,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          Container(height: 24.0),
-          Text(
-            S.current.sessionStartPromptDesc,
-            style: TextStyle(fontSize: 18.0),
-            textAlign: TextAlign.center,
-          ),
-        ],
+      padding: const EdgeInsets.fromLTRB(48.0, 0.0, 48.0, 8.0),
+      child: InfoSection(
+        image: Images.undrawRunnerStart,
+        title: S.current.sessionStartPromptTitle,
+        description: S.current.sessionStartPromptDesc,
+        risksOverflow: true,
       ),
     );
   }

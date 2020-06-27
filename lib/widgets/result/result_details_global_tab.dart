@@ -12,6 +12,7 @@ import 'package:pinger/utils/data_snap.dart';
 import 'package:pinger/widgets/charts/global_distribution_chart.dart';
 import 'package:pinger/widgets/common/collapsing_tab_layout.dart';
 import 'package:pinger/widgets/common/dotted_map.dart';
+import 'package:pinger/widgets/info_section.dart';
 import 'package:pinger/widgets/result/result_details_prompt_tab.dart';
 import 'package:pinger/widgets/three_bounce.dart';
 import 'package:pinger/widgets/view_type/view_type_button.dart';
@@ -108,7 +109,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         children: <Widget>[
           ..._buildValueSection(userValue),
           if (globalValues.isEmpty)
-            ..._buildNoData()
+            _buildNoData()
           else
             ..._buildResultsData(userValue, globalValues),
         ],
@@ -116,32 +117,14 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
     );
   }
 
-  List<Widget> _buildNoData() {
-    return [
-      Spacer(),
-      Container(height: 24.0),
-      Center(
-        child: Image(image: Images.undrawEmpty, width: 144.0, height: 144.0),
+  Widget _buildNoData() {
+    return Expanded(
+      child: InfoSection(
+        image: Images.undrawEmpty,
+        title: S.current.nothingToShowTitle,
+        description: S.current.resultGlobalEmptyDesc,
       ),
-      Container(height: 24.0),
-      Center(
-        child: Text(
-          S.current.nothingToShowTitle,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Container(height: 24.0),
-      Center(
-        child: Text(
-          S.current.resultGlobalEmptyDesc,
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      Container(height: 24.0),
-      Spacer(),
-    ];
+    );
   }
 
   List<Widget> _buildResultsData(int userValue, Map<int, int> globalValues) {

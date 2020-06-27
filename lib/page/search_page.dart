@@ -12,6 +12,7 @@ import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/widgets/common/flex_child_scroll_view.dart';
 import 'package:pinger/widgets/common/scroll_edge_gradient.dart';
+import 'package:pinger/widgets/info_section.dart';
 import 'package:pinger/widgets/three_bounce.dart';
 import 'package:pinger/widgets/tiles/host_tile.dart';
 
@@ -134,18 +135,10 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(height: 24.0),
-              Image(image: image, width: 144.0, height: 144.0),
-              Container(height: 48.0),
-              Text(
-                title,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              Container(height: 16.0),
-              Text(
-                description,
-                style: TextStyle(fontSize: 18.0),
-                textAlign: TextAlign.center,
+              InfoSection(
+                image: image,
+                title: title,
+                description: description,
               ),
               if (action != null)
                 Padding(

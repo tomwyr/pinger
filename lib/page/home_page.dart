@@ -17,6 +17,7 @@ import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/widgets/home_host_suggestions.dart';
+import 'package:pinger/widgets/info_section.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -80,21 +81,13 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
       child: Column(children: <Widget>[
-        Spacer(),
-        Image(image: Images.undrawRoadSign, width: 144.0, height: 144.0),
-        Container(height: 24.0),
-        Text(
-          S.current.homeIntroTitle,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
+        Expanded(
+          child: InfoSection(
+            image: Images.undrawRoadSign,
+            title: S.current.homeIntroTitle,
+            description: S.current.homeIntroDesc,
+          ),
         ),
-        Container(height: 24.0),
-        Text(
-          S.current.homeIntroDesc,
-          style: TextStyle(fontSize: 18.0),
-          textAlign: TextAlign.center,
-        ),
-        Spacer(),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
           child: RaisedButton(

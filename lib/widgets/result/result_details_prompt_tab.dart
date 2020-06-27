@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/widgets/info_section.dart';
 
 class ResultDetailsPromptTab extends StatelessWidget {
   final ImageProvider image;
@@ -24,31 +25,23 @@ class ResultDetailsPromptTab extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Column(children: <Widget>[
-          Spacer(),
-          Container(height: 40.0),
-          Image(image: image, width: 144.0, height: 144.0),
-          Container(height: 40.0),
-          Text(
-            title,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          Container(height: 24.0),
-          Text(
-            description,
-            style: TextStyle(fontSize: 18.0),
-            textAlign: TextAlign.center,
-          ),
-          Spacer(),
-          Container(height: 40.0),
-          ButtonTheme.fromButtonThemeData(
-            data: R.themes.raisedButton,
-            child: RaisedButton(
-              child: Text(buttonLabel),
-              onPressed: onButtonPressed,
+          Expanded(
+            child: InfoSection(
+              image: image,
+              title: title,
+              description: description,
             ),
           ),
-          Container(height: 40.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40.0),
+            child: ButtonTheme.fromButtonThemeData(
+              data: R.themes.raisedButton,
+              child: RaisedButton(
+                child: Text(buttonLabel),
+                onPressed: onButtonPressed,
+              ),
+            ),
+          ),
         ]),
       ),
     );
