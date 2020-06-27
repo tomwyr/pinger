@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/host_stats.dart';
+import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
@@ -56,14 +57,21 @@ abstract class HostsStoreBase with Store {
     hosts = DataSnap.loading();
     try {
       final counts = await _pingerApi.getPingCounts();
+      hosts = DataSnap.data(_createHostItems(counts));
+    } on ApiError {
+      hosts = DataSnap.error();
+    }
+  }
+
+  List<HostItem> _createHostItems(GlobalPingCounts counts) {
+    if (counts.totalCount == 0) {
+      return counts.pingCounts.map((it) => HostItem(it.host, 0.5)).toList();
+    } else {
       final maxCount = counts.pingCounts.map((it) => it.count).reduce(max);
-      final hostsList = counts.pingCounts
+      return counts.pingCounts
           .map((it) => HostItem(it.host, it.count / maxCount))
           .toList()
             ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
-      hosts = DataSnap.data(hostsList);
-    } on ApiError {
-      hosts = DataSnap.error();
     }
   }
 
