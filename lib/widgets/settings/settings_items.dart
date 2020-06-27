@@ -61,9 +61,11 @@ class PingSettingItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                value.toString(),
-                style: TextStyle(fontSize: 18.0, color: R.colors.secondary),
+              Flexible(
+                child: Text(
+                  value.toString(),
+                  style: TextStyle(fontSize: 18.0, color: R.colors.secondary),
+                ),
               ),
               Container(width: 4.0),
               Text(
@@ -153,28 +155,32 @@ class SwitchSettingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(bottom: 4.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(children: <Widget>[
-              Text(label, style: TextStyle(fontSize: 18.0)),
-              Spacer(),
-              Container(
-                height: 40.0,
-                alignment: Alignment.centerRight,
-                child: Switch(value: value, onChanged: onChanged),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(label, style: TextStyle(fontSize: 18.0)),
+                  ),
+                  if (description != null)
+                    Text(
+                      description,
+                      style: TextStyle(color: R.colors.gray),
+                    ),
+                ],
               ),
-            ]),
-            if (description != null)
-              Padding(
-                padding: const EdgeInsets.only(right: _SWITCH_WIDTH + 8.0),
-                child: Text(
-                  description,
-                  style: TextStyle(color: R.colors.gray),
-                ),
-              ),
+            ),
+            Container(
+              height: 36.0,
+              alignment: Alignment.topRight,
+              child: Switch(value: value, onChanged: onChanged),
+            ),
           ],
         ),
       ),
