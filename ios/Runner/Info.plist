@@ -28,7 +28,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location will be used to match it with your result and to present it for other users.</string>
+	<string>Your location will be used to allow other users to compare their results with results in your world region.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location will be used to allow other users to compare their results with results in your world region.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

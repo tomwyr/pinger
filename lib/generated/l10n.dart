@@ -433,10 +433,10 @@ class S {
     );
   }
 
-  /// `Either pick one of hosts suggested on home screen, find it among hosts pinged by other users or enter your own`
+  /// `Either pick one of suggested hosts, find it among hosts pinged by other users or enter your own`
   String get introSelectHostDesc {
     return Intl.message(
-      'Either pick one of hosts suggested on home screen, find it among hosts pinged by other users or enter your own',
+      'Either pick one of suggested hosts, find it among hosts pinged by other users or enter your own',
       name: 'introSelectHostDesc',
       desc: '',
       args: [],
@@ -553,10 +553,10 @@ class S {
     );
   }
 
-  /// `Current`
+  /// `Session`
   String get homeCurrentSubtitle {
     return Intl.message(
-      'Current',
+      'Session',
       name: 'homeCurrentSubtitle',
       desc: '',
       args: [],
