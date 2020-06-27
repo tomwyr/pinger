@@ -34,15 +34,15 @@ jobs:
           echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
           mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
       # Build and publish Android
-      # - name: Build Android
-      #   env:
-      #     SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
-      #   run: flutter build appbundle --flavor prod
-      # - name: Publish Android
-      #   working-directory: ./android
-      #   env:
-      #     JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
-      #   run: fastlane publish_play_store
+      - name: Build Android
+        env:
+          SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
+        run: flutter build appbundle --flavor prod
+      - name: Publish Android
+        working-directory: ./android
+        env:
+          JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
+        run: fastlane publish_play_store
       # Build and publish iOS
       - name: Build iOS
         run: flutter build ios --flavor prod --no-codesign
