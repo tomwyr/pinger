@@ -1,6 +1,6 @@
 import { Intervals } from "./constants";
 import { PingerStore } from "./pinger_store";
-import { DailyCounts, DailyResults, HostCounts, HostResults, LocationResults, MonthlyCounts, MonthlyResults, Session } from "./types";
+import { DailyCounts, DailyResults, HostCounts, HostResults, LocationResults, MonthlyCounts, MonthlyResults, Session, JsonObject, PingCount } from "./types";
 
 const pingerStore = new PingerStore();
 
@@ -75,7 +75,10 @@ async function _createMonthlyCounts(
   dailyCounts: DailyCounts
 ): Promise<MonthlyCounts> {
   const monthAgoKey = _getTodayDateKey(-30);
-  const monthlyCounts: HostCounts = { totalCount: 0, pingCounts: {} };
+  const monthlyCounts: HostCounts = {
+    totalCount: 0,
+    pingCounts: _createDefaultCounts(),
+  };
   Object.entries(dailyCounts).forEach(([dateKey, dayCounts]) => {
     if (dateKey <= monthAgoKey) {
       delete dailyCounts[dateKey];
@@ -95,6 +98,34 @@ async function _createMonthlyCounts(
     totalCount: monthlyCounts.totalCount,
     pingCounts: Object.values(monthlyCounts.pingCounts),
   };
+}
+
+function _createDefaultCounts(): JsonObject<PingCount> {
+  const defaultHosts = [
+    "google.com",
+    "facebook.com",
+    "twitter.com",
+    "instagram.com",
+    "baidu.com",
+    "wikipedia.org",
+    "yahoo.com",
+    "amazon.com",
+    "vk.com",
+    "yandex.ru",
+    "live.com",
+    "netflix.com",
+    "naver.com",
+    "reddit.com",
+    "zoom.us",
+    "office.com",
+    "whatsapp.com",
+    "google.com",
+    "mail.ru",
+    "ebay.com",
+  ];
+  const defaultCounts: JsonObject<PingCount> = {};
+  defaultHosts.forEach((it) => (defaultCounts[it] = { host: it, count: 0 }));
+  return defaultCounts;
 }
 
 export async function refreshMonthlyResults() {
