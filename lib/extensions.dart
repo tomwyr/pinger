@@ -18,9 +18,6 @@ extension StateExtensions<T extends StatefulWidget> on State<T> {
         MaterialPageRoute(builder: (_) => widget),
         predicate,
       );
-
-  // ignore: invalid_use_of_protected_member
-  void rebuild() => setState(() {});
 }
 
 extension ListExtensions<E> on List<E> {

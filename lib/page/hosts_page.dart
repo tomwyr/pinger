@@ -74,19 +74,19 @@ class _HostsPageState extends BaseState<HostsPage> {
     if (!_isEditing) {
       widget.onHostSelected(host);
     } else {
-      _toggleSelection(host);
-      rebuild();
+      setState(() => _toggleSelection(host));
     }
   }
 
   void _onItemLongPress(String host) {
-    if (!_isEditing) {
-      _isEditing = true;
-      _selection.add(host);
-    } else {
-      _toggleSelection(host);
-    }
-    rebuild();
+    setState(() {
+      if (!_isEditing) {
+        _isEditing = true;
+        _selection.add(host);
+      } else {
+        _toggleSelection(host);
+      }
+    });
   }
 
   void _toggleSelection(String host) {
@@ -95,9 +95,10 @@ class _HostsPageState extends BaseState<HostsPage> {
 
   void _onBackPressed() {
     if (_isEditing) {
-      _selection = [];
-      _isEditing = false;
-      rebuild();
+      setState(() {
+        _selection = [];
+        _isEditing = false;
+      });
     } else {
       pop();
     }
