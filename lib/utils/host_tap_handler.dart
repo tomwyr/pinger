@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
-import 'package:pinger/page/ping_page.dart';
 import 'package:pinger/store/ping_store.dart';
-import 'package:pinger/widgets/sheet/replace_session_sheet.dart';
+import 'package:pinger/ui/page/session/session_page.dart';
+import 'package:pinger/ui/shared/sheet/replace_session_sheet.dart';
 
 mixin HostTapHandler<T extends StatefulWidget> on State<T> {
   void onHostTap(PingStore pingStore, String newHost) {

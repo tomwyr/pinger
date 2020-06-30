@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
-import 'package:pinger/page/init_page.dart';
+import 'package:pinger/ui/page/init_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/settings_store.dart';
 
