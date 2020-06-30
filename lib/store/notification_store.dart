@@ -3,56 +3,51 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
-import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/notification_localizations.dart';
 
 part 'notification_store.g.dart';
 
 @singleton
 class NotificationStore extends NotificationStoreBase with _$NotificationStore {
-  final SettingsStore settingsStore;
-  final PingStore pingStore;
+  final FlutterLocalNotificationsPlugin _localNotifications;
+  final NotificationLocalizations _localizations;
+  final SettingsStore _settingsStore;
+  final PingStore _pingStore;
 
-  NotificationStore(this.settingsStore, this.pingStore);
+  NotificationStore(
+    this._localNotifications,
+    this._localizations,
+    this._settingsStore,
+    this._pingStore,
+  );
 }
 
 abstract class NotificationStoreBase with Store {
-  SettingsStore get settingsStore;
-  PingStore get pingStore;
+  FlutterLocalNotificationsPlugin get _localNotifications;
+  NotificationLocalizations get _localizations;
+  SettingsStore get _settingsStore;
+  PingStore get _pingStore;
 
   Future<void> _currentNotification;
-  FlutterLocalNotificationsPlugin _localNotifications;
   bool _isSettingEnabled;
   bool _isCheckingPermission = false;
 
   @action
   void init() {
-    _localNotifications = FlutterLocalNotificationsPlugin()
-      ..initialize(_getInitSettings());
     autorun((_) {
-      if (settingsStore.userSettings == null) return;
+      if (_settingsStore.userSettings == null) return;
       _checkPermissionIfGotEnabled();
       _showNotificationIfPinging();
     });
   }
 
-  InitializationSettings _getInitSettings() {
-    return InitializationSettings(
-      AndroidInitializationSettings('ic_notification'),
-      IOSInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
-      ),
-    );
-  }
-
   void _checkPermissionIfGotEnabled() async {
     if (!_isCheckingPermission) {
       final showNotification =
-          settingsStore.userSettings.showSystemNotification;
+          _settingsStore.userSettings.showSystemNotification;
       if (showNotification && _isSettingEnabled == false) {
         _isCheckingPermission = true;
         await _checkNotificationPermission();
@@ -69,7 +64,8 @@ abstract class NotificationStoreBase with Store {
               IOSFlutterLocalNotificationsPlugin>()
           .requestPermissions(badge: true, alert: true, sound: true);
       if (!hasPermission) {
-        await settingsStore.updateSettings(settingsStore.userSettings.copyWith(
+        await _settingsStore
+            .updateSettings(_settingsStore.userSettings.copyWith(
           showSystemNotification: false,
         ));
       }
@@ -77,11 +73,11 @@ abstract class NotificationStoreBase with Store {
   }
 
   void _showNotificationIfPinging() async {
-    if (pingStore.currentSession == null) return;
+    if (_pingStore.currentSession == null) return;
     if (!_isSettingEnabled) {
       _clearNotification();
     } else if (!_isCheckingPermission) {
-      _showSessionNotification(pingStore.currentSession);
+      _showSessionNotification(_pingStore.currentSession);
     }
   }
 
@@ -89,16 +85,16 @@ abstract class NotificationStoreBase with Store {
     switch (session.status) {
       case PingStatus.sessionStarted:
         _showNotification(
-          S.current.notificationStartedTitle,
+          _localizations.startedTitle,
           session.values.isNotEmpty
-              ? S.current.notificationStartedBody(session.values.last ?? "-")
+              ? _localizations.startedBody(session.values.last ?? "-")
               : "",
         );
         break;
       case PingStatus.sessionPaused:
         _showNotification(
-          S.current.notificationPausedTitle,
-          S.current.notificationPausedBody(
+          _localizations.pausedTitle,
+          _localizations.pausedBody(
             session.values.length,
             session.settings.count,
           ),
@@ -106,9 +102,9 @@ abstract class NotificationStoreBase with Store {
         break;
       case PingStatus.sessionDone:
         _showNotification(
-          S.current.notificationDoneTitle,
+          _localizations.doneTitle,
           session.stats != null
-              ? S.current.notificationDoneBody(
+              ? _localizations.doneBody(
                   session.stats.min,
                   session.stats.mean,
                   session.stats.max,

@@ -1,9 +1,23 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:pinger/di/injector.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/hosts_store.dart';
+
+class HostIconProvider extends InheritedWidget {
+  const HostIconProvider({
+    Key key,
+    @required Widget child,
+    @required this.provide,
+  }) : super(key: key, child: child);
+
+  final Future<Uint8List> Function(String url) provide;
+
+  static HostIconProvider of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType();
+
+  @override
+  bool updateShouldNotify(HostIconProvider old) => old.provide != provide;
+}
 
 class HostIconTile extends StatelessWidget {
   final String host;
@@ -46,7 +60,7 @@ class HostIconTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<Uint8List>(
       future: host != null
-          ? Injector.resolve<HostsStore>().getFavicon(host).data
+          ? HostIconProvider.of(context).provide(host)
           : Future.value(null),
       initialData: host != null ? Uint8List(0) : null,
       builder: (_, snap) => SizedBox.fromSize(

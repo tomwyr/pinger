@@ -8,12 +8,14 @@ part 'settings_store.g.dart';
 
 @singleton
 class SettingsStore extends SettingsStoreBase with _$SettingsStore {
+  final PackageInfo _packageInfo;
   final PingerPrefs _pingerPrefs;
 
-  SettingsStore(this._pingerPrefs);
+  SettingsStore(this._packageInfo, this._pingerPrefs);
 }
 
 abstract class SettingsStoreBase with Store {
+  PackageInfo get _packageInfo;
   PingerPrefs get _pingerPrefs;
 
   @observable
@@ -29,7 +31,7 @@ abstract class SettingsStoreBase with Store {
   Future<void> init() async {
     didShowIntro = _pingerPrefs.getDidShowIntro() ?? false;
     userSettings = _getUserSettings();
-    appVersion = (await PackageInfo.fromPlatform()).version;
+    appVersion = _packageInfo.version;
   }
 
   UserSettings _getUserSettings() {

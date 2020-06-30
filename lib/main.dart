@@ -5,9 +5,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
-import 'package:pinger/ui/page/init_page.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/page/init_page.dart';
+import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 void main() async {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
@@ -55,6 +57,10 @@ class _PingerAppState extends State<PingerApp> {
       theme: R.themes.app,
       themeMode: R.themes.mode,
       title: "Pinger",
+      builder: (_, child) => HostIconProvider(
+        provide: (it) => Injector.resolve<HostsStore>().getFavicon(it).data,
+        child: child,
+      ),
       home: InitPage(),
     );
   }
