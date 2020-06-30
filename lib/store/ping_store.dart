@@ -11,9 +11,9 @@ import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
-import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/location_store.dart';
+import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
 
 part 'ping_store.g.dart';
@@ -24,7 +24,7 @@ class PingStore extends PingStoreBase with _$PingStore {
   final PingerApi _pingerApi;
   final PingService _pingService;
   final SettingsStore _settingsStore;
-  final ArchiveStore _archiveStore;
+  final ResultsStore _resultsStore;
   final HostsStore _hostsStore;
   final LocationStore _locationStore;
 
@@ -33,7 +33,7 @@ class PingStore extends PingStoreBase with _$PingStore {
     this._pingerApi,
     this._pingService,
     this._settingsStore,
-    this._archiveStore,
+    this._resultsStore,
     this._hostsStore,
     this._locationStore,
   );
@@ -44,7 +44,7 @@ abstract class PingStoreBase with Store {
   PingerApi get _pingerApi;
   PingService get _pingService;
   SettingsStore get _settingsStore;
-  ArchiveStore get _archiveStore;
+  ResultsStore get _resultsStore;
   HostsStore get _hostsStore;
   LocationStore get _locationStore;
 
@@ -254,6 +254,6 @@ abstract class PingStoreBase with Store {
       stats: currentSession.stats,
       duration: _timer.elapsed,
     );
-    _archivedId = await _archiveStore.saveLocalResult(result);
+    _archivedId = await _resultsStore.saveLocalResult(result);
   }
 }

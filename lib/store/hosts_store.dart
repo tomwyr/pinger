@@ -27,6 +27,8 @@ abstract class HostsStoreBase with Store {
   PingerApi get _pingerApi;
   FaviconService get _faviconService;
 
+  final Map<String, Future<Uint8List>> _favicons = {};
+
   @observable
   String _searchQuery = "";
 
@@ -34,7 +36,10 @@ abstract class HostsStoreBase with Store {
   DataSnap<List<HostItem>> hosts;
 
   @observable
-  Map<String, HostStats> stats;
+  Map<String, HostStats> localStats;
+
+  @observable
+  List<String> favorites;
 
   @computed
   List<HostItem> get searchResults {
@@ -50,6 +55,7 @@ abstract class HostsStoreBase with Store {
   Future<void> init() async {
     _emitStats();
     await fetchHosts();
+    autorun((_) => _emitFavorites());
   }
 
   @action
@@ -75,9 +81,33 @@ abstract class HostsStoreBase with Store {
     }
   }
 
+  void _emitFavorites() {
+    final favoriteHosts = _pingerPrefs.getFavoriteHosts();
+    favorites = favoriteHosts
+      ..sort((e1, e2) {
+        if (!localStats.containsKey(e1)) return 1;
+        if (!localStats.containsKey(e2)) return -1;
+        return localStats[e2].pingCount.compareTo(localStats[e1].pingCount);
+      });
+  }
+
+  @action
+  Future<void> addFavorite(String host) async {
+    await _pingerPrefs.addFavoriteHost(host);
+    _emitFavorites();
+  }
+
+  @action
+  Future<void> removeFavorites(List<String> hosts) async {
+    await _pingerPrefs.removeFavoriteHosts(hosts);
+    _emitFavorites();
+  }
+
+  bool isFavorite(String host) => favorites.any((it) => it == host);
+
   @action
   Future<void> incrementStats(String host) async {
-    final hostsStats = stats.values.toList();
+    final hostsStats = localStats.values.toList();
     final index = hostsStats.indexWhere((it) => it.host == host);
     final updatedStats = HostStats(
       host: host,
@@ -97,13 +127,14 @@ abstract class HostsStoreBase with Store {
   }
 
   void _emitStats() {
-    stats = {for (var it in _pingerPrefs.getHostsStats()) it.host: it};
+    localStats = {for (var it in _pingerPrefs.getHostsStats()) it.host: it};
   }
 
   @action
   void search(String query) => _searchQuery = query;
 
-  Favicon getFavicon(String url) => Favicon(_faviconService.load(url));
+  Future<Uint8List> getFavicon(String host) =>
+      _favicons.putIfAbsent(host, () => _faviconService.load(host));
 }
 
 class HostItem {
@@ -111,10 +142,4 @@ class HostItem {
   final double popularity;
 
   HostItem(this.name, this.popularity);
-}
-
-class Favicon {
-  final Future<Uint8List> data;
-
-  Favicon(this.data);
 }

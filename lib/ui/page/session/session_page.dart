@@ -6,7 +6,7 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/favorites_store.dart';
+import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/ui/common/fade_out.dart';
 import 'package:pinger/ui/page/base_page.dart';
@@ -29,7 +29,7 @@ class PingPage extends StatefulWidget {
 class _PingPageState extends BaseState<PingPage> {
   final Duration _animDuration = Duration(milliseconds: 500);
   final PingStore _pingStore = Injector.resolve();
-  final FavoritesStore _favoritesStore = Injector.resolve();
+  final HostsStore _hostsStore = Injector.resolve();
 
   ValueNotifier<PingValuesType> _viewType = ValueNotifier(PingValuesType.gauge);
 
@@ -44,7 +44,7 @@ class _PingPageState extends BaseState<PingPage> {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
           final canArchive = _pingStore.canArchiveResult;
-          final isFavorite = _favoritesStore.isFavorite(session.host);
+          final isFavorite = _hostsStore.isFavorite(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
           final isExpanded = status.isInitial || status.isQuickCheckDone;
@@ -94,8 +94,8 @@ class _PingPageState extends BaseState<PingPage> {
           enabled: true,
           active: isFavorite,
           onPressed: () => isFavorite
-              ? _favoritesStore.removeFavorites([session.host])
-              : _favoritesStore.addFavorite(session.host),
+              ? _hostsStore.removeFavorites([session.host])
+              : _hostsStore.addFavorite(session.host),
         ),
         SessionHostButton(
           icon: Icons.tune,

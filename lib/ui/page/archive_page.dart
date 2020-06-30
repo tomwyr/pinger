@@ -6,7 +6,7 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/archive_store.dart';
+import 'package:pinger/store/results_store.dart';
 import 'package:pinger/ui/common/animated_ink_icon.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
@@ -25,7 +25,7 @@ class ArchivePage extends StatefulWidget {
 }
 
 class _ArchivePageState extends BaseState<ArchivePage> {
-  final ArchiveStore _archiveStore = Injector.resolve();
+  final ResultsStore _resultsStore = Injector.resolve();
 
   ArchiveViewType _viewType = ArchiveViewType.list;
   String _selectedHost;
@@ -42,8 +42,8 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       },
       child: Observer(
         builder: (_) => Scaffold(
-          appBar: _buildAppBar(_archiveStore.localResults.isNotEmpty),
-          body: _buildBody(_archiveStore.localResults),
+          appBar: _buildAppBar(_resultsStore.localResults.isNotEmpty),
+          body: _buildBody(_resultsStore.localResults),
         ),
       ),
     );

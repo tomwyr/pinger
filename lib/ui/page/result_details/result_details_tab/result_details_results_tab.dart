@@ -62,7 +62,7 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
               ),
               Expanded(
                 child: ViewTypeRow(
-                  types: {
+                  labeledTypes: {
                     PingValuesType.list: S.current.viewTypeListLabel,
                     PingValuesType.chart: S.current.viewTypeChartLabel,
                   },

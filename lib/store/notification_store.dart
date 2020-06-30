@@ -6,28 +6,29 @@ import 'package:mobx/mobx.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/utils/notification_localizations.dart';
+import 'package:pinger/utils/local_notifications.dart';
+import 'package:pinger/utils/notification_messages.dart';
 
 part 'notification_store.g.dart';
 
 @singleton
 class NotificationStore extends NotificationStoreBase with _$NotificationStore {
-  final FlutterLocalNotificationsPlugin _localNotifications;
-  final NotificationLocalizations _localizations;
+  final LocalNotifications _localNotifications;
+  final NotificationMessages _messages;
   final SettingsStore _settingsStore;
   final PingStore _pingStore;
 
   NotificationStore(
     this._localNotifications,
-    this._localizations,
+    this._messages,
     this._settingsStore,
     this._pingStore,
   );
 }
 
 abstract class NotificationStoreBase with Store {
-  FlutterLocalNotificationsPlugin get _localNotifications;
-  NotificationLocalizations get _localizations;
+  LocalNotifications get _localNotifications;
+  NotificationMessages get _messages;
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
 
@@ -85,16 +86,16 @@ abstract class NotificationStoreBase with Store {
     switch (session.status) {
       case PingStatus.sessionStarted:
         _showNotification(
-          _localizations.startedTitle,
+          _messages.startedTitle,
           session.values.isNotEmpty
-              ? _localizations.startedBody(session.values.last ?? "-")
+              ? _messages.startedBody(session.values.last ?? "-")
               : "",
         );
         break;
       case PingStatus.sessionPaused:
         _showNotification(
-          _localizations.pausedTitle,
-          _localizations.pausedBody(
+          _messages.pausedTitle,
+          _messages.pausedBody(
             session.values.length,
             session.settings.count,
           ),
@@ -102,9 +103,9 @@ abstract class NotificationStoreBase with Store {
         break;
       case PingStatus.sessionDone:
         _showNotification(
-          _localizations.doneTitle,
+          _messages.doneTitle,
           session.stats != null
-              ? _localizations.doneBody(
+              ? _messages.doneBody(
                   session.stats.min,
                   session.stats.mean,
                   session.stats.max,

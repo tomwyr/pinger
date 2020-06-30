@@ -5,16 +5,16 @@ import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
-import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
-import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/ui/common/flex_child_scroll_view.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
+import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/ui/shared/three_bounce.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 
 class SearchPage extends StatefulWidget {
   final String initialQuery;

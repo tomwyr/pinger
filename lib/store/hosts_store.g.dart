@@ -47,18 +47,33 @@ mixin _$HostsStore on HostsStoreBase, Store {
     });
   }
 
-  final _$statsAtom = Atom(name: 'HostsStoreBase.stats');
+  final _$localStatsAtom = Atom(name: 'HostsStoreBase.localStats');
 
   @override
-  Map<String, HostStats> get stats {
-    _$statsAtom.reportRead();
-    return super.stats;
+  Map<String, HostStats> get localStats {
+    _$localStatsAtom.reportRead();
+    return super.localStats;
   }
 
   @override
-  set stats(Map<String, HostStats> value) {
-    _$statsAtom.reportWrite(value, super.stats, () {
-      super.stats = value;
+  set localStats(Map<String, HostStats> value) {
+    _$localStatsAtom.reportWrite(value, super.localStats, () {
+      super.localStats = value;
+    });
+  }
+
+  final _$favoritesAtom = Atom(name: 'HostsStoreBase.favorites');
+
+  @override
+  List<String> get favorites {
+    _$favoritesAtom.reportRead();
+    return super.favorites;
+  }
+
+  @override
+  set favorites(List<String> value) {
+    _$favoritesAtom.reportWrite(value, super.favorites, () {
+      super.favorites = value;
     });
   }
 
@@ -74,6 +89,21 @@ mixin _$HostsStore on HostsStoreBase, Store {
   @override
   Future<void> fetchHosts() {
     return _$fetchHostsAsyncAction.run(() => super.fetchHosts());
+  }
+
+  final _$addFavoriteAsyncAction = AsyncAction('HostsStoreBase.addFavorite');
+
+  @override
+  Future<void> addFavorite(String host) {
+    return _$addFavoriteAsyncAction.run(() => super.addFavorite(host));
+  }
+
+  final _$removeFavoritesAsyncAction =
+      AsyncAction('HostsStoreBase.removeFavorites');
+
+  @override
+  Future<void> removeFavorites(List<String> hosts) {
+    return _$removeFavoritesAsyncAction.run(() => super.removeFavorites(hosts));
   }
 
   final _$incrementStatsAsyncAction =
@@ -109,7 +139,8 @@ mixin _$HostsStore on HostsStoreBase, Store {
   String toString() {
     return '''
 hosts: ${hosts},
-stats: ${stats},
+localStats: ${localStats},
+favorites: ${favorites},
 searchResults: ${searchResults}
     ''';
   }

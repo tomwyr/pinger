@@ -12,7 +12,6 @@ class FaviconService {
     'image/vnd.microsoft.icon',
   };
 
-  final Map<String, Future<Uint8List>> _icons = {};
   final String baseUrl;
   final Duration expiryTime;
 
@@ -24,10 +23,7 @@ class FaviconService {
         const Duration(days: 7),
       );
 
-  Future<Uint8List> load(String url) =>
-      _icons.putIfAbsent(url, () => _loadIcon(url));
-
-  Future<Uint8List> _loadIcon(String url) async {
+  Future<Uint8List> load(String url) async {
     final dir = await path.getApplicationDocumentsDirectory();
     final file = File("${dir.path}/$url");
     if (!await _isIconValid(file)) {

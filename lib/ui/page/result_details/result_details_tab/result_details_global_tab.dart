@@ -216,7 +216,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
           ),
           Expanded(
             child: ViewTypeRow(
-              types: {
+              labeledTypes: {
                 UserResultType.min: S.current.viewTypeMin,
                 UserResultType.mean: S.current.viewTypeMean,
                 UserResultType.max: S.current.viewTypeMax,
@@ -271,7 +271,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
     throw StateError("Unhandled $UserResultType: $_resultType.");
   }
 
-  Map<int, int> _groupChartData(Map<int, int> values) {
+  List<PingValueCount> _groupChartData(Map<int, int> values) {
     final pings = values.keys.toList()..sort();
     final groupsCount = min(10, pings.last - pings.first);
     final groupSpan = (pings.last - pings.first) ~/ groupsCount;
@@ -281,6 +281,8 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       groups[groupKey] ??= 0;
       groups[groupKey] += count;
     });
-    return groups;
+    return groups.entries
+        .map((it) => PingValueCount(it.key, it.value))
+        .toList();
   }
 }

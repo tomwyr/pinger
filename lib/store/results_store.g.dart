@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'archive_store.dart';
+part of 'results_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'archive_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$ArchiveStore on ArchiveStoreBase, Store {
-  final _$localResultsAtom = Atom(name: 'ArchiveStoreBase.localResults');
+mixin _$ResultsStore on ResultsStoreBase, Store {
+  final _$localResultsAtom = Atom(name: 'ResultsStoreBase.localResults');
 
   @override
   List<PingResult> get localResults {
@@ -24,7 +24,7 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
     });
   }
 
-  final _$globalResultsAtom = Atom(name: 'ArchiveStoreBase.globalResults');
+  final _$globalResultsAtom = Atom(name: 'ResultsStoreBase.globalResults');
 
   @override
   Map<String, DataSnap<GlobalHostResults>> get globalResults {
@@ -40,7 +40,7 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
   }
 
   final _$fetchGlobalResultsAsyncAction =
-      AsyncAction('ArchiveStoreBase.fetchGlobalResults');
+      AsyncAction('ResultsStoreBase.fetchGlobalResults');
 
   @override
   Future<void> fetchGlobalResults(String host) {
@@ -49,7 +49,7 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
   }
 
   final _$deleteLocalResultAsyncAction =
-      AsyncAction('ArchiveStoreBase.deleteLocalResult');
+      AsyncAction('ResultsStoreBase.deleteLocalResult');
 
   @override
   Future<void> deleteLocalResult(int resultId) {
@@ -58,7 +58,7 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
   }
 
   final _$saveLocalResultAsyncAction =
-      AsyncAction('ArchiveStoreBase.saveLocalResult');
+      AsyncAction('ResultsStoreBase.saveLocalResult');
 
   @override
   Future<int> saveLocalResult(PingResult result) {
@@ -66,17 +66,17 @@ mixin _$ArchiveStore on ArchiveStoreBase, Store {
         .run(() => super.saveLocalResult(result));
   }
 
-  final _$ArchiveStoreBaseActionController =
-      ActionController(name: 'ArchiveStoreBase');
+  final _$ResultsStoreBaseActionController =
+      ActionController(name: 'ResultsStoreBase');
 
   @override
   void init() {
-    final _$actionInfo = _$ArchiveStoreBaseActionController.startAction(
-        name: 'ArchiveStoreBase.init');
+    final _$actionInfo = _$ResultsStoreBaseActionController.startAction(
+        name: 'ResultsStoreBase.init');
     try {
       return super.init();
     } finally {
-      _$ArchiveStoreBaseActionController.endAction(_$actionInfo);
+      _$ResultsStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

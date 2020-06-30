@@ -5,20 +5,20 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
-import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/archive_store.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/utils/host_tap_handler.dart';
 import 'package:pinger/ui/common/collapsing_tab_layout.dart';
-import 'package:pinger/ui/page/result_details/result_details_tab/result_details_global_tab.dart';
+import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/page/result_details/result_details_header.dart';
+import 'package:pinger/ui/page/result_details/result_details_tab/result_details_global_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_info_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_more_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_results_tab.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
+import 'package:pinger/utils/host_tap_handler.dart';
 
 enum ResultDetailsTab { results, global, info, more }
 
@@ -37,7 +37,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
   static final _collapsedHeight = kToolbarHeight + 48.0;
   static final _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
 
-  final ArchiveStore _archiveStore = Injector.resolve();
+  final ResultsStore _resultsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final LocationStore _locationStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
@@ -54,7 +54,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       vsync: this,
       length: ResultDetailsTab.values.length,
     );
-    _archiveStore.fetchGlobalResults(widget.result.host);
+    _resultsStore.fetchGlobalResults(widget.result.host);
   }
 
   @override
@@ -130,7 +130,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       onAcceptPressed: () {
         pop();
         pop();
-        _archiveStore.deleteLocalResult(widget.result.id);
+        _resultsStore.deleteLocalResult(widget.result.id);
       },
     );
   }
@@ -172,15 +172,15 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
             isSharingLocation: _checkIsSharingLocation(),
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
-            globalResults: _archiveStore.globalResults[widget.result.host],
+            globalResults: _resultsStore.globalResults[widget.result.host],
             onRefreshPressed: () =>
-                _archiveStore.fetchGlobalResults(widget.result.host),
+                _resultsStore.fetchGlobalResults(widget.result.host),
           ),
         ),
         ResultDetailsInfoTab(result: widget.result),
         Observer(
           builder: (_) => ResultDetailsMoreTab(
-            results: _archiveStore.localResults
+            results: _resultsStore.localResults
                 .where((it) =>
                     it.host == widget.result.host && it.id != widget.result.id)
                 .toList(),

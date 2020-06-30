@@ -6,7 +6,6 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -26,7 +25,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends BaseState<HomePage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
-  final FavoritesStore _favoritesStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
 
@@ -57,18 +55,18 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         builder: (context) {
           final shouldShowIntroPrompt = !_settingsStore.didShowIntro &&
               _pingStore.currentSession == null &&
-              _favoritesStore.items.isEmpty &&
-              _hostsStore.stats.isEmpty;
+              _hostsStore.favorites.isEmpty &&
+              _hostsStore.localStats.isEmpty;
           return shouldShowIntroPrompt
               ? _buildIntroContent(_settingsStore.notifyDidShowIntro)
               : HomeHostSuggestions(
                   session: _pingStore.currentSession,
-                  favorites: _favoritesStore.items,
+                  favorites: _hostsStore.favorites,
                   popular: _hostsStore.hosts.maybeWhen(
                     data: (data) => data.take(5).map((it) => it.name).toList(),
                     orElse: () => [],
                   ),
-                  stats: _hostsStore.stats,
+                  stats: _hostsStore.localStats,
                   searchBar: _buildSearchBar(),
                   onItemPressed: (it) => onHostTap(_pingStore, it),
                 );

@@ -6,17 +6,17 @@ import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/utils/data_snap.dart';
 
-part 'archive_store.g.dart';
+part 'results_store.g.dart';
 
 @singleton
-class ArchiveStore extends ArchiveStoreBase with _$ArchiveStore {
+class ResultsStore extends ResultsStoreBase with _$ResultsStore {
   final PingerPrefs _pingerPrefs;
   final PingerApi _pingerApi;
 
-  ArchiveStore(this._pingerPrefs, this._pingerApi);
+  ResultsStore(this._pingerPrefs, this._pingerApi);
 }
 
-abstract class ArchiveStoreBase with Store {
+abstract class ResultsStoreBase with Store {
   PingerPrefs get _pingerPrefs;
   PingerApi get _pingerApi;
 

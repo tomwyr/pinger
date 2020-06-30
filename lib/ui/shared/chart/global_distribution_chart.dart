@@ -24,12 +24,12 @@ class GlobalDistributionChart extends StatelessWidget {
 
   factory GlobalDistributionChart({
     Key key,
-    @required Map<int, int> data,
+    @required List<PingValueCount> data,
     @required int dataCount,
     @required int userResult,
   }) {
-    final spots = data.entries
-        .map((it) => FlSpot(it.key.toDouble(), it.value / dataCount * 100))
+    final spots = data
+        .map((it) => FlSpot(it.value.toDouble(), it.count / dataCount * 100))
         .toList()
           ..sort((e1, e2) => e1.x.compareTo(e2.x));
     final highlightIndex = _insertUserResultSpot(userResult, spots);
@@ -120,4 +120,11 @@ class GlobalDistributionChart extends StatelessWidget {
       ],
     ));
   }
+}
+
+class PingValueCount {
+  final int value;
+  final int count;
+
+  PingValueCount(this.value, this.count);
 }

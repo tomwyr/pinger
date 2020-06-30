@@ -7,16 +7,16 @@ class HostIconProvider extends InheritedWidget {
   const HostIconProvider({
     Key key,
     @required Widget child,
-    @required this.provide,
+    @required this.getIcon,
   }) : super(key: key, child: child);
 
-  final Future<Uint8List> Function(String url) provide;
+  final Future<Uint8List> Function(String url) getIcon;
 
   static HostIconProvider of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType();
 
   @override
-  bool updateShouldNotify(HostIconProvider old) => old.provide != provide;
+  bool updateShouldNotify(HostIconProvider old) => old.getIcon != getIcon;
 }
 
 class HostIconTile extends StatelessWidget {
@@ -60,7 +60,7 @@ class HostIconTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<Uint8List>(
       future: host != null
-          ? HostIconProvider.of(context).provide(host)
+          ? HostIconProvider.of(context).getIcon(host)
           : Future.value(null),
       initialData: host != null ? Uint8List(0) : null,
       builder: (_, snap) => SizedBox.fromSize(

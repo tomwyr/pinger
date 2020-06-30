@@ -1,6 +1,6 @@
 import 'package:pinger/generated/l10n.dart';
 
-class NotificationLocalizations {
+class NotificationMessages {
   String get startedTitle => S.current.notificationStartedTitle;
 
   String startedBody(int last) => S.current.notificationStartedBody(last);

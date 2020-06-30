@@ -5,22 +5,21 @@ import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pinger/di/injector.iconfig.dart';
-import 'package:pinger/store/archive_store.dart';
-import 'package:pinger/store/favorites_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/notification_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/utils/notification_localizations.dart';
+import 'package:pinger/utils/local_notifications.dart';
+import 'package:pinger/utils/notification_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Injector {
   static Future<void> configure() async {
     await _initInjectable();
     resolve<SettingsStore>().init();
-    resolve<ArchiveStore>().init();
-    resolve<FavoritesStore>().init();
+    resolve<ResultsStore>().init();
     resolve<HostsStore>().init();
     resolve<PingStore>().init();
     resolve<LocationStore>().init();
@@ -44,19 +43,17 @@ abstract class InjectorModule {
 
   Firestore get firestore => Firestore.instance;
 
-  FlutterLocalNotificationsPlugin get localNotifications =>
-      FlutterLocalNotificationsPlugin()
-        ..initialize(InitializationSettings(
-          AndroidInitializationSettings('ic_notification'),
-          IOSInitializationSettings(
-            requestAlertPermission: false,
-            requestBadgePermission: false,
-            requestSoundPermission: false,
-          ),
-        ));
+  LocalNotifications get localNotifications => LocalNotifications()
+    ..initialize(InitializationSettings(
+      AndroidInitializationSettings('ic_notification'),
+      IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      ),
+    ));
 
-  NotificationLocalizations get notificationLocalizations =>
-      NotificationLocalizations();
+  NotificationMessages get notificationLocalizations => NotificationMessages();
 }
 
 @injectableInit

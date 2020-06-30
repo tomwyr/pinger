@@ -53,7 +53,7 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
                 if (widget.session.status.isSession)
                   Expanded(
                     child: ViewTypeRow(
-                      types: {
+                      labeledTypes: {
                         PingValuesType.gauge: S.current.viewTypeGaugleLabel,
                         PingValuesType.list: S.current.viewTypeListLabel,
                         PingValuesType.chart: S.current.viewTypeChartLabel,

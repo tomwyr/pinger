@@ -58,7 +58,7 @@ class _PingerAppState extends State<PingerApp> {
       themeMode: R.themes.mode,
       title: "Pinger",
       builder: (_, child) => HostIconProvider(
-        provide: (it) => Injector.resolve<HostsStore>().getFavicon(it).data,
+        getIcon: Injector.resolve<HostsStore>().getFavicon,
         child: child,
       ),
       home: InitPage(),
