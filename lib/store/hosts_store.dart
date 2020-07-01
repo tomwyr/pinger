@@ -27,7 +27,7 @@ abstract class HostsStoreBase with Store {
   PingerApi get _pingerApi;
   FaviconService get _faviconService;
 
-  final Map<String, Future<Uint8List>> _favicons = {};
+  final Map<String, Observable<DataSnap<Uint8List>>> _favicons = {};
 
   @observable
   String _searchQuery = "";
@@ -54,8 +54,8 @@ abstract class HostsStoreBase with Store {
   @action
   Future<void> init() async {
     _emitStats();
-    await fetchHosts();
     autorun((_) => _emitFavorites());
+    await fetchHosts();
   }
 
   @action
@@ -133,8 +133,25 @@ abstract class HostsStoreBase with Store {
   @action
   void search(String query) => _searchQuery = query;
 
-  Future<Uint8List> getFavicon(String host) =>
-      _favicons.putIfAbsent(host, () => _faviconService.load(host));
+  Observable<DataSnap<Uint8List>> getFavicon(String host) {
+    if (!_favicons.containsKey(host)) {
+      _favicons[host] = Observable(DataSnap.loading());
+      _tryLoadFavicon(host);
+    }
+    return _favicons[host];
+  }
+
+  @action
+  Future<void> _tryLoadFavicon(String host) async {
+    final observable = _favicons[host];
+    observable.value = DataSnap.loading();
+    try {
+      final icon = await _faviconService.load(host);
+      observable.value = DataSnap.data(icon);
+    } on FaviconError {
+      observable.value = DataSnap.error();
+    }
+  }
 }
 
 class HostItem {

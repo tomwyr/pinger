@@ -121,6 +121,14 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return _$removeStatsAsyncAction.run(() => super.removeStats(hosts));
   }
 
+  final _$_tryLoadFaviconAsyncAction =
+      AsyncAction('HostsStoreBase._tryLoadFavicon');
+
+  @override
+  Future<void> _tryLoadFavicon(String host) {
+    return _$_tryLoadFaviconAsyncAction.run(() => super._tryLoadFavicon(host));
+  }
+
   final _$HostsStoreBaseActionController =
       ActionController(name: 'HostsStoreBase');
 
