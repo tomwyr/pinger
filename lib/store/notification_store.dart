@@ -6,14 +6,13 @@ import 'package:mobx/mobx.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/utils/local_notifications.dart';
 import 'package:pinger/utils/notification_messages.dart';
 
 part 'notification_store.g.dart';
 
 @singleton
 class NotificationStore extends NotificationStoreBase with _$NotificationStore {
-  final LocalNotifications _localNotifications;
+  final FlutterLocalNotificationsPlugin _localNotifications;
   final NotificationMessages _messages;
   final SettingsStore _settingsStore;
   final PingStore _pingStore;
@@ -27,7 +26,7 @@ class NotificationStore extends NotificationStoreBase with _$NotificationStore {
 }
 
 abstract class NotificationStoreBase with Store {
-  LocalNotifications get _localNotifications;
+  FlutterLocalNotificationsPlugin get _localNotifications;
   NotificationMessages get _messages;
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
