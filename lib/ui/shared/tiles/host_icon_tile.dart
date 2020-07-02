@@ -17,14 +17,11 @@ class HostIconProvider extends InheritedWidget {
 
   final HostIconGetter getIcon;
 
-  static HostIconProvider of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType();
-
   @override
   bool updateShouldNotify(HostIconProvider old) => old.getIcon != getIcon;
 }
 
-class HostIconTile extends StatelessWidget {
+class HostIconTile extends StatefulWidget {
   final String host;
   final Duration duration;
   final Color shadowColor;
@@ -62,12 +59,35 @@ class HostIconTile extends StatelessWidget {
         );
 
   @override
+  _HostIconTileState createState() => _HostIconTileState();
+}
+
+class _HostIconTileState extends State<HostIconTile> {
+  Observable<DataSnap<Uint8List>> _iconObservable;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateIcon();
+  }
+
+  @override
+  void didUpdateWidget(HostIconTile old) {
+    super.didUpdateWidget(old);
+    if (old.host != widget.host) _updateIcon();
+  }
+
+  void _updateIcon() => _iconObservable = context
+      .dependOnInheritedWidgetOfExactType<HostIconProvider>()
+      .getIcon(widget.host);
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
       size: Size.square(36.0),
       child: TweenAnimationBuilder<Color>(
-        tween: ColorTween(begin: shadowColor, end: shadowColor),
-        duration: duration,
+        tween: ColorTween(begin: widget.shadowColor, end: widget.shadowColor),
+        duration: widget.duration,
         child: _buildIcon(context),
         builder: (_, value, child) => DecoratedBox(
           decoration: BoxDecoration(
@@ -92,12 +112,11 @@ class HostIconTile extends StatelessWidget {
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         child: Observer(
-          builder: (_) => HostIconProvider.of(context).getIcon(host).value.when(
-                data: (it) => Image.memory(it, width: 24.0, height: 24.0),
-                loading: () => SizedBox.shrink(),
-                error: () =>
-                    Icon(Icons.language, color: R.colors.gray, size: 24.0),
-              ),
+          builder: (_) => _iconObservable.value.when(
+            data: (it) => Image.memory(it, width: 24.0, height: 24.0),
+            loading: () => SizedBox.shrink(),
+            error: () => Icon(Icons.language, color: R.colors.gray, size: 24.0),
+          ),
         ),
       ),
     );

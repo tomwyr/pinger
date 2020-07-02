@@ -28,6 +28,7 @@ dependencies:
   google_fonts: ^1.0.0
   fl_chart: ^0.10.0
   package_info: ^0.4.1
+  connectivity: ^0.4.9
 
 dev_dependencies:
   flutter_test:

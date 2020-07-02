@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/host_stats.dart';
@@ -18,16 +19,25 @@ class HostsStore extends HostsStoreBase with _$HostsStore {
   final PingerPrefs _pingerPrefs;
   final PingerApi _pingerApi;
   final FaviconService _faviconService;
+  final Connectivity _connectivity;
 
-  HostsStore(this._pingerPrefs, this._pingerApi, this._faviconService);
+  HostsStore(
+    this._pingerPrefs,
+    this._pingerApi,
+    this._faviconService,
+    this._connectivity,
+  );
 }
 
 abstract class HostsStoreBase with Store {
   PingerPrefs get _pingerPrefs;
   PingerApi get _pingerApi;
   FaviconService get _faviconService;
+  Connectivity get _connectivity;
 
   final Map<String, Observable<DataSnap<Uint8List>>> _favicons = {};
+
+  ConnectivityResult _lastConnectivity;
 
   @observable
   String _searchQuery = "";
@@ -53,9 +63,37 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> init() async {
+    _connectivity.onConnectivityChanged.listen(_onConnectivityChanged);
     _emitStats();
     autorun((_) => _emitFavorites());
     await fetchHosts();
+  }
+
+  void _onConnectivityChanged(ConnectivityResult result) {
+    if (result != _lastConnectivity) {
+      _lastConnectivity = result;
+      final isEnabled = result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi;
+      if (isEnabled) {
+        _favicons.forEach((key, value) {
+          if (value.value is SnapError) _tryLoadFavicon(key);
+        });
+      }
+    }
+  }
+
+  void _emitStats() {
+    localStats = {for (var it in _pingerPrefs.getHostsStats()) it.host: it};
+  }
+
+  void _emitFavorites() {
+    final favoriteHosts = _pingerPrefs.getFavoriteHosts();
+    favorites = favoriteHosts
+      ..sort((e1, e2) {
+        if (!localStats.containsKey(e1)) return 1;
+        if (!localStats.containsKey(e2)) return -1;
+        return localStats[e2].pingCount.compareTo(localStats[e1].pingCount);
+      });
   }
 
   @action
@@ -81,16 +119,6 @@ abstract class HostsStoreBase with Store {
     }
   }
 
-  void _emitFavorites() {
-    final favoriteHosts = _pingerPrefs.getFavoriteHosts();
-    favorites = favoriteHosts
-      ..sort((e1, e2) {
-        if (!localStats.containsKey(e1)) return 1;
-        if (!localStats.containsKey(e2)) return -1;
-        return localStats[e2].pingCount.compareTo(localStats[e1].pingCount);
-      });
-  }
-
   @action
   Future<void> addFavorite(String host) async {
     await _pingerPrefs.addFavoriteHost(host);
@@ -102,8 +130,6 @@ abstract class HostsStoreBase with Store {
     await _pingerPrefs.removeFavoriteHosts(hosts);
     _emitFavorites();
   }
-
-  bool isFavorite(String host) => favorites.any((it) => it == host);
 
   @action
   Future<void> incrementStats(String host) async {
@@ -126,19 +152,19 @@ abstract class HostsStoreBase with Store {
     _emitStats();
   }
 
-  void _emitStats() {
-    localStats = {for (var it in _pingerPrefs.getHostsStats()) it.host: it};
-  }
-
   @action
   void search(String query) => _searchQuery = query;
 
   Observable<DataSnap<Uint8List>> getFavicon(String host) {
-    if (!_favicons.containsKey(host)) {
-      _favicons[host] = Observable(DataSnap.loading());
+    var favicon = _favicons[host];
+    if (favicon == null) {
+      favicon = Observable(null);
+      _favicons[host] = favicon;
+      _tryLoadFavicon(host);
+    } else if (favicon.value is SnapError) {
       _tryLoadFavicon(host);
     }
-    return _favicons[host];
+    return favicon;
   }
 
   @action

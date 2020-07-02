@@ -4,10 +4,11 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:pinger/service/favicon_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_notifications/src/flutter_local_notifications_plugin.dart';
 import 'package:location/location.dart';
 import 'package:pinger/utils/notification_messages.dart';
 import 'package:package_info/package_info.dart';
@@ -25,6 +26,7 @@ import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
   final injectorModule = _$InjectorModule();
+  g.registerFactory<Connectivity>(() => injectorModule.connectivity);
   g.registerFactory<Firestore>(() => injectorModule.firestore);
   g.registerFactory<FlutterLocalNotificationsPlugin>(
       () => injectorModule.localNotifications);
@@ -50,6 +52,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<PingerPrefs>(),
     g<PingerApi>(),
     g<FaviconService>(),
+    g<Connectivity>(),
   ));
   g.registerSingleton<LocationStore>(
       LocationStore(g<Location>(), g<SettingsStore>()));

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -54,6 +55,8 @@ abstract class InjectorModule {
         ));
 
   NotificationMessages get notificationLocalizations => NotificationMessages();
+
+  Connectivity get connectivity => Connectivity();
 }
 
 @injectableInit

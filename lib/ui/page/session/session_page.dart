@@ -44,7 +44,7 @@ class _PingPageState extends BaseState<PingPage> {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
           final canArchive = _pingStore.canArchiveResult;
-          final isFavorite = _hostsStore.isFavorite(session.host);
+          final isFavorite = _hostsStore.favorites.contains(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
           final isExpanded = status.isInitial || status.isQuickCheckDone;
