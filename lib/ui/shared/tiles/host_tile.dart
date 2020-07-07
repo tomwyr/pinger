@@ -30,6 +30,7 @@ class HostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
+      key: ValueKey(host),
       elevation: type == HostTileType.highlighted ? 4.0 : 0.0,
       highlightElevation: type == HostTileType.highlighted ? 8.0 : 0.0,
       onPressed: onPressed,

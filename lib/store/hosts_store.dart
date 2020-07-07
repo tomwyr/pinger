@@ -157,12 +157,12 @@ abstract class HostsStoreBase with Store {
 
   Observable<DataSnap<Uint8List>> getFavicon(String host) {
     var favicon = _favicons[host];
+    if (favicon == null || favicon.value is SnapError) {
+      Future(() => _tryLoadFavicon(host));
+    }
     if (favicon == null) {
-      favicon = Observable(null);
+      favicon = Observable(DataSnap.loading());
       _favicons[host] = favicon;
-      _tryLoadFavicon(host);
-    } else if (favicon.value is SnapError) {
-      _tryLoadFavicon(host);
     }
     return favicon;
   }

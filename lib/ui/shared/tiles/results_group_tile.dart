@@ -18,6 +18,7 @@ class ResultsGroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlineButton(
+      key: ValueKey(host),
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       borderSide: R.styles.outlineButtonBorder,
       highlightedBorderColor: R.styles.outlineButtonBorder.color,

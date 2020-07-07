@@ -25,6 +25,7 @@ class ResultTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      key: ValueKey(result.id),
       height: 56.0,
       child: OutlineButton(
         onPressed: onPressed,

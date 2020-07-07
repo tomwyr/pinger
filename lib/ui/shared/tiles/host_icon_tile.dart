@@ -112,10 +112,10 @@ class _HostIconTileState extends State<HostIconTile> {
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         child: Observer(
-          builder: (_) => _iconObservable.value.when(
+          builder: (_) => _iconObservable.value.maybeWhen(
             data: (it) => Image.memory(it, width: 24.0, height: 24.0),
-            loading: () => SizedBox.shrink(),
-            error: () => Icon(Icons.language, color: R.colors.gray, size: 24.0),
+            orElse: () =>
+                Icon(Icons.language, color: R.colors.gray, size: 24.0),
           ),
         ),
       ),
