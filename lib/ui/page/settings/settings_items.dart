@@ -185,10 +185,12 @@ class SwitchSettingItem extends StatelessWidget {
         ),
       ),
       if (!enabled)
-        Positioned.fill(
-          child: AbsorbPointer(
-            child: Container(
-              color: R.colors.canvas.withOpacity(0.75),
+        TweenAnimationBuilder(
+          duration: kThemeChangeDuration,
+          tween: ColorTween(begin: null, end: R.colors.canvas),
+          builder: (_, value, __) => Positioned.fill(
+            child: AbsorbPointer(
+              child: Container(color: value.withOpacity(0.75)),
             ),
           ),
         ),

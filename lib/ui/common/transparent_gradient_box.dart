@@ -56,7 +56,7 @@ class TransparentGradientBox extends StatelessWidget {
       height: height,
       child: TweenAnimationBuilder(
         tween: ColorTween(begin: color, end: color),
-        duration: kThemeAnimationDuration,
+        duration: kThemeChangeDuration,
         builder: (_, value, __) => DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
