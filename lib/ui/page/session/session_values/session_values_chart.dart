@@ -25,12 +25,12 @@ class SessionValuesChart extends StatefulWidget {
 
 class _SessionValuesChartState extends State<SessionValuesChart>
     with SingleTickerProviderStateMixin {
-  final _visibleDotsCount = 5;
   final _gradientSize = 24.0;
   final _valueLabelSize = 24.0;
   final _valueLabelMargin = 12.0;
 
   bool _isMovingToNewHead = false;
+  int _visibleDotsCount = 0;
   double _lastTickValue = 0.0;
   double _maxStartX;
   ValueNotifier<bool> _didReachHead;
@@ -47,6 +47,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
       vsync: this,
       duration: Duration(seconds: 1),
     );
+    _updateDotsCount();
     _updateMaxStart();
     _updateStart(_maxStartX);
   }
@@ -64,11 +65,15 @@ class _SessionValuesChartState extends State<SessionValuesChart>
   @override
   void didUpdateWidget(SessionValuesChart old) {
     super.didUpdateWidget(old);
+    _updateDotsCount();
     if (old.values.length != widget.values.length) {
       _updateMaxStart();
       _animateToNewHead();
     }
   }
+
+  void _updateDotsCount() =>
+      _visibleDotsCount = widget.values.length.clamp(5, 20);
 
   void _updateMaxStart() {
     _maxStartX = max(0, widget.values.length - _visibleDotsCount).toDouble();
