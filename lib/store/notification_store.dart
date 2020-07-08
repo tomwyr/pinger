@@ -31,53 +31,56 @@ abstract class NotificationStoreBase with Store {
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
 
-  Future<void> _currentNotification;
-  bool _isSettingEnabled;
+  @observable
+  bool _isSettingEnabled = false;
   bool _isCheckingPermission = false;
+  Future<void> _currentNotification;
+  PingSession _lastSession;
 
   @action
   void init() {
-    autorun((_) {
-      if (_settingsStore.userSettings == null) return;
-      _checkPermissionIfGotEnabled();
-      _showNotificationIfPinging();
-    });
+    autorun((_) => _checkPermissionIfGotEnabled());
+    autorun((_) => _showNotificationIfPinging());
   }
 
   void _checkPermissionIfGotEnabled() async {
-    if (!_isCheckingPermission) {
-      final showNotification =
-          _settingsStore.userSettings.showSystemNotification;
-      if (showNotification && _isSettingEnabled == false) {
-        _isCheckingPermission = true;
-        await _checkNotificationPermission();
-        _isCheckingPermission = false;
+    final settings = _settingsStore.userSettings;
+    if (settings == null) {
+      return;
+    } else if (!settings.showSystemNotification) {
+      _isSettingEnabled = false;
+    } else if (!_isCheckingPermission) {
+      _isCheckingPermission = true;
+      if (await _hasNotificationPermission()) {
+        _isSettingEnabled = true;
+      } else {
+        await _settingsStore.updateSettings(
+          _settingsStore.userSettings.copyWith(
+            showSystemNotification: false,
+          ),
+        );
       }
-      _isSettingEnabled = showNotification;
+      _isCheckingPermission = false;
     }
   }
 
-  Future<void> _checkNotificationPermission() async {
+  Future<bool> _hasNotificationPermission() async {
     if (Platform.isIOS) {
-      final hasPermission = await _localNotifications
+      return await _localNotifications
           .resolvePlatformSpecificImplementation<
               IOSFlutterLocalNotificationsPlugin>()
-          .requestPermissions(badge: true, alert: true, sound: true);
-      if (!hasPermission) {
-        await _settingsStore
-            .updateSettings(_settingsStore.userSettings.copyWith(
-          showSystemNotification: false,
-        ));
-      }
+          .requestPermissions(badge: true, alert: false, sound: false);
     }
+    return true;
   }
 
   void _showNotificationIfPinging() async {
-    if (_pingStore.currentSession == null) return;
-    if (!_isSettingEnabled) {
+    final session = _pingStore.currentSession;
+    if (!_isSettingEnabled || session == null) {
       _clearNotification();
-    } else if (!_isCheckingPermission) {
-      _showSessionNotification(_pingStore.currentSession);
+    } else if (session != _lastSession) {
+      _lastSession = session;
+      _showSessionNotification(session);
     }
   }
 
@@ -87,7 +90,9 @@ abstract class NotificationStoreBase with Store {
         _showNotification(
           _messages.startedTitle,
           session.values.isNotEmpty
-              ? _messages.startedBody(session.values.last ?? "-")
+              ? session.values.last != null
+                  ? _messages.startedBody(session.values.last)
+                  : "-"
               : "",
         );
         break;
@@ -126,8 +131,13 @@ abstract class NotificationStoreBase with Store {
         'pingerChannelId',
         'pingerChannelName',
         'Pinger notifications channel',
+        playSound: false,
+        enableVibration: false,
       ),
-      IOSNotificationDetails(),
+      IOSNotificationDetails(
+        presentAlert: false,
+        presentSound: false,
+      ),
     );
     _currentNotification = _localNotifications.show(0, title, body, details);
   }
