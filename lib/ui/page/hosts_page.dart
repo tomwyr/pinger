@@ -120,8 +120,15 @@ class _HostsPageState extends BaseState<HostsPage> {
             SizedBox.fromSize(
               size: Size.square(56.0),
               child: IconButton(
-                icon: Icon(_isEditing ? Icons.lock_open : Icons.lock),
-                onPressed: _onEditPressed,
+                icon: Icon(_isEditing ? Icons.delete : Icons.delete_outline),
+                onPressed: !_isEditing || _selection.isNotEmpty
+                    ? _onEditPressed
+                    : null,
+                color: !_isEditing
+                    ? R.colors.primaryLight
+                    : _selection.isNotEmpty
+                        ? R.colors.secondary
+                        : R.colors.gray,
               ),
             ),
           ],

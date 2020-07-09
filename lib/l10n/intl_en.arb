@@ -20,7 +20,7 @@
   "skipButtonLabel": "SKIP",
   "cancelButtonLabel": "CANCEL",
   "resetButtonLabel": "RESET",
-  "sessionEditButtonLabel": "Edit",
+  "sessionSearchButtonLabel": "Search",
   "sessionFavoriteButtonLabel": "Favorite",
   "sessionAdjustButtonLabel": "Adjust",
   "homeIntroTitle": "See short intro that presents main functionalities of the app",

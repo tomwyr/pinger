@@ -80,8 +80,8 @@ class _PingPageState extends BaseState<PingPage> {
       animDuration: _animDuration,
       buttons: [
         SessionHostButton(
-          icon: Icons.edit,
-          label: S.current.sessionEditButtonLabel,
+          icon: Icons.search,
+          label: S.current.sessionSearchButtonLabel,
           enabled: true,
           active: false,
           onPressed: () => pushReplacement(SearchPage(

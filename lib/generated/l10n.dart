@@ -243,11 +243,11 @@ class S {
     );
   }
 
-  /// `Edit`
-  String get sessionEditButtonLabel {
+  /// `Search`
+  String get sessionSearchButtonLabel {
     return Intl.message(
-      'Edit',
-      name: 'sessionEditButtonLabel',
+      'Search',
+      name: 'sessionSearchButtonLabel',
       desc: '',
       args: [],
     );
