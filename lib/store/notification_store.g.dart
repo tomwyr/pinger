@@ -9,19 +9,18 @@ part of 'notification_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NotificationStore on NotificationStoreBase, Store {
-  final _$_isSettingEnabledAtom =
-      Atom(name: 'NotificationStoreBase._isSettingEnabled');
+  final _$hasPermissionAtom = Atom(name: 'NotificationStoreBase.hasPermission');
 
   @override
-  bool get _isSettingEnabled {
-    _$_isSettingEnabledAtom.reportRead();
-    return super._isSettingEnabled;
+  bool get hasPermission {
+    _$hasPermissionAtom.reportRead();
+    return super.hasPermission;
   }
 
   @override
-  set _isSettingEnabled(bool value) {
-    _$_isSettingEnabledAtom.reportWrite(value, super._isSettingEnabled, () {
-      super._isSettingEnabled = value;
+  set hasPermission(bool value) {
+    _$hasPermissionAtom.reportWrite(value, super.hasPermission, () {
+      super.hasPermission = value;
     });
   }
 
@@ -42,7 +41,7 @@ mixin _$NotificationStore on NotificationStoreBase, Store {
   @override
   String toString() {
     return '''
-
+hasPermission: ${hasPermission}
     ''';
   }
 }

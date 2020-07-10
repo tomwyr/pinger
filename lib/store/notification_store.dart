@@ -32,7 +32,8 @@ abstract class NotificationStoreBase with Store {
   PingStore get _pingStore;
 
   @observable
-  bool _isSettingEnabled = false;
+  bool hasPermission;
+
   bool _isCheckingPermission = false;
   Future<void> _currentNotification;
   PingSession _lastSession;
@@ -44,39 +45,34 @@ abstract class NotificationStoreBase with Store {
   }
 
   void _checkPermissionIfGotEnabled() async {
-    final settings = _settingsStore.userSettings;
-    if (settings == null) {
-      return;
-    } else if (!settings.showSystemNotification) {
-      _isSettingEnabled = false;
-    } else if (!_isCheckingPermission) {
+    if (_settingsStore.userSettings != null && !_isCheckingPermission) {
       _isCheckingPermission = true;
-      if (await _hasNotificationPermission()) {
-        _isSettingEnabled = true;
-      } else {
-        await _settingsStore.updateSettings(
-          _settingsStore.userSettings.copyWith(
-            showSystemNotification: false,
-          ),
-        );
-      }
+      await _checkNotificationPermission();
       _isCheckingPermission = false;
     }
   }
 
-  Future<bool> _hasNotificationPermission() async {
-    if (Platform.isIOS) {
-      return await _localNotifications
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          .requestPermissions(badge: true, alert: false, sound: false);
+  Future<void> _checkNotificationPermission() async {
+    hasPermission = Platform.isIOS
+        ? await _localNotifications
+            .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin>()
+            .requestPermissions(badge: true, alert: false, sound: false)
+        : true;
+    if (!hasPermission) {
+      await _settingsStore.updateSettings(
+        _settingsStore.userSettings.copyWith(
+          showSystemNotification: false,
+        ),
+      );
     }
-    return true;
   }
 
   void _showNotificationIfPinging() async {
     final session = _pingStore.currentSession;
-    if (!_isSettingEnabled || session == null) {
+    final showNotification = hasPermission == true &&
+        _settingsStore.userSettings.showSystemNotification;
+    if (!showNotification || session == null) {
       _clearNotification();
     } else if (session != _lastSession) {
       _lastSession = session;
