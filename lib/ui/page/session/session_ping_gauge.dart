@@ -8,14 +8,33 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class SessionPingGauge extends StatelessWidget {
-  const SessionPingGauge({
+  SessionPingGauge({
     Key key,
     @required this.session,
     @required this.duration,
-  }) : super(key: key);
+  })  : minValue = _getMinValue(session),
+        maxValue = _getMaxValue(session),
+        super(key: key);
 
   final PingSession session;
   final Duration duration;
+  final int minValue;
+  final int maxValue;
+  final Size edgeValuesSize = Size(48.0, 24.0);
+
+  static int _getMinValue(PingSession session) =>
+      session.stats != null ? 0 : null;
+
+  static int _getMaxValue(PingSession session) {
+    if (session.stats != null) {
+      final max = session.stats.max;
+      final firstDigit = int.parse(max.toString().substring(0, 1));
+      final maxFirstDigit =
+          firstDigit < 1 ? 1 : firstDigit < 2 ? 2 : firstDigit < 5 ? 5 : 10;
+      return maxFirstDigit * pow(10, max.toString().length - 1);
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +42,47 @@ class SessionPingGauge extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: LayoutBuilder(
         builder: (_, constraints) => SizedBox(
-          height: min(constraints.maxHeight, constraints.maxWidth / 2),
+          height: min(
+            constraints.maxHeight,
+            constraints.maxWidth / 2 + edgeValuesSize.height,
+          ),
           child: Stack(children: <Widget>[
-            PingGaugeArc.forSession(session),
-            _buildLabels(),
+            Positioned.fill(
+              bottom: edgeValuesSize.height,
+              child: PingGaugeArc.forSession(session, maxValue),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                _buildArcEdgeLabel(true),
+                _buildResultsLabels(),
+                _buildArcEdgeLabel(false),
+              ],
+            ),
           ]),
         ),
       ),
     );
   }
 
-  Widget _buildLabels() {
+  Widget _buildArcEdgeLabel(bool isMin) {
+    return Container(
+      width: edgeValuesSize.width,
+      child: Align(
+        alignment: isMin ? Alignment.bottomLeft : Alignment.bottomRight,
+        child: FractionalTranslation(
+          translation: Offset(isMin ? -0.5 : 0.5, 0.0),
+          child: Text(
+            (isMin ? minValue : maxValue)?.toString() ?? "",
+            style: TextStyle(fontSize: 14.0, color: R.colors.gray),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultsLabels() {
     return Column(children: <Widget>[
       Spacer(flex: 4),
       Container(
@@ -53,7 +102,7 @@ class SessionPingGauge extends StatelessWidget {
           style: TextStyle(fontSize: 36.0),
         ),
       ),
-      Spacer(flex: 2),
+      Spacer(flex: 1),
       Container(
         height: 24.0,
         alignment: Alignment.bottomCenter,
@@ -96,18 +145,13 @@ class PingGaugeArc extends StatefulWidget {
     @required this.duration,
   }) : super(key: key);
 
-  factory PingGaugeArc.forSession(PingSession session) {
+  factory PingGaugeArc.forSession(PingSession session, int gaugeMaxValue) {
     final progress = !session.status.isQuickCheck
         ? session.values.length / session.settings.count
         : 0.0;
     final lastResult =
         session.values.lastWhere((it) => it != null, orElse: () => null);
-    final value = lastResult != null
-        ? session.stats.max == session.stats.min
-            ? 0.5
-            : (lastResult - session.stats.min) /
-                (session.stats.max - session.stats.min)
-        : null;
+    final value = lastResult != null ? lastResult / gaugeMaxValue : null;
     return PingGaugeArc(
       progress: progress,
       value: value,
