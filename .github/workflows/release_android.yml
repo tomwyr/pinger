@@ -2,9 +2,9 @@ name: release_android
 
 on:
   push:
-    branches: [production]
+    tags: v*
   pull_request:
-    branches: [production]
+    tags: v*
 
 jobs:
   build_and_publish_android_to_store:
