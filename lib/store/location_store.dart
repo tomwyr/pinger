@@ -55,7 +55,7 @@ abstract class LocationStoreBase with Store {
         !_isCheckingPermission;
     if (shouldRequestPermission) {
       _isCheckingPermission = true;
-      await Permission.location.request();
+      await Permission.locationWhenInUse.request();
       await _updateAccessStatus();
       _isCheckingPermission = false;
     }
