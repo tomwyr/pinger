@@ -24,6 +24,15 @@ mixin _$NotificationStore on NotificationStoreBase, Store {
     });
   }
 
+  final _$_updateNotificatioPermissionAsyncAction =
+      AsyncAction('NotificationStoreBase._updateNotificatioPermission');
+
+  @override
+  Future<void> _updateNotificatioPermission() {
+    return _$_updateNotificatioPermissionAsyncAction
+        .run(() => super._updateNotificatioPermission());
+  }
+
   final _$NotificationStoreBaseActionController =
       ActionController(name: 'NotificationStoreBase');
 

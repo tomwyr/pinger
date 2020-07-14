@@ -1,23 +1,25 @@
-import 'dart:io';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/lifecycle_notifier.dart';
 import 'package:pinger/utils/notification_messages.dart';
 
 part 'notification_store.g.dart';
 
 @singleton
 class NotificationStore extends NotificationStoreBase with _$NotificationStore {
+  final LifecycleNotifier _lifecycleNotifier;
   final FlutterLocalNotificationsPlugin _localNotifications;
   final NotificationMessages _messages;
   final SettingsStore _settingsStore;
   final PingStore _pingStore;
 
   NotificationStore(
+    this._lifecycleNotifier,
     this._localNotifications,
     this._messages,
     this._settingsStore,
@@ -26,13 +28,14 @@ class NotificationStore extends NotificationStoreBase with _$NotificationStore {
 }
 
 abstract class NotificationStoreBase with Store {
+  LifecycleNotifier get _lifecycleNotifier;
   FlutterLocalNotificationsPlugin get _localNotifications;
   NotificationMessages get _messages;
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
 
   @observable
-  bool hasPermission;
+  bool hasPermission = false;
 
   bool _isCheckingPermission = false;
   Future<void> _currentNotification;
@@ -40,31 +43,41 @@ abstract class NotificationStoreBase with Store {
 
   @action
   void init() {
-    autorun((_) => _checkPermissionIfGotEnabled());
+    _lifecycleNotifier.register(LifecycleAware(
+      onResumed: _updateNotificatioPermission,
+    ));
+    _updateNotificatioPermission();
+    autorun((_) => _verifyCanShowNotification());
     autorun((_) => _showNotificationIfPinging());
   }
 
-  void _checkPermissionIfGotEnabled() async {
-    if (_settingsStore.userSettings != null && !_isCheckingPermission) {
-      _isCheckingPermission = true;
-      await _checkNotificationPermission();
-      _isCheckingPermission = false;
+  @action
+  Future<void> _updateNotificatioPermission() async {
+    var status = hasPermission;
+    switch (await Permission.notification.status) {
+      case PermissionStatus.granted:
+        status = true;
+        break;
+      case PermissionStatus.restricted:
+      case PermissionStatus.denied:
+      case PermissionStatus.permanentlyDenied:
+        status = false;
+        break;
+      case PermissionStatus.undetermined:
+        status = null;
+        break;
     }
+    if (status != hasPermission) hasPermission = status;
   }
 
-  Future<void> _checkNotificationPermission() async {
-    hasPermission = Platform.isIOS
-        ? await _localNotifications
-            .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin>()
-            .requestPermissions(badge: true, alert: false, sound: false)
-        : true;
-    if (!hasPermission) {
-      await _settingsStore.updateSettings(
-        _settingsStore.userSettings.copyWith(
-          showSystemNotification: false,
-        ),
-      );
+  void _verifyCanShowNotification() async {
+    if (_settingsStore.userSettings.showSystemNotification) {
+      if (hasPermission == null && !_isCheckingPermission) {
+        _isCheckingPermission = true;
+        await Permission.notification.request();
+        await _updateNotificatioPermission();
+        _isCheckingPermission = false;
+      }
     }
   }
 
@@ -72,11 +85,13 @@ abstract class NotificationStoreBase with Store {
     final session = _pingStore.currentSession;
     final showNotification = hasPermission == true &&
         _settingsStore.userSettings.showSystemNotification;
-    if (!showNotification || session == null) {
-      _clearNotification();
-    } else if (session != _lastSession) {
+    if (session != _lastSession) {
+      if (showNotification && session != null) {
+        _showSessionNotification(session);
+      } else {
+        _clearNotification();
+      }
       _lastSession = session;
-      _showSessionNotification(session);
     }
   }
 
