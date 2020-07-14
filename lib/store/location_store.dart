@@ -32,6 +32,8 @@ abstract class LocationStoreBase with Store {
   @computed
   bool get canAccessLocation => hasPermission && isServiceEnabled;
 
+  bool _isCheckingPermission = false;
+
   @action
   Future<void> init() async {
     _location.changeSettings(accuracy: LocationAccuracy.balanced);
@@ -41,17 +43,21 @@ abstract class LocationStoreBase with Store {
     _updateAccessStatus();
     reaction(
       (_) => _settingsStore.userSettings.shareSettings,
-      _verifyCanShowLocation,
+      _verifyCanAccessLocation,
       fireImmediately: true,
     );
   }
 
-  void _verifyCanShowLocation(ShareSettings settings) async {
-    if (settings.shareResults) {
-      if (settings.attachLocation && !canAccessLocation) {
-        await Permission.location.request();
-        await _updateAccessStatus();
-      }
+  void _verifyCanAccessLocation(ShareSettings settings) async {
+    final shouldRequestPermission = settings.shareResults &&
+        settings.attachLocation &&
+        !canAccessLocation &&
+        !_isCheckingPermission;
+    if (shouldRequestPermission) {
+      _isCheckingPermission = true;
+      await Permission.location.request();
+      await _updateAccessStatus();
+      _isCheckingPermission = false;
     }
     if (!settings.shareResults || (settings.attachLocation && !hasPermission)) {
       await _settingsStore.updateSettings(

@@ -47,44 +47,33 @@ abstract class NotificationStoreBase with Store {
       onResumed: _updateNotificatioPermission,
     ));
     _updateNotificatioPermission();
-    autorun((_) => _verifyCanShowNotification());
+    reaction(
+      (_) => _settingsStore.userSettings.showSystemNotification,
+      _verifyCanShowNotification,
+      fireImmediately: true,
+    );
     autorun((_) => _showNotificationIfPinging());
   }
 
   @action
   Future<void> _updateNotificatioPermission() async {
-    var status = hasPermission;
-    switch (await Permission.notification.status) {
-      case PermissionStatus.granted:
-        status = true;
-        break;
-      case PermissionStatus.restricted:
-      case PermissionStatus.denied:
-      case PermissionStatus.permanentlyDenied:
-        status = false;
-        break;
-      case PermissionStatus.undetermined:
-        status = null;
-        break;
-    }
-    if (status != hasPermission) hasPermission = status;
+    final permissionStatus = (await Permission.notification.status).isGranted;
+    if (permissionStatus != hasPermission) hasPermission = permissionStatus;
   }
 
-  void _verifyCanShowNotification() async {
-    if (_settingsStore.userSettings.showSystemNotification) {
-      if (hasPermission == null && !_isCheckingPermission) {
-        _isCheckingPermission = true;
-        await Permission.notification.request();
-        await _updateNotificatioPermission();
-        _isCheckingPermission = false;
-      }
+  void _verifyCanShowNotification(bool showNotification) async {
+    if (showNotification && !hasPermission && !_isCheckingPermission) {
+      _isCheckingPermission = true;
+      await Permission.notification.request();
+      await _updateNotificatioPermission();
+      _isCheckingPermission = false;
     }
   }
 
   void _showNotificationIfPinging() async {
     final session = _pingStore.currentSession;
-    final showNotification = hasPermission == true &&
-        _settingsStore.userSettings.showSystemNotification;
+    final showNotification =
+        hasPermission && _settingsStore.userSettings.showSystemNotification;
     if (session != _lastSession) {
       if (showNotification && session != null) {
         _showSessionNotification(session);
