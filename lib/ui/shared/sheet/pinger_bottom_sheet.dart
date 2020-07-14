@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:pinger/main.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/pinger_app.dart';
 
 class PingerBottomSheet extends StatelessWidget {
   static Future<T> show<T>({
