@@ -56,7 +56,6 @@ class _HostsPageState extends BaseState<HostsPage> {
 
   void _showConfirmRemoveSheet({@required VoidCallback onConfirmed}) {
     PingerBottomSheet.show(
-      context,
       title: Text(
         S.current.confirmHostRemoveTitle,
         style: R.styles.bottomSheetTitle,

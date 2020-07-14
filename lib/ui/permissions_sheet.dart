@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
+import 'package:pinger/main.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/location_store.dart';
 import 'package:pinger/store/notification_store.dart';
@@ -29,7 +30,6 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
         title: "Notification permission disabled",
         subtitle: "Enable permission in app settings",
         openSettings: AppSettings.openNotificationSettings,
-        getContext: () => context,
         isPermissionGranted: () => _notificationStore.hasPermission,
         isSettingEnabled: () =>
             _settingsStore.userSettings.showSystemNotification,
@@ -44,7 +44,6 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
         title: "Location access disabled",
         subtitle: "Enable permission and service in app settings",
         openSettings: AppSettings.openLocationSettings,
-        getContext: () => context,
         isPermissionGranted: () => _locationStore.canAccessLocation,
         isSettingEnabled: () =>
             _settingsStore.userSettings.shareSettings.attachLocation,
@@ -77,7 +76,6 @@ class PermissionSheetHandler {
     @required this.title,
     @required this.subtitle,
     @required this.openSettings,
-    @required this.getContext,
     @required this.isSettingEnabled,
     @required this.updateSetting,
     @required this.isPermissionGranted,
@@ -86,7 +84,6 @@ class PermissionSheetHandler {
   final String title;
   final String subtitle;
   final VoidCallback openSettings;
-  final ValueGetter<BuildContext> getContext;
   final ValueGetter<bool> isSettingEnabled;
   final ValueSetter<bool> updateSetting;
   final ValueGetter<bool> isPermissionGranted;
@@ -97,7 +94,7 @@ class PermissionSheetHandler {
   void init() {
     _disposer = autorun((_) {
       if (!isSettingEnabled() && isPermissionGranted() && _isShowingSheet) {
-        Navigator.pop(getContext());
+        PingerApp.navigator.pop();
         updateSetting(true);
       } else if (isSettingEnabled() &&
           !isPermissionGranted() &&
@@ -113,7 +110,6 @@ class PermissionSheetHandler {
   void _showSheet() async {
     _isShowingSheet = true;
     await Future(() => PingerBottomSheet.show(
-          getContext(),
           title: Text(
             title,
             style: R.styles.bottomSheetTitle,

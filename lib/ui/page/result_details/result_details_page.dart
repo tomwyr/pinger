@@ -117,7 +117,6 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
 
   void _showConfirmDeleteSheet() {
     PingerBottomSheet.show(
-      context,
       title: Text(
         S.current.confirmResultRemoveTitle,
         style: R.styles.bottomSheetTitle,

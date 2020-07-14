@@ -38,7 +38,7 @@ class ResultDetailsGlobalTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CollapsingTabLayoutItem(slivers: <Widget>[
-      if (isSharingLocation)
+      if (!isSharingLocation)
         ResultDetailsPromptTab(
           image: Images.undrawTheWorldIsMine,
           title: S.current.enableLocationPromptTitle,

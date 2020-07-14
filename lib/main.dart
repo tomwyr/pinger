@@ -24,6 +24,9 @@ void main() async {
 }
 
 class PingerApp extends StatefulWidget {
+  static final _navigatorKey = GlobalKey<NavigatorState>();
+  static NavigatorState get navigator => _navigatorKey.currentState;
+
   @override
   _PingerAppState createState() => _PingerAppState();
 }
@@ -54,6 +57,7 @@ class _PingerAppState extends State<PingerApp> {
         GlobalMaterialLocalizations.delegate,
         S.delegate,
       ],
+      navigatorKey: PingerApp._navigatorKey,
       supportedLocales: S.delegate.supportedLocales,
       theme: R.themes.app,
       themeMode: R.themes.mode,

@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:pinger/main.dart';
 import 'package:pinger/resources.dart';
 
 class PingerBottomSheet extends StatelessWidget {
-  static Future<T> show<T>(
-    BuildContext context, {
+  static Future<T> show<T>({
     Widget title,
     Widget subtitle,
     IconData acceptIcon = Icons.check,
@@ -17,7 +17,7 @@ class PingerBottomSheet extends StatelessWidget {
     Widget builder(VoidCallback rebuild),
   }) {
     return showGeneralDialog(
-      context: context,
+      context: PingerApp.navigator.overlay.context,
       barrierDismissible: true,
       barrierLabel: "PingerBottomSheet",
       pageBuilder: (_, __, ___) => null,
