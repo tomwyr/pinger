@@ -56,8 +56,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<FaviconService>(),
     g<Connectivity>(),
   ));
-  g.registerSingleton<LocationStore>(
-      LocationStore(g<Location>(), g<SettingsStore>()));
+  g.registerSingleton<LocationStore>(LocationStore(
+    g<LifecycleNotifier>(),
+    g<Location>(),
+    g<SettingsStore>(),
+  ));
   g.registerSingleton<PingStore>(PingStore(
     g<PingerPrefs>(),
     g<PingerApi>(),
