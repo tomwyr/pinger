@@ -9,6 +9,7 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/ui/page/init_page.dart';
+import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 void main() async {
@@ -57,9 +58,11 @@ class _PingerAppState extends State<PingerApp> {
       theme: R.themes.app,
       themeMode: R.themes.mode,
       title: "Pinger",
-      builder: (_, child) => HostIconProvider(
-        getIcon: Injector.resolve<HostsStore>().getFavicon,
-        child: child,
+      builder: (_, child) => PermissionsSheet(
+        child: HostIconProvider(
+          getIcon: Injector.resolve<HostsStore>().getFavicon,
+          child: child,
+        ),
       ),
       home: InitPage(),
     );
