@@ -29,6 +29,8 @@ dependencies:
   fl_chart: ^0.10.0
   package_info: ^0.4.1
   connectivity: ^0.4.9
+  app_settings: ^4.0.1+1
+  permission_handler: ^5.0.1+1
 
 dev_dependencies:
   flutter_test:

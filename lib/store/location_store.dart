@@ -1,71 +1,48 @@
 import 'package:injectable/injectable.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' show Location, LocationAccuracy;
 import 'package:mobx/mobx.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pinger/model/geo_position.dart';
-import 'package:pinger/model/user_settings.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/lifecycle_notifier.dart';
 
 part 'location_store.g.dart';
 
 @singleton
 class LocationStore extends LocationStoreBase with _$LocationStore {
+  final LifecycleNotifier _lifecycleNotifier;
   final Location _location;
   final SettingsStore _settingsStore;
 
-  LocationStore(this._location, this._settingsStore);
+  LocationStore(this._lifecycleNotifier, this._location, this._settingsStore);
 }
 
 abstract class LocationStoreBase with Store {
+  LifecycleNotifier get _lifecycleNotifier;
   Location get _location;
   SettingsStore get _settingsStore;
 
-  ShareSettings _lastSettings;
+  PermissionStore _permissionStore;
 
-  @observable
-  bool canAccessLocation;
+  PermissionStore get permissionStore => _permissionStore;
+
+  bool get canAccessLocation => _permissionStore.canAccessService;
 
   @action
   Future<void> init() async {
+    _permissionStore = PermissionStore(
+      _lifecycleNotifier,
+      Permission.locationWhenInUse,
+      () => _settingsStore.userSettings.shareSettings.attachLocation,
+      (it) => _settingsStore.updateSettings(
+        _settingsStore.userSettings.copyWith.shareSettings(
+          attachLocation: it,
+        ),
+      ),
+    );
+    await _permissionStore.init();
     await _location.changeSettings(accuracy: LocationAccuracy.balanced);
-    await _updateAccessStatus();
-    autorun((_) {
-      if (_settingsStore.userSettings == null) return;
-      _requestPermissionIfGotEnabled();
-    });
-  }
-
-  @action
-  Future<void> _requestPermissionIfGotEnabled() async {
-    var shareSettings = _settingsStore.userSettings.shareSettings;
-    final shouldRequestPermission = shareSettings != _lastSettings &&
-        shareSettings.shareResults &&
-        shareSettings.attachLocation &&
-        !canAccessLocation;
-    if (shouldRequestPermission) {
-      await _tryGetAccess();
-      await _updateAccessStatus();
-      if (!canAccessLocation) {
-        shareSettings = shareSettings.copyWith(attachLocation: false);
-        await _settingsStore.updateSettings(
-          _settingsStore.userSettings.copyWith(
-            shareSettings: shareSettings,
-          ),
-        );
-      }
-      _lastSettings = shareSettings;
-    }
-  }
-
-  Future<void> _tryGetAccess() async {
-    await _location.requestPermission();
-    await _location.requestService();
-  }
-
-  Future<void> _updateAccessStatus() async {
-    final isPermissionGranted =
-        await _location.hasPermission() == PermissionStatus.granted;
-    final isServiceEnabled = await _location.serviceEnabled();
-    canAccessLocation = isPermissionGranted && isServiceEnabled;
   }
 
   @action

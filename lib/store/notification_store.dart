@@ -1,23 +1,26 @@
-import 'dart:io';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/lifecycle_notifier.dart';
 import 'package:pinger/utils/notification_messages.dart';
 
 part 'notification_store.g.dart';
 
 @singleton
 class NotificationStore extends NotificationStoreBase with _$NotificationStore {
+  final LifecycleNotifier _lifecycleNotifier;
   final FlutterLocalNotificationsPlugin _localNotifications;
   final NotificationMessages _messages;
   final SettingsStore _settingsStore;
   final PingStore _pingStore;
 
   NotificationStore(
+    this._lifecycleNotifier,
     this._localNotifications,
     this._messages,
     this._settingsStore,
@@ -26,61 +29,43 @@ class NotificationStore extends NotificationStoreBase with _$NotificationStore {
 }
 
 abstract class NotificationStoreBase with Store {
+  LifecycleNotifier get _lifecycleNotifier;
   FlutterLocalNotificationsPlugin get _localNotifications;
   NotificationMessages get _messages;
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
 
-  @observable
-  bool _isSettingEnabled = false;
-  bool _isCheckingPermission = false;
+  PermissionStore _permissionStore;
   Future<void> _currentNotification;
   PingSession _lastSession;
 
+  PermissionStore get permissionStore => _permissionStore;
+
   @action
-  void init() {
-    autorun((_) => _checkPermissionIfGotEnabled());
+  Future<void> init() async {
+    _permissionStore = PermissionStore(
+      _lifecycleNotifier,
+      Permission.notification,
+      () => _settingsStore.userSettings.showSystemNotification,
+      (it) => _settingsStore.updateSettings(
+        _settingsStore.userSettings.copyWith(showSystemNotification: it),
+      ),
+    );
+    await _permissionStore.init();
     autorun((_) => _showNotificationIfPinging());
   }
 
-  void _checkPermissionIfGotEnabled() async {
-    final settings = _settingsStore.userSettings;
-    if (settings == null) {
-      return;
-    } else if (!settings.showSystemNotification) {
-      _isSettingEnabled = false;
-    } else if (!_isCheckingPermission) {
-      _isCheckingPermission = true;
-      if (await _hasNotificationPermission()) {
-        _isSettingEnabled = true;
-      } else {
-        await _settingsStore.updateSettings(
-          _settingsStore.userSettings.copyWith(
-            showSystemNotification: false,
-          ),
-        );
-      }
-      _isCheckingPermission = false;
-    }
-  }
-
-  Future<bool> _hasNotificationPermission() async {
-    if (Platform.isIOS) {
-      return await _localNotifications
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          .requestPermissions(badge: true, alert: false, sound: false);
-    }
-    return true;
-  }
-
-  void _showNotificationIfPinging() async {
+  void _showNotificationIfPinging() {
     final session = _pingStore.currentSession;
-    if (!_isSettingEnabled || session == null) {
-      _clearNotification();
-    } else if (session != _lastSession) {
+    final showNotification = _permissionStore.canAccessService &&
+        _settingsStore.userSettings.showSystemNotification;
+    if (session != _lastSession) {
+      if (showNotification && session != null) {
+        _showSessionNotification(session);
+      } else {
+        _clearNotification();
+      }
       _lastSession = session;
-      _showSessionNotification(session);
     }
   }
 

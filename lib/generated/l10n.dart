@@ -1292,6 +1292,46 @@ class S {
       args: [min, mean, max],
     );
   }
+
+  /// `Notifications disabled`
+  String get notificationAccessDisabledTitle {
+    return Intl.message(
+      'Notifications disabled',
+      name: 'notificationAccessDisabledTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change permission settings to allow the app to show notifications`
+  String get notificationAccessDisabledDesc {
+    return Intl.message(
+      'Change permission settings to allow the app to show notifications',
+      name: 'notificationAccessDisabledDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location disabled`
+  String get locationAccessDisabledTitle {
+    return Intl.message(
+      'Location disabled',
+      name: 'locationAccessDisabledTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change permission settings to allow the app to detect device location`
+  String get locationAccessDisabledDesc {
+    return Intl.message(
+      'Change permission settings to allow the app to detect device location',
+      name: 'locationAccessDisabledDesc',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

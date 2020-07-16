@@ -15,7 +15,6 @@ class ReplaceSessionSheet {
         .replaceSessionSheetSubtitle(currentHost, newHost)
         .split(RegExp("($currentHost|$newHost)"));
     await PingerBottomSheet.show(
-      context,
       title: Text(
         S.current.replaceSessionSheetTitle,
         style: R.styles.bottomSheetTitle,

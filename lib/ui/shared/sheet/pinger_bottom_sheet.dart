@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/pinger_app.dart';
 
 class PingerBottomSheet extends StatelessWidget {
-  static Future<T> show<T>(
-    BuildContext context, {
+  static Future<T> show<T>({
     Widget title,
     Widget subtitle,
+    IconData acceptIcon = Icons.check,
     String rejectLabel,
     VoidCallback onRejectPressed,
     VoidCallback onAcceptPressed,
@@ -16,7 +17,7 @@ class PingerBottomSheet extends StatelessWidget {
     Widget builder(VoidCallback rebuild),
   }) {
     return showGeneralDialog(
-      context: context,
+      context: PingerApp.navigator.overlay.context,
       barrierDismissible: true,
       barrierLabel: "PingerBottomSheet",
       pageBuilder: (_, __, ___) => null,
@@ -24,6 +25,7 @@ class PingerBottomSheet extends StatelessWidget {
       transitionBuilder: (_, transition, __, child) => PingerBottomSheet._(
         title: title,
         subtitle: subtitle,
+        acceptIcon: acceptIcon,
         rejectLabel: rejectLabel,
         onRejectPressed: onRejectPressed,
         onAcceptPressed: onAcceptPressed,
@@ -38,6 +40,7 @@ class PingerBottomSheet extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.subtitle,
+    @required this.acceptIcon,
     @required this.rejectLabel,
     @required this.onRejectPressed,
     @required this.onAcceptPressed,
@@ -51,6 +54,7 @@ class PingerBottomSheet extends StatelessWidget {
   final Animation<double> transition;
   final Widget title;
   final Widget subtitle;
+  final IconData acceptIcon;
   final String rejectLabel;
   final VoidCallback onRejectPressed;
   final VoidCallback onAcceptPressed;
@@ -149,7 +153,7 @@ class PingerBottomSheet extends StatelessWidget {
                   onPressed: canAccept == null || canAccept()
                       ? onAcceptPressed ?? Navigator.of(context).pop
                       : null,
-                  child: Icon(Icons.check),
+                  child: Icon(acceptIcon),
                 ),
               ),
             ],

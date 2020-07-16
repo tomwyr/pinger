@@ -110,7 +110,6 @@ class _PingPageState extends BaseState<PingPage> {
 
   void _showSettingsSheet() async {
     await PingerBottomSheet.show(
-      context,
       rejectLabel: S.current.resetButtonLabel,
       title: Text(
         S.current.pingSettingsSheetTitle,

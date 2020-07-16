@@ -89,7 +89,6 @@ class PingSettingItem extends StatelessWidget {
       ),
     ));
     return PingerBottomSheet.show<int>(
-      context,
       title: Text(label, style: R.styles.bottomSheetTitle),
       subtitle: Text(
         S.current.settingSheetTitle,

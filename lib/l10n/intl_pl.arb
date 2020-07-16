@@ -124,5 +124,9 @@
   "notificationPausedTitle": "Pingowanie zatrzymane",
   "notificationPausedBody": "Postęp: {current}/{total}",
   "notificationDoneTitle": "Pingowanie zakończone",
-  "notificationDoneBody": "Min: {min} ms / Śred: {mean} ms / Maks: {max} ms"
+  "notificationDoneBody": "Min: {min} ms / Śred: {mean} ms / Maks: {max} ms",
+  "notificationAccessDisabledTitle": "Powiadomienia wyłączone",
+  "notificationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na wyświetlanie powiadomień",
+  "locationAccessDisabledTitle": "Lokalizacja wyłączona",
+  "locationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na dostęp do lokalizacji urządzenia"
 }
