@@ -1,16 +1,16 @@
 import 'package:pinger/generated/l10n.dart';
 
 class NotificationMessages {
-  String get startedTitle => S.current.notificationStartedTitle;
+  String startedTitle(String host) => S.current.notificationStartedTitle(host);
 
   String startedBody(int last) => S.current.notificationStartedBody(last);
 
-  String get pausedTitle => S.current.notificationPausedTitle;
+  String pausedTitle(String host) => S.current.notificationPausedTitle(host);
 
   String pausedBody(int length, int count) =>
       S.current.notificationPausedBody(length, count);
 
-  String get doneTitle => S.current.notificationDoneTitle;
+  String doneTitle(String host) => S.current.notificationDoneTitle(host);
 
   String doneBody(int min, int mean, int max) =>
       S.current.notificationDoneBody(min, mean, max);

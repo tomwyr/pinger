@@ -1233,13 +1233,13 @@ class S {
     );
   }
 
-  /// `Ping started`
-  String get notificationStartedTitle {
+  /// `{host} [in progress]`
+  String notificationStartedTitle(Object host) {
     return Intl.message(
-      'Ping started',
+      '$host [in progress]',
       name: 'notificationStartedTitle',
       desc: '',
-      args: [],
+      args: [host],
     );
   }
 
@@ -1253,13 +1253,13 @@ class S {
     );
   }
 
-  /// `Ping paused`
-  String get notificationPausedTitle {
+  /// `{host} [paused]`
+  String notificationPausedTitle(Object host) {
     return Intl.message(
-      'Ping paused',
+      '$host [paused]',
       name: 'notificationPausedTitle',
       desc: '',
-      args: [],
+      args: [host],
     );
   }
 
@@ -1273,13 +1273,13 @@ class S {
     );
   }
 
-  /// `Ping done`
-  String get notificationDoneTitle {
+  /// `{host} [done]`
+  String notificationDoneTitle(Object host) {
     return Intl.message(
-      'Ping done',
+      '$host [done]',
       name: 'notificationDoneTitle',
       desc: '',
-      args: [],
+      args: [host],
     );
   }
 

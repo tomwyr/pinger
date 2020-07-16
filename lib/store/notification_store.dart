@@ -73,7 +73,7 @@ abstract class NotificationStoreBase with Store {
     switch (session.status) {
       case PingStatus.sessionStarted:
         _showNotification(
-          _messages.startedTitle,
+          _messages.startedTitle(session.host),
           session.values.isNotEmpty
               ? session.values.last != null
                   ? _messages.startedBody(session.values.last)
@@ -83,7 +83,7 @@ abstract class NotificationStoreBase with Store {
         break;
       case PingStatus.sessionPaused:
         _showNotification(
-          _messages.pausedTitle,
+          _messages.pausedTitle(session.host),
           _messages.pausedBody(
             session.values.length,
             session.settings.count,
@@ -92,7 +92,7 @@ abstract class NotificationStoreBase with Store {
         break;
       case PingStatus.sessionDone:
         _showNotification(
-          _messages.doneTitle,
+          _messages.doneTitle(session.host),
           session.stats != null
               ? _messages.doneBody(
                   session.stats.min,

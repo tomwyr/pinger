@@ -29,25 +29,31 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m4(min, mean, max) => "Min: ${min} ms / Śred: ${mean} ms / Maks: ${max} ms";
 
-  static m5(current, total) => "Postęp: ${current}/${total}";
+  static m5(host) => "${host} [zakończone]";
 
-  static m6(value) => "Ostatni wynik: ${value} ms";
+  static m6(current, total) => "Postęp: ${current}/${total}";
 
-  static m7(value) => "${value} x";
+  static m7(host) => "${host} [zatrzymane]";
 
-  static m8(value) => "Twój wynik jest lepszy, niż ${value}% innych";
+  static m8(value) => "Ostatni wynik: ${value} ms";
 
-  static m9(value) => "Wynik pingowania innych to ${value} ms";
+  static m9(host) => "${host} [w trakcie]";
 
-  static m10(value) => "${value} ms";
+  static m10(value) => "${value} x";
 
-  static m11(currentHost, newHost) => "Zatrzymać obecną sesję ${currentHost} i uruchomić nową ${newHost}?";
+  static m11(value) => "Twój wynik jest lepszy, niż ${value}% innych";
 
-  static m12(count) => "${Intl.plural(count, zero: '0 wyników', one: '1 wynik', two: '2 wyniki', few: '${count} wyniki', many: '${count} wyników', other: '${count} wyników')}";
+  static m12(value) => "Wynik pingowania innych to ${value} ms";
 
-  static m13(seconds) => "${seconds} s";
+  static m13(value) => "${value} ms";
 
-  static m14(weeks) => "${weeks} t";
+  static m14(currentHost, newHost) => "Zatrzymać obecną sesję ${currentHost} i uruchomić nową ${newHost}?";
+
+  static m15(count) => "${Intl.plural(count, zero: '0 wyników', one: '1 wynik', two: '2 wyniki', few: '${count} wyniki', many: '${count} wyników', other: '${count} wyników')}";
+
+  static m16(seconds) => "${seconds} s";
+
+  static m17(weeks) => "${weeks} t";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -92,16 +98,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "notificationAccessDisabledDesc" : MessageLookupByLibrary.simpleMessage("Zmień ustawienia uprawnień, aby zezwolić na wyświetlanie powiadomień"),
     "notificationAccessDisabledTitle" : MessageLookupByLibrary.simpleMessage("Powiadomienia wyłączone"),
     "notificationDoneBody" : m4,
-    "notificationDoneTitle" : MessageLookupByLibrary.simpleMessage("Pingowanie zakończone"),
-    "notificationPausedBody" : m5,
-    "notificationPausedTitle" : MessageLookupByLibrary.simpleMessage("Pingowanie zatrzymane"),
-    "notificationStartedBody" : m6,
-    "notificationStartedTitle" : MessageLookupByLibrary.simpleMessage("Pingowanie rozpoczęte"),
-    "pingCountLabel" : m7,
+    "notificationDoneTitle" : m5,
+    "notificationPausedBody" : m6,
+    "notificationPausedTitle" : m7,
+    "notificationStartedBody" : m8,
+    "notificationStartedTitle" : m9,
+    "pingCountLabel" : m10,
     "pingFailedCountLabel" : MessageLookupByLibrary.simpleMessage("Nieudane"),
-    "pingGlobalByFrequencyDesc" : m8,
+    "pingGlobalByFrequencyDesc" : m11,
     "pingGlobalByFrequencySubtitle" : MessageLookupByLibrary.simpleMessage("Wyniki dla częstotliwości"),
-    "pingGlobalByLocationDesc" : m9,
+    "pingGlobalByLocationDesc" : m12,
     "pingGlobalByLocationSubtitle" : MessageLookupByLibrary.simpleMessage("Wyniki dla lokalizacji"),
     "pingGlobalYourResult" : MessageLookupByLibrary.simpleMessage("Twój wynik"),
     "pingInfoDateLabel" : MessageLookupByLibrary.simpleMessage("Data"),
@@ -118,10 +124,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "pingSummaryDateLabel" : MessageLookupByLibrary.simpleMessage("Data"),
     "pingSummaryDurationLabel" : MessageLookupByLibrary.simpleMessage("Czas trwania"),
     "pingTotalCountLabel" : MessageLookupByLibrary.simpleMessage("Razem"),
-    "pingValueLabel" : m10,
+    "pingValueLabel" : m13,
     "recentsPageTitle" : MessageLookupByLibrary.simpleMessage("Ostatnie"),
     "removeHostsTitle" : MessageLookupByLibrary.simpleMessage("Usuń"),
-    "replaceSessionSheetSubtitle" : m11,
+    "replaceSessionSheetSubtitle" : m14,
     "replaceSessionSheetTitle" : MessageLookupByLibrary.simpleMessage("Inna sesja jest uruchomiona"),
     "resetButtonLabel" : MessageLookupByLibrary.simpleMessage("PRZYWRÓĆ"),
     "resultGlobalEmptyDesc" : MessageLookupByLibrary.simpleMessage("Sprawdź ponowanie za jakiś czas, kiedy pojawią się dane dla tego hosta"),
@@ -129,14 +135,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "resultPageTitle" : MessageLookupByLibrary.simpleMessage("Wyniki"),
     "resultResultsSubtitle" : MessageLookupByLibrary.simpleMessage("Wyniki"),
     "resultsGlobalTabLabel" : MessageLookupByLibrary.simpleMessage("Porównaj"),
-    "resultsGroupCount" : m12,
+    "resultsGroupCount" : m15,
     "resultsInfoTabLabel" : MessageLookupByLibrary.simpleMessage("Więcej"),
     "resultsMoreTabLabel" : MessageLookupByLibrary.simpleMessage("Inne"),
     "resultsResultsTabLabel" : MessageLookupByLibrary.simpleMessage("Wyniki"),
     "searchHostHint" : MessageLookupByLibrary.simpleMessage("Znajdź hosta..."),
     "searchResultsEmptyDesc" : MessageLookupByLibrary.simpleMessage("Brak wyników pasujących do podanego hosta - możesz nadal wybrać go i spróbować pingować"),
     "searchResultsEmptyTitle" : MessageLookupByLibrary.simpleMessage("Nic nie znaleziono"),
-    "secondsSinceNow" : m13,
+    "secondsSinceNow" : m16,
     "sessionAdjustButtonLabel" : MessageLookupByLibrary.simpleMessage("Dostosuj"),
     "sessionFavoriteButtonLabel" : MessageLookupByLibrary.simpleMessage("Ulubione"),
     "sessionPageTitle" : MessageLookupByLibrary.simpleMessage("Sesja"),
@@ -180,6 +186,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewTypeMax" : MessageLookupByLibrary.simpleMessage("Maks"),
     "viewTypeMean" : MessageLookupByLibrary.simpleMessage("Śred"),
     "viewTypeMin" : MessageLookupByLibrary.simpleMessage("Min"),
-    "weeksSinceNow" : m14
+    "weeksSinceNow" : m17
   };
 }
