@@ -26,15 +26,15 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
   List<PermissionSheetHandler> _handlers;
 
   PermissionSheetHandler get _notificationHandler => PermissionSheetHandler(
-        title: "Notification permission disabled",
-        subtitle: "Enable permission in app settings",
+        title: S.current.notificationAccessDisabledTitle,
+        subtitle: S.current.notificationAccessDisabledDesc,
         openSettings: AppSettings.openNotificationSettings,
         store: _notificationStore.permissionStore,
       );
 
   PermissionSheetHandler get _locationHandler => PermissionSheetHandler(
-        title: "Location access disabled",
-        subtitle: "Enable permission and service in app settings",
+        title: S.current.locationAccessDisabledTitle,
+        subtitle: S.current.locationAccessDisabledDesc,
         openSettings: AppSettings.openLocationSettings,
         store: _locationStore.permissionStore,
       );

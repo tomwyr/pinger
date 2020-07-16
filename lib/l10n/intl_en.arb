@@ -124,5 +124,9 @@
   "notificationPausedTitle": "Ping paused",
   "notificationPausedBody": "Progress: {current}/{total}",
   "notificationDoneTitle": "Ping done",
-  "notificationDoneBody": "Min: {min} ms / Mean: {mean} ms / Max: {max} ms"
+  "notificationDoneBody": "Min: {min} ms / Mean: {mean} ms / Max: {max} ms",
+  "notificationAccessDisabledTitle": "Notifications disabled",
+  "notificationAccessDisabledDesc": "Change permission settings to allow the app to show notifications",
+  "locationAccessDisabledTitle": "Location disabled",
+  "locationAccessDisabledDesc": "Change permission settings to allow the app to detect device location"
 }
