@@ -9,10 +9,10 @@ mixin HostTapHandler<T extends StatefulWidget> on State<T> {
   void onHostTap(PingStore pingStore, String newHost) {
     final status = pingStore.currentSession?.status;
     final host = pingStore.currentSession?.host;
-    if (status.isNull || status.isInitial || status.isDone) {
-      pingStore.initSession(newHost);
+    if (host == newHost) {
       _showPingPage();
-    } else if (host == newHost) {
+    } else if (status.isNull || status.isInitial || status.isDone) {
+      pingStore.initSession(newHost);
       _showPingPage();
     } else {
       ReplaceSessionSheet.show(
