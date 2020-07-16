@@ -111,7 +111,10 @@ class ShareSettingsSection extends StatelessWidget {
           label: S.current.settingsShareResultsLabel,
           description: S.current.settingsShareResultsDesc,
           value: settings.shareResults,
-          onChanged: (it) => onChanged(settings.copyWith(shareResults: it)),
+          onChanged: (it) => onChanged(settings.copyWith(
+            shareResults: it,
+            attachLocation: it ? settings.attachLocation : false,
+          )),
         ),
         SwitchSettingItem(
           label: S.current.settingsAttachLocationTitle,

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/lifecycle_notifier.dart';
@@ -34,46 +35,30 @@ abstract class NotificationStoreBase with Store {
   SettingsStore get _settingsStore;
   PingStore get _pingStore;
 
-  @observable
-  bool hasPermission = false;
-
-  bool _isCheckingPermission = false;
+  PermissionStore _permissionStore;
   Future<void> _currentNotification;
   PingSession _lastSession;
 
+  PermissionStore get permissionStore => _permissionStore;
+
   @action
-  void init() {
-    _lifecycleNotifier.register(LifecycleAware(
-      onResumed: _updateNotificatioPermission,
-    ));
-    _updateNotificatioPermission();
-    reaction(
-      (_) => _settingsStore.userSettings.showSystemNotification,
-      _verifyCanShowNotification,
-      fireImmediately: true,
+  Future<void> init() async {
+    _permissionStore = PermissionStore(
+      _lifecycleNotifier,
+      Permission.notification,
+      () => _settingsStore.userSettings.showSystemNotification,
+      (it) => _settingsStore.updateSettings(
+        _settingsStore.userSettings.copyWith(showSystemNotification: it),
+      ),
     );
+    await _permissionStore.init();
     autorun((_) => _showNotificationIfPinging());
   }
 
-  @action
-  Future<void> _updateNotificatioPermission() async {
-    final permissionStatus = (await Permission.notification.status).isGranted;
-    if (permissionStatus != hasPermission) hasPermission = permissionStatus;
-  }
-
-  void _verifyCanShowNotification(bool showNotification) async {
-    if (showNotification && !hasPermission && !_isCheckingPermission) {
-      _isCheckingPermission = true;
-      await Permission.notification.request();
-      await _updateNotificatioPermission();
-      _isCheckingPermission = false;
-    }
-  }
-
-  void _showNotificationIfPinging() async {
+  void _showNotificationIfPinging() {
     final session = _pingStore.currentSession;
-    final showNotification =
-        hasPermission && _settingsStore.userSettings.showSystemNotification;
+    final showNotification = _permissionStore.canAccessService &&
+        _settingsStore.userSettings.showSystemNotification;
     if (session != _lastSession) {
       if (showNotification && session != null) {
         _showSessionNotification(session);
