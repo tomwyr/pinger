@@ -113,7 +113,9 @@ class _HostsPageState extends BaseState<HostsPage> {
       child: Scaffold(
         appBar: AppBar(
           leading: CloseButton(onPressed: _onBackPressed),
-          title: Text(!_isEditing ? widget.title : S.current.removeHostsTitle),
+          title: Text(
+            !_isEditing ? widget.title : S.current.removeHostsPageTitle,
+          ),
           centerTitle: true,
           actions: <Widget>[
             SizedBox.fromSize(

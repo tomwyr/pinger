@@ -103,6 +103,16 @@ class S {
     );
   }
 
+  /// `Remove`
+  String get removeHostsPageTitle {
+    return Intl.message(
+      'Remove',
+      name: 'removeHostsPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `There't nothing here yet`
   String get nothingToShowTitle {
     return Intl.message(
@@ -128,16 +138,6 @@ class S {
     return Intl.message(
       'Remove selected items?',
       name: 'confirmHostRemoveTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Remove`
-  String get removeHostsTitle {
-    return Intl.message(
-      'Remove',
-      name: 'removeHostsTitle',
       desc: '',
       args: [],
     );
