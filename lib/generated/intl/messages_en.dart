@@ -49,7 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m14(currentHost, newHost) => "Stop current session ${currentHost} and start new one ${newHost}?";
 
-  static m15(count) => "${count} results";
+  static m15(count) => "${Intl.plural(count, zero: '0 results', one: '1 result', two: '2 results', few: '${count} results', many: '${count} results', other: '${count} results')}";
 
   static m16(seconds) => "${seconds} s";
 
@@ -94,7 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "minutesSinceNow" : m2,
     "moreHostsButtonLabel" : MessageLookupByLibrary.simpleMessage("More"),
     "moreHostsCountButtonLabel" : m3,
-    "nothingToShowTitle" : MessageLookupByLibrary.simpleMessage("There\'t nothing here yet"),
+    "nothingToShowTitle" : MessageLookupByLibrary.simpleMessage("There is nothing here yet"),
     "notificationAccessDisabledDesc" : MessageLookupByLibrary.simpleMessage("Change permission settings to allow the app to show notifications"),
     "notificationAccessDisabledTitle" : MessageLookupByLibrary.simpleMessage("Notifications disabled"),
     "notificationDoneBody" : m4,
@@ -154,7 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sessionStartPromptTitle" : MessageLookupByLibrary.simpleMessage("Tap button to start new session"),
     "sessionSummarySubtitle" : MessageLookupByLibrary.simpleMessage("Summary"),
     "settingSheetTitle" : MessageLookupByLibrary.simpleMessage("Provide new value"),
-    "settingsAttachLocationDesc" : MessageLookupByLibrary.simpleMessage("Current location will be attached to session statistics in order to comapre them on global results map"),
+    "settingsAttachLocationDesc" : MessageLookupByLibrary.simpleMessage("Current location will be attached to session statistics in order to compare them on global results map"),
     "settingsAttachLocationTitle" : MessageLookupByLibrary.simpleMessage("Attach location"),
     "settingsNightModeTitle" : MessageLookupByLibrary.simpleMessage("Night mode"),
     "settingsOtherSectionTitle" : MessageLookupByLibrary.simpleMessage("Other"),

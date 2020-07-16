@@ -113,10 +113,10 @@ class S {
     );
   }
 
-  /// `There't nothing here yet`
+  /// `There is nothing here yet`
   String get nothingToShowTitle {
     return Intl.message(
-      'There\'t nothing here yet',
+      'There is nothing here yet',
       name: 'nothingToShowTitle',
       desc: '',
       args: [],
@@ -563,10 +563,16 @@ class S {
     );
   }
 
-  /// `{count} results`
-  String resultsGroupCount(Object count) {
-    return Intl.message(
-      '$count results',
+  /// `{count, plural, =0{0 results} =1{1 result} =2{2 results} few{{count} results} many{{count} results} other{{count} results}}`
+  String resultsGroupCount(num count) {
+    return Intl.plural(
+      count,
+      zero: '0 results',
+      one: '1 result',
+      two: '2 results',
+      few: '$count results',
+      many: '$count results',
+      other: '$count results',
       name: 'resultsGroupCount',
       desc: '',
       args: [count],
@@ -723,10 +729,10 @@ class S {
     );
   }
 
-  /// `Current location will be attached to session statistics in order to comapre them on global results map`
+  /// `Current location will be attached to session statistics in order to compare them on global results map`
   String get settingsAttachLocationDesc {
     return Intl.message(
-      'Current location will be attached to session statistics in order to comapre them on global results map',
+      'Current location will be attached to session statistics in order to compare them on global results map',
       name: 'settingsAttachLocationDesc',
       desc: '',
       args: [],
@@ -1340,6 +1346,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'fr'),
       Locale.fromSubtags(languageCode: 'pl'),
     ];
   }
