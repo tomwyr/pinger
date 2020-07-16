@@ -15,8 +15,9 @@ class PingerBottomSheet extends StatelessWidget {
     ValueGetter<bool> canAccept,
     Duration duration = const Duration(milliseconds: 300),
     Widget builder(VoidCallback rebuild),
-  }) {
-    return showGeneralDialog(
+  }) async {
+    var didPop = false;
+    final result = await showGeneralDialog(
       context: PingerApp.navigator.overlay.context,
       barrierDismissible: true,
       barrierLabel: "PingerBottomSheet",
@@ -30,10 +31,13 @@ class PingerBottomSheet extends StatelessWidget {
         onRejectPressed: onRejectPressed,
         onAcceptPressed: onAcceptPressed,
         canAccept: canAccept,
+        didPop: () => didPop,
         transition: transition,
         builder: builder ?? (_) => SizedBox.shrink(),
       ),
     );
+    didPop = true;
+    return result;
   }
 
   const PingerBottomSheet._({
@@ -45,6 +49,7 @@ class PingerBottomSheet extends StatelessWidget {
     @required this.onRejectPressed,
     @required this.onAcceptPressed,
     @required this.canAccept,
+    @required this.didPop,
     @required this.transition,
     @required this.builder,
   }) : super(key: key);
@@ -59,7 +64,12 @@ class PingerBottomSheet extends StatelessWidget {
   final VoidCallback onRejectPressed;
   final VoidCallback onAcceptPressed;
   final ValueGetter<bool> canAccept;
+  final ValueGetter<bool> didPop;
   final Widget Function(VoidCallback) builder;
+
+  void _tryPop(BuildContext context) {
+    if (!didPop()) Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +86,7 @@ class PingerBottomSheet extends StatelessWidget {
 
   Widget _buildBlurLayer(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
+      onTap: () => _tryPop(context),
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaX: transition.value * _blurSigma,
@@ -141,7 +151,7 @@ class PingerBottomSheet extends StatelessWidget {
                   data: R.themes.flatButton,
                   child: FlatButton(
                     padding: EdgeInsets.zero,
-                    onPressed: onRejectPressed ?? Navigator.of(context).pop,
+                    onPressed: onRejectPressed ?? () => _tryPop(context),
                     child: Text(rejectLabel),
                   ),
                 ),
@@ -151,7 +161,7 @@ class PingerBottomSheet extends StatelessWidget {
                 child: RaisedButton(
                   padding: EdgeInsets.zero,
                   onPressed: canAccept == null || canAccept()
-                      ? onAcceptPressed ?? Navigator.of(context).pop
+                      ? onAcceptPressed ?? () => _tryPop(context)
                       : null,
                   child: Icon(acceptIcon),
                 ),
