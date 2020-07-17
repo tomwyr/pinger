@@ -47,6 +47,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/images/
+    - lib/assets/icons/
 
 flutter_intl:
   enabled: true

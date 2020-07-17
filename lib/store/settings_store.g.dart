@@ -39,18 +39,18 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     });
   }
 
-  final _$appVersionAtom = Atom(name: 'SettingsStoreBase.appVersion');
+  final _$appInfoAtom = Atom(name: 'SettingsStoreBase.appInfo');
 
   @override
-  String get appVersion {
-    _$appVersionAtom.reportRead();
-    return super.appVersion;
+  AppInfo get appInfo {
+    _$appInfoAtom.reportRead();
+    return super.appInfo;
   }
 
   @override
-  set appVersion(String value) {
-    _$appVersionAtom.reportWrite(value, super.appVersion, () {
-      super.appVersion = value;
+  set appInfo(AppInfo value) {
+    _$appInfoAtom.reportWrite(value, super.appInfo, () {
+      super.appInfo = value;
     });
   }
 
@@ -84,7 +84,7 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     return '''
 userSettings: ${userSettings},
 didShowIntro: ${didShowIntro},
-appVersion: ${appVersion}
+appInfo: ${appInfo}
     ''';
   }
 }

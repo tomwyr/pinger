@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:package_info/package_info.dart';
+import 'package:pinger/config.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 
@@ -10,13 +12,15 @@ part 'settings_store.g.dart';
 class SettingsStore extends SettingsStoreBase with _$SettingsStore {
   final PackageInfo _packageInfo;
   final PingerPrefs _pingerPrefs;
+  final AppConfig _appConfig;
 
-  SettingsStore(this._packageInfo, this._pingerPrefs);
+  SettingsStore(this._packageInfo, this._pingerPrefs, this._appConfig);
 }
 
 abstract class SettingsStoreBase with Store {
   PackageInfo get _packageInfo;
   PingerPrefs get _pingerPrefs;
+  AppConfig get _appConfig;
 
   @observable
   UserSettings userSettings;
@@ -25,13 +29,18 @@ abstract class SettingsStoreBase with Store {
   bool didShowIntro;
 
   @observable
-  String appVersion;
+  AppInfo appInfo;
 
   @action
   Future<void> init() async {
     didShowIntro = _pingerPrefs.getDidShowIntro() ?? false;
     userSettings = _getUserSettings();
-    appVersion = _packageInfo.version;
+    appInfo = AppInfo(
+      name: _packageInfo.appName,
+      version: _packageInfo.version,
+      icon: _appConfig.iconPath,
+      copyright: "© 2019 Tomasz Wyrowiński",
+    );
   }
 
   UserSettings _getUserSettings() {
@@ -70,4 +79,18 @@ abstract class SettingsStoreBase with Store {
     await _pingerPrefs.setDidShowIntro(true);
     didShowIntro = true;
   }
+}
+
+class AppInfo {
+  final String version;
+  final String name;
+  final String copyright;
+  final String icon;
+
+  AppInfo({
+    @required this.version,
+    @required this.name,
+    @required this.icon,
+    @required this.copyright,
+  });
 }

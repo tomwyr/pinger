@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -20,11 +21,13 @@ class PingerApp extends StatefulWidget {
 }
 
 class _PingerAppState extends State<PingerApp> {
+  final SettingsStore _settingsStore = Injector.resolve();
+
   @override
   void initState() {
     super.initState();
     reaction(
-      (_) => Injector.resolve<SettingsStore>().userSettings.nightMode,
+      (_) => _settingsStore.userSettings.nightMode,
       (it) => setState(() => R.load(it ? Brightness.dark : Brightness.light)),
       fireImmediately: true,
     );
@@ -32,24 +35,26 @@ class _PingerAppState extends State<PingerApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        S.delegate,
-      ],
-      navigatorKey: PingerApp._navigatorKey,
-      supportedLocales: S.delegate.supportedLocales,
-      theme: R.themes.app,
-      themeMode: R.themes.mode,
-      title: "Pinger",
-      builder: (_, child) => PermissionsSheet(
-        child: HostIconProvider(
-          getIcon: Injector.resolve<HostsStore>().getFavicon,
-          child: child,
+    return Observer(
+      builder: (_) => MaterialApp(
+        localizationsDelegates: [
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          S.delegate,
+        ],
+        navigatorKey: PingerApp._navigatorKey,
+        supportedLocales: S.delegate.supportedLocales,
+        theme: R.themes.app,
+        themeMode: R.themes.mode,
+        title: _settingsStore.appInfo.name,
+        builder: (_, child) => PermissionsSheet(
+          child: HostIconProvider(
+            getIcon: Injector.resolve<HostsStore>().getFavicon,
+            child: child,
+          ),
         ),
+        home: InitPage(),
       ),
-      home: InitPage(),
     );
   }
 }

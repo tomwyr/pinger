@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:pinger/config.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:pinger/service/favicon_service.dart';
@@ -43,13 +44,31 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   final sharedPreferences = await injectorModule.sharedPreferences;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
 
+  //Register test Dependencies --------
+  if (environment == 'test') {
+    g.registerFactory<AppConfig>(() => TestConfig());
+  }
+
+  //Register dev Dependencies --------
+  if (environment == 'dev') {
+    g.registerFactory<AppConfig>(() => DevConfig());
+  }
+
+  //Register prod Dependencies --------
+  if (environment == 'prod') {
+    g.registerFactory<AppConfig>(() => ProdConfig());
+  }
+
   //Eager singletons must be registered in the right order
   g.registerSingleton<FaviconService>(FaviconService.create());
   g.registerSingleton<PingerPrefs>(PingerPrefs(g<SharedPreferences>()));
   g.registerSingleton<ResultsStore>(
       ResultsStore(g<PingerPrefs>(), g<PingerApi>()));
-  g.registerSingleton<SettingsStore>(
-      SettingsStore(g<PackageInfo>(), g<PingerPrefs>()));
+  g.registerSingleton<SettingsStore>(SettingsStore(
+    g<PackageInfo>(),
+    g<PingerPrefs>(),
+    g<AppConfig>(),
+  ));
   g.registerSingleton<HostsStore>(HostsStore(
     g<PingerPrefs>(),
     g<PingerApi>(),
