@@ -126,7 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pingTotalCountLabel" : MessageLookupByLibrary.simpleMessage("Razem"),
     "pingValueLabel" : m13,
     "recentsPageTitle" : MessageLookupByLibrary.simpleMessage("Ostatnie"),
-    "removeHostsPageTitle" : MessageLookupByLibrary.simpleMessage("Usuń"),
+    "removeHostsPageTitle" : MessageLookupByLibrary.simpleMessage("Usun"),
     "replaceSessionSheetSubtitle" : m14,
     "replaceSessionSheetTitle" : MessageLookupByLibrary.simpleMessage("Inna sesja jest uruchomiona"),
     "resetButtonLabel" : MessageLookupByLibrary.simpleMessage("PRZYWRÓĆ"),

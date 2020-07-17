@@ -56,7 +56,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
               ),
               Container(height: 48.0),
               SettingsFooterSection(
-                appVersion: appInfo.version,
+                appInfo: appInfo,
                 onShowIntroPressed: () => push(IntroPage()),
               ),
             ],
