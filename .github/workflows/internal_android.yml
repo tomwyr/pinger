@@ -32,7 +32,7 @@ jobs:
         run: echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/dev/google-services.json
       # Build and publish Android
       - name: Build Android
-        run: flutter build apk --flavor dev
+        run: flutter build apk --flavor dev --dart-define APP_ENV=dev
       - name: Publish Android
         working-directory: ./android
         env:

@@ -1,6 +1,12 @@
 import 'package:flutter/widgets.dart';
 
 class Images {
+  /// ![](file:///C:/dev/projects/pinger/lib/assets/icons/app-icon-dev.png)
+  static AssetImage get appIconDev => const AssetImage("lib/assets/icons/app-icon-dev.png");
+  /// ![](file:///C:/dev/projects/pinger/lib/assets/icons/app-icon-prod.png)
+  static AssetImage get appIconProd => const AssetImage("lib/assets/icons/app-icon-prod.png");
+  /// ![](file:///C:/dev/projects/pinger/lib/assets/icons/app-icon-tst.png)
+  static AssetImage get appIconTst => const AssetImage("lib/assets/icons/app-icon-tst.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/images/splash-hd.png)
   static AssetImage get splashHd => const AssetImage("lib/assets/images/splash-hd.png");
   /// ![](file:///C:/dev/projects/pinger/lib/assets/images/splash.png)

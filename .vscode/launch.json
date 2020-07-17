@@ -8,19 +8,19 @@
             "name": "tst",
             "request": "launch",
             "type": "dart",
-            "args": ["--flavor", "tst"]
+            "args": ["--flavor", "tst", "--dart-define", "APP_ENV=test"]
         },
         {
             "name": "dev",
             "request": "launch",
             "type": "dart",
-            "args": ["--flavor", "dev"]
+            "args": ["--flavor", "dev", "--dart-define", "APP_ENV=dev"]
         },
         {
             "name": "prod",
             "request": "launch",
             "type": "dart",
-            "args": ["--flavor", "prod"]
+            "args": ["--flavor", "prod", "--dart-define", "APP_ENV=prod"]
         }
     ]
 }
