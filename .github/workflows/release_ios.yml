@@ -32,7 +32,7 @@ jobs:
         run: mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
       # Build and publish iOS
       - name: Build iOS
-        run: flutter build ios --flavor prod --no-codesign
+        run: flutter build ios --flavor prod --dart-define APP_ENV=prod --no-codesign
       - name: Archive iOS
         working-directory: ./ios
         env:

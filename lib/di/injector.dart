@@ -16,8 +16,8 @@ import 'package:pinger/utils/notification_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Injector {
-  static Future<void> configure() async {
-    await _initInjectable();
+  static Future<void> configure(String environment) async {
+    await _initInjectable(environment);
     resolve<SettingsStore>().init();
     resolve<ResultsStore>().init();
     resolve<HostsStore>().init();
@@ -60,4 +60,5 @@ abstract class InjectorModule {
 }
 
 @injectableInit
-Future<void> _initInjectable() => $initGetIt(GetIt.instance);
+Future<void> _initInjectable(String environment) =>
+    $initGetIt(GetIt.instance, environment: environment);

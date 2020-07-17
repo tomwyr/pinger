@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/ui/pinger_app.dart';
 
+const APP_ENV = String.fromEnvironment("APP_ENV");
+
 void main() async {
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +13,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await Injector.configure();
+  await Injector.configure(APP_ENV);
   runApp(PingerApp());
 }
