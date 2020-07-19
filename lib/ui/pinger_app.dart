@@ -8,6 +8,7 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/info_tray.dart';
 import 'package:pinger/ui/page/init_page.dart';
 import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
@@ -50,7 +51,7 @@ class _PingerAppState extends State<PingerApp> {
         builder: (_, child) => PermissionsSheet(
           child: HostIconProvider(
             getIcon: Injector.resolve<HostsStore>().getFavicon,
-            child: child,
+            child: InfoTray(child: child),
           ),
         ),
         home: InitPage(),
