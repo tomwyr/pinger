@@ -13,6 +13,7 @@ import 'package:flutter_local_notifications/src/flutter_local_notifications_plug
 import 'package:pinger/utils/lifecycle_notifier.dart';
 import 'package:location/location.dart';
 import 'package:pinger/utils/notification_messages.dart';
+import 'package:pinger/service/notifications_manager.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/service/pinger_api.dart';
@@ -36,6 +37,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<Location>(() => injectorModule.location);
   g.registerFactory<NotificationMessages>(
       () => injectorModule.notificationLocalizations);
+  g.registerFactory<NotificationsManager>(() => NotificationsManager(
+      g<FlutterLocalNotificationsPlugin>(), g<NotificationMessages>()));
   final packageInfo = await injectorModule.packageInfo;
   g.registerFactory<PackageInfo>(() => packageInfo);
   g.registerFactory<PingCommand>(() => PingCommand.create());
@@ -91,8 +94,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   ));
   g.registerSingleton<NotificationStore>(NotificationStore(
     g<LifecycleNotifier>(),
-    g<FlutterLocalNotificationsPlugin>(),
-    g<NotificationMessages>(),
+    g<NotificationsManager>(),
     g<SettingsStore>(),
     g<PingStore>(),
   ));
