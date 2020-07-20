@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notification_store.dart';
+part of 'device_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,12 +8,21 @@ part of 'notification_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$NotificationStore on NotificationStoreBase, Store {
-  final _$initAsyncAction = AsyncAction('NotificationStoreBase.init');
+mixin _$DeviceStore on DeviceStoreBase, Store {
+  final _$initAsyncAction = AsyncAction('DeviceStoreBase.init');
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
+  }
+
+  final _$getCurrentPositionAsyncAction =
+      AsyncAction('DeviceStoreBase.getCurrentPosition');
+
+  @override
+  Future<GeoPosition> getCurrentPosition() {
+    return _$getCurrentPositionAsyncAction
+        .run(() => super.getCurrentPosition());
   }
 
   @override

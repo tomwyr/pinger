@@ -22,9 +22,9 @@ import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/store/hosts_store.dart';
-import 'package:pinger/store/location_store.dart';
+import 'package:pinger/store/permission_store.dart';
+import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/ping_store.dart';
-import 'package:pinger/store/notification_store.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> $initGetIt(GetIt g, {String environment}) async {
@@ -46,6 +46,13 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<PingerApi>(() => PingerApi(g<Firestore>()));
   final sharedPreferences = await injectorModule.sharedPreferences;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<PermissionStore>(
+      () => NotificationPermissionStore(
+          g<SettingsStore>(), g<LifecycleNotifier>()),
+      instanceName: 'notification');
+  g.registerFactory<PermissionStore>(
+      () => LocationPermissionStore(g<SettingsStore>(), g<LifecycleNotifier>()),
+      instanceName: 'location');
 
   //Register test Dependencies --------
   if (environment == 'test') {
@@ -78,10 +85,11 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<FaviconService>(),
     g<Connectivity>(),
   ));
-  g.registerSingleton<LocationStore>(LocationStore(
-    g<LifecycleNotifier>(),
+  g.registerSingleton<DeviceStore>(DeviceStore(
     g<Location>(),
+    g<NotificationsManager>(),
     g<SettingsStore>(),
+    g<PermissionStore>(instanceName: 'notification'),
   ));
   g.registerSingleton<PingStore>(PingStore(
     g<PingerPrefs>(),
@@ -90,13 +98,8 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<SettingsStore>(),
     g<ResultsStore>(),
     g<HostsStore>(),
-    g<LocationStore>(),
-  ));
-  g.registerSingleton<NotificationStore>(NotificationStore(
-    g<LifecycleNotifier>(),
-    g<NotificationsManager>(),
-    g<SettingsStore>(),
-    g<PingStore>(),
+    g<DeviceStore>(),
+    g<PermissionStore>(instanceName: 'location'),
   ));
 }
 

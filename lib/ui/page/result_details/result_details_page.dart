@@ -6,7 +6,7 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/location_store.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -39,8 +39,9 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
 
   final ResultsStore _resultsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
-  final LocationStore _locationStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
+  final PermissionStore _locationPermissionStore =
+      Injector.resolve(PermissionStore.location);
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
   ScrollController _scrollController;
@@ -196,7 +197,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     final shareSettings = _settingsStore.userSettings.shareSettings;
     return shareSettings.shareResults &&
         shareSettings.attachLocation &&
-        _locationStore.canAccessLocation;
+        _locationPermissionStore.canAccessService;
   }
 
   void _enableShareSettings() {
