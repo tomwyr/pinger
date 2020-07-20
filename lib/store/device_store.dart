@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
@@ -11,12 +12,14 @@ part 'device_store.g.dart';
 
 @singleton
 class DeviceStore extends DeviceStoreBase with _$DeviceStore {
+  final Connectivity _connectivity;
   final Location _location;
   final NotificationsManager _notificationsManager;
   final SettingsStore _settingsStore;
   final PermissionStore _notificationPermissionStore;
 
   DeviceStore(
+    this._connectivity,
     this._location,
     this._notificationsManager,
     this._settingsStore,
@@ -25,6 +28,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
 }
 
 abstract class DeviceStoreBase with Store {
+  Connectivity get _connectivity;
   Location get _location;
   NotificationsManager get _notificationsManager;
   SettingsStore get _settingsStore;
@@ -32,9 +36,21 @@ abstract class DeviceStoreBase with Store {
 
   PingSession _lastSession;
 
+  @observable
+  bool isNetworkEnabled;
+
   @action
   Future<void> init() async {
+    _connectivity.onConnectivityChanged
+        .distinct()
+        .listen(_onConnectivityChanged);
     await _location.changeSettings(accuracy: LocationAccuracy.balanced);
+  }
+
+  void _onConnectivityChanged(ConnectivityResult result) {
+    final isEnabled = result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.wifi;
+    if (isNetworkEnabled != isEnabled) isNetworkEnabled = isEnabled;
   }
 
   @action

@@ -9,6 +9,21 @@ part of 'device_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$DeviceStore on DeviceStoreBase, Store {
+  final _$isNetworkEnabledAtom = Atom(name: 'DeviceStoreBase.isNetworkEnabled');
+
+  @override
+  bool get isNetworkEnabled {
+    _$isNetworkEnabledAtom.reportRead();
+    return super.isNetworkEnabled;
+  }
+
+  @override
+  set isNetworkEnabled(bool value) {
+    _$isNetworkEnabledAtom.reportWrite(value, super.isNetworkEnabled, () {
+      super.isNetworkEnabled = value;
+    });
+  }
+
   final _$initAsyncAction = AsyncAction('DeviceStoreBase.init');
 
   @override
@@ -28,7 +43,7 @@ mixin _$DeviceStore on DeviceStoreBase, Store {
   @override
   String toString() {
     return '''
-
+isNetworkEnabled: ${isNetworkEnabled}
     ''';
   }
 }

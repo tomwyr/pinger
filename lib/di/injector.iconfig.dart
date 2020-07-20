@@ -21,9 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/device_store.dart';
+import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:get_it/get_it.dart';
 
@@ -79,17 +79,18 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<PingerPrefs>(),
     g<AppConfig>(),
   ));
-  g.registerSingleton<HostsStore>(HostsStore(
-    g<PingerPrefs>(),
-    g<PingerApi>(),
-    g<FaviconService>(),
-    g<Connectivity>(),
-  ));
   g.registerSingleton<DeviceStore>(DeviceStore(
+    g<Connectivity>(),
     g<Location>(),
     g<NotificationsManager>(),
     g<SettingsStore>(),
     g<PermissionStore>(instanceName: 'notification'),
+  ));
+  g.registerSingleton<HostsStore>(HostsStore(
+    g<PingerPrefs>(),
+    g<PingerApi>(),
+    g<FaviconService>(),
+    g<DeviceStore>(),
   ));
   g.registerSingleton<PingStore>(PingStore(
     g<PingerPrefs>(),
