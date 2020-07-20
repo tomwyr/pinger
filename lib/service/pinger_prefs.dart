@@ -86,14 +86,6 @@ class PingerPrefs {
     }
   }
 
-  // Future<void> removeFavoriteHost(String host) async {
-  //   final allHosts = getFavoriteHosts();
-  //   if (allHosts.contains(host)) {
-  //     allHosts.remove(host);
-  //     await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
-  //   }
-  // }
-
   Future<void> removeFavoriteHosts(List<String> hosts) async {
     final allHosts = getFavoriteHosts();
     hosts.forEach(allHosts.remove);
