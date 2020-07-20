@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/host_stats.dart';
@@ -10,6 +9,7 @@ import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/service/favicon_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
+import 'package:pinger/store/device_store.dart';
 import 'package:pinger/utils/data_snap.dart';
 
 part 'hosts_store.g.dart';
@@ -19,13 +19,13 @@ class HostsStore extends HostsStoreBase with _$HostsStore {
   final PingerPrefs _pingerPrefs;
   final PingerApi _pingerApi;
   final FaviconService _faviconService;
-  final Connectivity _connectivity;
+  final DeviceStore _deviceStore;
 
   HostsStore(
     this._pingerPrefs,
     this._pingerApi,
     this._faviconService,
-    this._connectivity,
+    this._deviceStore,
   );
 }
 
@@ -33,11 +33,9 @@ abstract class HostsStoreBase with Store {
   PingerPrefs get _pingerPrefs;
   PingerApi get _pingerApi;
   FaviconService get _faviconService;
-  Connectivity get _connectivity;
+  DeviceStore get _deviceStore;
 
   final Map<String, Observable<DataSnap<Uint8List>>> _favicons = {};
-
-  ConnectivityResult _lastConnectivity;
 
   @observable
   String _searchQuery = "";
@@ -63,23 +61,10 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> init() async {
-    _connectivity.onConnectivityChanged.listen(_onConnectivityChanged);
     _emitStats();
     autorun((_) => _emitFavorites());
+    reaction((_) => _deviceStore.isNetworkEnabled, _checkRefreshIcons);
     await fetchHosts();
-  }
-
-  void _onConnectivityChanged(ConnectivityResult result) {
-    if (result != _lastConnectivity) {
-      _lastConnectivity = result;
-      final isEnabled = result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi;
-      if (isEnabled) {
-        _favicons.forEach((key, value) {
-          if (value.value is SnapError) _tryLoadFavicon(key);
-        });
-      }
-    }
   }
 
   void _emitStats() {
@@ -94,6 +79,14 @@ abstract class HostsStoreBase with Store {
         if (!localStats.containsKey(e2)) return -1;
         return localStats[e2].pingCount.compareTo(localStats[e1].pingCount);
       });
+  }
+
+  void _checkRefreshIcons(bool isNetworkEnabled) {
+    if (isNetworkEnabled) {
+      _favicons.forEach((key, value) {
+        if (value.value is SnapError) _tryLoadFavicon(key);
+      });
+    }
   }
 
   @action

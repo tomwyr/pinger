@@ -6,9 +6,9 @@ import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:package_info/package_info.dart';
 import 'package:pinger/di/injector.iconfig.dart';
+import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/hosts_store.dart';
-import 'package:pinger/store/location_store.dart';
-import 'package:pinger/store/notification_store.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -22,8 +22,9 @@ abstract class Injector {
     resolve<ResultsStore>().init();
     resolve<HostsStore>().init();
     resolve<PingStore>().init();
-    resolve<LocationStore>().init();
-    resolve<NotificationStore>().init();
+    resolve<DeviceStore>().init();
+    resolve<PermissionStore>(PermissionStore.location).init();
+    resolve<PermissionStore>(PermissionStore.notification).init();
   }
 
   static T resolve<T>([String instanceName]) =>

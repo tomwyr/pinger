@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location_store.dart';
+part of 'device_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,23 @@ part of 'location_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$LocationStore on LocationStoreBase, Store {
-  final _$initAsyncAction = AsyncAction('LocationStoreBase.init');
+mixin _$DeviceStore on DeviceStoreBase, Store {
+  final _$isNetworkEnabledAtom = Atom(name: 'DeviceStoreBase.isNetworkEnabled');
+
+  @override
+  bool get isNetworkEnabled {
+    _$isNetworkEnabledAtom.reportRead();
+    return super.isNetworkEnabled;
+  }
+
+  @override
+  set isNetworkEnabled(bool value) {
+    _$isNetworkEnabledAtom.reportWrite(value, super.isNetworkEnabled, () {
+      super.isNetworkEnabled = value;
+    });
+  }
+
+  final _$initAsyncAction = AsyncAction('DeviceStoreBase.init');
 
   @override
   Future<void> init() {
@@ -17,7 +32,7 @@ mixin _$LocationStore on LocationStoreBase, Store {
   }
 
   final _$getCurrentPositionAsyncAction =
-      AsyncAction('LocationStoreBase.getCurrentPosition');
+      AsyncAction('DeviceStoreBase.getCurrentPosition');
 
   @override
   Future<GeoPosition> getCurrentPosition() {
@@ -28,7 +43,7 @@ mixin _$LocationStore on LocationStoreBase, Store {
   @override
   String toString() {
     return '''
-
+isNetworkEnabled: ${isNetworkEnabled}
     ''';
   }
 }

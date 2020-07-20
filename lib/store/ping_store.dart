@@ -11,8 +11,9 @@ import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:pinger/service/pinger_prefs.dart';
+import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/hosts_store.dart';
-import 'package:pinger/store/location_store.dart';
+import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
 
@@ -26,7 +27,8 @@ class PingStore extends PingStoreBase with _$PingStore {
   final SettingsStore _settingsStore;
   final ResultsStore _resultsStore;
   final HostsStore _hostsStore;
-  final LocationStore _locationStore;
+  final DeviceStore _deviceStore;
+  final PermissionStore _locationPermissionStore;
 
   PingStore(
     this._pingerPrefs,
@@ -35,7 +37,8 @@ class PingStore extends PingStoreBase with _$PingStore {
     this._settingsStore,
     this._resultsStore,
     this._hostsStore,
-    this._locationStore,
+    this._deviceStore,
+    @Named(PermissionStore.location) this._locationPermissionStore,
   );
 }
 
@@ -46,7 +49,8 @@ abstract class PingStoreBase with Store {
   SettingsStore get _settingsStore;
   ResultsStore get _resultsStore;
   HostsStore get _hostsStore;
-  LocationStore get _locationStore;
+  DeviceStore get _deviceStore;
+  PermissionStore get _locationPermissionStore;
 
   StreamSubscription _pingSub;
   StreamSubscription _timerSub;
@@ -85,6 +89,7 @@ abstract class PingStoreBase with Store {
         _shareResultIfPossible();
       }
     });
+    reaction((_) => currentSession, _deviceStore.updateNotification);
   }
 
   void _cacheCurrentHost() async {
@@ -129,8 +134,8 @@ abstract class PingStoreBase with Store {
   Future<GeoPosition> _getResultLocation() async {
     final attachLocation =
         _settingsStore.userSettings.shareSettings.attachLocation;
-    return attachLocation && _locationStore.canAccessLocation
-        ? await _locationStore.getCurrentPosition()
+    return attachLocation && _locationPermissionStore.canAccessService
+        ? await _deviceStore.getCurrentPosition()
         : null;
   }
 

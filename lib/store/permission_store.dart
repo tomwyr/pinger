@@ -1,28 +1,75 @@
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/lifecycle_notifier.dart';
 
 part 'permission_store.g.dart';
 
-class PermissionStore extends PermissionStoreBase with _$PermissionStore {
+abstract class PermissionStore extends PermissionStoreBase
+    with _$PermissionStore {
   PermissionStore(
+    this._settingsStore,
     this._lifecycleNotifier,
-    this._permission,
-    this._getSetting,
-    this._updateSetting,
   );
 
+  static const location = 'location';
+  static const notification = 'notification';
+
+  final SettingsStore _settingsStore;
   final LifecycleNotifier _lifecycleNotifier;
-  final Permission _permission;
-  final bool Function() _getSetting;
-  final Future<void> Function(bool) _updateSetting;
+}
+
+@Named(PermissionStore.notification)
+@Injectable(as: PermissionStore)
+class NotificationPermissionStore extends PermissionStore {
+  NotificationPermissionStore(
+    SettingsStore settingsStore,
+    LifecycleNotifier lifecycleNotifier,
+  ) : super(settingsStore, lifecycleNotifier);
+
+  @override
+  Permission get _permission => Permission.notification;
+
+  @override
+  bool _getSetting() => _settingsStore.userSettings.showSystemNotification;
+
+  @override
+  Future<void> _updateSetting(bool value) async {
+    await _settingsStore.updateSettings(
+      _settingsStore.userSettings.copyWith(showSystemNotification: value),
+    );
+  }
+}
+
+@Named(PermissionStore.location)
+@Injectable(as: PermissionStore)
+class LocationPermissionStore extends PermissionStore {
+  LocationPermissionStore(
+    SettingsStore settingsStore,
+    LifecycleNotifier lifecycleNotifier,
+  ) : super(settingsStore, lifecycleNotifier);
+
+  @override
+  Permission get _permission => Permission.locationWhenInUse;
+
+  @override
+  bool _getSetting() =>
+      _settingsStore.userSettings.shareSettings.attachLocation;
+
+  @override
+  Future<void> _updateSetting(bool value) async {
+    await _settingsStore.updateSettings(
+      _settingsStore.userSettings.copyWith.shareSettings(attachLocation: value),
+    );
+  }
 }
 
 abstract class PermissionStoreBase with Store, LifecycleAware {
   LifecycleNotifier get _lifecycleNotifier;
   Permission get _permission;
-  bool Function() get _getSetting;
-  Future<void> Function(bool) get _updateSetting;
+  bool _getSetting();
+  Future<void> _updateSetting(bool value);
 
   @observable
   bool didRejectSetting = false;

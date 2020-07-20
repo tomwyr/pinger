@@ -4,8 +4,6 @@ import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/store/location_store.dart';
-import 'package:pinger/store/notification_store.dart';
 import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/ui/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
@@ -20,23 +18,20 @@ class PermissionsSheet extends StatefulWidget {
 }
 
 class _PermissionsSheetState extends State<PermissionsSheet> {
-  final NotificationStore _notificationStore = Injector.resolve();
-  final LocationStore _locationStore = Injector.resolve();
-
   List<PermissionSheetHandler> _handlers;
 
   PermissionSheetHandler get _notificationHandler => PermissionSheetHandler(
         title: S.current.notificationAccessDisabledTitle,
         subtitle: S.current.notificationAccessDisabledDesc,
         openSettings: AppSettings.openNotificationSettings,
-        store: _notificationStore.permissionStore,
+        store: Injector.resolve(PermissionStore.notification),
       );
 
   PermissionSheetHandler get _locationHandler => PermissionSheetHandler(
         title: S.current.locationAccessDisabledTitle,
         subtitle: S.current.locationAccessDisabledDesc,
         openSettings: AppSettings.openLocationSettings,
-        store: _locationStore.permissionStore,
+        store: Injector.resolve(PermissionStore.location),
       );
 
   @override
