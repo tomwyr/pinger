@@ -31,7 +31,6 @@ dependencies:
   connectivity: ^0.4.9
   app_settings: ^4.0.1+1
   permission_handler: ^5.0.1+1
-  sliding_sheet: ^0.3.5
 
 dev_dependencies:
   flutter_test:

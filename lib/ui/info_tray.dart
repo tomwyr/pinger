@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pinger/di/injector.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/store/device_store.dart';
+import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/ui/common/draggable_sheet.dart';
 import 'package:pinger/ui/common/fade_out.dart';
-import 'package:sliding_sheet/sliding_sheet.dart';
 
-enum InfoTrayMode { HIDDEN, AUTO_EXPAND, MANUAL_EXPAND }
+enum InfoTrayItem { CONNECTIVITY, SESSION }
 
 class InfoTray extends StatefulWidget {
   final Widget child;
@@ -17,76 +21,156 @@ class InfoTray extends StatefulWidget {
 
 class _InfoTrayState extends State<InfoTray>
     with SingleTickerProviderStateMixin {
-  final _handleWidth = 64.0;
-  final _handleHeight = 32.0;
-  final _borderRadius = 12.0;
-  final _trayExpansion = ValueNotifier(0.0);
-  final _controller = SheetController();
+  final PingStore _pingStore = Injector.resolve();
+  final DeviceStore _deviceStore = Injector.resolve();
 
-  void _onHandleTap() {
-    final state = _controller.state;
-    if (state.isCollapsed) {
-      _controller.expand();
-    } else if (state.isExpanded) {
-      _controller.collapse();
+  final DraggableSheetController _controller = DraggableSheetController();
+  final Duration _animDuration = const Duration(milliseconds: 500);
+  final Set<InfoTrayItem> _visibleItems = {};
+
+  void _onItemValue(InfoTrayItem item, bool visible) async {
+    final didChange =
+        visible ? _visibleItems.add(item) : _visibleItems.remove(item);
+    if (didChange) {
+      if (_visibleItems.isNotEmpty && !_controller.isVisible) {
+        _controller.show();
+      } else if (_visibleItems.isEmpty && _controller.isVisible) {
+        _controller.hide();
+      }
     }
   }
 
-  void _onSheetSnap(SheetState state, double snap) {
-    //
+  void _onHandleTap() {
+    if (_controller.currentExpansion == 1.0) {
+      _controller.collapse();
+    } else if (_controller.currentExpansion == 0.0) {
+      _controller.expand();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SlidingSheet(
-      padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 12.0),
-      color: R.colors.none,
-      duration: const Duration(milliseconds: 500),
+    return InfoTraySheet(
       controller: _controller,
-      listener: (it) => _trayExpansion.value = it.progress,
-      snapSpec: SnapSpec(
-        onSnap: _onSheetSnap,
-        initialSnap: SnapSpec.headerSnap,
-        snappings: [
-          SnapSpec.headerSnap,
-          SnapSpec.expanded,
-        ],
+      onHandleTap: _onHandleTap,
+      child: widget.child,
+      items: <Widget>[
+        _buildItem<bool>(
+          item: InfoTrayItem.CONNECTIVITY,
+          valueObservable: () => _deviceStore.isNetworkEnabled,
+          isVisible: (it) => it == false,
+          builder: (_) => _buildConnectivityItem(),
+        ),
+        _buildItem<PingSession>(
+          item: InfoTrayItem.SESSION,
+          valueObservable: () => _pingStore.currentSession,
+          isVisible: (it) => it?.status?.isSession ?? false,
+          builder: (_) => _buildSessionItem(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildItem<T>({
+    @required InfoTrayItem item,
+    @required ValueGetter<T> valueObservable,
+    @required bool Function(T value) isVisible,
+    @required Widget builder(T value),
+  }) {
+    return Observer(builder: (_) {
+      final value = valueObservable();
+      final visible = isVisible(value);
+      Future(() => _onItemValue(item, visible));
+      return FadeOut(
+        visible: visible,
+        duration: _animDuration,
+        child: builder(value),
+      );
+    });
+  }
+
+  Widget _buildConnectivityItem() {
+    return Row(children: <Widget>[
+      Expanded(
+        child: Text(
+          "Connection seems to be disabled. Go to settings and enable wifi/mobile in order to be able to ping a host",
+          style: TextStyle(color: R.colors.white),
+        ),
       ),
-      headerBuilder: (_, __) => _buildHandle(),
-      builder: (_, __) => _buildTray(),
-      body: widget.child,
+      Container(width: 12.0),
+      Icon(Icons.signal_wifi_off, color: R.colors.white),
+    ]);
+  }
+
+  Widget _buildSessionItem() {
+    return Text(
+      "Session is running",
+      style: TextStyle(color: R.colors.white),
+    );
+  }
+}
+
+class InfoTraySheet extends StatelessWidget {
+  static const _handleWidth = 64.0;
+  static const _handleHeight = 32.0;
+  static const _borderRadius = 12.0;
+  static const _padding = EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 12.0);
+
+  final DraggableSheetController controller;
+  final VoidCallback onHandleTap;
+  final Widget child;
+  final List<Widget> items;
+
+  const InfoTraySheet({
+    Key key,
+    @required this.controller,
+    @required this.onHandleTap,
+    @required this.child,
+    @required this.items,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: DraggableSheet(
+        controller: controller,
+        child: child,
+        handleBuilder: (_) => _buildHandle(),
+        contentBuilder: (_) => _buildTray(),
+      ),
     );
   }
 
   Widget _buildHandle() {
-    return GestureDetector(
-      onTap: _onHandleTap,
+    return Padding(
+      padding: _padding.copyWith(bottom: 0.0),
       child: SizedBox(
         height: _handleHeight,
         child: LayoutBuilder(
-          builder: (_, constraints) => ValueListenableBuilder<double>(
-            valueListenable: _trayExpansion,
-            builder: (_, value, __) => Align(
+          builder: (_, constraints) => StreamBuilder<double>(
+            stream: controller.expansion,
+            initialData: controller.currentExpansion,
+            builder: (_, snapshot) => Align(
               alignment: Alignment.bottomCenter,
               child: SizedBox(
-                height: _handleHeight * (1.0 - value / 2),
+                height: _handleHeight * (1.0 - snapshot.data / 2),
                 width: _handleWidth +
-                    (constraints.maxWidth - _handleWidth) * value,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: ColorTween(
-                      begin: R.colors.secondary,
-                      end: R.colors.primaryLight,
-                    ).transform(value),
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(_handleWidth),
+                    (constraints.maxWidth - _handleWidth) * snapshot.data,
+                child: GestureDetector(
+                  onTap: onHandleTap,
+                  child: DecoratedBox(
+                    decoration: _buildDecoration(
+                      expansion: snapshot.data,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(_handleWidth),
+                      ),
                     ),
-                  ),
-                  child: CustomPaint(
-                    painter: InfoTrayHandlePainter(
-                      expansion: value,
-                      color: R.colors.white,
-                      width: 24.0,
+                    child: CustomPaint(
+                      painter: InfoTrayHandlePainter(
+                        expansion: snapshot.data,
+                        color: R.colors.white,
+                        width: 24.0,
+                      ),
                     ),
                   ),
                 ),
@@ -99,30 +183,46 @@ class _InfoTrayState extends State<InfoTray>
   }
 
   Widget _buildTray() {
-    return Material(
-      child: ValueListenableBuilder<double>(
-        valueListenable: _trayExpansion,
-        builder: (_, value, child) => DecoratedBox(
-          decoration: BoxDecoration(
+    return Padding(
+      padding: _padding.copyWith(top: 0.0),
+      child: StreamBuilder<double>(
+        initialData: controller.currentExpansion,
+        stream: controller.expansion,
+        builder: (_, snapshot) => DecoratedBox(
+          decoration: _buildDecoration(
+            expansion: snapshot.data,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(_borderRadius * (1.0 - value) * 2),
+              top: Radius.circular(_borderRadius * (1.0 - snapshot.data) * 2),
               bottom: Radius.circular(_borderRadius),
             ),
-            color: ColorTween(
-              begin: R.colors.secondary,
-              end: R.colors.primaryLight,
-            ).transform(value),
           ),
-          child: child,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 12.0),
-          child: Column(children: <Widget>[
-            ConnectivityInfo(enabled: true),
-            SessionInfo(session: null),
-          ]),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 12.0),
+            child: Column(children: items),
+          ),
         ),
       ),
+    );
+  }
+
+  BoxDecoration _buildDecoration({
+    @required double expansion,
+    @required BorderRadiusGeometry borderRadius,
+  }) {
+    final color = ColorTween(
+      begin: R.colors.secondary,
+      end: R.colors.primaryLight,
+    ).transform(expansion);
+    return BoxDecoration(
+      color: color,
+      boxShadow: [
+        BoxShadow(
+          color: color,
+          blurRadius: 4.0,
+          spreadRadius: 1.0,
+        )
+      ],
+      borderRadius: borderRadius,
     );
   }
 }
@@ -164,39 +264,4 @@ class InfoTrayHandlePainter extends CustomPainter {
       old.expansion != expansion ||
       old.width != width ||
       old.strokeWidth != strokeWidth;
-}
-
-class ConnectivityInfo extends StatelessWidget {
-  final bool enabled;
-
-  const ConnectivityInfo({Key key, @required this.enabled}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeOut(
-      visible: enabled,
-      duration: const Duration(milliseconds: 500),
-      child: Row(children: <Widget>[
-        Expanded(
-          child: Text(
-            "Connection seems to be disabled. Go to settings and enable wifi/mobile in order to be able to ping a host",
-            style: TextStyle(color: R.colors.white),
-          ),
-        ),
-        Container(width: 12.0),
-        Icon(Icons.signal_wifi_off, color: R.colors.white),
-      ]),
-    );
-  }
-}
-
-class SessionInfo extends StatelessWidget {
-  final PingSession session;
-
-  const SessionInfo({Key key, @required this.session}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
 }
