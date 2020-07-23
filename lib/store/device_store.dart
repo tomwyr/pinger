@@ -44,6 +44,7 @@ abstract class DeviceStoreBase with Store {
     _connectivity.onConnectivityChanged
         .distinct()
         .listen(_onConnectivityChanged);
+    await _connectivity.checkConnectivity().then(_onConnectivityChanged);
     await _location.changeSettings(accuracy: LocationAccuracy.balanced);
   }
 

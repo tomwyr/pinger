@@ -82,7 +82,7 @@ abstract class HostsStoreBase with Store {
   }
 
   void _checkRefreshIcons(bool isNetworkEnabled) {
-    if (isNetworkEnabled) {
+    if (isNetworkEnabled == true) {
       _favicons.forEach((key, value) {
         if (value.value is SnapError) _tryLoadFavicon(key);
       });
