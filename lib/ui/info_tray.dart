@@ -107,6 +107,7 @@ class InfoTraySheet extends StatelessWidget {
       child: SeparatedDraggableSheet<InfoTrayItem>(
         controller: controller,
         duration: _animDuration,
+        animateVisibility: true,
         child: child,
         items: items,
         onVisibilityChanged: onVisibilityChanged,

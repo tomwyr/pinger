@@ -255,6 +255,7 @@ class _SheetHeight {
 class SeparatedDraggableSheet<T> extends StatefulWidget {
   final DraggableSheetController controller;
   final Duration duration;
+  final bool animateVisibility;
   final Widget child;
   final List<SeparatedItem<T>> items;
   final ValueChanged<Set<T>> onVisibilityChanged;
@@ -266,6 +267,7 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
     Key key,
     @required this.controller,
     @required this.duration,
+    @required this.animateVisibility,
     @required this.child,
     @required this.items,
     @required this.onVisibilityChanged,
@@ -282,7 +284,7 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
 class _SeparatedDraggableSheetState<T>
     extends State<SeparatedDraggableSheet<T>> {
   final _visibleItems = <T>{};
-  final _separators = <T, ValueNotifier<bool>>{};
+  final _separatorVisibilities = <T, ValueNotifier<bool>>{};
   final _visibilityListeners = <T, VoidCallback>{};
 
   List<SeparatedItem<T>> _items;
@@ -293,7 +295,7 @@ class _SeparatedDraggableSheetState<T>
     super.initState();
     _items = widget.items
       ..forEach((it) {
-        _separators[it.value] = ValueNotifier(it.visibility.value);
+        _separatorVisibilities[it.value] = ValueNotifier(it.visibility.value);
         final listener = () => _onItemVisibility(it.value, it.visibility.value);
         _visibilityListeners[it.value] = listener;
         it.visibility.addListener(listener);
@@ -304,7 +306,7 @@ class _SeparatedDraggableSheetState<T>
   void dispose() {
     _items.forEach((it) {
       it.visibility.removeListener(_visibilityListeners[it.value]);
-      _separators[it.value].dispose();
+      _separatorVisibilities[it.value].dispose();
     });
     super.dispose();
   }
@@ -320,13 +322,13 @@ class _SeparatedDraggableSheetState<T>
 
   void _updateSeparatorsVisibility(T item, bool visible) {
     if (!visible) {
-      _separators[item].value = false;
+      _separatorVisibilities[item].value = false;
       if (_firstVisibleItem == item) {
         _firstVisibleItem = _visibleItems.isNotEmpty
             ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
             : null;
         if (_firstVisibleItem != null) {
-          _separators[_firstVisibleItem].value = false;
+          _separatorVisibilities[_firstVisibleItem].value = false;
         }
       }
     } else {
@@ -335,12 +337,12 @@ class _SeparatedDraggableSheetState<T>
           : null;
       if (firstVisible == item) {
         if (_firstVisibleItem != null) {
-          _separators[_firstVisibleItem].value = true;
+          _separatorVisibilities[_firstVisibleItem].value = true;
         }
-        _separators[item].value = false;
+        _separatorVisibilities[item].value = false;
         _firstVisibleItem = item;
       } else {
-        _separators[item].value = true;
+        _separatorVisibilities[item].value = true;
       }
     }
   }
@@ -356,25 +358,37 @@ class _SeparatedDraggableSheetState<T>
         context,
         [
           for (var it in _items) ...[
-            ValueListenableBuilder<bool>(
-              valueListenable: _separators[it.value],
-              builder: (_, value, child) => Visibility(
-                visible: value,
-                child: child,
-              ),
-              child: widget.separatorBuilder(context),
+            _buildSheetItem(
+              _separatorVisibilities[it.value],
+              widget.separatorBuilder(context),
             ),
-            ValueListenableBuilder<bool>(
-              valueListenable: it.visibility,
-              builder: (_, value, child) => Visibility(
-                visible: value,
-                child: child,
-              ),
-              child: it.builder(context),
+            _buildSheetItem(
+              it.visibility,
+              it.builder(context),
             ),
           ]
         ],
       ),
+    );
+  }
+
+  Widget _buildSheetItem(ValueNotifier<bool> visibility, Widget child) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: visibility,
+      builder: (_, value, child) => widget.animateVisibility
+          ? AnimatedSwitcher(
+              duration: widget.duration,
+              transitionBuilder: (child, animation) => SizeTransition(
+                sizeFactor: animation,
+                child: FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+              ),
+              child: value ? child : SizedBox.shrink(),
+            )
+          : Visibility(visible: value, child: child),
+      child: child,
     );
   }
 }
