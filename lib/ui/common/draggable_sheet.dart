@@ -322,37 +322,37 @@ class _SeparatedDraggableSheetState<T>
     final didChange =
         visible ? _visibleItems.add(item) : _visibleItems.remove(item);
     if (didChange) {
-      _updateSeparatorsVisibility(item, visible);
+      visible ? _onItemAppeared(item) : _onItemDisappeared(item);
       widget.onVisibilityChanged(_visibleItems);
     }
   }
 
-  void _updateSeparatorsVisibility(T item, bool visible) {
-    if (!visible) {
-      _separatorVisibilities[item].value = false;
-      if (_firstVisibleItem == item) {
-        _firstVisibleItem = _visibleItems.isNotEmpty
-            ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
-            : null;
-        if (_firstVisibleItem != null) {
-          _separatorVisibilities[_firstVisibleItem].value = false;
-        }
+  void _onItemAppeared(T item) {
+    if (_firstVisibleItem == item) {
+      _firstVisibleItem = _findFirstVisibltItem();
+      if (_firstVisibleItem != null) {
+        _separatorVisibilities[_firstVisibleItem].value = false;
       }
     } else {
-      final firstVisible = _visibleItems.isNotEmpty
-          ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
-          : null;
-      if (firstVisible == item) {
-        if (_firstVisibleItem != null) {
-          _separatorVisibilities[_firstVisibleItem].value = true;
-        }
-        _separatorVisibilities[item].value = false;
-        _firstVisibleItem = item;
-      } else {
-        _separatorVisibilities[item].value = true;
-      }
+      _separatorVisibilities[item].value = false;
     }
   }
+
+  void _onItemDisappeared(T item) {
+    if (_findFirstVisibltItem() == item) {
+      if (_firstVisibleItem != null) {
+        _separatorVisibilities[_firstVisibleItem].value = true;
+      }
+      _firstVisibleItem = item;
+      _separatorVisibilities[item].value = false;
+    } else {
+      _separatorVisibilities[item].value = true;
+    }
+  }
+
+  T _findFirstVisibltItem() => _visibleItems.isNotEmpty
+      ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
+      : null;
 
   @override
   Widget build(BuildContext context) {
