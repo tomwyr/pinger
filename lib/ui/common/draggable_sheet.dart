@@ -18,16 +18,18 @@ class DraggableSheetController {
 
 class DraggableSheet extends StatefulWidget {
   final DraggableSheetController controller;
+  final Duration duration;
   final Widget child;
   final WidgetBuilder handleBuilder;
   final WidgetBuilder contentBuilder;
 
   const DraggableSheet({
     Key key,
+    @required this.controller,
+    @required this.duration,
+    @required this.child,
     @required this.handleBuilder,
     @required this.contentBuilder,
-    @required this.child,
-    @required this.controller,
   }) : super(key: key);
 
   @override
@@ -72,10 +74,7 @@ class _DraggableSheetState extends State<DraggableSheet>
   }
 
   void _setupDragAnimation() {
-    _animator = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
+    _animator = AnimationController(vsync: this, duration: widget.duration);
     final animation = _dragAnimTween
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_animator);
@@ -136,7 +135,7 @@ class _DraggableSheetState extends State<DraggableSheet>
     return ValueListenableBuilder<bool>(
       valueListenable: _visibility,
       builder: (_, value, child) => TweenAnimationBuilder<double>(
-        duration: const Duration(milliseconds: 500),
+        duration: widget.duration,
         tween: Tween(begin: value ? 0.0 : 1.0, end: value ? 0.0 : 1.0),
         builder: (_, value, child) => FractionalTranslation(
           translation: Offset(0.0, value),
@@ -251,4 +250,143 @@ class _SheetHeight {
       other is _SheetHeight &&
       other.handle == handle &&
       other.content == content;
+}
+
+class SeparatedDraggableSheet<T> extends StatefulWidget {
+  final DraggableSheetController controller;
+  final Duration duration;
+  final Widget child;
+  final List<SeparatedItem<T>> items;
+  final ValueChanged<Set<T>> onVisibilityChanged;
+  final WidgetBuilder handleBuilder;
+  final WidgetBuilder separatorBuilder;
+  final Widget Function(BuildContext, List<Widget>) contentBuilder;
+
+  const SeparatedDraggableSheet({
+    Key key,
+    @required this.controller,
+    @required this.duration,
+    @required this.child,
+    @required this.items,
+    @required this.onVisibilityChanged,
+    @required this.handleBuilder,
+    @required this.separatorBuilder,
+    @required this.contentBuilder,
+  }) : super(key: key);
+
+  @override
+  _SeparatedDraggableSheetState<T> createState() =>
+      _SeparatedDraggableSheetState<T>();
+}
+
+class _SeparatedDraggableSheetState<T>
+    extends State<SeparatedDraggableSheet<T>> {
+  final _visibleItems = <T>{};
+  final _separators = <T, ValueNotifier<bool>>{};
+  final _visibilityListeners = <T, VoidCallback>{};
+
+  List<SeparatedItem<T>> _items;
+  T _firstVisibleItem;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = widget.items
+      ..forEach((it) {
+        _separators[it.value] = ValueNotifier(it.visibility.value);
+        final listener = () => _onItemVisibility(it.value, it.visibility.value);
+        _visibilityListeners[it.value] = listener;
+        it.visibility.addListener(listener);
+      });
+  }
+
+  @override
+  void dispose() {
+    _items.forEach((it) {
+      it.visibility.removeListener(_visibilityListeners[it.value]);
+      _separators[it.value].dispose();
+    });
+    super.dispose();
+  }
+
+  void _onItemVisibility(T item, bool visible) {
+    final didChange =
+        visible ? _visibleItems.add(item) : _visibleItems.remove(item);
+    if (didChange) {
+      _updateSeparatorsVisibility(item, visible);
+      widget.onVisibilityChanged(_visibleItems);
+    }
+  }
+
+  void _updateSeparatorsVisibility(T item, bool visible) {
+    if (!visible) {
+      _separators[item].value = false;
+      if (_firstVisibleItem == item) {
+        _firstVisibleItem = _visibleItems.isNotEmpty
+            ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
+            : null;
+        if (_firstVisibleItem != null) {
+          _separators[_firstVisibleItem].value = false;
+        }
+      }
+    } else {
+      final firstVisible = _visibleItems.isNotEmpty
+          ? _items.firstWhere((it) => _visibleItems.contains(it.value)).value
+          : null;
+      if (firstVisible == item) {
+        if (_firstVisibleItem != null) {
+          _separators[_firstVisibleItem].value = true;
+        }
+        _separators[item].value = false;
+        _firstVisibleItem = item;
+      } else {
+        _separators[item].value = true;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableSheet(
+      controller: widget.controller,
+      duration: widget.duration,
+      child: widget.child,
+      handleBuilder: widget.handleBuilder,
+      contentBuilder: (context) => widget.contentBuilder(
+        context,
+        [
+          for (var it in _items) ...[
+            ValueListenableBuilder<bool>(
+              valueListenable: _separators[it.value],
+              builder: (_, value, child) => Visibility(
+                visible: value,
+                child: child,
+              ),
+              child: widget.separatorBuilder(context),
+            ),
+            ValueListenableBuilder<bool>(
+              valueListenable: it.visibility,
+              builder: (_, value, child) => Visibility(
+                visible: value,
+                child: child,
+              ),
+              child: it.builder(context),
+            ),
+          ]
+        ],
+      ),
+    );
+  }
+}
+
+class SeparatedItem<T> {
+  final T value;
+  final ValueNotifier<bool> visibility;
+  final WidgetBuilder builder;
+
+  SeparatedItem({
+    @required this.value,
+    @required this.visibility,
+    @required this.builder,
+  });
 }
