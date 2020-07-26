@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/ui/common/draggable_sheet.dart';
-import 'package:pinger/ui/common/fade_out.dart';
-
-enum InfoTrayItem { CONNECTIVITY, SESSION }
 
 class InfoTray extends StatefulWidget {
   final Widget child;
@@ -23,20 +21,41 @@ class _InfoTrayState extends State<InfoTray>
     with SingleTickerProviderStateMixin {
   final PingStore _pingStore = Injector.resolve();
   final DeviceStore _deviceStore = Injector.resolve();
-
   final DraggableSheetController _controller = DraggableSheetController();
-  final Duration _animDuration = const Duration(milliseconds: 500);
-  final Set<InfoTrayItem> _visibleItems = {};
 
-  void _onItemValue(InfoTrayItem item, bool visible) async {
-    final didChange =
-        visible ? _visibleItems.add(item) : _visibleItems.remove(item);
-    if (didChange) {
-      if (_visibleItems.isNotEmpty && !_controller.isVisible) {
-        _controller.show();
-      } else if (_visibleItems.isEmpty && _controller.isVisible) {
-        _controller.hide();
-      }
+  Map<InfoTrayItem, InfoTrayEntry> _entries;
+  Map<InfoTrayItem, InfoTrayEntry> _createEntries() => {
+        InfoTrayItem.CONNECTIVITY: InfoTrayEntry<bool>(
+          item: InfoTrayItem.CONNECTIVITY,
+          valueObservable: () => _deviceStore.isNetworkEnabled,
+          valueBuilder: (_) => InfoTrayConnectivityItem(),
+          isVisible: (it) => it == false,
+        ),
+        InfoTrayItem.SESSION: InfoTrayEntry<PingSession>(
+          item: InfoTrayItem.SESSION,
+          valueObservable: () => _pingStore.currentSession,
+          valueBuilder: (it) => InfoTraySessionItem(session: it),
+          isVisible: (it) => it?.status?.isSession ?? false,
+        ),
+      };
+
+  @override
+  void initState() {
+    super.initState();
+    _entries = _createEntries()..values.forEach((it) => it.init());
+  }
+
+  @override
+  void dispose() {
+    _entries.values.forEach((it) => it.dispose());
+    super.dispose();
+  }
+
+  void _onVisibilityChanged(Set<InfoTrayItem> visibleItems) {
+    if (visibleItems.isNotEmpty && !_controller.isVisible) {
+      _controller.show();
+    } else if (visibleItems.isEmpty && _controller.isVisible) {
+      _controller.hide();
     }
   }
 
@@ -52,60 +71,10 @@ class _InfoTrayState extends State<InfoTray>
   Widget build(BuildContext context) {
     return InfoTraySheet(
       controller: _controller,
+      onVisibilityChanged: _onVisibilityChanged,
       onHandleTap: _onHandleTap,
+      items: _entries.values.toList(),
       child: widget.child,
-      items: <Widget>[
-        _buildItem<bool>(
-          item: InfoTrayItem.CONNECTIVITY,
-          valueObservable: () => _deviceStore.isNetworkEnabled,
-          isVisible: (it) => it == false,
-          builder: (_) => _buildConnectivityItem(),
-        ),
-        _buildItem<PingSession>(
-          item: InfoTrayItem.SESSION,
-          valueObservable: () => _pingStore.currentSession,
-          isVisible: (it) => it?.status?.isSession ?? false,
-          builder: (_) => _buildSessionItem(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildItem<T>({
-    @required InfoTrayItem item,
-    @required ValueGetter<T> valueObservable,
-    @required bool Function(T value) isVisible,
-    @required Widget builder(T value),
-  }) {
-    return Observer(builder: (_) {
-      final value = valueObservable();
-      final visible = isVisible(value);
-      Future(() => _onItemValue(item, visible));
-      return FadeOut(
-        visible: visible,
-        duration: _animDuration,
-        child: builder(value),
-      );
-    });
-  }
-
-  Widget _buildConnectivityItem() {
-    return Row(children: <Widget>[
-      Expanded(
-        child: Text(
-          "Connection seems to be disabled. Go to settings and enable wifi/mobile in order to be able to ping a host",
-          style: TextStyle(color: R.colors.white),
-        ),
-      ),
-      Container(width: 12.0),
-      Icon(Icons.signal_wifi_off, color: R.colors.white),
-    ]);
-  }
-
-  Widget _buildSessionItem() {
-    return Text(
-      "Session is running",
-      style: TextStyle(color: R.colors.white),
     );
   }
 }
@@ -115,28 +84,61 @@ class InfoTraySheet extends StatelessWidget {
   static const _handleHeight = 32.0;
   static const _borderRadius = 12.0;
   static const _padding = EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 12.0);
+  static const _animDuration = Duration(milliseconds: 500);
 
   final DraggableSheetController controller;
   final VoidCallback onHandleTap;
+  final ValueChanged<Set<InfoTrayItem>> onVisibilityChanged;
+  final List<InfoTrayEntry> items;
   final Widget child;
-  final List<Widget> items;
 
   const InfoTraySheet({
     Key key,
     @required this.controller,
     @required this.onHandleTap,
-    @required this.child,
+    @required this.onVisibilityChanged,
     @required this.items,
+    @required this.child,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: DraggableSheet(
+      child: SeparatedDraggableSheet<InfoTrayItem>(
         controller: controller,
+        duration: _animDuration,
         child: child,
+        items: items,
+        onVisibilityChanged: onVisibilityChanged,
+        contentBuilder: (_, children) => _buildTray(children),
         handleBuilder: (_) => _buildHandle(),
-        contentBuilder: (_) => _buildTray(),
+        separatorBuilder: (_) => _buildSeparator(),
+      ),
+    );
+  }
+
+  Widget _buildTray(List<Widget> children) {
+    return Padding(
+      padding: _padding.copyWith(top: 0.0),
+      child: StreamBuilder<double>(
+        initialData: controller.currentExpansion,
+        stream: controller.expansion,
+        builder: (_, snapshot) => DecoratedBox(
+          decoration: _buildDecoration(
+            expansion: snapshot.data,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(_borderRadius * (1.0 - snapshot.data) * 2),
+              bottom: Radius.circular(_borderRadius),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -182,26 +184,12 @@ class InfoTraySheet extends StatelessWidget {
     );
   }
 
-  Widget _buildTray() {
-    return Padding(
-      padding: _padding.copyWith(top: 0.0),
-      child: StreamBuilder<double>(
-        initialData: controller.currentExpansion,
-        stream: controller.expansion,
-        builder: (_, snapshot) => DecoratedBox(
-          decoration: _buildDecoration(
-            expansion: snapshot.data,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(_borderRadius * (1.0 - snapshot.data) * 2),
-              bottom: Radius.circular(_borderRadius),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 12.0),
-            child: Column(children: items),
-          ),
-        ),
-      ),
+  Widget _buildSeparator() {
+    return Container(
+      width: double.infinity,
+      height: 0.25,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      color: R.colors.white,
     );
   }
 
@@ -264,4 +252,76 @@ class InfoTrayHandlePainter extends CustomPainter {
       old.expansion != expansion ||
       old.width != width ||
       old.strokeWidth != strokeWidth;
+}
+
+enum InfoTrayItem { CONNECTIVITY, SESSION }
+
+class InfoTrayEntry<T> implements SeparatedItem<InfoTrayItem> {
+  InfoTrayEntry({
+    @required this.item,
+    @required this.valueObservable,
+    @required this.valueBuilder,
+    @required this.isVisible,
+  });
+
+  final InfoTrayItem item;
+  final ValueGetter<T> valueObservable;
+  final Widget Function(T value) valueBuilder;
+  final bool Function(T value) isVisible;
+  final ValueNotifier<bool> visibility = ValueNotifier(null);
+
+  ReactionDisposer _reactionDisposer;
+
+  void init() {
+    _reactionDisposer = reaction(
+      (_) => isVisible(valueObservable()),
+      (it) => visibility.value = it,
+      fireImmediately: true,
+    );
+  }
+
+  void dispose() {
+    _reactionDisposer();
+    visibility.dispose();
+  }
+
+  @override
+  InfoTrayItem get value => item;
+
+  @override
+  WidgetBuilder get builder =>
+      (_) => Observer(builder: (_) => valueBuilder(valueObservable()));
+}
+
+class InfoTrayConnectivityItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      Expanded(
+        child: Text(
+          "Connection seems to be disabled. Go to settings and enable wifi/mobile in order to be able to ping a host",
+          style: TextStyle(color: R.colors.white),
+        ),
+      ),
+      Container(width: 12.0),
+      Icon(Icons.signal_wifi_off, color: R.colors.white),
+    ]);
+  }
+}
+
+class InfoTraySessionItem extends StatelessWidget {
+  final PingSession session;
+
+  const InfoTraySessionItem({
+    Key key,
+    @required this.session,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "Session is running",
+      style: TextStyle(color: R.colors.white),
+    );
+  }
 }
