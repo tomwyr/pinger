@@ -44,9 +44,10 @@ class _DraggableSheetState extends State<DraggableSheet>
   final _sheetHeight = ValueNotifier(_SheetHeight.zero);
   final _expansion = StreamController<double>.broadcast();
 
+  _SheetState _sheetState = _SheetState.COLLAPSED;
+  _SheetHeight _lastHeight = _SheetHeight.zero;
   AnimationController _animator;
   double _currentExpansion;
-  _SheetState _sheetState;
 
   void show() => _visibility.value = true;
   void hide() => _visibility.value = false;
@@ -58,16 +59,16 @@ class _DraggableSheetState extends State<DraggableSheet>
     super.initState();
     _updateExpansion();
     _setupDragAnimation();
-    _sheetHeight.addListener(_updateExpansion);
-    _dragDelta.addListener(_updateExpansion);
+    _sheetHeight.addListener(_onSheetHeight);
+    _dragDelta.addListener(_onDragDelta);
     widget.controller._state = this;
   }
 
   @override
   void dispose() {
     widget.controller._state = null;
-    _sheetHeight.removeListener(_updateExpansion);
-    _dragDelta.removeListener(_updateExpansion);
+    _sheetHeight.removeListener(_onSheetHeight);
+    _dragDelta.removeListener(_onDragDelta);
     _expansion.close();
     _animator.dispose();
     super.dispose();
@@ -89,9 +90,24 @@ class _DraggableSheetState extends State<DraggableSheet>
       });
   }
 
+  void _onSheetHeight() {
+    if (_sheetState == _SheetState.EXPANDED ||
+        _sheetState == _SheetState.EXPANDING) {
+      final heightDiff = (_lastHeight - _sheetHeight.value).total;
+      Future(() => _dragDelta.value += heightDiff);
+    } else {
+      _updateExpansion();
+    }
+    _lastHeight = _sheetHeight.value;
+  }
+
+  void _onDragDelta() => _updateExpansion();
+
   void _updateExpansion() {
-    _currentExpansion =
-        (-_dragDelta.value / _sheetHeight.value.content).clamp(0.0, 1.0);
+    final contentHeight = _sheetHeight.value.content;
+    _currentExpansion = contentHeight > 0.0
+        ? (-_dragDelta.value / contentHeight).clamp(0.0, 1.0)
+        : 0.0;
     _expansion.add(_currentExpansion);
   }
 
@@ -186,10 +202,11 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     final height = layoutItems(size);
-    final handleOffset = _calcHandleOffset(size, height);
-    final contentOffset = handleOffset + Offset(0.0, height.handle);
-    positionChild(_SheetItem.HANDLE, handleOffset);
-    positionChild(_SheetItem.CONTENT, contentOffset);
+    final contentOffset = (size.height + dragDelta + _calcHeightDiff(height))
+        .clamp(size.height - height.content, size.height);
+    final handleOffset = contentOffset - height.handle;
+    positionChild(_SheetItem.CONTENT, Offset(0.0, contentOffset));
+    positionChild(_SheetItem.HANDLE, Offset(0.0, handleOffset));
     sheetHeight.value = height;
   }
 
@@ -200,24 +217,13 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
     return _SheetHeight(handleHeight, contentHeight);
   }
 
-  Offset _calcHandleOffset(Size parentSize, _SheetHeight height) {
-    final heightDiff = _calcHeightDiff(height);
-    final maxHeight = parentSize.height - height.handle;
-    final startHeight =
-        (parentSize.height - height.handle + dragDelta + heightDiff)
-            .clamp(maxHeight - height.content, maxHeight)
-            .ceilToDouble();
-    return Offset(0.0, startHeight);
-  }
-
   double _calcHeightDiff(_SheetHeight height) {
     final diff = sheetHeight.value - height;
     if (diff != _SheetHeight.zero) {
-      return sheetState == _SheetState.COLLAPSING ||
-              sheetState == _SheetState.COLLAPSED ||
-              sheetState == _SheetState.DRAGGING
-          ? max(diff.total, 0.0)
-          : min(diff.total, 0.0);
+      return sheetState == _SheetState.EXPANDING ||
+              sheetState == _SheetState.EXPANDED
+          ? min(diff.total, 0.0)
+          : max(diff.total, 0.0);
     }
     return 0.0;
   }
@@ -299,6 +305,7 @@ class _SeparatedDraggableSheetState<T>
         final listener = () => _onItemVisibility(it.value, it.visibility.value);
         _visibilityListeners[it.value] = listener;
         it.visibility.addListener(listener);
+        Future(listener);
       });
   }
 

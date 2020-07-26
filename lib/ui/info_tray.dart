@@ -35,7 +35,7 @@ class _InfoTrayState extends State<InfoTray>
           item: InfoTrayItem.SESSION,
           valueObservable: () => _pingStore.currentSession,
           valueBuilder: (it) => InfoTraySessionItem(session: it),
-          isVisible: (it) => it?.status?.isSession ?? false,
+          isVisible: (it) => it?.status?.isDone != true,
         ),
       };
 
@@ -230,7 +230,7 @@ class InfoTrayHandlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final lineWidth = width / 3 + width / 6 * expansion;
+    final lineWidth = width / 3 + width / 2 * expansion;
     final lineHeight = size.height / 6 * (1.0 - expansion);
     final startX = size.width / 2 - lineWidth;
     final startY = (size.height + lineHeight) / 2 + (2.0 * (1.0 - expansion));
