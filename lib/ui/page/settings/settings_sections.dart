@@ -129,6 +129,43 @@ class ShareSettingsSection extends StatelessWidget {
   }
 }
 
+class TraySettingsSection extends StatelessWidget {
+  final TraySettings settings;
+  final ValueChanged<TraySettings> onChanged;
+
+  const TraySettingsSection({
+    Key key,
+    @required this.settings,
+    @required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SettingsHeaderItem(title: S.current.settingsInfoTraySectionTitle),
+        SwitchSettingItem(
+          label: S.current.settingsTrayEnabledTitle,
+          description: S.current.settingsTrayEnabledDesc,
+          value: settings.enabled,
+          onChanged: (it) => onChanged(settings.copyWith(
+            enabled: it,
+            autoReveal: it ? settings.autoReveal : false,
+          )),
+        ),
+        SwitchSettingItem(
+          label: S.current.settingsTrayAutoRevealTitle,
+          description: S.current.settingsTrayAutoRevealDesc,
+          enabled: settings.enabled,
+          value: settings.autoReveal,
+          onChanged: (it) => onChanged(settings.copyWith(autoReveal: it)),
+        ),
+      ],
+    );
+  }
+}
+
 class SettingsFooterSection extends StatelessWidget {
   final AppInfo appInfo;
   final VoidCallback onShowIntroPressed;

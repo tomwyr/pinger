@@ -128,5 +128,10 @@
   "notificationAccessDisabledTitle": "Notifications disabled",
   "notificationAccessDisabledDesc": "Change permission settings to allow the app to show notifications",
   "locationAccessDisabledTitle": "Location disabled",
-  "locationAccessDisabledDesc": "Change permission settings to allow the app to detect device location"
+  "locationAccessDisabledDesc": "Change permission settings to allow the app to detect device location",
+  "settingsTrayEnabledTitle": "Show info tray",
+  "settingsTrayEnabledDesc": "Show app state informations on a sheet that can be expanded",
+  "settingsTrayAutoRevealTitle": "Auto reveal tray",
+  "settingsTrayAutoRevealDesc": "Automatically reveal tray if there's new item visible",
+  "settingsInfoTraySectionTitle": "Info tray"
 }

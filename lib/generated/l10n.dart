@@ -1338,6 +1338,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Show info tray`
+  String get settingsTrayEnabledTitle {
+    return Intl.message(
+      'Show info tray',
+      name: 'settingsTrayEnabledTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show app state informations on a sheet that can be expanded`
+  String get settingsTrayEnabledDesc {
+    return Intl.message(
+      'Show app state informations on a sheet that can be expanded',
+      name: 'settingsTrayEnabledDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto reveal tray`
+  String get settingsTrayAutoRevealTitle {
+    return Intl.message(
+      'Auto reveal tray',
+      name: 'settingsTrayAutoRevealTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically reveal tray if there's new item visible`
+  String get settingsTrayAutoRevealDesc {
+    return Intl.message(
+      'Automatically reveal tray if there\'s new item visible',
+      name: 'settingsTrayAutoRevealDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info tray`
+  String get settingsInfoTraySectionTitle {
+    return Intl.message(
+      'Info tray',
+      name: 'settingsInfoTraySectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

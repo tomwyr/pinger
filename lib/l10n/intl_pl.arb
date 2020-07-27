@@ -128,5 +128,10 @@
   "notificationAccessDisabledTitle": "Powiadomienia wyłączone",
   "notificationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na wyświetlanie powiadomień",
   "locationAccessDisabledTitle": "Lokalizacja wyłączona",
-  "locationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na dostęp do lokalizacji urządzenia"
+  "locationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na dostęp do lokalizacji urządzenia",
+  "settingsTrayEnabledTitle": "Show info tray",
+  "settingsTrayEnabledDesc": "Show app state informations on a sheet that can be expanded",
+  "settingsTrayAutoRevealTitle": "Auto reveal tray",
+  "settingsTrayAutoRevealDesc": "Automatically reveal tray if there's new item visible",
+  "settingsInfoTraySectionTitle": "Info tray"
 }

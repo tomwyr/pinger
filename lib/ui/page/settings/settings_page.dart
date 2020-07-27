@@ -50,6 +50,13 @@ class _SettingsPageState extends BaseState<SettingsPage> {
                 ),
               ),
               Container(height: 24.0),
+              TraySettingsSection(
+                settings: settings.traySettings,
+                onChanged: (it) => _settingsStore.updateSettings(
+                  settings.copyWith(traySettings: it),
+                ),
+              ),
+              Container(height: 24.0),
               OtherSettingsSection(
                 settings: settings,
                 onChanged: _settingsStore.updateSettings,

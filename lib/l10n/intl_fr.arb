@@ -71,7 +71,7 @@
   "settingsAttachLocationDesc": "La localisation actuelle sera attachée aux statistiques de session afin de les comparer sur une carte de résultats globale",
   "settingsNightModeTitle": "Mode nuit",
   "settingsSystemNotificationTitle": "Notifications système",
-"settingsSystemNotificationDesc": "Le statut actuel des sessions en cours apparaîtra sur la barre de notification",
+  "settingsSystemNotificationDesc": "Le statut actuel des sessions en cours apparaîtra sur la barre de notification",
   "settingsRestoreHostTitle": "Retenir l'hôte",
   "settingsRestoreHostDesc": "Une nouvelle session sera automatiquement créée pour le dernier hôte pingé",
   "settingsPingTimeoutLabel": "Délai maximum",
@@ -128,5 +128,10 @@
   "notificationAccessDisabledTitle": "Notifications désactivées",
   "notificationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli de montrer des notifications",
   "locationAccessDisabledTitle": "Localisation désactivée",
-  "locationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil"
+  "locationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil",
+  "settingsTrayEnabledTitle": "Show info tray",
+  "settingsTrayEnabledDesc": "Show app state informations on a sheet that can be expanded",
+  "settingsTrayAutoRevealTitle": "Auto reveal tray",
+  "settingsTrayAutoRevealDesc": "Automatically reveal tray if there's new item visible",
+  "settingsInfoTraySectionTitle": "Info tray"
 }
