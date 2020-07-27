@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class DraggableSheetController {
   _DraggableSheetState _state;
 
+  SheetState get sheetState => _state?._sheetState;
   double get currentExpansion => _state?._currentExpansion;
   Stream<double> get expansion => _state?._expansion?.stream?.distinct();
   bool get isVisible => _state?._visibility?.value;
@@ -44,7 +45,7 @@ class _DraggableSheetState extends State<DraggableSheet>
   final _sheetHeight = ValueNotifier(_SheetHeight.zero);
   final _expansion = StreamController<double>.broadcast();
 
-  _SheetState _sheetState = _SheetState.COLLAPSED;
+  SheetState _sheetState = SheetState.COLLAPSED;
   _SheetHeight _lastHeight = _SheetHeight.zero;
   AnimationController _animator;
   double _currentExpansion;
@@ -84,15 +85,15 @@ class _DraggableSheetState extends State<DraggableSheet>
       ..addStatusListener((it) {
         if (it == AnimationStatus.completed) {
           _sheetState = animation.value == 0.0
-              ? _SheetState.COLLAPSED
-              : _SheetState.EXPANDED;
+              ? SheetState.COLLAPSED
+              : SheetState.EXPANDED;
         }
       });
   }
 
   void _onSheetHeight() {
-    if (_sheetState == _SheetState.EXPANDED ||
-        _sheetState == _SheetState.EXPANDING) {
+    if (_sheetState == SheetState.EXPANDED ||
+        _sheetState == SheetState.EXPANDING) {
       final heightDiff = (_lastHeight - _sheetHeight.value).total;
       Future(() => _dragDelta.value += heightDiff);
     } else {
@@ -113,23 +114,24 @@ class _DraggableSheetState extends State<DraggableSheet>
 
   void _onDragUpdate(double delta) {
     if (!_animator.isAnimating) {
-      _sheetState = _SheetState.DRAGGING;
+      _sheetState = SheetState.DRAGGING;
       _dragDelta.value += delta;
     }
   }
 
   void _onDragEnd(double velocity) {
     if (!_animator.isAnimating) {
-      _animateTo(_calcEndDelta(velocity));
+      final endDelta = _calcEndDelta(velocity);
+      final didReachEnd =
+          _dragDelta.value >= 0.0 || _dragDelta.value <= endDelta;
+      if (didReachEnd) {
+        _dragDelta.value = endDelta;
+        _sheetState =
+            endDelta == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
+      } else {
+        _animateTo(endDelta);
+      }
     }
-  }
-
-  void _animateTo(double delta) {
-    _dragAnimTween
-      ..begin = _dragDelta.value
-      ..end = delta;
-    _sheetState = delta == 0.0 ? _SheetState.COLLAPSING : _SheetState.EXPANDING;
-    _animator.forward(from: 0.0);
   }
 
   double _calcEndDelta(double velocity) {
@@ -137,6 +139,14 @@ class _DraggableSheetState extends State<DraggableSheet>
     final expand = velocity < 0.0 ||
         (velocity == 0.0 && _dragDelta.value < -contentHeight / 2);
     return expand ? -contentHeight : 0.0;
+  }
+
+  void _animateTo(double delta) {
+    _dragAnimTween
+      ..begin = _dragDelta.value
+      ..end = delta;
+    _sheetState = delta == 0.0 ? SheetState.COLLAPSING : SheetState.EXPANDING;
+    _animator.forward(from: 0.0);
   }
 
   @override
@@ -190,11 +200,11 @@ class _DraggableSheetState extends State<DraggableSheet>
 
 enum _SheetItem { HANDLE, CONTENT }
 
-enum _SheetState { EXPANDING, EXPANDED, COLLAPSING, COLLAPSED, DRAGGING }
+enum SheetState { EXPANDING, EXPANDED, COLLAPSING, COLLAPSED, DRAGGING }
 
 class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   final double dragDelta;
-  final _SheetState sheetState;
+  final SheetState sheetState;
   final ValueNotifier<_SheetHeight> sheetHeight;
 
   _SheetLayoutDelegate(this.dragDelta, this.sheetState, this.sheetHeight);
@@ -220,8 +230,8 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   double _calcHeightDiff(_SheetHeight height) {
     final diff = sheetHeight.value - height;
     if (diff != _SheetHeight.zero) {
-      return sheetState == _SheetState.EXPANDING ||
-              sheetState == _SheetState.EXPANDED
+      return sheetState == SheetState.EXPANDING ||
+              sheetState == SheetState.EXPANDED
           ? min(diff.total, 0.0)
           : max(diff.total, 0.0);
     }
