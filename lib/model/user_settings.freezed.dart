@@ -18,12 +18,14 @@ class _$UserSettingsTearOff {
   _UserSettings call(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
+      TraySettings traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode}) {
     return _UserSettings(
       pingSettings: pingSettings,
       shareSettings: shareSettings,
+      traySettings: traySettings,
       showSystemNotification: showSystemNotification,
       restoreHost: restoreHost,
       nightMode: nightMode,
@@ -37,6 +39,7 @@ const $UserSettings = _$UserSettingsTearOff();
 mixin _$UserSettings {
   PingSettings get pingSettings;
   ShareSettings get shareSettings;
+  TraySettings get traySettings;
   bool get showSystemNotification;
   bool get restoreHost;
   bool get nightMode;
@@ -52,12 +55,14 @@ abstract class $UserSettingsCopyWith<$Res> {
   $Res call(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
+      TraySettings traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode});
 
   $PingSettingsCopyWith<$Res> get pingSettings;
   $ShareSettingsCopyWith<$Res> get shareSettings;
+  $TraySettingsCopyWith<$Res> get traySettings;
 }
 
 class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
@@ -71,6 +76,7 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
   $Res call({
     Object pingSettings = freezed,
     Object shareSettings = freezed,
+    Object traySettings = freezed,
     Object showSystemNotification = freezed,
     Object restoreHost = freezed,
     Object nightMode = freezed,
@@ -82,6 +88,9 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
       shareSettings: shareSettings == freezed
           ? _value.shareSettings
           : shareSettings as ShareSettings,
+      traySettings: traySettings == freezed
+          ? _value.traySettings
+          : traySettings as TraySettings,
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
           : showSystemNotification as bool,
@@ -110,6 +119,16 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
       return _then(_value.copyWith(shareSettings: value));
     });
   }
+
+  @override
+  $TraySettingsCopyWith<$Res> get traySettings {
+    if (_value.traySettings == null) {
+      return null;
+    }
+    return $TraySettingsCopyWith<$Res>(_value.traySettings, (value) {
+      return _then(_value.copyWith(traySettings: value));
+    });
+  }
 }
 
 abstract class _$UserSettingsCopyWith<$Res>
@@ -121,6 +140,7 @@ abstract class _$UserSettingsCopyWith<$Res>
   $Res call(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
+      TraySettings traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode});
@@ -129,6 +149,8 @@ abstract class _$UserSettingsCopyWith<$Res>
   $PingSettingsCopyWith<$Res> get pingSettings;
   @override
   $ShareSettingsCopyWith<$Res> get shareSettings;
+  @override
+  $TraySettingsCopyWith<$Res> get traySettings;
 }
 
 class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
@@ -144,6 +166,7 @@ class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
   $Res call({
     Object pingSettings = freezed,
     Object shareSettings = freezed,
+    Object traySettings = freezed,
     Object showSystemNotification = freezed,
     Object restoreHost = freezed,
     Object nightMode = freezed,
@@ -155,6 +178,9 @@ class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
       shareSettings: shareSettings == freezed
           ? _value.shareSettings
           : shareSettings as ShareSettings,
+      traySettings: traySettings == freezed
+          ? _value.traySettings
+          : traySettings as TraySettings,
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
           : showSystemNotification as bool,
@@ -170,6 +196,7 @@ class _$_UserSettings implements _UserSettings {
   _$_UserSettings(
       {this.pingSettings,
       this.shareSettings,
+      this.traySettings,
       this.showSystemNotification,
       this.restoreHost,
       this.nightMode});
@@ -182,6 +209,8 @@ class _$_UserSettings implements _UserSettings {
   @override
   final ShareSettings shareSettings;
   @override
+  final TraySettings traySettings;
+  @override
   final bool showSystemNotification;
   @override
   final bool restoreHost;
@@ -190,7 +219,7 @@ class _$_UserSettings implements _UserSettings {
 
   @override
   String toString() {
-    return 'UserSettings(pingSettings: $pingSettings, shareSettings: $shareSettings, showSystemNotification: $showSystemNotification, restoreHost: $restoreHost, nightMode: $nightMode)';
+    return 'UserSettings(pingSettings: $pingSettings, shareSettings: $shareSettings, traySettings: $traySettings, showSystemNotification: $showSystemNotification, restoreHost: $restoreHost, nightMode: $nightMode)';
   }
 
   @override
@@ -203,6 +232,9 @@ class _$_UserSettings implements _UserSettings {
             (identical(other.shareSettings, shareSettings) ||
                 const DeepCollectionEquality()
                     .equals(other.shareSettings, shareSettings)) &&
+            (identical(other.traySettings, traySettings) ||
+                const DeepCollectionEquality()
+                    .equals(other.traySettings, traySettings)) &&
             (identical(other.showSystemNotification, showSystemNotification) ||
                 const DeepCollectionEquality().equals(
                     other.showSystemNotification, showSystemNotification)) &&
@@ -219,6 +251,7 @@ class _$_UserSettings implements _UserSettings {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(pingSettings) ^
       const DeepCollectionEquality().hash(shareSettings) ^
+      const DeepCollectionEquality().hash(traySettings) ^
       const DeepCollectionEquality().hash(showSystemNotification) ^
       const DeepCollectionEquality().hash(restoreHost) ^
       const DeepCollectionEquality().hash(nightMode);
@@ -237,6 +270,7 @@ abstract class _UserSettings implements UserSettings {
   factory _UserSettings(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
+      TraySettings traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode}) = _$_UserSettings;
@@ -248,6 +282,8 @@ abstract class _UserSettings implements UserSettings {
   PingSettings get pingSettings;
   @override
   ShareSettings get shareSettings;
+  @override
+  TraySettings get traySettings;
   @override
   bool get showSystemNotification;
   @override
@@ -574,4 +610,147 @@ abstract class _PingSettings implements PingSettings {
   int get timeout;
   @override
   _$PingSettingsCopyWith<_PingSettings> get copyWith;
+}
+
+TraySettings _$TraySettingsFromJson(Map<String, dynamic> json) {
+  return _TraySettings.fromJson(json);
+}
+
+class _$TraySettingsTearOff {
+  const _$TraySettingsTearOff();
+
+  _TraySettings call({bool enabled, bool autoReveal}) {
+    return _TraySettings(
+      enabled: enabled,
+      autoReveal: autoReveal,
+    );
+  }
+}
+
+// ignore: unused_element
+const $TraySettings = _$TraySettingsTearOff();
+
+mixin _$TraySettings {
+  bool get enabled;
+  bool get autoReveal;
+
+  Map<String, dynamic> toJson();
+  $TraySettingsCopyWith<TraySettings> get copyWith;
+}
+
+abstract class $TraySettingsCopyWith<$Res> {
+  factory $TraySettingsCopyWith(
+          TraySettings value, $Res Function(TraySettings) then) =
+      _$TraySettingsCopyWithImpl<$Res>;
+  $Res call({bool enabled, bool autoReveal});
+}
+
+class _$TraySettingsCopyWithImpl<$Res> implements $TraySettingsCopyWith<$Res> {
+  _$TraySettingsCopyWithImpl(this._value, this._then);
+
+  final TraySettings _value;
+  // ignore: unused_field
+  final $Res Function(TraySettings) _then;
+
+  @override
+  $Res call({
+    Object enabled = freezed,
+    Object autoReveal = freezed,
+  }) {
+    return _then(_value.copyWith(
+      enabled: enabled == freezed ? _value.enabled : enabled as bool,
+      autoReveal:
+          autoReveal == freezed ? _value.autoReveal : autoReveal as bool,
+    ));
+  }
+}
+
+abstract class _$TraySettingsCopyWith<$Res>
+    implements $TraySettingsCopyWith<$Res> {
+  factory _$TraySettingsCopyWith(
+          _TraySettings value, $Res Function(_TraySettings) then) =
+      __$TraySettingsCopyWithImpl<$Res>;
+  @override
+  $Res call({bool enabled, bool autoReveal});
+}
+
+class __$TraySettingsCopyWithImpl<$Res> extends _$TraySettingsCopyWithImpl<$Res>
+    implements _$TraySettingsCopyWith<$Res> {
+  __$TraySettingsCopyWithImpl(
+      _TraySettings _value, $Res Function(_TraySettings) _then)
+      : super(_value, (v) => _then(v as _TraySettings));
+
+  @override
+  _TraySettings get _value => super._value as _TraySettings;
+
+  @override
+  $Res call({
+    Object enabled = freezed,
+    Object autoReveal = freezed,
+  }) {
+    return _then(_TraySettings(
+      enabled: enabled == freezed ? _value.enabled : enabled as bool,
+      autoReveal:
+          autoReveal == freezed ? _value.autoReveal : autoReveal as bool,
+    ));
+  }
+}
+
+@JsonSerializable()
+class _$_TraySettings implements _TraySettings {
+  _$_TraySettings({this.enabled, this.autoReveal});
+
+  factory _$_TraySettings.fromJson(Map<String, dynamic> json) =>
+      _$_$_TraySettingsFromJson(json);
+
+  @override
+  final bool enabled;
+  @override
+  final bool autoReveal;
+
+  @override
+  String toString() {
+    return 'TraySettings(enabled: $enabled, autoReveal: $autoReveal)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _TraySettings &&
+            (identical(other.enabled, enabled) ||
+                const DeepCollectionEquality()
+                    .equals(other.enabled, enabled)) &&
+            (identical(other.autoReveal, autoReveal) ||
+                const DeepCollectionEquality()
+                    .equals(other.autoReveal, autoReveal)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(enabled) ^
+      const DeepCollectionEquality().hash(autoReveal);
+
+  @override
+  _$TraySettingsCopyWith<_TraySettings> get copyWith =>
+      __$TraySettingsCopyWithImpl<_TraySettings>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_TraySettingsToJson(this);
+  }
+}
+
+abstract class _TraySettings implements TraySettings {
+  factory _TraySettings({bool enabled, bool autoReveal}) = _$_TraySettings;
+
+  factory _TraySettings.fromJson(Map<String, dynamic> json) =
+      _$_TraySettings.fromJson;
+
+  @override
+  bool get enabled;
+  @override
+  bool get autoReveal;
+  @override
+  _$TraySettingsCopyWith<_TraySettings> get copyWith;
 }

@@ -48,6 +48,9 @@ abstract class SettingsStoreBase with Store {
     if (settings == null) {
       settings = _createDefaultSettings();
       _pingerPrefs.saveUserSettings(settings);
+    } else if (settings.traySettings == null) {
+      settings = settings.copyWith(traySettings: _createDefaultTraySettings());
+      _pingerPrefs.saveUserSettings(settings);
     }
     return settings;
   }
@@ -56,6 +59,7 @@ abstract class SettingsStoreBase with Store {
         nightMode: false,
         restoreHost: false,
         showSystemNotification: false,
+        traySettings: _createDefaultTraySettings(),
         shareSettings: ShareSettings(
           shareResults: true,
           attachLocation: false,
@@ -67,6 +71,9 @@ abstract class SettingsStoreBase with Store {
           timeout: 10,
         ),
       );
+
+  TraySettings _createDefaultTraySettings() =>
+      TraySettings(enabled: true, autoReveal: true);
 
   @action
   Future<void> updateSettings(UserSettings settings) async {

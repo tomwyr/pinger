@@ -14,6 +14,9 @@ _$_UserSettings _$_$_UserSettingsFromJson(Map<String, dynamic> json) {
     shareSettings: json['shareSettings'] == null
         ? null
         : ShareSettings.fromJson(json['shareSettings'] as Map<String, dynamic>),
+    traySettings: json['traySettings'] == null
+        ? null
+        : TraySettings.fromJson(json['traySettings'] as Map<String, dynamic>),
     showSystemNotification: json['showSystemNotification'] as bool,
     restoreHost: json['restoreHost'] as bool,
     nightMode: json['nightMode'] as bool,
@@ -24,6 +27,7 @@ Map<String, dynamic> _$_$_UserSettingsToJson(_$_UserSettings instance) =>
     <String, dynamic>{
       'pingSettings': instance.pingSettings?.toJson(),
       'shareSettings': instance.shareSettings?.toJson(),
+      'traySettings': instance.traySettings?.toJson(),
       'showSystemNotification': instance.showSystemNotification,
       'restoreHost': instance.restoreHost,
       'nightMode': instance.nightMode,
@@ -57,4 +61,17 @@ Map<String, dynamic> _$_$_PingSettingsToJson(_$_PingSettings instance) =>
       'packetSize': instance.packetSize,
       'interval': instance.interval,
       'timeout': instance.timeout,
+    };
+
+_$_TraySettings _$_$_TraySettingsFromJson(Map<String, dynamic> json) {
+  return _$_TraySettings(
+    enabled: json['enabled'] as bool,
+    autoReveal: json['autoReveal'] as bool,
+  );
+}
+
+Map<String, dynamic> _$_$_TraySettingsToJson(_$_TraySettings instance) =>
+    <String, dynamic>{
+      'enabled': instance.enabled,
+      'autoReveal': instance.autoReveal,
     };
