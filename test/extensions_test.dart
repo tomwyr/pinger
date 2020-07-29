@@ -1,44 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pinger/extensions.dart';
 
 void main() {
-  group("StateExtensions", () {
-    testWidgets("delegate method calls to ancestor navigator", (tester) async {
-      final key1 = Key('key1');
-      final key2 = Key('key2');
-      final key3 = Key('key3');
-
-      await tester.pumpWidget(MaterialApp(home: _TestWidget()));
-
-      final state =
-          tester.firstState<_TestWidgetState>(find.byType(_TestWidget));
-
-      state.push(Container(key: key1));
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(key1), findsOneWidget);
-
-      state.pushAndRemoveUntil(Container(key: key2), (route) => route.isFirst);
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(key1), findsNothing);
-      expect(find.byKey(key2), findsOneWidget);
-
-      state.pushReplacement(Container(key: key3));
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(key2), findsNothing);
-      expect(find.byKey(key3), findsOneWidget);
-
-      state.pop();
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(key3), findsNothing);
-    });
-  });
-
   group("ListExtensions", () {
     test("isNullOrEmpty returns true only if list exists and has element", () {
       var list = [true, 2, "item"];
@@ -94,16 +57,4 @@ void main() {
       expect(iteratesInOrder, true);
     });
   });
-}
-
-class _TestWidget extends StatefulWidget {
-  @override
-  _TestWidgetState createState() => _TestWidgetState();
-}
-
-class _TestWidgetState extends State<_TestWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
 }
