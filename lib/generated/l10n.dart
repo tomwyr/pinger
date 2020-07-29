@@ -1339,51 +1339,61 @@ class S {
     );
   }
 
-  /// `Show info tray`
+  /// `Show tray`
   String get settingsTrayEnabledTitle {
     return Intl.message(
-      'Show info tray',
+      'Show tray',
       name: 'settingsTrayEnabledTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Show app state informations on a sheet that can be expanded`
+  /// `Informations about app's state will appear in an expandable tray at the bottom of the screen`
   String get settingsTrayEnabledDesc {
     return Intl.message(
-      'Show app state informations on a sheet that can be expanded',
+      'Informations about app\'s state will appear in an expandable tray at the bottom of the screen',
       name: 'settingsTrayEnabledDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Auto reveal tray`
+  /// `Reveal automatically`
   String get settingsTrayAutoRevealTitle {
     return Intl.message(
-      'Auto reveal tray',
+      'Reveal automatically',
       name: 'settingsTrayAutoRevealTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Automatically reveal tray if there's new item visible`
+  /// `Tray will become visible automatically each time a new item appears`
   String get settingsTrayAutoRevealDesc {
     return Intl.message(
-      'Automatically reveal tray if there\'s new item visible',
+      'Tray will become visible automatically each time a new item appears',
       name: 'settingsTrayAutoRevealDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Info tray`
+  /// `Notifications tray`
   String get settingsInfoTraySectionTitle {
     return Intl.message(
-      'Info tray',
+      'Notifications tray',
       name: 'settingsInfoTraySectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device connectivity seems to be disabled. Make sure you have network access in order to be able to ping hosts`
+  String get infoTrayNetworkDisabled {
+    return Intl.message(
+      'Device connectivity seems to be disabled. Make sure you have network access in order to be able to ping hosts',
+      name: 'infoTrayNetworkDisabled',
       desc: '',
       args: [],
     );

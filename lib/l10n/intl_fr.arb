@@ -129,9 +129,10 @@
   "notificationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli de montrer des notifications",
   "locationAccessDisabledTitle": "Localisation désactivée",
   "locationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil",
-  "settingsTrayEnabledTitle": "Show info tray",
-  "settingsTrayEnabledDesc": "Show app state informations on a sheet that can be expanded",
-  "settingsTrayAutoRevealTitle": "Auto reveal tray",
-  "settingsTrayAutoRevealDesc": "Automatically reveal tray if there's new item visible",
-  "settingsInfoTraySectionTitle": "Info tray"
+  "settingsTrayEnabledTitle": "Afficher le panneau",
+  "settingsTrayEnabledDesc": "Les informations sur l'appli apparaîtront dans un panneau glissant en bas de l'écran",
+  "settingsTrayAutoRevealTitle": "Révéler automatiquement",
+  "settingsTrayAutoRevealDesc": "Le panneau apparaîtra automatiquement à chaque fois qu'il y aura un nouvel élément",
+  "settingsInfoTraySectionTitle": "Panneau d'informations",
+  "infoTrayNetworkDisabled": "La connectivité d'appareil semble être éteinte. Vérifiez que vous avez l'accés au réseau afin de pinger des hôtes"
 }

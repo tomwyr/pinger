@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
+import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -331,7 +332,7 @@ class InfoTrayConnectivityItem extends StatelessWidget {
     return Row(children: <Widget>[
       Expanded(
         child: Text(
-          "Connection seems to be disabled. Go to settings and enable wifi/mobile in order to be able to ping a host",
+          S.current.infoTrayNetworkDisabled,
           style: TextStyle(color: R.colors.white),
         ),
       ),

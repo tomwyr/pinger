@@ -129,9 +129,10 @@
   "notificationAccessDisabledDesc": "Change permission settings to allow the app to show notifications",
   "locationAccessDisabledTitle": "Location disabled",
   "locationAccessDisabledDesc": "Change permission settings to allow the app to detect device location",
-  "settingsTrayEnabledTitle": "Show info tray",
-  "settingsTrayEnabledDesc": "Show app state informations on a sheet that can be expanded",
-  "settingsTrayAutoRevealTitle": "Auto reveal tray",
-  "settingsTrayAutoRevealDesc": "Automatically reveal tray if there's new item visible",
-  "settingsInfoTraySectionTitle": "Info tray"
+  "settingsTrayEnabledTitle": "Show tray",
+  "settingsTrayEnabledDesc": "Informations about app's state will appear in an expandable tray at the bottom of the screen",
+  "settingsTrayAutoRevealTitle": "Reveal automatically",
+  "settingsTrayAutoRevealDesc": "Tray will become visible automatically each time a new item appears",
+  "settingsInfoTraySectionTitle": "Notifications tray",
+  "infoTrayNetworkDisabled": "Device connectivity seems to be disabled. Make sure you have network access in order to be able to ping hosts"
 }
