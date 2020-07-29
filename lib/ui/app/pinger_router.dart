@@ -101,9 +101,12 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   }
 
   Route generateRoute(RouteSettings settings) {
+    final isInitial =
+        settings.name == PingerRoutes.INIT && settings.arguments == null;
     return MaterialPageRoute(
       settings: RouteSettings(name: settings.name),
-      builder: (_) => settings.arguments,
+      builder: (_) =>
+          isInitial ? RouteConfig.init().widget : settings.arguments,
     );
   }
 }

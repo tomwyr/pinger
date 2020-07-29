@@ -44,6 +44,7 @@ class _PingerAppState extends State<PingerApp> {
           GlobalMaterialLocalizations.delegate,
           S.delegate,
         ],
+        initialRoute: PingerRoutes.INIT,
         onGenerateRoute: PingerApp._router.generateRoute,
         navigatorObservers: [PingerApp._router],
         supportedLocales: S.delegate.supportedLocales,
@@ -56,7 +57,6 @@ class _PingerAppState extends State<PingerApp> {
             child: InfoTray(child: child),
           ),
         ),
-        home: RouteConfig.init().widget,
       ),
     );
   }
