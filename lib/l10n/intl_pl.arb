@@ -128,5 +128,11 @@
   "notificationAccessDisabledTitle": "Powiadomienia wyłączone",
   "notificationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na wyświetlanie powiadomień",
   "locationAccessDisabledTitle": "Lokalizacja wyłączona",
-  "locationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na dostęp do lokalizacji urządzenia"
+  "locationAccessDisabledDesc": "Zmień ustawienia uprawnień, aby zezwolić na dostęp do lokalizacji urządzenia",
+  "settingsTrayEnabledTitle": "Wyświetl panel",
+  "settingsTrayEnabledDesc": "Informacje o stanie aplikacji będą pojawiać się w wysuwanym panelu u dołu ekranu",
+  "settingsTrayAutoRevealTitle": "Wysuń automatycznie",
+  "settingsTrayAutoRevealDesc": "Panel pokaże się automatycznie, jeżeli pojawi się w nim nowy element",
+  "settingsInfoTraySectionTitle": "Panel powiadomień",
+  "infoTrayNetworkDisabled": "Łączność urządzenia nie jest włączona. Upewnij się, że posiadasz dostęp do sieci, aby móc pingować hosty"
 }

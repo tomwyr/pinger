@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/page/home/home_page.dart';
-import 'package:pinger/ui/page/session/session_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 
 class InitPage extends StatefulWidget {
   @override
@@ -17,9 +16,9 @@ class InitPageState extends BaseState<InitPage> {
   void initState() {
     super.initState();
     Future(() {
-      pushReplacement(HomePage());
+      PingerApp.router.show(RouteConfig.home());
       final hasSession = Injector.resolve<PingStore>().currentSession != null;
-      if (hasSession) push(PingPage());
+      if (hasSession) PingerApp.router.show(RouteConfig.session());
     });
   }
 

@@ -71,7 +71,7 @@
   "settingsAttachLocationDesc": "La localisation actuelle sera attachée aux statistiques de session afin de les comparer sur une carte de résultats globale",
   "settingsNightModeTitle": "Mode nuit",
   "settingsSystemNotificationTitle": "Notifications système",
-"settingsSystemNotificationDesc": "Le statut actuel des sessions en cours apparaîtra sur la barre de notification",
+  "settingsSystemNotificationDesc": "Le statut actuel des sessions en cours apparaîtra sur la barre de notification",
   "settingsRestoreHostTitle": "Retenir l'hôte",
   "settingsRestoreHostDesc": "Une nouvelle session sera automatiquement créée pour le dernier hôte pingé",
   "settingsPingTimeoutLabel": "Délai maximum",
@@ -128,5 +128,11 @@
   "notificationAccessDisabledTitle": "Notifications désactivées",
   "notificationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli de montrer des notifications",
   "locationAccessDisabledTitle": "Localisation désactivée",
-  "locationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil"
+  "locationAccessDisabledDesc": "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil",
+  "settingsTrayEnabledTitle": "Afficher le panneau",
+  "settingsTrayEnabledDesc": "Les informations sur l'appli apparaîtront dans un panneau glissant en bas de l'écran",
+  "settingsTrayAutoRevealTitle": "Révéler automatiquement",
+  "settingsTrayAutoRevealDesc": "Le panneau apparaîtra automatiquement à chaque fois qu'il y aura un nouvel élément",
+  "settingsInfoTraySectionTitle": "Panneau d'informations",
+  "infoTrayNetworkDisabled": "La connectivité d'appareil semble être éteinte. Vérifiez que vous avez l'accés au réseau afin de pinger des hôtes"
 }

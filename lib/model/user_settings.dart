@@ -8,6 +8,7 @@ abstract class UserSettings with _$UserSettings {
   factory UserSettings({
     PingSettings pingSettings,
     ShareSettings shareSettings,
+    TraySettings traySettings,
     bool showSystemNotification,
     bool restoreHost,
     bool nightMode,
@@ -37,4 +38,12 @@ abstract class PingSettings with _$PingSettings {
 
   factory PingSettings.fromJson(Map<String, dynamic> json) =>
       _$PingSettingsFromJson(json);
+}
+
+@freezed
+abstract class TraySettings with _$TraySettings {
+  factory TraySettings({bool enabled, bool autoReveal}) = _TraySettings;
+
+  factory TraySettings.fromJson(Map<String, dynamic> json) =>
+      _$TraySettingsFromJson(json);
 }

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/ui/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 
 class PingerBottomSheet extends StatelessWidget {
   static Future<T> show<T>({
@@ -18,7 +18,7 @@ class PingerBottomSheet extends StatelessWidget {
   }) async {
     var didPop = false;
     final result = await showGeneralDialog(
-      context: PingerApp.navigator.overlay.context,
+      context: PingerApp.router.overlayContext,
       barrierDismissible: true,
       barrierLabel: "PingerBottomSheet",
       pageBuilder: (_, __, ___) => null,
@@ -68,7 +68,7 @@ class PingerBottomSheet extends StatelessWidget {
   final Widget Function(VoidCallback) builder;
 
   void _tryPop(BuildContext context) {
-    if (!didPop()) Navigator.of(context).pop();
+    if (!didPop()) PingerApp.router.pop();
   }
 
   @override

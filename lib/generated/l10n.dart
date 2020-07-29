@@ -1338,6 +1338,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Show tray`
+  String get settingsTrayEnabledTitle {
+    return Intl.message(
+      'Show tray',
+      name: 'settingsTrayEnabledTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Informations about app's state will appear in an expandable tray at the bottom of the screen`
+  String get settingsTrayEnabledDesc {
+    return Intl.message(
+      'Informations about app\'s state will appear in an expandable tray at the bottom of the screen',
+      name: 'settingsTrayEnabledDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reveal automatically`
+  String get settingsTrayAutoRevealTitle {
+    return Intl.message(
+      'Reveal automatically',
+      name: 'settingsTrayAutoRevealTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tray will become visible automatically each time a new item appears`
+  String get settingsTrayAutoRevealDesc {
+    return Intl.message(
+      'Tray will become visible automatically each time a new item appears',
+      name: 'settingsTrayAutoRevealDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications tray`
+  String get settingsInfoTraySectionTitle {
+    return Intl.message(
+      'Notifications tray',
+      name: 'settingsInfoTraySectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device connectivity seems to be disabled. Make sure you have network access in order to be able to ping hosts`
+  String get infoTrayNetworkDisabled {
+    return Intl.message(
+      'Device connectivity seems to be disabled. Make sure you have network access in order to be able to ping hosts',
+      name: 'infoTrayNetworkDisabled',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

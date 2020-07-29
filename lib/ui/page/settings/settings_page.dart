@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/page/intro_page.dart';
 import 'package:pinger/ui/page/settings/settings_sections.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -50,6 +50,13 @@ class _SettingsPageState extends BaseState<SettingsPage> {
                 ),
               ),
               Container(height: 24.0),
+              TraySettingsSection(
+                settings: settings.traySettings,
+                onChanged: (it) => _settingsStore.updateSettings(
+                  settings.copyWith(traySettings: it),
+                ),
+              ),
+              Container(height: 24.0),
               OtherSettingsSection(
                 settings: settings,
                 onChanged: _settingsStore.updateSettings,
@@ -57,7 +64,8 @@ class _SettingsPageState extends BaseState<SettingsPage> {
               Container(height: 48.0),
               SettingsFooterSection(
                 appInfo: appInfo,
-                onShowIntroPressed: () => push(IntroPage()),
+                onShowIntroPressed: () =>
+                    PingerApp.router.show(RouteConfig.intro()),
               ),
             ],
           ),

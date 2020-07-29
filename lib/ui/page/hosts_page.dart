@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
-import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
+import 'package:pinger/ui/page/base_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
@@ -34,7 +34,7 @@ class _HostsPageState extends BaseState<HostsPage> {
   @override
   void didUpdateWidget(HostsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.hosts.isEmpty) Future(pop);
+    if (widget.hosts.isEmpty) Future(PingerApp.router.pop);
   }
 
   void _onEditPressed() {
@@ -44,7 +44,7 @@ class _HostsPageState extends BaseState<HostsPage> {
       setState(() => _isEditing = false);
     } else {
       _showConfirmRemoveSheet(onConfirmed: () {
-        pop();
+        PingerApp.router.pop();
         widget.removeHosts(_selection);
         setState(() {
           _selection = [];
@@ -99,7 +99,7 @@ class _HostsPageState extends BaseState<HostsPage> {
         _isEditing = false;
       });
     } else {
-      pop();
+      PingerApp.router.pop();
     }
   }
 

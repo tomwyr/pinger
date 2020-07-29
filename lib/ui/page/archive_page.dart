@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/results_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/animated_ink_icon.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/page/result_details/result_details_page.dart';
-import 'package:pinger/ui/page/search_page.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 import 'package:pinger/ui/shared/tiles/result_tile.dart';
@@ -118,8 +117,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
           data: R.themes.raisedButton,
           child: RaisedButton(
             child: Text(S.current.startNowButtonLabel),
-            onPressed: () =>
-                pushAndRemoveUntil(SearchPage(), (it) => it.isFirst),
+            onPressed: () => PingerApp.router.show(RouteConfig.search()),
           ),
         ),
         Container(height: 64.0),
@@ -174,7 +172,8 @@ class _ArchivePageState extends BaseState<ArchivePage> {
           child: ResultTile(
             result: results[index],
             type: type,
-            onPressed: () => push(ResultDetailsPage(result: results[index])),
+            onPressed: () =>
+                PingerApp.router.show(RouteConfig.results(results[index])),
           ),
         ),
       ),
