@@ -73,7 +73,7 @@ class _InfoTrayState extends State<InfoTray>
   }
 
   void _onSessionItemPressed() {
-    PingerApp.navigator.push(MaterialPageRoute(builder: (_) => PingPage()));
+    PingerApp.navigator.push(MaterialPageRoute(builder: (_) => SessionPage()));
   }
 
   @override

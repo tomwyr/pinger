@@ -21,12 +21,12 @@ import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
-class PingPage extends StatefulWidget {
+class SessionPage extends StatefulWidget {
   @override
-  _PingPageState createState() => _PingPageState();
+  _SessionPageState createState() => _SessionPageState();
 }
 
-class _PingPageState extends BaseState<PingPage> {
+class _SessionPageState extends BaseState<SessionPage> {
   final Duration _animDuration = Duration(milliseconds: 500);
   final PingStore _pingStore = Injector.resolve();
   final HostsStore _hostsStore = Injector.resolve();

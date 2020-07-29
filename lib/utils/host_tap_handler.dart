@@ -28,5 +28,5 @@ mixin HostTapHandler<T extends StatefulWidget> on State<T> {
   }
 
   void _showPingPage() =>
-      pushAndRemoveUntil(PingPage(), (route) => route.isFirst);
+      pushAndRemoveUntil(SessionPage(), (route) => route.isFirst);
 }

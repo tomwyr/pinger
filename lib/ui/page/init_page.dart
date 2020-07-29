@@ -19,7 +19,7 @@ class InitPageState extends BaseState<InitPage> {
     Future(() {
       pushReplacement(HomePage());
       final hasSession = Injector.resolve<PingStore>().currentSession != null;
-      if (hasSession) push(PingPage());
+      if (hasSession) push(SessionPage());
     });
   }
 
