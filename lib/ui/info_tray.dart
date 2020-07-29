@@ -32,6 +32,10 @@ class _InfoTrayState extends State<InfoTray>
   final DeviceStore _deviceStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
   final DraggableSheetController _controller = DraggableSheetController();
+  final ObservableStream<String> _routeObservable = ObservableStream(
+    PingerApp.router.route,
+    initialValue: PingerApp.router.currentRoute,
+  );
 
   ReactionDisposer _settingsDisposer;
   Map<InfoTrayItem, InfoTrayEntry> _entries;
@@ -48,7 +52,7 @@ class _InfoTrayState extends State<InfoTray>
           valueObservable: () => SessionItemModel(
             _pingStore.currentSession,
             _pingStore.pingDuration,
-            null,
+            _routeObservable.value,
           ),
           valueBuilder: (it) => InfoTraySessionItem(
             session: it.session,
@@ -56,7 +60,9 @@ class _InfoTrayState extends State<InfoTray>
             onButtonPressed: _onSessionItemButtonPressed,
             onPressed: _onSessionItemPressed,
           ),
-          isVisible: (it) => it?.session?.status?.isSession ?? false,
+          isVisible: (it) =>
+              (it?.session?.status?.isSession ?? false) &&
+              (it.route != null && it.route != PingerRoutes.SESSION),
         ),
       };
 
