@@ -27,4 +27,6 @@ extension ListExtensions<E> on List<E> {
   }
 
   E get lastOrNull => isNotEmpty ? last : null;
+
+  bool get isNullOrEmpty => this == null || isEmpty;
 }

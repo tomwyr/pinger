@@ -40,6 +40,20 @@ void main() {
   });
 
   group("ListExtensions", () {
+    test("isNullOrEmpty returns true only if list exists and has element", () {
+      var list = [true, 2, "item"];
+
+      expect(list.isNullOrEmpty, false);
+
+      list.clear();
+
+      expect(list.isNullOrEmpty, true);
+
+      list = null;
+
+      expect(list.isNullOrEmpty, true);
+    });
+
     test("lastOrNull returns null if list is empty", () {
       final list = [];
 
