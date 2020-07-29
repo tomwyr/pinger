@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
-import 'package:pinger/ui/page/session/session_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/shared/sheet/replace_session_sheet.dart';
 
 mixin HostTapHandler<T extends StatefulWidget> on State<T> {
@@ -27,6 +27,5 @@ mixin HostTapHandler<T extends StatefulWidget> on State<T> {
     }
   }
 
-  void _showPingPage() =>
-      pushAndRemoveUntil(SessionPage(), (route) => route.isFirst);
+  void _showPingPage() => PingerApp.router.show(RouteConfig.session());
 }

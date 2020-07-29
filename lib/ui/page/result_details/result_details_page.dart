@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
@@ -10,6 +9,7 @@ import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/collapsing_tab_layout.dart';
 import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/page/result_details/result_details_header.dart';
@@ -17,6 +17,7 @@ import 'package:pinger/ui/page/result_details/result_details_tab/result_details_
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_info_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_more_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_results_tab.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
@@ -128,8 +129,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       ),
       rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: () {
-        pop();
-        pop();
+        PingerApp.router..pop()..pop();
         _resultsStore.deleteLocalResult(widget.result.id);
       },
     );
@@ -185,7 +185,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
                     it.host == widget.result.host && it.id != widget.result.id)
                 .toList(),
             onItemSelected: (item) =>
-                pushReplacement(ResultDetailsPage(result: item)),
+                PingerApp.router.show(RouteConfig.results(item)),
             onStartPingPressed: () => onHostTap(_pingStore, widget.result.host),
           ),
         ),

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -11,6 +10,7 @@ import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/ui/common/flex_child_scroll_view.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/ui/shared/three_bounce.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
@@ -62,7 +62,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
       _inputController.clear();
       _onQueryChanged("");
     } else {
-      pop();
+      PingerApp.router.pop();
     }
   }
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pinger/assets.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
-import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/page/base_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -232,7 +232,7 @@ class _IntroPageState extends BaseState<IntroPage> {
           data: R.themes.flatButton,
           child: FlatButton(
             child: Text(S.current.skipButtonLabel),
-            onPressed: value < 1.0 ? pop : null,
+            onPressed: value < 1.0 ? PingerApp.router.pop : null,
           ),
         ),
       ),
@@ -256,7 +256,7 @@ class _IntroPageState extends BaseState<IntroPage> {
               left: 20.0 * expansion,
               right: 12.0 * expansion,
             ),
-            onPressed: expansion > 0.5 ? pop : _onNextPressed,
+            onPressed: expansion > 0.5 ? PingerApp.router.pop : _onNextPressed,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

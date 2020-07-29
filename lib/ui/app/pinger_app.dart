@@ -8,14 +8,14 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/info_tray.dart';
-import 'package:pinger/ui/page/init_page.dart';
 import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class PingerApp extends StatefulWidget {
-  static final _navigatorKey = GlobalKey<NavigatorState>();
-  static NavigatorState get navigator => _navigatorKey.currentState;
+  static final PingerNavigatorRouter _router = PingerNavigatorRouter();
+  static PingerRouter get router => _router;
 
   @override
   _PingerAppState createState() => _PingerAppState();
@@ -23,6 +23,7 @@ class PingerApp extends StatefulWidget {
 
 class _PingerAppState extends State<PingerApp> {
   final SettingsStore _settingsStore = Injector.resolve();
+  final HostsStore _hostsStore = Injector.resolve();
 
   @override
   void initState() {
@@ -43,18 +44,19 @@ class _PingerAppState extends State<PingerApp> {
           GlobalMaterialLocalizations.delegate,
           S.delegate,
         ],
-        navigatorKey: PingerApp._navigatorKey,
+        onGenerateRoute: PingerApp._router.generateRoute,
+        navigatorObservers: [PingerApp._router],
         supportedLocales: S.delegate.supportedLocales,
         theme: R.themes.app,
         themeMode: R.themes.mode,
         title: _settingsStore.appInfo.name,
         builder: (_, child) => PermissionsSheet(
           child: HostIconProvider(
-            getIcon: Injector.resolve<HostsStore>().getFavicon,
+            getIcon: _hostsStore.getFavicon,
             child: InfoTray(child: child),
           ),
         ),
-        home: InitPage(),
+        home: RouteConfig.init().widget,
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/permission_store.dart';
-import 'package:pinger/ui/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 
 class PermissionsSheet extends StatefulWidget {
@@ -73,7 +73,7 @@ class PermissionSheetHandler {
         if (!store.canAccessService && !_isShowingSheet) {
           _showSheet();
         } else if (store.canAccessService && _isShowingSheet) {
-          PingerApp.navigator.pop();
+          PingerApp.router.pop();
         }
       }
     });

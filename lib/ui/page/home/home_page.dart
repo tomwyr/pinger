@@ -3,18 +3,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
-import 'package:pinger/ui/page/archive_page.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/page/home/home_host_suggestions.dart';
-import 'package:pinger/ui/page/intro_page.dart';
-import 'package:pinger/ui/page/search_page.dart';
-import 'package:pinger/ui/page/settings/settings_page.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
@@ -37,7 +34,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.settings),
-          onPressed: () => push(SettingsPage()),
+          onPressed: () => PingerApp.router.show(RouteConfig.settings()),
         ),
         title: Text(S.current.homePageTitle),
         centerTitle: true,
@@ -46,7 +43,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
             size: Size.square(56.0),
             child: IconButton(
               icon: Icon(Icons.unarchive),
-              onPressed: () => push(ArchivePage()),
+              onPressed: () => PingerApp.router.show(RouteConfig.archive()),
             ),
           ),
         ],
@@ -90,7 +87,9 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
           data: R.themes.raisedButton,
           child: RaisedButton(
             child: Text(S.current.showIntroButtonLabel),
-            onPressed: () => push(IntroPage()).then((_) => onIntroDone()),
+            onPressed: () => PingerApp.router
+                .show(RouteConfig.intro())
+                .then((_) => onIntroDone()),
           ),
         ),
         Container(height: 8.0),
@@ -110,7 +109,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
     return TextField(
       style: TextStyle(fontSize: 18.0),
       readOnly: true,
-      onTap: () => push(SearchPage()),
+      onTap: () => PingerApp.router.show(RouteConfig.search()),
       decoration: InputDecoration(
         hintText: S.current.searchHostHint,
         contentPadding: const EdgeInsets.symmetric(vertical: 12.0),

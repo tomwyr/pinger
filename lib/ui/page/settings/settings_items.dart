@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 
 const double _SWITCH_WIDTH = 60.0;
@@ -97,7 +98,7 @@ class PingSettingItem extends StatelessWidget {
       rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: () {
         final result = int.tryParse(controller.text);
-        Navigator.of(context).pop(result);
+        PingerApp.router.pop(result);
       },
       canAccept: () => controller.text.isNotEmpty,
       builder: (rebuild) => _buildEditContent(context, rebuild, controller),

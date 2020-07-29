@@ -12,9 +12,9 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/draggable_sheet.dart';
-import 'package:pinger/ui/page/session/session_page.dart';
-import 'package:pinger/ui/pinger_app.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class InfoTray extends StatefulWidget {
@@ -73,7 +73,7 @@ class _InfoTrayState extends State<InfoTray>
   }
 
   void _onSessionItemPressed() {
-    PingerApp.navigator.push(MaterialPageRoute(builder: (_) => SessionPage()));
+    PingerApp.router.show(RouteConfig.session());
   }
 
   @override

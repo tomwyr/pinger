@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/collapsing_header_delegate.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
-import 'package:pinger/ui/page/favorites_page.dart';
 import 'package:pinger/ui/page/home/home_hosts_section.dart';
-import 'package:pinger/ui/page/recents_page.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HomeHostSuggestions extends StatefulWidget {
@@ -87,7 +86,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           hosts: widget.favorites,
           itemLimit: 5,
           onItemPressed: widget.onItemPressed,
-          onMorePressed: () => push(FavoritesPage()),
+          onMorePressed: () => PingerApp.router.show(RouteConfig.favorites()),
         ),
       ),
       SliverToBoxAdapter(child: Container(height: 32.0)),
@@ -98,7 +97,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           hosts: widget.stats.keys.toList(),
           itemLimit: 5,
           onItemPressed: widget.onItemPressed,
-          onMorePressed: () => push(RecentsPage()),
+          onMorePressed: () => PingerApp.router.show(RouteConfig.recents()),
         ),
       ),
       if (widget.popular.isNotEmpty) ...[
