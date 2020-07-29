@@ -49,6 +49,11 @@ class _DraggableSheetState extends State<DraggableSheet>
   _SheetHeight _lastHeight = _SheetHeight.zero;
   AnimationController _animator;
   double _currentExpansion;
+  double _lastAnimValue;
+
+  Widget _handle;
+  Widget _content;
+  BoxConstraints _lastSheetConstraints;
 
   void show() => _visibility.value = true;
   void hide() => _visibility.value = false;
@@ -81,10 +86,14 @@ class _DraggableSheetState extends State<DraggableSheet>
         .chain(CurveTween(curve: Curves.easeOutCubic))
         .animate(_animator);
     animation
-      ..addListener(() => _dragDelta.value = animation.value)
+      ..addListener(() {
+        _dragDelta.value += (animation.value - (_lastAnimValue ?? 0.0));
+        _lastAnimValue = animation.value;
+      })
       ..addStatusListener((it) {
         if (it == AnimationStatus.completed) {
-          _sheetState = animation.value == 0.0
+          _lastAnimValue = null;
+          _sheetState = _dragDelta.value == 0.0
               ? SheetState.COLLAPSED
               : SheetState.EXPANDED;
         }
@@ -115,15 +124,17 @@ class _DraggableSheetState extends State<DraggableSheet>
   void _onDragUpdate(double delta) {
     if (!_animator.isAnimating) {
       _sheetState = SheetState.DRAGGING;
-      _dragDelta.value += delta;
+      _dragDelta.value =
+          (_dragDelta.value + delta).clamp(-_sheetHeight.value.content, 0.0);
     }
   }
 
   void _onDragEnd(double velocity) {
     if (!_animator.isAnimating) {
       final endDelta = _calcEndDelta(velocity);
-      final didReachEnd =
-          _dragDelta.value >= 0.0 || _dragDelta.value <= endDelta;
+      final didReachEnd = endDelta == 0.0
+          ? _dragDelta.value >= 0.0
+          : _dragDelta.value <= endDelta;
       if (didReachEnd) {
         _dragDelta.value = endDelta;
         _sheetState =
@@ -142,11 +153,14 @@ class _DraggableSheetState extends State<DraggableSheet>
   }
 
   void _animateTo(double delta) {
-    _dragAnimTween
-      ..begin = _dragDelta.value
-      ..end = delta;
-    _sheetState = delta == 0.0 ? SheetState.COLLAPSING : SheetState.EXPANDING;
-    _animator.forward(from: 0.0);
+    if (delta != _dragDelta.value) {
+      _dragAnimTween
+        ..begin = 0.0
+        ..end = delta - _dragDelta.value;
+      _sheetState =
+          _dragAnimTween.end > 0 ? SheetState.COLLAPSING : SheetState.EXPANDING;
+      _animator.forward(from: 0.0);
+    }
   }
 
   @override
@@ -180,18 +194,21 @@ class _DraggableSheetState extends State<DraggableSheet>
       onVerticalDragCancel: () => _onDragEnd(0.0),
       child: ValueListenableBuilder<double>(
         valueListenable: _dragDelta,
-        builder: (_, value, __) => CustomMultiChildLayout(
-          delegate: _SheetLayoutDelegate(value, _sheetState, _sheetHeight),
-          children: <Widget>[
-            LayoutId(
-              id: _SheetItem.HANDLE,
-              child: widget.handleBuilder(context),
-            ),
-            LayoutId(
-              id: _SheetItem.CONTENT,
-              child: widget.contentBuilder(context),
-            ),
-          ],
+        builder: (_, value, __) => LayoutBuilder(
+          builder: (_, constraints) {
+            if (_lastSheetConstraints != constraints) {
+              _lastSheetConstraints = constraints;
+              _handle = widget.handleBuilder(context);
+              _content = widget.contentBuilder(context);
+            }
+            return CustomMultiChildLayout(
+              delegate: _SheetLayoutDelegate(value, _sheetState, _sheetHeight),
+              children: <Widget>[
+                LayoutId(id: _SheetItem.HANDLE, child: _handle),
+                LayoutId(id: _SheetItem.CONTENT, child: _content),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -338,17 +355,6 @@ class _SeparatedDraggableSheetState<T>
   }
 
   void _onItemAppeared(T item) {
-    if (_firstVisibleItem == item) {
-      _firstVisibleItem = _findFirstVisibltItem();
-      if (_firstVisibleItem != null) {
-        _separatorVisibilities[_firstVisibleItem].value = false;
-      }
-    } else {
-      _separatorVisibilities[item].value = false;
-    }
-  }
-
-  void _onItemDisappeared(T item) {
     if (_findFirstVisibltItem() == item) {
       if (_firstVisibleItem != null) {
         _separatorVisibilities[_firstVisibleItem].value = true;
@@ -357,6 +363,17 @@ class _SeparatedDraggableSheetState<T>
       _separatorVisibilities[item].value = false;
     } else {
       _separatorVisibilities[item].value = true;
+    }
+  }
+
+  void _onItemDisappeared(T item) {
+    if (_firstVisibleItem == item) {
+      _firstVisibleItem = _findFirstVisibltItem();
+      if (_firstVisibleItem != null) {
+        _separatorVisibilities[_firstVisibleItem].value = false;
+      }
+    } else {
+      _separatorVisibilities[item].value = false;
     }
   }
 
