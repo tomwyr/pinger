@@ -37,6 +37,7 @@ class _InfoTrayState extends State<InfoTray>
     initialValue: PingerApp.router.currentRoute,
   );
 
+  Set<InfoTrayItem> _visibleItems = {};
   ReactionDisposer _settingsDisposer;
   Map<InfoTrayItem, InfoTrayEntry> _entries;
 
@@ -101,17 +102,8 @@ class _InfoTrayState extends State<InfoTray>
   }
 
   void _onTraySettings(TraySettings settings) {
-    final hasVisibleItems = _entries.values.any((it) => it.visibility.value);
-    _syncSheetState(settings, hasVisibleItems);
-  }
-
-  void _onVisibilityChanged(Set<InfoTrayItem> visibleItems) {
-    final settings = _settingsStore.userSettings.traySettings;
-    _syncSheetState(settings, visibleItems.isNotEmpty);
-  }
-
-  void _syncSheetState(TraySettings settings, bool hasVisibleItems) {
     if (settings.enabled) {
+      final hasVisibleItems = _entries.values.any((it) => it.visibility.value);
       if (hasVisibleItems && !_controller.isVisible) {
         _controller.show();
       } else if (!hasVisibleItems && _controller.isVisible) {
@@ -126,6 +118,21 @@ class _InfoTrayState extends State<InfoTray>
     } else if (_controller.isVisible) {
       _controller.hide();
     }
+  }
+
+  void _onVisibilityChanged(Set<InfoTrayItem> visibleItems) {
+    if (visibleItems.isEmpty) {
+      if (_controller.isVisible) _controller.hide();
+    } else {
+      if (!_controller.isVisible) _controller.show();
+      final added = _visibleItems.toSet()..removeAll(visibleItems);
+      final settings = _settingsStore.userSettings.traySettings;
+      final state = _controller.sheetState;
+      if (added.isNotEmpty &&
+          settings.autoReveal &&
+          state == SheetState.COLLAPSED) _controller.expand();
+    }
+    _visibleItems = visibleItems.toSet();
   }
 
   void _onHandleTap() {

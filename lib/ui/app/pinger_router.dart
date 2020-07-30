@@ -87,10 +87,6 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   void didReplace({Route newRoute, Route oldRoute}) =>
       _onRouteChanged(newRoute);
 
-  @override
-  void didRemove(Route route, Route previousRoute) =>
-      _onRouteChanged(previousRoute);
-
   void _onRouteChanged(Route activeRoute) {
     _currentRoute = activeRoute.settings.name;
     _routeController.add(_currentRoute);
