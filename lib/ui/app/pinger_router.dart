@@ -44,7 +44,6 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   Future<T> show<T>(RouteConfig config) async {
     switch (config.name) {
       case PingerRoutes.INIT:
-      case PingerRoutes.HOME:
       case PingerRoutes.INTRO:
       case PingerRoutes.SETTINGS:
       case PingerRoutes.ARCHIVE:
@@ -54,6 +53,8 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
       case PingerRoutes.SEARCH:
       case PingerRoutes.SESSION:
         return _pushOnHome(config);
+      case PingerRoutes.HOME:
+        return _replace(config);
       case PingerRoutes.RESULTS:
         if (currentRoute == PingerRoutes.ARCHIVE) {
           return _push(config);
