@@ -37,9 +37,11 @@ class _InfoTrayState extends State<InfoTray>
     initialValue: PingerApp.router.currentRoute,
   );
 
+  bool _shouldRestoreTray = false;
   Set<InfoTrayItem> _visibleItems = {};
-  ReactionDisposer _settingsDisposer;
   Map<InfoTrayItem, InfoTrayEntry> _entries;
+  ReactionDisposer _settingsDisposer;
+  ReactionDisposer _routeDisposer;
 
   Map<InfoTrayItem, InfoTrayEntry> _createEntries() => {
         InfoTrayItem.CONNECTIVITY: InfoTrayEntry<bool>(
@@ -92,11 +94,17 @@ class _InfoTrayState extends State<InfoTray>
       _onTraySettings,
       fireImmediately: true,
     );
+    _routeDisposer = reaction(
+      (_) => _routeObservable.value,
+      _onRouteChanged,
+      fireImmediately: true,
+    );
   }
 
   @override
   void dispose() {
     _settingsDisposer();
+    _routeDisposer();
     _entries.values.forEach((it) => it.dispose());
     super.dispose();
   }
@@ -105,7 +113,11 @@ class _InfoTrayState extends State<InfoTray>
     if (settings.enabled) {
       final hasVisibleItems = _entries.values.any((it) => it.visibility.value);
       if (hasVisibleItems && !_controller.isVisible) {
-        _controller.show();
+        if (_routeObservable.value == PingerRoutes.SHEET) {
+          _controller.show();
+        } else {
+          _shouldRestoreTray = true;
+        }
       } else if (!hasVisibleItems && _controller.isVisible) {
         _controller.hide();
       }
@@ -117,6 +129,16 @@ class _InfoTrayState extends State<InfoTray>
       }
     } else if (_controller.isVisible) {
       _controller.hide();
+    }
+  }
+
+  void _onRouteChanged(String route) {
+    if (route == PingerRoutes.SHEET && _controller.isVisible) {
+      _shouldRestoreTray = true;
+      _controller.hide();
+    } else if (route != PingerRoutes.SHEET && _shouldRestoreTray) {
+      _shouldRestoreTray = false;
+      _controller.show();
     }
   }
 
