@@ -89,6 +89,11 @@ class _InfoTrayState extends State<InfoTray>
   void initState() {
     super.initState();
     _entries = _createEntries()..values.forEach((it) => it.init());
+    // Init reactions after controller initialization
+    Future(_initReactions);
+  }
+
+  void _initReactions() {
     _settingsDisposer = reaction(
       (_) => _settingsStore.userSettings.traySettings,
       _onTraySettings,
