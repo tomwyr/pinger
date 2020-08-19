@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/resources.dart';
 import 'package:pinger/ui/page/archive_page.dart';
 import 'package:pinger/ui/page/favorites_page.dart';
 import 'package:pinger/ui/page/home/home_page.dart';
@@ -14,8 +16,6 @@ import 'package:pinger/ui/page/session/session_page.dart';
 import 'package:pinger/ui/page/settings/settings_page.dart';
 
 abstract class PingerRouter {
-  BuildContext get overlayContext;
-
   String get currentRoute;
 
   Stream<String> get route;
@@ -26,9 +26,6 @@ abstract class PingerRouter {
 }
 
 class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
-  @override
-  BuildContext get overlayContext => navigator.overlay.context;
-
   @override
   String get currentRoute => _currentRoute;
   String _currentRoute;
@@ -42,39 +39,53 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
 
   @override
   Future<T> show<T>(RouteConfig config) async {
-    switch (config.name) {
-      case PingerRoutes.INIT:
-      case PingerRoutes.INTRO:
-      case PingerRoutes.SETTINGS:
-      case PingerRoutes.ARCHIVE:
-      case PingerRoutes.FAVORITES:
-      case PingerRoutes.RECENTS:
-        return _push(config);
-      case PingerRoutes.SEARCH:
-      case PingerRoutes.SESSION:
-        return _pushOnHome(config);
-      case PingerRoutes.HOME:
-        return _replace(config);
-      case PingerRoutes.RESULTS:
-        if (currentRoute == PingerRoutes.ARCHIVE) {
+    if (config is _PageRouteConfig) {
+      switch (config.name) {
+        case PingerRoutes.INIT:
+        case PingerRoutes.INTRO:
+        case PingerRoutes.SETTINGS:
+        case PingerRoutes.ARCHIVE:
+        case PingerRoutes.FAVORITES:
+        case PingerRoutes.RECENTS:
           return _push(config);
-        }
-        return _replace(config);
+        case PingerRoutes.SEARCH:
+        case PingerRoutes.SESSION:
+          return _pushOnHome(config);
+        case PingerRoutes.HOME:
+          return _replace(config);
+        case PingerRoutes.RESULTS:
+          if (currentRoute == PingerRoutes.ARCHIVE) {
+            return _push(config);
+          }
+          return _replace(config);
+      }
+    } else if (config is _SheetRouteConfig) {
+      return _showSheet(config);
     }
-    throw ArgumentError("Unhandled route config: $config");
+    throw ArgumentError("Unhandled route config with name: ${config.name}");
   }
 
-  Future<T> _push<T>(RouteConfig config) =>
+  Future<T> _push<T>(_PageRouteConfig config) =>
       navigator.pushNamed(config.name, arguments: config.widget);
 
-  Future<T> _replace<T>(RouteConfig config) =>
+  Future<T> _replace<T>(_PageRouteConfig config) =>
       navigator.pushReplacementNamed(config.name, arguments: config.widget);
 
-  Future<T> _pushOnHome<T>(RouteConfig config) =>
+  Future<T> _pushOnHome<T>(_PageRouteConfig config) =>
       navigator.pushNamedAndRemoveUntil(
         config.name,
         (it) => it.settings.name == PingerRoutes.HOME,
         arguments: config.widget,
+      );
+
+  Future<T> _showSheet<T>(_SheetRouteConfig config) => showGeneralDialog(
+        context: navigator.overlay.context,
+        routeSettings: RouteSettings(name: config.name),
+        barrierDismissible: false,
+        barrierLabel: "PingerSheet",
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionBuilder: PingerTransitions.blurBackground,
+        pageBuilder: config.builder,
       );
 
   @override
@@ -98,51 +109,59 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   }
 
   Route generateRoute(RouteSettings settings) {
-    final isInitial =
-        settings.name == PingerRoutes.INIT && settings.arguments == null;
     return MaterialPageRoute(
       settings: RouteSettings(name: settings.name),
       builder: (_) =>
-          isInitial ? RouteConfig.init().widget : settings.arguments,
+          settings.name == PingerRoutes.INIT ? InitPage() : settings.arguments,
     );
   }
 }
 
 class RouteConfig {
   final String name;
-  final Widget widget;
 
-  RouteConfig._(this.name, this.widget);
+  RouteConfig._(this.name);
 
-  factory RouteConfig.init() => RouteConfig._(PingerRoutes.INIT, InitPage());
+  factory RouteConfig.home() => _PageRouteConfig(PingerRoutes.HOME, HomePage());
 
-  factory RouteConfig.home() => RouteConfig._(PingerRoutes.HOME, HomePage());
-
-  factory RouteConfig.intro() => RouteConfig._(PingerRoutes.INTRO, IntroPage());
+  factory RouteConfig.intro() =>
+      _PageRouteConfig(PingerRoutes.INTRO, IntroPage());
 
   factory RouteConfig.settings() =>
-      RouteConfig._(PingerRoutes.SETTINGS, SettingsPage());
+      _PageRouteConfig(PingerRoutes.SETTINGS, SettingsPage());
 
   factory RouteConfig.archive() =>
-      RouteConfig._(PingerRoutes.ARCHIVE, ArchivePage());
+      _PageRouteConfig(PingerRoutes.ARCHIVE, ArchivePage());
 
   factory RouteConfig.results(PingResult result) =>
-      RouteConfig._(PingerRoutes.RESULTS, ResultDetailsPage(result: result));
+      _PageRouteConfig(PingerRoutes.RESULTS, ResultDetailsPage(result: result));
 
   factory RouteConfig.favorites() =>
-      RouteConfig._(PingerRoutes.FAVORITES, FavoritesPage());
+      _PageRouteConfig(PingerRoutes.FAVORITES, FavoritesPage());
 
   factory RouteConfig.recents() =>
-      RouteConfig._(PingerRoutes.RECENTS, RecentsPage());
+      _PageRouteConfig(PingerRoutes.RECENTS, RecentsPage());
 
-  factory RouteConfig.search([String initialQuery]) => RouteConfig._(
+  factory RouteConfig.search([String initialQuery]) => _PageRouteConfig(
       PingerRoutes.SEARCH, SearchPage(initialQuery: initialQuery));
 
   factory RouteConfig.session() =>
-      RouteConfig._(PingerRoutes.SESSION, SessionPage());
+      _PageRouteConfig(PingerRoutes.SESSION, SessionPage());
 
-  @override
-  String toString() => "$RouteConfig($name, $widget)";
+  factory RouteConfig.sheet(RoutePageBuilder builder) =>
+      _SheetRouteConfig(PingerRoutes.SHEET, builder);
+}
+
+class _PageRouteConfig extends RouteConfig {
+  final Widget widget;
+
+  _PageRouteConfig(String name, this.widget) : super._(name);
+}
+
+class _SheetRouteConfig extends RouteConfig {
+  final RoutePageBuilder builder;
+
+  _SheetRouteConfig(String name, this.builder) : super._(name);
 }
 
 class PingerRoutes {
@@ -158,4 +177,28 @@ class PingerRoutes {
   static const RECENTS = '/recents';
   static const SEARCH = '/search';
   static const SESSION = '/session';
+  static const SHEET = '/sheet';
+}
+
+class PingerTransitions {
+  PingerTransitions._();
+
+  static RouteTransitionsBuilder blurBackground = (_, animation, __, child) {
+    final _blurSigma = 3.0;
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: animation.value * _blurSigma,
+              sigmaY: animation.value * _blurSigma,
+            ),
+            child: Container(color: R.colors.none),
+          ),
+        ),
+        child,
+      ],
+    );
+  };
 }
