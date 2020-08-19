@@ -424,7 +424,8 @@ class InfoTraySessionItem extends StatelessWidget {
   final Duration duration;
   final VoidCallback onButtonPressed;
   final VoidCallback onPressed;
-  final Duration animDuration = const Duration(milliseconds: 1000);
+  final Duration barAnimDuration = const Duration(milliseconds: 500);
+  final Duration progressAnimDuration = const Duration(milliseconds: 1000);
 
   const InfoTraySessionItem({
     Key key,
@@ -491,7 +492,7 @@ class InfoTraySessionItem extends StatelessWidget {
         children: <Widget>[
           for (var item in session.values) ...[
             TweenAnimationBuilder<double>(
-              duration: animDuration,
+              duration: barAnimDuration,
               tween: Tween(
                 begin: 0.0,
                 end: item != null
@@ -543,7 +544,7 @@ class InfoTraySessionItem extends StatelessWidget {
       ),
       alignment: Alignment.centerLeft,
       child: TweenAnimationBuilder<double>(
-        duration: animDuration,
+        duration: progressAnimDuration,
         tween: Tween(begin: progress, end: progress),
         builder: (_, value, child) => FractionallySizedBox(
           widthFactor: value,
@@ -563,7 +564,7 @@ class InfoTraySessionItem extends StatelessWidget {
 
   Widget _buildProgressDot(double progress, double size) {
     return TweenAnimationBuilder<double>(
-      duration: animDuration,
+      duration: progressAnimDuration,
       tween: Tween(begin: 0.0, end: progress * 2.0 - 1.0),
       builder: (_, value, child) => Align(
         alignment: Alignment(value, 0.0),
