@@ -21,7 +21,7 @@ abstract class PermissionStore extends PermissionStoreBase
 }
 
 @Named(PermissionStore.notification)
-@Injectable(as: PermissionStore)
+@Singleton(as: PermissionStore)
 class NotificationPermissionStore extends PermissionStore {
   NotificationPermissionStore(
     SettingsStore settingsStore,
@@ -43,7 +43,7 @@ class NotificationPermissionStore extends PermissionStore {
 }
 
 @Named(PermissionStore.location)
-@Injectable(as: PermissionStore)
+@Singleton(as: PermissionStore)
 class LocationPermissionStore extends PermissionStore {
   LocationPermissionStore(
     SettingsStore settingsStore,

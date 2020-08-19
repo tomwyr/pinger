@@ -46,13 +46,6 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<PingerApi>(() => PingerApi(g<Firestore>()));
   final sharedPreferences = await injectorModule.sharedPreferences;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
-  g.registerFactory<PermissionStore>(
-      () => NotificationPermissionStore(
-          g<SettingsStore>(), g<LifecycleNotifier>()),
-      instanceName: 'notification');
-  g.registerFactory<PermissionStore>(
-      () => LocationPermissionStore(g<SettingsStore>(), g<LifecycleNotifier>()),
-      instanceName: 'location');
 
   //Register test Dependencies --------
   if (environment == 'test') {
@@ -79,6 +72,12 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<PingerPrefs>(),
     g<AppConfig>(),
   ));
+  g.registerSingleton<PermissionStore>(
+      NotificationPermissionStore(g<SettingsStore>(), g<LifecycleNotifier>()),
+      instanceName: 'notification');
+  g.registerSingleton<PermissionStore>(
+      LocationPermissionStore(g<SettingsStore>(), g<LifecycleNotifier>()),
+      instanceName: 'location');
   g.registerSingleton<DeviceStore>(DeviceStore(
     g<Connectivity>(),
     g<Location>(),
