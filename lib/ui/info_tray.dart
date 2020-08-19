@@ -112,23 +112,10 @@ class _InfoTrayState extends State<InfoTray>
   void _onTraySettings(TraySettings settings) {
     if (settings.enabled) {
       final hasVisibleItems = _entries.values.any((it) => it.visibility.value);
-      if (hasVisibleItems && !_controller.isVisible) {
-        if (_routeObservable.value == PingerRoutes.SHEET) {
-          _controller.show();
-        } else {
-          _shouldRestoreTray = true;
-        }
-      } else if (!hasVisibleItems && _controller.isVisible) {
-        _controller.hide();
-      }
-      final state = _controller.sheetState;
-      if (settings.autoReveal && state == SheetState.COLLAPSED) {
-        _controller.expand();
-      } else if (!settings.autoReveal && state == SheetState.EXPANDED) {
-        _controller.collapse();
-      }
-    } else if (_controller.isVisible) {
-      _controller.hide();
+      _updateSheetVisibility(hasVisibleItems);
+      _updateSheetExpansion(settings.autoReveal);
+    } else {
+      _updateSheetVisibility(false);
     }
   }
 
@@ -144,24 +131,41 @@ class _InfoTrayState extends State<InfoTray>
 
   void _onVisibilityChanged(Set<InfoTrayItem> visibleItems) {
     if (visibleItems.isEmpty) {
-      if (_controller.isVisible) _controller.hide();
+      _updateSheetVisibility(false);
     } else {
-      if (!_controller.isVisible) _controller.show();
+      _updateSheetVisibility(true);
       final added = _visibleItems.toSet()..removeAll(visibleItems);
       final settings = _settingsStore.userSettings.traySettings;
-      final state = _controller.sheetState;
-      if (added.isNotEmpty &&
-          settings.autoReveal &&
-          state == SheetState.COLLAPSED) _controller.expand();
+      if (added.isNotEmpty && settings.autoReveal) {
+        _updateSheetExpansion(true);
+      }
     }
     _visibleItems = visibleItems.toSet();
   }
 
+  void _updateSheetVisibility(bool visible) {
+    if (_routeObservable.value != PingerRoutes.SHEET) {
+      if (visible && !_controller.isVisible) {
+        _controller.show();
+      } else if (!visible && _controller.isVisible) {
+        _controller.hide();
+      }
+    } else {
+      _shouldRestoreTray = visible;
+    }
+  }
+
   void _onHandleTap() {
-    if (_controller.sheetState == SheetState.EXPANDED) {
-      _controller.collapse();
-    } else if (_controller.sheetState == SheetState.COLLAPSED) {
+    final shouldExpand = _controller.sheetState == SheetState.COLLAPSING ||
+        _controller.sheetState == SheetState.COLLAPSED;
+    _updateSheetExpansion(shouldExpand);
+  }
+
+  void _updateSheetExpansion(bool expanded) {
+    if (expanded && _controller.sheetState == SheetState.COLLAPSED) {
       _controller.expand();
+    } else if (!expanded && _controller.sheetState == SheetState.EXPANDED) {
+      _controller.collapse();
     }
   }
 
