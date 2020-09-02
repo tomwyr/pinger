@@ -126,7 +126,7 @@ class PingSettingItem extends StatelessWidget {
             suffixText: unit,
           ),
           inputFormatters: [
-            WhitelistingTextInputFormatter(RegExp(r"[1-9]\d{0,2}")),
+            FilteringTextInputFormatter.allow(RegExp(r"[1-9]\d{0,2}")),
           ],
           onChanged: (_) => rebuild(),
         ),
