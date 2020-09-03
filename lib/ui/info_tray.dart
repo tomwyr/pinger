@@ -431,6 +431,9 @@ class InfoTraySessionItem extends StatelessWidget {
   final VoidCallback onPressed;
   final Duration barAnimDuration = const Duration(milliseconds: 500);
   final Duration progressAnimDuration = const Duration(milliseconds: 1000);
+  final Duration animDuration = const Duration(milliseconds: 1000);
+  final int maxBarCount = 30;
+  final double gapWidth = 3.0;
 
   const InfoTraySessionItem({
     Key key,
@@ -487,39 +490,53 @@ class InfoTraySessionItem extends StatelessWidget {
 
   Widget _buildResultsChart() {
     if (session.values.isNullOrEmpty) return Container();
-    final gapWidth = max(50.0 / session.settings.count, 0.1);
+    final barCount = session.settings.count.when(
+      finite: (it) => min(it, maxBarCount),
+      infinite: () => maxBarCount,
+    );
+    final visibleValues = session.values.skip(
+      max(session.values.length - barCount, 0),
+    );
     return LayoutBuilder(builder: (_, constraints) {
-      final barsSpace =
-          constraints.maxWidth - ((session.settings.count - 1) * gapWidth);
-      final barWidth = barsSpace / session.settings.count;
+      final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);
+      final barSize = Size(barsSpace / barCount, constraints.maxHeight);
       return Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          for (var item in session.values) ...[
-            TweenAnimationBuilder<double>(
-              duration: barAnimDuration,
-              tween: Tween(
-                begin: 0.0,
-                end: item != null
-                    ? item / session.stats.max * constraints.maxHeight
-                    : constraints.maxHeight,
-              ),
-              builder: (_, value, __) => Container(
-                width: barWidth,
-                height: value,
-                color:
-                    item != null ? Colors.white : Colors.white.withOpacity(0.3),
-              ),
-            ),
-            Container(width: gapWidth),
-          ]
-        ]..removeLast(),
+        children: visibleValues
+            .mapIndexed((index, item) => _buildBarItem(index, item, barSize))
+            .toList()
+              ..removeLast(),
       );
     });
   }
 
+  Padding _buildBarItem(int index, int item, Size size) {
+    return Padding(
+      // key: ValueKey(index),
+      padding: EdgeInsets.only(left: index == 0 ? 0.0 : gapWidth),
+      child: TweenAnimationBuilder<double>(
+        duration: animDuration,
+        tween: Tween(
+          begin: 0.0,
+          end: item != null
+              ? item / session.stats.max * size.height
+              : size.height,
+        ),
+        builder: (_, value, __) => Container(
+          width: size.width,
+          height: value,
+          color: item != null ? Colors.white : Colors.white.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+
   Widget _buildProgressIndicator() {
-    final progress = (session.values?.length ?? 0.0) / session.settings.count;
+    final valuesCount = session.values?.length ?? 0.0;
+    final progress = session.settings.count.when(
+      finite: (it) => valuesCount / it,
+      infinite: () => min(valuesCount / maxBarCount, 1.0),
+    );
     final dotSize = 6.0;
     return FractionalTranslation(
       translation: Offset(0.0, 0.5),
@@ -622,7 +639,7 @@ class InfoTraySessionItem extends StatelessWidget {
         width: sideWidth,
         child: Text(
           session.values != null
-              ? "${session.values.length}/${session.settings.count}"
+              ? "${session.values.length}/${FormatUtils.getCountLabel(session.settings.count)}"
               : "",
           textAlign: TextAlign.end,
           style: style,

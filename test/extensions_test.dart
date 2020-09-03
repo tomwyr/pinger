@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pinger/extensions.dart';
 
 void main() {
-  group("ListExtensions", () {
+  group("IterableExtensions", () {
     test("isNullOrEmpty returns true only if list exists and has element", () {
       var list = [true, 2, "item"];
 

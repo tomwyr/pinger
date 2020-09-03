@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/utils/notification_messages.dart';
 
 @injectable
@@ -29,7 +30,7 @@ class NotificationsManager {
           _messages.pausedTitle(session.host),
           _messages.pausedBody(
             session.values.length,
-            session.settings.count,
+            FormatUtils.getCountLabel(session.settings.count),
           ),
         );
         break;

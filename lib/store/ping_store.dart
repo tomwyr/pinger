@@ -200,9 +200,15 @@ abstract class PingStoreBase with Store {
 
   @action
   void resumeSession() {
-    final remainingCount =
-        currentSession.settings.count - currentSession.values.length;
-    if (remainingCount > 0) {
+    final remainingCount = currentSession.settings.count.when(
+      finite: (it) => NumSetting.finite(it - currentSession.values.length),
+      infinite: () => NumSetting.infinite(),
+    );
+    final isDone = remainingCount.when(
+      finite: (it) => it == 0,
+      infinite: () => false,
+    );
+    if (!isDone) {
       currentSession =
           currentSession.copyWith(status: PingStatus.sessionStarted);
       final settings = currentSession.settings.copyWith(count: remainingCount);
