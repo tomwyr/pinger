@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
+import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -490,52 +491,60 @@ class InfoTraySessionItem extends StatelessWidget {
 
   Widget _buildResultsChart() {
     if (session.values.isNullOrEmpty) return Container();
-    final barCount = session.settings.count.when(
-      finite: (it) => min(it, maxBarCount),
-      infinite: () => maxBarCount,
-    );
-    final visibleValues = session.values.skip(
-      max(session.values.length - barCount, 0),
-    );
-    return LayoutBuilder(builder: (_, constraints) {
-      final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);
-      final barSize = Size(barsSpace / barCount, constraints.maxHeight);
-      return Row(
+    return LayoutBuilder(
+      builder: (_, constraints) => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: visibleValues
-            .mapIndexed((index, item) => _buildBarItem(index, item, barSize))
-            .toList()
-              ..removeLast(),
-      );
-    });
-  }
-
-  Padding _buildBarItem(int index, int item, Size size) {
-    return Padding(
-      // key: ValueKey(index),
-      padding: EdgeInsets.only(left: index == 0 ? 0.0 : gapWidth),
-      child: TweenAnimationBuilder<double>(
-        duration: animDuration,
-        tween: Tween(
-          begin: 0.0,
-          end: item != null
-              ? item / session.stats.max * size.height
-              : size.height,
-        ),
-        builder: (_, value, __) => Container(
-          width: size.width,
-          height: value,
-          color: item != null ? Colors.white : Colors.white.withOpacity(0.3),
-        ),
+        children: <Widget>[
+          for (final item in _createChartBarItems(constraints))
+            Padding(
+              key: ValueKey(item.key),
+              padding: EdgeInsets.only(left: item.index == 0 ? 0.0 : gapWidth),
+              child: TweenAnimationBuilder<double>(
+                duration: animDuration,
+                tween: Tween(
+                    begin: 0.0,
+                    end: item.value != null
+                        ? item.value / item.maxValue * item.size.height
+                        : item.size.height),
+                builder: (_, value, __) => Container(
+                  width: item.size.width,
+                  height: value,
+                  color: item.value != null
+                      ? Colors.white
+                      : Colors.white.withOpacity(0.3),
+                ),
+              ),
+            )
+        ],
       ),
     );
   }
 
+  Iterable<_ChartBarItem> _createChartBarItems(BoxConstraints constraints) {
+    final barCount = session.settings.count.when(
+      finite: (it) => min(it, maxBarCount),
+      infinite: () => maxBarCount,
+    );
+    final visibleBarCount = session.status.isDone ? barCount : barCount - 1;
+    final firstVisible = max(session.values.length - visibleBarCount, 0);
+    final visibleValues = session.values.skip(firstVisible);
+    final visibleMax = PingStats.fromValues(visibleValues).max;
+    final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);
+    final barSize = Size(barsSpace / barCount, constraints.maxHeight);
+    return visibleValues.mapIndexed((index, value) => _ChartBarItem(
+          key: index + firstVisible,
+          index: index,
+          value: value,
+          maxValue: visibleMax,
+          size: barSize,
+        ));
+  }
+
   Widget _buildProgressIndicator() {
-    final valuesCount = session.values?.length ?? 0.0;
+    final valuesCount = session.values?.length ?? 0;
     final progress = session.settings.count.when(
       finite: (it) => valuesCount / it,
-      infinite: () => min(valuesCount / maxBarCount, 1.0),
+      infinite: () => min(valuesCount, maxBarCount - 1) / maxBarCount,
     );
     final dotSize = 6.0;
     return FractionalTranslation(
@@ -678,6 +687,22 @@ class InfoTraySessionItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ChartBarItem {
+  final int key;
+  final int index;
+  final int value;
+  final int maxValue;
+  final Size size;
+
+  _ChartBarItem({
+    @required this.key,
+    @required this.index,
+    @required this.value,
+    @required this.maxValue,
+    @required this.size,
+  });
 }
 
 class SessionItemModel {
