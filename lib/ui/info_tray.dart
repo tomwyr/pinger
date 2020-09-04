@@ -502,10 +502,11 @@ class InfoTraySessionItem extends StatelessWidget {
               child: TweenAnimationBuilder<double>(
                 duration: animDuration,
                 tween: Tween(
-                    begin: 0.0,
-                    end: item.value != null
-                        ? item.value / item.maxValue * item.size.height
-                        : item.size.height),
+                  begin: 0.0,
+                  end: item.value != null
+                      ? item.value / item.maxValue * item.size.height
+                      : item.size.height,
+                ),
                 builder: (_, value, __) => Container(
                   width: item.size.width,
                   height: value,
