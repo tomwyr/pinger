@@ -51,13 +51,13 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
       body: Observer(
         builder: (context) {
           final shouldShowIntroPrompt = !_settingsStore.didShowIntro &&
-              _pingStore.currentSession == null &&
+              _pingStore.currentHost == null &&
               _hostsStore.favorites.isEmpty &&
               _hostsStore.localStats.isEmpty;
           return shouldShowIntroPrompt
               ? _buildIntroContent(_settingsStore.notifyDidShowIntro)
               : HomeHostSuggestions(
-                  session: _pingStore.currentSession,
+                  currentHost: _pingStore.currentHost,
                   favorites: _hostsStore.favorites,
                   popular: _hostsStore.hosts.maybeWhen(
                     data: (data) => data.take(5).map((it) => it.name).toList(),

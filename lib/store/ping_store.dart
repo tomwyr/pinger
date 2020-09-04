@@ -78,6 +78,9 @@ abstract class PingStoreBase with Store {
   bool get didChangeSettings =>
       currentSession.settings != _settingsStore.userSettings.pingSettings;
 
+  @computed
+  String get currentHost => currentSession?.host;
+
   @action
   void init() {
     final host = _pingerPrefs.getLastHost();

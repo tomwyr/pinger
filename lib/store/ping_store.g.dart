@@ -23,6 +23,13 @@ mixin _$PingStore on PingStoreBase, Store {
           () => super.didChangeSettings,
           name: 'PingStoreBase.didChangeSettings'))
       .value;
+  Computed<String> _$currentHostComputed;
+
+  @override
+  String get currentHost =>
+      (_$currentHostComputed ??= Computed<String>(() => super.currentHost,
+              name: 'PingStoreBase.currentHost'))
+          .value;
 
   final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
 
@@ -211,7 +218,8 @@ pingDuration: ${pingDuration},
 currentSession: ${currentSession},
 prevStatus: ${prevStatus},
 canArchiveResult: ${canArchiveResult},
-didChangeSettings: ${didChangeSettings}
+didChangeSettings: ${didChangeSettings},
+currentHost: ${currentHost}
     ''';
   }
 }
