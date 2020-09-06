@@ -47,8 +47,7 @@ class NotificationsManager {
         );
         break;
       case PingStatus.initial:
-      case PingStatus.quickCheckDone:
-      case PingStatus.quickCheckStarted:
+      case PingStatus.quickCheck:
         clear();
         break;
     }

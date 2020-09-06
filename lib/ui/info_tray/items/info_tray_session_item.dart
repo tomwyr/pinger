@@ -105,7 +105,8 @@ class InfoTraySessionItem extends StatelessWidget {
       finite: (it) => min(it, maxBarCount),
       infinite: () => maxBarCount,
     );
-    final visibleBarCount = session.status.isDone ? barCount : barCount - 1;
+    final visibleBarCount =
+        session.status.isSessionDone ? barCount : barCount - 1;
     final firstVisible = max(session.values.length - visibleBarCount, 0);
     final visibleValues = session.values.skip(firstVisible);
     final visibleMax = PingStats.fromValues(visibleValues).max;

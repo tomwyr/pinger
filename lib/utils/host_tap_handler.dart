@@ -11,7 +11,7 @@ mixin HostTapHandler<T extends StatefulWidget> on State<T> {
     final host = pingStore.currentSession?.host;
     if (host == newHost) {
       _showPingPage();
-    } else if (status.isNull || status.isInitial || status.isDone) {
+    } else if (status.isNull || status.isInitial || status.isSessionDone) {
       pingStore.initSession(newHost);
       _showPingPage();
     } else {

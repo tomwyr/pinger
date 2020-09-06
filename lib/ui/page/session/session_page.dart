@@ -48,10 +48,14 @@ class _SessionPageState extends BaseState<SessionPage> {
           final isFavorite = _hostsStore.favorites.contains(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
-          final isExpanded = status.isInitial || status.isQuickCheckDone;
           final prevStatus = _pingStore.prevStatus;
           return Column(children: <Widget>[
-            _buildHeader(session, isFavorite, isExpanded, didChangeSettings),
+            _buildHeader(
+              session,
+              isFavorite,
+              status.isInitial,
+              didChangeSettings,
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -62,7 +66,7 @@ class _SessionPageState extends BaseState<SessionPage> {
                       : _buildResults(
                           session.status.isInitial ? prevSession : session,
                           sessionDuration,
-                          isExpanded,
+                          status.isInitial,
                         ),
                 ),
               ),
@@ -180,7 +184,7 @@ class _SessionPageState extends BaseState<SessionPage> {
 
   Widget _buildPingButton(
       PingStatus status, PingStatus prevStatus, bool canArchive) {
-    final showArchive = status.isDone || prevStatus.isDone;
+    final showArchive = status.isSessionDone || prevStatus.isSessionDone;
     final secondaryIcon = showArchive ? Icons.archive : Icons.stop;
     switch (status) {
       case PingStatus.initial:
@@ -193,7 +197,7 @@ class _SessionPageState extends BaseState<SessionPage> {
           onPrimaryLongPressStart: _pingStore.startQuickCheck,
           onPrimaryLongPressEnd: null,
         );
-      case PingStatus.quickCheckStarted:
+      case PingStatus.quickCheck:
         return SessionPingButton(
           isExpanded: false,
           primaryIcon: Icons.lens,
@@ -202,16 +206,6 @@ class _SessionPageState extends BaseState<SessionPage> {
           onSecondaryPressed: null,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: _pingStore.stopQuickCheck,
-        );
-      case PingStatus.quickCheckDone:
-        return SessionPingButton(
-          isExpanded: false,
-          primaryIcon: Icons.play_arrow,
-          onPrimaryPressed: _pingStore.startSession,
-          onSecondaryPressed: null,
-          secondaryIcon: secondaryIcon,
-          onPrimaryLongPressStart: _pingStore.startQuickCheck,
-          onPrimaryLongPressEnd: null,
         );
       case PingStatus.sessionStarted:
         return SessionPingButton(
