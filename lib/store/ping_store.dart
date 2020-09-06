@@ -65,6 +65,9 @@ abstract class PingStoreBase with Store {
   PingSession currentSession;
 
   @observable
+  PingSession prevSession;
+
+  @observable
   PingStatus prevStatus;
 
   @observable
@@ -146,6 +149,7 @@ abstract class PingStoreBase with Store {
   void initSession(String host) {
     _stopPing();
     _didShareResult = false;
+    prevSession = currentSession;
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
@@ -181,7 +185,7 @@ abstract class PingStoreBase with Store {
   @action
   void stopQuickCheck() {
     _stopPing();
-    currentSession = currentSession.copyWith(status: PingStatus.quickCheckDone);
+    initSession(currentSession.host);
   }
 
   @action
@@ -246,6 +250,12 @@ abstract class PingStoreBase with Store {
   void _onSessionDone() {
     _timer.stop();
     _timerSub.cancel();
+    currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
+  }
+
+  @action
+  void stopSession() {
+    _stopPing();
     currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
   }
 

@@ -43,6 +43,7 @@ class _SessionPageState extends BaseState<SessionPage> {
         child: Observer(builder: (_) {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
+          final prevSession = _pingStore.prevSession;
           final canArchive = _pingStore.canArchiveResult;
           final isFavorite = _hostsStore.favorites.contains(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
@@ -56,9 +57,13 @@ class _SessionPageState extends BaseState<SessionPage> {
                 alignment: Alignment.topCenter,
                 child: AnimatedSwitcher(
                   duration: _animDuration,
-                  child: session.status.isInitial
+                  child: session.status.isInitial && prevSession == null
                       ? _buildStartPrompt()
-                      : _buildResults(session, sessionDuration, isExpanded),
+                      : _buildResults(
+                          session.status.isInitial ? prevSession : session,
+                          sessionDuration,
+                          isExpanded,
+                        ),
                 ),
               ),
             ),
@@ -210,11 +215,11 @@ class _SessionPageState extends BaseState<SessionPage> {
         );
       case PingStatus.sessionStarted:
         return SessionPingButton(
-          isExpanded: false,
+          isExpanded: true,
           primaryIcon: Icons.pause,
           secondaryIcon: secondaryIcon,
           onPrimaryPressed: _pingStore.pauseSession,
-          onSecondaryPressed: null,
+          onSecondaryPressed: _pingStore.stopSession,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: null,
         );
@@ -224,7 +229,7 @@ class _SessionPageState extends BaseState<SessionPage> {
           primaryIcon: Icons.play_arrow,
           secondaryIcon: Icons.stop,
           onPrimaryPressed: _pingStore.resumeSession,
-          onSecondaryPressed: _pingStore.restartSession,
+          onSecondaryPressed: _pingStore.stopSession,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: null,
         );

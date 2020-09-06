@@ -61,6 +61,21 @@ mixin _$PingStore on PingStoreBase, Store {
     });
   }
 
+  final _$prevSessionAtom = Atom(name: 'PingStoreBase.prevSession');
+
+  @override
+  PingSession get prevSession {
+    _$prevSessionAtom.reportRead();
+    return super.prevSession;
+  }
+
+  @override
+  set prevSession(PingSession value) {
+    _$prevSessionAtom.reportWrite(value, super.prevSession, () {
+      super.prevSession = value;
+    });
+  }
+
   final _$prevStatusAtom = Atom(name: 'PingStoreBase.prevStatus');
 
   @override
@@ -201,6 +216,17 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
+  void stopSession() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.stopSession');
+    try {
+      return super.stopSession();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void restartSession() {
     final _$actionInfo = _$PingStoreBaseActionController.startAction(
         name: 'PingStoreBase.restartSession');
@@ -216,6 +242,7 @@ mixin _$PingStore on PingStoreBase, Store {
     return '''
 pingDuration: ${pingDuration},
 currentSession: ${currentSession},
+prevSession: ${prevSession},
 prevStatus: ${prevStatus},
 canArchiveResult: ${canArchiveResult},
 didChangeSettings: ${didChangeSettings},
