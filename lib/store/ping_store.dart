@@ -175,7 +175,7 @@ abstract class PingStoreBase with Store {
       startTime: DateTime.now(),
       values: [],
     );
-    _startPing(settings: currentSession.settings.copyWith(count: null));
+    _startPing();
   }
 
   @action
