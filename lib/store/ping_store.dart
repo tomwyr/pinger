@@ -88,27 +88,24 @@ abstract class PingStoreBase with Store {
   void init() {
     final host = _pingerPrefs.getLastHost();
     if (host != null) initSession(host);
-    autorun((_) {
-      if (currentSession != null) {
-        _cacheCurrentHost();
-        _handleStatusChange();
-      }
-    });
+    reaction((_) => currentHost, _cacheCurrentHost);
+    reaction((_) => currentSession?.status, _handleStatusChange);
     reaction((_) => currentSession, _deviceStore.updateNotification);
   }
 
-  void _cacheCurrentHost() async {
-    final host =
-        _settingsStore.userSettings.restoreHost ? currentSession?.host : null;
-    await _pingerPrefs.setLastHost(host);
+  void _cacheCurrentHost(String host) async {
+    if (!_settingsStore.userSettings.restoreHost) host = null;
+    if (_pingerPrefs.getLastHost() != host) {
+      await _pingerPrefs.setLastHost(host);
+    }
   }
 
-  void _handleStatusChange() {
-    final status = currentSession.status;
+  void _handleStatusChange(PingStatus status) {
     if (_lastStatus != status) prevStatus = _lastStatus;
     if (_lastStatus.isInitial && status.isStarted) {
       _hostsStore.incrementStats(currentSession.host);
     }
+    if (status.isQuickCheckStarted) _deviceStore.triggerFeedback();
     _lastStatus = status;
   }
 
@@ -149,7 +146,6 @@ abstract class PingStoreBase with Store {
     final settings =
         currentSession.settings.copyWith(count: NumSetting.infinite());
     _startPing(settings: settings);
-    _deviceStore.triggerFeedback();
   }
 
   @action
@@ -164,7 +160,6 @@ abstract class PingStoreBase with Store {
     currentSession = currentSession.copyWith(
       status: PingStatus.quickCheckStarted,
     );
-    _deviceStore.triggerFeedback();
   }
 
   @action
