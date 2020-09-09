@@ -451,7 +451,8 @@ PingSettings _$PingSettingsFromJson(Map<String, dynamic> json) {
 class _$PingSettingsTearOff {
   const _$PingSettingsTearOff();
 
-  _PingSettings call({int count, int packetSize, int interval, int timeout}) {
+  _PingSettings call(
+      {NumSetting count, int packetSize, int interval, int timeout}) {
     return _PingSettings(
       count: count,
       packetSize: packetSize,
@@ -465,7 +466,7 @@ class _$PingSettingsTearOff {
 const $PingSettings = _$PingSettingsTearOff();
 
 mixin _$PingSettings {
-  int get count;
+  NumSetting get count;
   int get packetSize;
   int get interval;
   int get timeout;
@@ -478,7 +479,9 @@ abstract class $PingSettingsCopyWith<$Res> {
   factory $PingSettingsCopyWith(
           PingSettings value, $Res Function(PingSettings) then) =
       _$PingSettingsCopyWithImpl<$Res>;
-  $Res call({int count, int packetSize, int interval, int timeout});
+  $Res call({NumSetting count, int packetSize, int interval, int timeout});
+
+  $NumSettingCopyWith<$Res> get count;
 }
 
 class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
@@ -496,11 +499,21 @@ class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
     Object timeout = freezed,
   }) {
     return _then(_value.copyWith(
-      count: count == freezed ? _value.count : count as int,
+      count: count == freezed ? _value.count : count as NumSetting,
       packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
       interval: interval == freezed ? _value.interval : interval as int,
       timeout: timeout == freezed ? _value.timeout : timeout as int,
     ));
+  }
+
+  @override
+  $NumSettingCopyWith<$Res> get count {
+    if (_value.count == null) {
+      return null;
+    }
+    return $NumSettingCopyWith<$Res>(_value.count, (value) {
+      return _then(_value.copyWith(count: value));
+    });
   }
 }
 
@@ -510,7 +523,10 @@ abstract class _$PingSettingsCopyWith<$Res>
           _PingSettings value, $Res Function(_PingSettings) then) =
       __$PingSettingsCopyWithImpl<$Res>;
   @override
-  $Res call({int count, int packetSize, int interval, int timeout});
+  $Res call({NumSetting count, int packetSize, int interval, int timeout});
+
+  @override
+  $NumSettingCopyWith<$Res> get count;
 }
 
 class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
@@ -530,7 +546,7 @@ class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
     Object timeout = freezed,
   }) {
     return _then(_PingSettings(
-      count: count == freezed ? _value.count : count as int,
+      count: count == freezed ? _value.count : count as NumSetting,
       packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
       interval: interval == freezed ? _value.interval : interval as int,
       timeout: timeout == freezed ? _value.timeout : timeout as int,
@@ -546,7 +562,7 @@ class _$_PingSettings implements _PingSettings {
       _$_$_PingSettingsFromJson(json);
 
   @override
-  final int count;
+  final NumSetting count;
   @override
   final int packetSize;
   @override
@@ -595,13 +611,16 @@ class _$_PingSettings implements _PingSettings {
 
 abstract class _PingSettings implements PingSettings {
   factory _PingSettings(
-      {int count, int packetSize, int interval, int timeout}) = _$_PingSettings;
+      {NumSetting count,
+      int packetSize,
+      int interval,
+      int timeout}) = _$_PingSettings;
 
   factory _PingSettings.fromJson(Map<String, dynamic> json) =
       _$_PingSettings.fromJson;
 
   @override
-  int get count;
+  NumSetting get count;
   @override
   int get packetSize;
   @override
@@ -610,6 +629,299 @@ abstract class _PingSettings implements PingSettings {
   int get timeout;
   @override
   _$PingSettingsCopyWith<_PingSettings> get copyWith;
+}
+
+NumSetting _$NumSettingFromJson(Map<String, dynamic> json) {
+  switch (json['runtimeType'] as String) {
+    case 'finite':
+      return _FiniteNumSetting.fromJson(json);
+    case 'infinite':
+      return _InfiniteNumSetting.fromJson(json);
+
+    default:
+      throw FallThroughError();
+  }
+}
+
+class _$NumSettingTearOff {
+  const _$NumSettingTearOff();
+
+  _FiniteNumSetting finite([int value]) {
+    return _FiniteNumSetting(
+      value,
+    );
+  }
+
+  _InfiniteNumSetting infinite() {
+    return const _InfiniteNumSetting();
+  }
+}
+
+// ignore: unused_element
+const $NumSetting = _$NumSettingTearOff();
+
+mixin _$NumSetting {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finite(int value),
+    @required Result infinite(),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finite(int value),
+    Result infinite(),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finite(_FiniteNumSetting value),
+    @required Result infinite(_InfiniteNumSetting value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finite(_FiniteNumSetting value),
+    Result infinite(_InfiniteNumSetting value),
+    @required Result orElse(),
+  });
+  Map<String, dynamic> toJson();
+}
+
+abstract class $NumSettingCopyWith<$Res> {
+  factory $NumSettingCopyWith(
+          NumSetting value, $Res Function(NumSetting) then) =
+      _$NumSettingCopyWithImpl<$Res>;
+}
+
+class _$NumSettingCopyWithImpl<$Res> implements $NumSettingCopyWith<$Res> {
+  _$NumSettingCopyWithImpl(this._value, this._then);
+
+  final NumSetting _value;
+  // ignore: unused_field
+  final $Res Function(NumSetting) _then;
+}
+
+abstract class _$FiniteNumSettingCopyWith<$Res> {
+  factory _$FiniteNumSettingCopyWith(
+          _FiniteNumSetting value, $Res Function(_FiniteNumSetting) then) =
+      __$FiniteNumSettingCopyWithImpl<$Res>;
+  $Res call({int value});
+}
+
+class __$FiniteNumSettingCopyWithImpl<$Res>
+    extends _$NumSettingCopyWithImpl<$Res>
+    implements _$FiniteNumSettingCopyWith<$Res> {
+  __$FiniteNumSettingCopyWithImpl(
+      _FiniteNumSetting _value, $Res Function(_FiniteNumSetting) _then)
+      : super(_value, (v) => _then(v as _FiniteNumSetting));
+
+  @override
+  _FiniteNumSetting get _value => super._value as _FiniteNumSetting;
+
+  @override
+  $Res call({
+    Object value = freezed,
+  }) {
+    return _then(_FiniteNumSetting(
+      value == freezed ? _value.value : value as int,
+    ));
+  }
+}
+
+@JsonSerializable()
+class _$_FiniteNumSetting implements _FiniteNumSetting {
+  const _$_FiniteNumSetting([this.value]);
+
+  factory _$_FiniteNumSetting.fromJson(Map<String, dynamic> json) =>
+      _$_$_FiniteNumSettingFromJson(json);
+
+  @override
+  final int value;
+
+  @override
+  String toString() {
+    return 'NumSetting.finite(value: $value)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _FiniteNumSetting &&
+            (identical(other.value, value) ||
+                const DeepCollectionEquality().equals(other.value, value)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(value);
+
+  @override
+  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith =>
+      __$FiniteNumSettingCopyWithImpl<_FiniteNumSetting>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finite(int value),
+    @required Result infinite(),
+  }) {
+    assert(finite != null);
+    assert(infinite != null);
+    return finite(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finite(int value),
+    Result infinite(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finite != null) {
+      return finite(value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finite(_FiniteNumSetting value),
+    @required Result infinite(_InfiniteNumSetting value),
+  }) {
+    assert(finite != null);
+    assert(infinite != null);
+    return finite(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finite(_FiniteNumSetting value),
+    Result infinite(_InfiniteNumSetting value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finite != null) {
+      return finite(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_FiniteNumSettingToJson(this)..['runtimeType'] = 'finite';
+  }
+}
+
+abstract class _FiniteNumSetting implements NumSetting {
+  const factory _FiniteNumSetting([int value]) = _$_FiniteNumSetting;
+
+  factory _FiniteNumSetting.fromJson(Map<String, dynamic> json) =
+      _$_FiniteNumSetting.fromJson;
+
+  int get value;
+  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith;
+}
+
+abstract class _$InfiniteNumSettingCopyWith<$Res> {
+  factory _$InfiniteNumSettingCopyWith(
+          _InfiniteNumSetting value, $Res Function(_InfiniteNumSetting) then) =
+      __$InfiniteNumSettingCopyWithImpl<$Res>;
+}
+
+class __$InfiniteNumSettingCopyWithImpl<$Res>
+    extends _$NumSettingCopyWithImpl<$Res>
+    implements _$InfiniteNumSettingCopyWith<$Res> {
+  __$InfiniteNumSettingCopyWithImpl(
+      _InfiniteNumSetting _value, $Res Function(_InfiniteNumSetting) _then)
+      : super(_value, (v) => _then(v as _InfiniteNumSetting));
+
+  @override
+  _InfiniteNumSetting get _value => super._value as _InfiniteNumSetting;
+}
+
+@JsonSerializable()
+class _$_InfiniteNumSetting implements _InfiniteNumSetting {
+  const _$_InfiniteNumSetting();
+
+  factory _$_InfiniteNumSetting.fromJson(Map<String, dynamic> json) =>
+      _$_$_InfiniteNumSettingFromJson(json);
+
+  @override
+  String toString() {
+    return 'NumSetting.infinite()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _InfiniteNumSetting);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result finite(int value),
+    @required Result infinite(),
+  }) {
+    assert(finite != null);
+    assert(infinite != null);
+    return infinite();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result finite(int value),
+    Result infinite(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (infinite != null) {
+      return infinite();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result finite(_FiniteNumSetting value),
+    @required Result infinite(_InfiniteNumSetting value),
+  }) {
+    assert(finite != null);
+    assert(infinite != null);
+    return infinite(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result finite(_FiniteNumSetting value),
+    Result infinite(_InfiniteNumSetting value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (infinite != null) {
+      return infinite(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_InfiniteNumSettingToJson(this)..['runtimeType'] = 'infinite';
+  }
+}
+
+abstract class _InfiniteNumSetting implements NumSetting {
+  const factory _InfiniteNumSetting() = _$_InfiniteNumSetting;
+
+  factory _InfiniteNumSetting.fromJson(Map<String, dynamic> json) =
+      _$_InfiniteNumSetting.fromJson;
 }
 
 TraySettings _$TraySettingsFromJson(Map<String, dynamic> json) {

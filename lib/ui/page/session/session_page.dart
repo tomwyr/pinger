@@ -11,9 +11,9 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/fade_out.dart';
 import 'package:pinger/ui/page/base_page.dart';
+import 'package:pinger/ui/page/session/session_button/ping_button.dart';
 import 'package:pinger/ui/page/session/session_host_button.dart';
 import 'package:pinger/ui/page/session/session_host_header.dart';
-import 'package:pinger/ui/page/session/session_ping_button.dart';
 import 'package:pinger/ui/page/session/session_summary_section.dart';
 import 'package:pinger/ui/page/session/session_values/session_values_section.dart';
 import 'package:pinger/ui/page/settings/settings_sections.dart';
@@ -43,22 +43,31 @@ class _SessionPageState extends BaseState<SessionPage> {
         child: Observer(builder: (_) {
           final session = _pingStore.currentSession;
           final sessionDuration = _pingStore.pingDuration;
+          final prevSession = _pingStore.prevSession;
           final canArchive = _pingStore.canArchiveResult;
           final isFavorite = _hostsStore.favorites.contains(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
-          final isExpanded = status.isInitial || status.isQuickCheckDone;
           final prevStatus = _pingStore.prevStatus;
           return Column(children: <Widget>[
-            _buildHeader(session, isFavorite, isExpanded, didChangeSettings),
+            _buildHeader(
+              session,
+              isFavorite,
+              status.isInitial,
+              didChangeSettings,
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: AnimatedSwitcher(
                   duration: _animDuration,
-                  child: session.status.isInitial
+                  child: session.status.isInitial && prevSession == null
                       ? _buildStartPrompt()
-                      : _buildResults(session, sessionDuration, isExpanded),
+                      : _buildResults(
+                          session.status.isInitial ? prevSession : session,
+                          sessionDuration,
+                          status.isInitial,
+                        ),
                 ),
               ),
             ),
@@ -175,31 +184,59 @@ class _SessionPageState extends BaseState<SessionPage> {
 
   Widget _buildPingButton(
       PingStatus status, PingStatus prevStatus, bool canArchive) {
-    final showArchive = status.isDone || prevStatus.isDone;
-    return SessionPingButton(
-      isExpanded:
-          status.isSessionPaused || (status.isSessionDone && canArchive),
-      primaryIcon: status.isQuickCheckStarted
-          ? Icons.lens
-          : status.isSessionDone
-              ? Icons.undo
-              : status.isSessionStarted ? Icons.pause : Icons.play_arrow,
-      secondaryIcon: showArchive ? Icons.archive : Icons.stop,
-      onPrimaryPressed: status.isSessionDone
-          ? _pingStore.restartSession
-          : status.isSessionPaused
-              ? _pingStore.resumeSession
-              : status.isSessionStarted
-                  ? _pingStore.pauseSession
-                  : _pingStore.startSession,
-      onPrimaryLongPressStart: status.isInitial || status.isQuickCheckDone
-          ? _pingStore.startQuickCheck
-          : null,
-      onPrimaryLongPressEnd:
-          status.isQuickCheckStarted ? _pingStore.stopQuickCheck : null,
-      onSecondaryPressed: !showArchive
-          ? _pingStore.restartSession
-          : canArchive ? _pingStore.archiveResult : null,
-    );
+    final showArchive = status.isSessionDone || prevStatus.isSessionDone;
+    final secondaryIcon = showArchive ? Icons.archive : Icons.stop;
+    switch (status) {
+      case PingStatus.initial:
+        return PingButton(
+          isExpanded: false,
+          primaryIcon: Icons.play_arrow,
+          onPrimaryPressed: _pingStore.startSession,
+          secondaryIcon: secondaryIcon,
+          onPrimaryLongPressStart: _pingStore.startQuickCheck,
+        );
+      case PingStatus.quickCheckStarted:
+        return PingButton(
+          isExpanded: false,
+          isLocked: false,
+          primaryIcon: Icons.lens,
+          secondaryIcon: secondaryIcon,
+          onPrimaryLongPressEnd: _pingStore.stopQuickCheck,
+          onLockSwipe: _pingStore.lockQuickCheck,
+        );
+      case PingStatus.quickCheckLocked:
+        return PingButton(
+          isExpanded: false,
+          isLocked: true,
+          primaryIcon: Icons.lens,
+          secondaryIcon: secondaryIcon,
+          onPrimaryLongPressStart: _pingStore.unlockQuickCheck,
+        );
+      case PingStatus.sessionStarted:
+        return PingButton(
+          isExpanded: true,
+          primaryIcon: Icons.pause,
+          secondaryIcon: secondaryIcon,
+          onPrimaryPressed: _pingStore.pauseSession,
+          onSecondaryPressed: _pingStore.stopSession,
+        );
+      case PingStatus.sessionPaused:
+        return PingButton(
+          isExpanded: true,
+          primaryIcon: Icons.play_arrow,
+          secondaryIcon: Icons.stop,
+          onPrimaryPressed: _pingStore.resumeSession,
+          onSecondaryPressed: _pingStore.stopSession,
+        );
+      case PingStatus.sessionDone:
+        return PingButton(
+          isExpanded: canArchive,
+          primaryIcon: Icons.undo,
+          secondaryIcon: secondaryIcon,
+          onPrimaryPressed: _pingStore.restartSession,
+          onSecondaryPressed: canArchive ? _pingStore.archiveResult : null,
+        );
+    }
+    throw StateError("Unhandled session status: $status");
   }
 }

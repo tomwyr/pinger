@@ -30,7 +30,7 @@ abstract class PingStats with _$PingStats {
     @required int mean,
   }) = _PingStats;
 
-  static PingStats fromValues(List<int> values) {
+  static PingStats fromValues(Iterable<int> values) {
     bool hasValue = false;
     int min = double.maxFinite.toInt();
     int max = 0;

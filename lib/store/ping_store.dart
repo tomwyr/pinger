@@ -65,6 +65,9 @@ abstract class PingStoreBase with Store {
   PingSession currentSession;
 
   @observable
+  PingSession prevSession;
+
+  @observable
   PingStatus prevStatus;
 
   @observable
@@ -78,6 +81,9 @@ abstract class PingStoreBase with Store {
   bool get didChangeSettings =>
       currentSession.settings != _settingsStore.userSettings.pingSettings;
 
+  @computed
+  String get currentHost => currentSession?.host;
+
   @action
   void init() {
     final host = _pingerPrefs.getLastHost();
@@ -86,7 +92,6 @@ abstract class PingStoreBase with Store {
       if (currentSession != null) {
         _cacheCurrentHost();
         _handleStatusChange();
-        _shareResultIfPossible();
       }
     });
     reaction((_) => currentSession, _deviceStore.updateNotification);
@@ -107,42 +112,11 @@ abstract class PingStoreBase with Store {
     _lastStatus = status;
   }
 
-  void _shareResultIfPossible() async {
-    if (_shouldShareResult()) {
-      _didShareResult = true;
-      final result = GlobalSessionResult(
-        count: currentSession.values.length,
-        host: currentSession.host,
-        stats: currentSession.stats,
-        location: await _getResultLocation(),
-      );
-      try {
-        await _pingerApi.saveSessionResult(result);
-      } on ApiError {}
-    }
-  }
-
-  bool _shouldShareResult() {
-    final isSessionShareable = currentSession.status.isDone &&
-        currentSession.values.length >= 10 &&
-        currentSession.stats != null;
-    final isSharingEnabled =
-        _settingsStore.userSettings.shareSettings.shareResults;
-    return isSessionShareable && isSharingEnabled && !_didShareResult;
-  }
-
-  Future<GeoPosition> _getResultLocation() async {
-    final attachLocation =
-        _settingsStore.userSettings.shareSettings.attachLocation;
-    return attachLocation && _locationPermissionStore.canAccessService
-        ? await _deviceStore.getCurrentPosition()
-        : null;
-  }
-
   @action
   void initSession(String host) {
     _stopPing();
     _didShareResult = false;
+    prevSession = currentSession;
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
@@ -172,13 +146,30 @@ abstract class PingStoreBase with Store {
       startTime: DateTime.now(),
       values: [],
     );
-    _startPing(settings: currentSession.settings.copyWith(count: null));
+    final settings =
+        currentSession.settings.copyWith(count: NumSetting.infinite());
+    _startPing(settings: settings);
+  }
+
+  @action
+  void lockQuickCheck() {
+    currentSession = currentSession.copyWith(
+      status: PingStatus.quickCheckLocked,
+    );
+  }
+
+  @action
+  void unlockQuickCheck() {
+    currentSession = currentSession.copyWith(
+      status: PingStatus.quickCheckStarted,
+    );
   }
 
   @action
   void stopQuickCheck() {
     _stopPing();
-    currentSession = currentSession.copyWith(status: PingStatus.quickCheckDone);
+    _shareResultIfPossible(currentSession);
+    initSession(currentSession.host);
   }
 
   @action
@@ -200,9 +191,15 @@ abstract class PingStoreBase with Store {
 
   @action
   void resumeSession() {
-    final remainingCount =
-        currentSession.settings.count - currentSession.values.length;
-    if (remainingCount > 0) {
+    final remainingCount = currentSession.settings.count.when(
+      finite: (it) => NumSetting.finite(it - currentSession.values.length),
+      infinite: () => NumSetting.infinite(),
+    );
+    final isDone = remainingCount.when(
+      finite: (it) => it == 0,
+      infinite: () => false,
+    );
+    if (!isDone) {
       currentSession =
           currentSession.copyWith(status: PingStatus.sessionStarted);
       final settings = currentSession.settings.copyWith(count: remainingCount);
@@ -237,6 +234,44 @@ abstract class PingStoreBase with Store {
   void _onSessionDone() {
     _timer.stop();
     _timerSub.cancel();
+    _shareResultIfPossible(currentSession);
+    currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
+  }
+
+  void _shareResultIfPossible(PingSession session) async {
+    if (_shouldShareResult(session)) {
+      _didShareResult = true;
+      final result = GlobalSessionResult(
+        count: currentSession.values.length,
+        host: currentSession.host,
+        stats: currentSession.stats,
+        location: await _getResultLocation(),
+      );
+      try {
+        await _pingerApi.saveSessionResult(result);
+      } on ApiError {}
+    }
+  }
+
+  bool _shouldShareResult(PingSession session) {
+    final isSessionShareable =
+        session.values.length >= 10 && session.stats != null;
+    final isSharingEnabled =
+        _settingsStore.userSettings.shareSettings.shareResults;
+    return isSessionShareable && isSharingEnabled && !_didShareResult;
+  }
+
+  Future<GeoPosition> _getResultLocation() async {
+    final attachLocation =
+        _settingsStore.userSettings.shareSettings.attachLocation;
+    return attachLocation && _locationPermissionStore.canAccessService
+        ? await _deviceStore.getCurrentPosition()
+        : null;
+  }
+
+  @action
+  void stopSession() {
+    _stopPing();
     currentSession = currentSession.copyWith(status: PingStatus.sessionDone);
   }
 

@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:pinger/generated/l10n.dart';
+import 'package:pinger/model/user_settings.dart';
+import 'package:pinger/resources.dart';
 
 class FormatUtils {
   static String getSinceNowLabel(DateTime timestamp) {
@@ -26,5 +28,12 @@ class FormatUtils {
     var formatter = DateFormat.MMMd();
     if (showTime) formatter = formatter.add_Hm();
     return formatter.format(timestamp);
+  }
+
+  static String getCountLabel(NumSetting setting) {
+    return setting.when(
+      finite: (it) => it.toString(),
+      infinite: () => R.symbols.infty,
+    );
   }
 }

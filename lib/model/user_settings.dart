@@ -30,7 +30,7 @@ abstract class ShareSettings with _$ShareSettings {
 @freezed
 abstract class PingSettings with _$PingSettings {
   factory PingSettings({
-    int count,
+    NumSetting count,
     int packetSize,
     int interval,
     int timeout,
@@ -38,6 +38,15 @@ abstract class PingSettings with _$PingSettings {
 
   factory PingSettings.fromJson(Map<String, dynamic> json) =>
       _$PingSettingsFromJson(json);
+}
+
+@freezed
+abstract class NumSetting with _$NumSetting {
+  const factory NumSetting.finite([int value]) = _FiniteNumSetting;
+  const factory NumSetting.infinite() = _InfiniteNumSetting;
+
+  factory NumSetting.fromJson(json) =>
+      json is int ? NumSetting.finite(json) : _$NumSettingFromJson(json);
 }
 
 @freezed

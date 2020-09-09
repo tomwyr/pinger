@@ -11,15 +11,18 @@ class PingerResources {
   PingerDimens _dimens;
   PingerThemes _themes;
   PingerStyles _styles;
+  PingerSymbols _symbols;
 
   PingerColors get colors => _colors;
   PingerDimens get dimens => _dimens;
   PingerThemes get themes => _themes;
   PingerStyles get styles => _styles;
+  PingerSymbols get symbols => _symbols;
 
   void load(Brightness brightness) {
     _dimens ??= PingerDimens();
     _styles ??= PingerStyles();
+    _symbols ??= PingerSymbols();
     if (brightness == Brightness.dark) {
       _colors = PingerDarkColors();
       _themes = PingerDarkThemes();
@@ -78,6 +81,8 @@ class PingerDarkColors extends PingerColors {
 }
 
 class PingerDimens {
+  final buttonThemeRadius = 12.0;
+
   const PingerDimens();
 }
 
@@ -103,6 +108,16 @@ abstract class PingerThemes {
         textTheme: _textTheme,
         buttonTheme: _buttonTheme,
         appBarTheme: _appBarTheme,
+        toggleButtonsTheme: _toggleButtonsTheme,
+      );
+
+  static TextTheme get _textTheme => TextTheme(
+        bodyText2: TextStyle(),
+        button: TextStyle(fontSize: 18.0),
+        subtitle1: TextStyle(color: R.colors.primary),
+      ).apply(
+        bodyColor: R.colors.primary,
+        displayColor: R.colors.primary,
       );
 
   static ButtonThemeData get _buttonTheme => ButtonThemeData(
@@ -111,7 +126,7 @@ abstract class PingerThemes {
         colorScheme: ColorScheme.light(primary: R.colors.primary),
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
         ),
       );
 
@@ -127,13 +142,13 @@ abstract class PingerThemes {
         ),
       );
 
-  static TextTheme get _textTheme => TextTheme(
-        bodyText2: TextStyle(),
-        button: TextStyle(fontSize: 18.0),
-        subtitle1: TextStyle(color: R.colors.primary),
-      ).apply(
-        bodyColor: R.colors.primary,
-        displayColor: R.colors.primary,
+  static ToggleButtonsThemeData get _toggleButtonsTheme =>
+      ToggleButtonsThemeData(
+        selectedColor: R.colors.secondary,
+        fillColor: R.colors.secondary.withOpacity(0.25),
+        splashColor: R.colors.primaryLight.withOpacity(0.5),
+        selectedBorderColor: R.colors.secondary,
+        borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
       );
 }
 
@@ -163,4 +178,8 @@ class PingerStyles {
       TextStyle(fontSize: 18.0, color: R.colors.gray);
   BorderSide get outlineButtonBorder =>
       BorderSide(color: R.colors.grayLight, width: 1.5);
+}
+
+class PingerSymbols {
+  String get infty => "∞";
 }

@@ -7,19 +7,16 @@ import 'package:path_provider/path_provider.dart' as path;
 
 @singleton
 class FaviconService {
-  static const Set<String> _validFormats = {
-    'image/png',
-    'image/vnd.microsoft.icon',
-  };
-
   final String baseUrl;
+  final Set<String> validFormats;
   final Duration expiryTime;
 
-  FaviconService(this.baseUrl, this.expiryTime);
+  FaviconService(this.baseUrl, this.validFormats, this.expiryTime);
 
   @factoryMethod
   factory FaviconService.create() => FaviconService(
-        "https://api.faviconkit.com/",
+        'https://api.faviconkit.com/',
+        {'image/png', 'image/vnd.microsoft.icon'},
         const Duration(days: 7),
       );
 
@@ -38,7 +35,7 @@ class FaviconService {
       final contentType = response.headers['content-type'];
       if (response.statusCode != 200) {
         throw FaviconError.SERVER_ERROR;
-      } else if (!_validFormats.contains(contentType)) {
+      } else if (!validFormats.contains(contentType)) {
         throw FaviconError.INVALID_FORMAT;
       }
       return response.bodyBytes;

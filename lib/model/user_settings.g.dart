@@ -48,7 +48,7 @@ Map<String, dynamic> _$_$_ShareSettingsToJson(_$_ShareSettings instance) =>
 
 _$_PingSettings _$_$_PingSettingsFromJson(Map<String, dynamic> json) {
   return _$_PingSettings(
-    count: json['count'] as int,
+    count: json['count'] == null ? null : NumSetting.fromJson(json['count']),
     packetSize: json['packetSize'] as int,
     interval: json['interval'] as int,
     timeout: json['timeout'] as int,
@@ -57,11 +57,32 @@ _$_PingSettings _$_$_PingSettingsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_PingSettingsToJson(_$_PingSettings instance) =>
     <String, dynamic>{
-      'count': instance.count,
+      'count': instance.count?.toJson(),
       'packetSize': instance.packetSize,
       'interval': instance.interval,
       'timeout': instance.timeout,
     };
+
+_$_FiniteNumSetting _$_$_FiniteNumSettingFromJson(Map<String, dynamic> json) {
+  return _$_FiniteNumSetting(
+    json['value'] as int,
+  );
+}
+
+Map<String, dynamic> _$_$_FiniteNumSettingToJson(
+        _$_FiniteNumSetting instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+    };
+
+_$_InfiniteNumSetting _$_$_InfiniteNumSettingFromJson(
+    Map<String, dynamic> json) {
+  return _$_InfiniteNumSetting();
+}
+
+Map<String, dynamic> _$_$_InfiniteNumSettingToJson(
+        _$_InfiniteNumSetting instance) =>
+    <String, dynamic>{};
 
 _$_TraySettings _$_$_TraySettingsFromJson(Map<String, dynamic> json) {
   return _$_TraySettings(

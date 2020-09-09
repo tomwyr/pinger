@@ -1,4 +1,4 @@
-extension ListExtensions<E> on List<E> {
+extension IterableExtensions<E> on Iterable<E> {
   Iterable<T> mapIndexed<T>(T f(int i, E e)) {
     int index = -1;
     return map((e) => f(++index, e));

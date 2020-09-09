@@ -7,10 +7,10 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/common/flex_child_scroll_view.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/ui/shared/three_bounce.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
@@ -196,9 +196,9 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
         onChanged: _onQueryChanged,
         style: TextStyle(fontSize: 18.0),
         inputFormatters: [
-          WhitelistingTextInputFormatter(RegExp(r"^[A-Za-z0-9-\.]+")),
-          BlacklistingTextInputFormatter(RegExp(r"^\.")),
-          BlacklistingTextInputFormatter("..", replacementString: "."),
+          FilteringTextInputFormatter.allow(RegExp(r"^[A-Za-z0-9-\.]+")),
+          FilteringTextInputFormatter.deny(RegExp(r"^\.")),
+          FilteringTextInputFormatter.deny("..", replacementString: "."),
           TextInputFormatter.withFunction(
             (_, value) => value.copyWith(text: value.text.toLowerCase()),
           )

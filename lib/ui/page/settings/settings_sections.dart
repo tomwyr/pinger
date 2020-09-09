@@ -29,26 +29,44 @@ class PingSettingsSection extends StatelessWidget {
           unit: S.current.settingsPingCountUnit,
           value: settings.count,
           onChanged: (it) => onChanged(settings.copyWith(count: it)),
+          allowInfinite: true,
         ),
         PingSettingItem(
           label: S.current.settingsPingPacketSizeLabel,
           unit: S.current.settingsPingPacketSizeUnit,
-          value: settings.packetSize,
-          onChanged: (it) => onChanged(settings.copyWith(packetSize: it)),
+          value: NumSetting.finite(settings.packetSize),
+          onChanged: (it) => _onFiniteSettingChanged(
+            it,
+            (value) => settings.copyWith(packetSize: value),
+          ),
         ),
         PingSettingItem(
           label: S.current.settingsPingIntervalLabel,
           unit: S.current.settingsPingIntervalUnit,
-          value: settings.interval,
-          onChanged: (it) => onChanged(settings.copyWith(interval: it)),
+          value: NumSetting.finite(settings.interval),
+          onChanged: (it) => _onFiniteSettingChanged(
+            it,
+            (value) => settings.copyWith(interval: value),
+          ),
         ),
         PingSettingItem(
           label: S.current.settingsPingTimeoutLabel,
           unit: S.current.settingsPingTimeoutUnit,
-          value: settings.timeout,
-          onChanged: (it) => onChanged(settings.copyWith(timeout: it)),
+          value: NumSetting.finite(settings.timeout),
+          onChanged: (it) => _onFiniteSettingChanged(
+            it,
+            (value) => settings.copyWith(timeout: value),
+          ),
         )
       ],
+    );
+  }
+
+  void _onFiniteSettingChanged(
+      NumSetting value, PingSettings updateSettings(int)) {
+    value.when(
+      finite: (it) => onChanged(updateSettings(it)),
+      infinite: () => throw ArgumentError("Expected finite setting value"),
     );
   }
 }

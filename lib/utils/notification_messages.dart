@@ -7,7 +7,7 @@ class NotificationMessages {
 
   String pausedTitle(String host) => S.current.notificationPausedTitle(host);
 
-  String pausedBody(int length, int count) =>
+  String pausedBody(int length, String count) =>
       S.current.notificationPausedBody(length, count);
 
   String doneTitle(String host) => S.current.notificationDoneTitle(host);

@@ -147,7 +147,10 @@ class PingGaugeArc extends StatefulWidget {
 
   factory PingGaugeArc.forSession(PingSession session, int gaugeMaxValue) {
     final progress = !session.status.isQuickCheck
-        ? session.values.length / session.settings.count
+        ? session.settings.count.when(
+            finite: (it) => session.values.length / it,
+            infinite: () => 0.0,
+          )
         : 0.0;
     final lastResult =
         session.values.lastWhere((it) => it != null, orElse: () => null);

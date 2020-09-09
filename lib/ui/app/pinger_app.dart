@@ -9,7 +9,7 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
-import 'package:pinger/ui/info_tray.dart';
+import 'package:pinger/ui/info_tray/info_tray.dart';
 import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 

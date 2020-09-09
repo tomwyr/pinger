@@ -1,6 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pinger/model/ping_session.dart';
+import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/utils/notification_messages.dart';
 
 @injectable
@@ -15,6 +16,7 @@ class NotificationsManager {
   void show(PingSession session) {
     switch (session.status) {
       case PingStatus.sessionStarted:
+      case PingStatus.quickCheckLocked:
         _showNotification(
           _messages.startedTitle(session.host),
           session.values.isNotEmpty
@@ -29,7 +31,7 @@ class NotificationsManager {
           _messages.pausedTitle(session.host),
           _messages.pausedBody(
             session.values.length,
-            session.settings.count,
+            FormatUtils.getCountLabel(session.settings.count),
           ),
         );
         break;
@@ -46,7 +48,6 @@ class NotificationsManager {
         );
         break;
       case PingStatus.initial:
-      case PingStatus.quickCheckDone:
       case PingStatus.quickCheckStarted:
         clear();
         break;

@@ -12,17 +12,27 @@ class PingService {
   final PingCommand _pingCommand;
 
   Stream<double> ping(String host, PingSettings settings) async* {
-    final count = settings.count ?? double.infinity;
-    for (var i = 0; i < count; i++) {
-      try {
-        yield await _pingCommand.execute(host, settings);
-      } catch (e, stackTrace) {
-        yield* Future<double>.error(e, stackTrace).asStream();
-      }
-      // Skip last interval to send done signal immidiately
-      if (i < count - 1) {
-        await Future.delayed(Duration(seconds: settings.interval));
-      }
+    final interval = Duration(seconds: settings.interval);
+    var currentCount = 0;
+    while (_shouldPingNext(settings, currentCount)) {
+      if (currentCount > 0) await Future.delayed(interval);
+      yield* _pingNext(host, settings);
+      ++currentCount;
+    }
+  }
+
+  bool _shouldPingNext(PingSettings settings, int currentCount) {
+    return settings.count.when(
+      finite: (it) => currentCount < it,
+      infinite: () => true,
+    );
+  }
+
+  Stream<double> _pingNext(String host, PingSettings settings) async* {
+    try {
+      yield await _pingCommand.execute(host, settings);
+    } catch (e, stackTrace) {
+      yield* Future<double>.error(e, stackTrace).asStream();
     }
   }
 }

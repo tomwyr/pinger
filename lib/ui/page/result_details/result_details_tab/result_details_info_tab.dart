@@ -34,7 +34,7 @@ class ResultDetailsInfoTab extends StatelessWidget {
               _buildHeader(S.current.pingInfoSettingsSubtitle),
               _buildItem(
                 S.current.settingsPingCountLabel,
-                "${result.settings.count} ${S.current.settingsPingCountUnit}",
+                "${FormatUtils.getCountLabel(result.settings.count)} ${S.current.settingsPingCountUnit}",
               ),
               _buildItem(
                 S.current.settingsPingPacketSizeLabel,

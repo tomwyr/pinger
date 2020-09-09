@@ -65,7 +65,7 @@ abstract class SettingsStoreBase with Store {
           attachLocation: false,
         ),
         pingSettings: PingSettings(
-          count: 10,
+          count: NumSetting.finite(10),
           packetSize: 56,
           interval: 1,
           timeout: 10,
