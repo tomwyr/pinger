@@ -172,6 +172,28 @@ mixin _$PingStore on PingStoreBase, Store {
   }
 
   @override
+  void lockQuickCheck() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.lockQuickCheck');
+    try {
+      return super.lockQuickCheck();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void unlockQuickCheck() {
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(
+        name: 'PingStoreBase.unlockQuickCheck');
+    try {
+      return super.unlockQuickCheck();
+    } finally {
+      _$PingStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void stopQuickCheck() {
     final _$actionInfo = _$PingStoreBaseActionController.startAction(
         name: 'PingStoreBase.stopQuickCheck');

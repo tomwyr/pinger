@@ -20,7 +20,8 @@ abstract class PingSession with _$PingSession {
 
 enum PingStatus {
   initial,
-  quickCheck,
+  quickCheckStarted,
+  quickCheckLocked,
   sessionStarted,
   sessionPaused,
   sessionDone,
@@ -30,13 +31,19 @@ extension PingStatusExtensions on PingStatus {
   bool get isNull => this == null;
 
   bool get isInitial => this == PingStatus.initial;
-  bool get isQuickCheck => this == PingStatus.quickCheck;
+  bool get isQuickCheckStarted => this == PingStatus.quickCheckStarted;
+  bool get isQuickCheckLocked => this == PingStatus.quickCheckLocked;
   bool get isSessionStarted => this == PingStatus.sessionStarted;
   bool get isSessionPaused => this == PingStatus.sessionPaused;
   bool get isSessionDone => this == PingStatus.sessionDone;
 
+  bool get isQuickCheck =>
+      this == PingStatus.quickCheckStarted ||
+      this == PingStatus.quickCheckLocked;
   bool get isStarted =>
-      this == PingStatus.quickCheck || this == PingStatus.sessionStarted;
+      this == PingStatus.quickCheckStarted ||
+      this == PingStatus.quickCheckLocked ||
+      this == PingStatus.sessionStarted;
   bool get isSession =>
       this == PingStatus.sessionStarted ||
       this == PingStatus.sessionPaused ||

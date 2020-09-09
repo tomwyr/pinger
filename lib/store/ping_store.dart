@@ -142,13 +142,27 @@ abstract class PingStoreBase with Store {
   void startQuickCheck() {
     _timer.reset();
     currentSession = currentSession.copyWith(
-      status: PingStatus.quickCheck,
+      status: PingStatus.quickCheckStarted,
       startTime: DateTime.now(),
       values: [],
     );
     final settings =
         currentSession.settings.copyWith(count: NumSetting.infinite());
     _startPing(settings: settings);
+  }
+
+  @action
+  void lockQuickCheck() {
+    currentSession = currentSession.copyWith(
+      status: PingStatus.quickCheckLocked,
+    );
+  }
+
+  @action
+  void unlockQuickCheck() {
+    currentSession = currentSession.copyWith(
+      status: PingStatus.quickCheckStarted,
+    );
   }
 
   @action

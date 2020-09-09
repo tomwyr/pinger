@@ -16,6 +16,7 @@ class NotificationsManager {
   void show(PingSession session) {
     switch (session.status) {
       case PingStatus.sessionStarted:
+      case PingStatus.quickCheckLocked:
         _showNotification(
           _messages.startedTitle(session.host),
           session.values.isNotEmpty
@@ -47,7 +48,7 @@ class NotificationsManager {
         );
         break;
       case PingStatus.initial:
-      case PingStatus.quickCheck:
+      case PingStatus.quickCheckStarted:
         clear();
         break;
     }

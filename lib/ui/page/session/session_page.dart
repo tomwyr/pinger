@@ -11,9 +11,9 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/fade_out.dart';
 import 'package:pinger/ui/page/base_page.dart';
+import 'package:pinger/ui/page/session/session_button/ping_button.dart';
 import 'package:pinger/ui/page/session/session_host_button.dart';
 import 'package:pinger/ui/page/session/session_host_header.dart';
-import 'package:pinger/ui/page/session/session_ping_button.dart';
 import 'package:pinger/ui/page/session/session_summary_section.dart';
 import 'package:pinger/ui/page/session/session_values/session_values_section.dart';
 import 'package:pinger/ui/page/settings/settings_sections.dart';
@@ -188,54 +188,76 @@ class _SessionPageState extends BaseState<SessionPage> {
     final secondaryIcon = showArchive ? Icons.archive : Icons.stop;
     switch (status) {
       case PingStatus.initial:
-        return SessionPingButton(
+        return PingButton(
           isExpanded: false,
+          isLocked: null,
           primaryIcon: Icons.play_arrow,
           onPrimaryPressed: _pingStore.startSession,
           onSecondaryPressed: null,
           secondaryIcon: secondaryIcon,
           onPrimaryLongPressStart: _pingStore.startQuickCheck,
           onPrimaryLongPressEnd: null,
+          onLockSwipe: null,
         );
-      case PingStatus.quickCheck:
-        return SessionPingButton(
+      case PingStatus.quickCheckStarted:
+        return PingButton(
           isExpanded: false,
+          isLocked: false,
           primaryIcon: Icons.lens,
           secondaryIcon: secondaryIcon,
           onPrimaryPressed: null,
           onSecondaryPressed: null,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: _pingStore.stopQuickCheck,
+          onLockSwipe: _pingStore.lockQuickCheck,
+        );
+      case PingStatus.quickCheckLocked:
+        return PingButton(
+          isExpanded: false,
+          isLocked: true,
+          primaryIcon: Icons.lens,
+          secondaryIcon: secondaryIcon,
+          onPrimaryPressed: null,
+          onSecondaryPressed: null,
+          onPrimaryLongPressStart: _pingStore.unlockQuickCheck,
+          onPrimaryLongPressEnd: null,
+          onLockSwipe: null,
         );
       case PingStatus.sessionStarted:
-        return SessionPingButton(
+        return PingButton(
           isExpanded: true,
+          isLocked: null,
           primaryIcon: Icons.pause,
           secondaryIcon: secondaryIcon,
           onPrimaryPressed: _pingStore.pauseSession,
           onSecondaryPressed: _pingStore.stopSession,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: null,
+          onLockSwipe: null,
         );
       case PingStatus.sessionPaused:
-        return SessionPingButton(
+        return PingButton(
           isExpanded: true,
+          isLocked: null,
           primaryIcon: Icons.play_arrow,
           secondaryIcon: Icons.stop,
           onPrimaryPressed: _pingStore.resumeSession,
           onSecondaryPressed: _pingStore.stopSession,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: null,
+          onLockSwipe: null,
         );
       case PingStatus.sessionDone:
-        return SessionPingButton(
+        return PingButton(
           isExpanded: canArchive,
+          isLocked: null,
           primaryIcon: Icons.undo,
           secondaryIcon: secondaryIcon,
           onPrimaryPressed: _pingStore.restartSession,
           onSecondaryPressed: canArchive ? _pingStore.archiveResult : null,
           onPrimaryLongPressStart: null,
           onPrimaryLongPressEnd: null,
+          onLockSwipe: null,
         );
     }
     throw StateError("Unhandled session status: $status");
