@@ -149,6 +149,7 @@ abstract class PingStoreBase with Store {
     final settings =
         currentSession.settings.copyWith(count: NumSetting.infinite());
     _startPing(settings: settings);
+    _deviceStore.triggerFeedback();
   }
 
   @action
@@ -163,6 +164,7 @@ abstract class PingStoreBase with Store {
     currentSession = currentSession.copyWith(
       status: PingStatus.quickCheckStarted,
     );
+    _deviceStore.triggerFeedback();
   }
 
   @action

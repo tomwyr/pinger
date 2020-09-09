@@ -1,4 +1,5 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
@@ -71,5 +72,9 @@ abstract class DeviceStoreBase with Store {
       }
       _lastSession = session;
     }
+  }
+
+  void triggerFeedback() {
+    Vibrate.feedback(FeedbackType.medium);
   }
 }

@@ -31,6 +31,7 @@ dependencies:
   connectivity: ^0.4.9
   app_settings: ^4.0.1+1
   permission_handler: ^5.0.1+1
+  flutter_vibrate : ^1.0.0
 
 dev_dependencies:
   flutter_test:
