@@ -61,7 +61,7 @@ class _SessionPageState extends BaseState<SessionPage> {
                 alignment: Alignment.topCenter,
                 child: AnimatedSwitcher(
                   duration: _animDuration,
-                  child: session.status.isInitial && prevSession == null
+                  child: session.status.isInitial && prevSession?.values == null
                       ? _buildStartPrompt()
                       : _buildResults(
                           session.status.isInitial ? prevSession : session,

@@ -58,9 +58,11 @@ class _InfoTrayState extends State<InfoTray>
             onButtonPressed: _onSessionItemButtonPressed,
             onPressed: _onSessionItemPressed,
           ),
-          isVisible: (it) =>
-              (it?.session?.status?.isSession ?? false) &&
-              (it.route != null && it.route != PingerRoutes.SESSION),
+          isVisible: (it) {
+            final status = it?.session?.status;
+            return (status.isSession || status.isQuickCheck) &&
+                it.route != PingerRoutes.SESSION;
+          },
         ),
       };
 
@@ -122,7 +124,7 @@ class _InfoTrayState extends State<InfoTray>
       if (_controller.isVisible) _controller.hide();
     } else {
       if (!_controller.isVisible) _controller.show();
-      final added = _visibleItems.toSet()..removeAll(visibleItems);
+      final added = visibleItems.toSet()..removeAll(_visibleItems);
       final settings = _settingsStore.userSettings.traySettings;
       final state = _controller.sheetState;
       if (added.isNotEmpty &&

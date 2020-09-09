@@ -55,7 +55,7 @@ abstract class PingStoreBase with Store {
   StreamSubscription _pingSub;
   StreamSubscription _timerSub;
   Stopwatch _timer;
-  PingStatus _lastStatus;
+  PingSettings _sessionLastSettings;
   bool _didShareResult = false;
 
   @observable
@@ -79,7 +79,8 @@ abstract class PingStoreBase with Store {
 
   @computed
   bool get didChangeSettings =>
-      currentSession.settings != _settingsStore.userSettings.pingSettings;
+      currentSession.settings != _settingsStore.userSettings.pingSettings &&
+      !currentSession.status.isQuickCheck;
 
   @computed
   String get currentHost => currentSession?.host;
@@ -101,12 +102,11 @@ abstract class PingStoreBase with Store {
   }
 
   void _handleStatusChange(PingStatus status) {
-    if (_lastStatus != status) prevStatus = _lastStatus;
-    if (_lastStatus.isInitial && status.isStarted) {
+    if (prevStatus.isInitial && status.isStarted) {
       _hostsStore.incrementStats(currentSession.host);
     }
     if (status.isQuickCheckStarted) _deviceStore.triggerFeedback();
-    _lastStatus = status;
+    prevStatus = status;
   }
 
   @action
@@ -117,12 +117,24 @@ abstract class PingStoreBase with Store {
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
-      settings:
-          currentSession?.settings ?? _settingsStore.userSettings.pingSettings,
+      settings: _getInitSessionSettings(),
     );
     pingDuration = Duration.zero;
     _archivedId = null;
     _timer = Stopwatch();
+  }
+
+  PingSettings _getInitSessionSettings() {
+    PingSettings settings;
+    if (_sessionLastSettings != null) {
+      settings = _sessionLastSettings;
+      _sessionLastSettings = null;
+    } else if (currentSession != null) {
+      settings = currentSession.settings;
+    } else {
+      settings = _settingsStore.userSettings.pingSettings;
+    }
+    return settings;
   }
 
   @action
@@ -138,14 +150,14 @@ abstract class PingStoreBase with Store {
   @action
   void startQuickCheck() {
     _timer.reset();
+    _sessionLastSettings = currentSession.settings;
     currentSession = currentSession.copyWith(
+      settings: currentSession.settings.copyWith(count: NumSetting.infinite()),
       status: PingStatus.quickCheckStarted,
       startTime: DateTime.now(),
       values: [],
     );
-    final settings =
-        currentSession.settings.copyWith(count: NumSetting.infinite());
-    _startPing(settings: settings);
+    _startPing();
   }
 
   @action
