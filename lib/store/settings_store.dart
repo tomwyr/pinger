@@ -73,7 +73,7 @@ abstract class SettingsStoreBase with Store {
       );
 
   TraySettings _createDefaultTraySettings() =>
-      TraySettings(enabled: true, autoReveal: true);
+      TraySettings(enabled: true, autoReveal: false);
 
   @action
   Future<void> updateSettings(UserSettings settings) async {
