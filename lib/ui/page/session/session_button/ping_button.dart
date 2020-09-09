@@ -6,10 +6,10 @@ import 'package:pinger/ui/page/session/session_button/ping_lock_indicator.dart';
 class PingButton extends StatefulWidget {
   final Duration animDuration = const Duration(milliseconds: 500);
 
-  final bool isExpanded;
-  final bool isLocked;
   final IconData primaryIcon;
   final IconData secondaryIcon;
+  final bool isExpanded;
+  final bool isLocked;
   final VoidCallback onPrimaryPressed;
   final VoidCallback onPrimaryLongPressStart;
   final VoidCallback onPrimaryLongPressEnd;
@@ -18,15 +18,15 @@ class PingButton extends StatefulWidget {
 
   const PingButton({
     Key key,
-    @required this.isExpanded,
-    @required this.isLocked,
     @required this.primaryIcon,
     @required this.secondaryIcon,
-    @required this.onPrimaryPressed,
-    @required this.onPrimaryLongPressStart,
-    @required this.onPrimaryLongPressEnd,
-    @required this.onSecondaryPressed,
-    @required this.onLockSwipe,
+    @required this.isExpanded,
+    this.isLocked,
+    this.onPrimaryPressed,
+    this.onPrimaryLongPressStart,
+    this.onPrimaryLongPressEnd,
+    this.onSecondaryPressed,
+    this.onLockSwipe,
   }) : super(key: key);
 
   @override
