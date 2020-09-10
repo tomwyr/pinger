@@ -78,20 +78,17 @@ class InfoTraySessionItem extends StatelessWidget {
           for (final item in _createChartBarItems(constraints))
             Padding(
               key: ValueKey(item.key),
-              padding: EdgeInsets.only(left: item.index == 0 ? 0.0 : gapWidth),
+              padding: EdgeInsets.only(left: item.margin),
               child: TweenAnimationBuilder<double>(
                 duration: animDuration,
                 tween: Tween(
-                    begin: 0.0,
-                    end: item.value != null
-                        ? item.value / item.maxValue * item.size.height
-                        : item.size.height),
+                  begin: 0.0,
+                  end: item.size.height,
+                ),
                 builder: (_, value, __) => Container(
                   width: item.size.width,
                   height: value,
-                  color: item.value != null
-                      ? Colors.white
-                      : Colors.white.withOpacity(0.3),
+                  color: item.color,
                 ),
               ),
             )
@@ -109,15 +106,18 @@ class InfoTraySessionItem extends StatelessWidget {
         session.status.isSessionDone ? barCount : barCount - 1;
     final firstVisible = max(session.values.length - visibleBarCount, 0);
     final visibleValues = session.values.skip(firstVisible);
-    final visibleMax = PingStats.fromValues(visibleValues).max;
     final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);
-    final barSize = Size(barsSpace / barCount, constraints.maxHeight);
+    final barWidth = barsSpace / barCount;
+    final visibleMax = PingStats.fromValues(visibleValues)?.max ?? 0.0;
+    final barHeightRatio = constraints.maxHeight / visibleMax;
     return visibleValues.mapIndexed((index, value) => _ChartBarItem(
           key: index + firstVisible,
-          index: index,
-          value: value,
-          maxValue: visibleMax,
-          size: barSize,
+          margin: index == 0 ? 0.0 : gapWidth,
+          color: value != null ? Colors.white : Colors.white.withOpacity(0.3),
+          size: Size(
+            barWidth,
+            value != null ? value * barHeightRatio : constraints.maxHeight,
+          ),
         ));
   }
 
@@ -272,16 +272,14 @@ class InfoTraySessionItem extends StatelessWidget {
 
 class _ChartBarItem {
   final int key;
-  final int index;
-  final int value;
-  final int maxValue;
+  final double margin;
+  final Color color;
   final Size size;
 
   _ChartBarItem({
     @required this.key,
-    @required this.index,
-    @required this.value,
-    @required this.maxValue,
+    @required this.margin,
+    @required this.color,
     @required this.size,
   });
 }
