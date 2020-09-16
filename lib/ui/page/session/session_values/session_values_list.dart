@@ -21,8 +21,9 @@ class SessionValuesList extends StatefulWidget {
 
 class _SessionValuesListState extends State<SessionValuesList>
     with SingleTickerProviderStateMixin {
-  final _listKey = GlobalKey<AnimatedListState>();
   final _insertDuration = const Duration(milliseconds: 500);
+
+  var _listKey = GlobalKey<AnimatedListState>();
 
   ScrollController _scroller;
   ValueNotifier<bool> _didReachHead;
@@ -44,9 +45,14 @@ class _SessionValuesListState extends State<SessionValuesList>
   @override
   void didUpdateWidget(SessionValuesList old) {
     super.didUpdateWidget(old);
-    final lengthDiff = widget.values.length - old.values.length;
-    for (var i = 0; i < lengthDiff; i++) {
-      _listKey.currentState.insertItem(0, duration: _insertDuration);
+    if (widget.values.isEmpty && old.values.isNotEmpty) {
+      // Reassign key to drop old state that keeps reference to previous results
+      _listKey = GlobalKey();
+    } else {
+      final lengthDiff = widget.values.length - old.values.length;
+      for (var i = 0; i < lengthDiff; i++) {
+        _listKey.currentState.insertItem(0, duration: _insertDuration);
+      }
     }
   }
 
