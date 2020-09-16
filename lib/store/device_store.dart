@@ -8,11 +8,13 @@ import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/service/notifications_manager.dart';
 import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/utils/lifecycle_notifier.dart';
 
 part 'device_store.g.dart';
 
 @singleton
 class DeviceStore extends DeviceStoreBase with _$DeviceStore {
+  final LifecycleNotifier _lifecycleNotifier;
   final Connectivity _connectivity;
   final Location _location;
   final NotificationsManager _notificationsManager;
@@ -20,6 +22,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
   final PermissionStore _notificationPermissionStore;
 
   DeviceStore(
+    this._lifecycleNotifier,
     this._connectivity,
     this._location,
     this._notificationsManager,
@@ -29,6 +32,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
 }
 
 abstract class DeviceStoreBase with Store {
+  LifecycleNotifier get _lifecycleNotifier;
   Connectivity get _connectivity;
   Location get _location;
   NotificationsManager get _notificationsManager;
@@ -42,11 +46,14 @@ abstract class DeviceStoreBase with Store {
 
   @action
   Future<void> init() async {
-    _connectivity.onConnectivityChanged
-        .distinct()
-        .listen(_onConnectivityChanged);
-    await _connectivity.checkConnectivity().then(_onConnectivityChanged);
+    _connectivity.onConnectivityChanged.listen(_onConnectivityChanged);
+    _lifecycleNotifier.register(LifecycleAware(onResumed: _syncNetworkStatus));
+    await _syncNetworkStatus();
     await _location.changeSettings(accuracy: LocationAccuracy.balanced);
+  }
+
+  Future<void> _syncNetworkStatus() async {
+    await _connectivity.checkConnectivity().then(_onConnectivityChanged);
   }
 
   void _onConnectivityChanged(ConnectivityResult result) {

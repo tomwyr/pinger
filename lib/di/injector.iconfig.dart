@@ -79,6 +79,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
       LocationPermissionStore(g<SettingsStore>(), g<LifecycleNotifier>()),
       instanceName: 'location');
   g.registerSingleton<DeviceStore>(DeviceStore(
+    g<LifecycleNotifier>(),
     g<Connectivity>(),
     g<Location>(),
     g<NotificationsManager>(),
