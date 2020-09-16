@@ -18,6 +18,7 @@ import 'package:package_info/package_info.dart';
 import 'package:pinger/service/ping_service.dart';
 import 'package:pinger/service/pinger_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pinger/service/vibration.dart';
 import 'package:pinger/service/pinger_prefs.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
@@ -46,6 +47,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
   g.registerFactory<PingerApi>(() => PingerApi(g<Firestore>()));
   final sharedPreferences = await injectorModule.sharedPreferences;
   g.registerFactory<SharedPreferences>(() => sharedPreferences);
+  g.registerFactory<Vibration>(() => Vibration());
 
   //Register test Dependencies --------
   if (environment == 'test') {
@@ -82,6 +84,7 @@ Future<void> $initGetIt(GetIt g, {String environment}) async {
     g<LifecycleNotifier>(),
     g<Connectivity>(),
     g<Location>(),
+    g<Vibration>(),
     g<NotificationsManager>(),
     g<SettingsStore>(),
     g<PermissionStore>(instanceName: 'notification'),

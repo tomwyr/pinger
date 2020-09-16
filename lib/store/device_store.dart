@@ -1,11 +1,11 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/service/notifications_manager.dart';
+import 'package:pinger/service/vibration.dart';
 import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/lifecycle_notifier.dart';
@@ -17,6 +17,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
   final LifecycleNotifier _lifecycleNotifier;
   final Connectivity _connectivity;
   final Location _location;
+  final Vibration _vibration;
   final NotificationsManager _notificationsManager;
   final SettingsStore _settingsStore;
   final PermissionStore _notificationPermissionStore;
@@ -25,6 +26,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
     this._lifecycleNotifier,
     this._connectivity,
     this._location,
+    this._vibration,
     this._notificationsManager,
     this._settingsStore,
     @Named(PermissionStore.notification) this._notificationPermissionStore,
@@ -35,6 +37,7 @@ abstract class DeviceStoreBase with Store {
   LifecycleNotifier get _lifecycleNotifier;
   Connectivity get _connectivity;
   Location get _location;
+  Vibration get _vibration;
   NotificationsManager get _notificationsManager;
   SettingsStore get _settingsStore;
   PermissionStore get _notificationPermissionStore;
@@ -81,7 +84,5 @@ abstract class DeviceStoreBase with Store {
     }
   }
 
-  void triggerFeedback() {
-    Vibrate.feedback(FeedbackType.medium);
-  }
+  void triggerFeedback() => _vibration.feedback();
 }
