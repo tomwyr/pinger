@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -156,7 +154,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
             ),
             child: globalValues.length > 1
                 ? GlobalDistributionChart(
-                    data: _groupChartData(globalValues),
+                    values: globalValues,
                     dataCount: widget.globalResults.totalCount,
                     userResult: userValue,
                   )
@@ -269,20 +267,5 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         return stats.max;
     }
     throw StateError("Unhandled $UserResultType: $_resultType.");
-  }
-
-  List<PingValueCount> _groupChartData(Map<int, int> values) {
-    final pings = values.keys.toList()..sort();
-    final groupsCount = min(10, pings.last - pings.first);
-    final groupSpan = (pings.last - pings.first) ~/ groupsCount;
-    final groups = <int, int>{};
-    values.forEach((ping, count) {
-      final groupKey = ((ping ~/ groupSpan + 0.5) * groupSpan).toInt();
-      groups[groupKey] ??= 0;
-      groups[groupKey] += count;
-    });
-    return groups.entries
-        .map((it) => PingValueCount(it.key, it.value))
-        .toList();
   }
 }

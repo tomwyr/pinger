@@ -11,6 +11,8 @@ class GlobalDistributionChart extends StatelessWidget {
   final double minY;
   final double maxY;
   final List<FlSpot> spots;
+  final String Function(double) getLabelX;
+  final String Function(double) getLabelY;
 
   const GlobalDistributionChart._({
     Key key,
@@ -20,19 +22,23 @@ class GlobalDistributionChart extends StatelessWidget {
     @required this.minY,
     @required this.maxY,
     @required this.spots,
+    @required this.getLabelX,
+    @required this.getLabelY,
   }) : super(key: key);
 
   factory GlobalDistributionChart({
     Key key,
-    @required List<PingValueCount> data,
+    @required Map<int, int> values,
     @required int dataCount,
     @required int userResult,
   }) {
-    final spots = data
+    final firstGroupSize = _calcFistGroupSize(values);
+    final spots = _groupChartData(values, firstGroupSize)
         .map((it) => FlSpot(it.value.toDouble(), it.count / dataCount * 100))
         .toList()
           ..sort((e1, e2) => e1.x.compareTo(e2.x));
-    final highlightIndex = _insertUserResultSpot(userResult, spots);
+    final highlightIndex =
+        _insertUserResultSpot(userResult, firstGroupSize, spots);
     return GlobalDistributionChart._(
       key: key,
       highlightIndex: highlightIndex,
@@ -41,28 +47,59 @@ class GlobalDistributionChart extends StatelessWidget {
       minY: 0.0,
       maxY: (spots.map((it) => it.y).fold(0.0, max) / 10).ceil() * 10.0,
       spots: spots,
+      getLabelX: (it) => it == 0.0
+          ? "0"
+          : pow(_logBase, it + firstGroupSize - 1).toStringAsFixed(0),
+      getLabelY: (it) => it.toInt().toString(),
     );
   }
 
-  static int _insertUserResultSpot(int result, List<FlSpot> spots) {
+  static final double _logBase = 1.25;
+
+  static int _calcFistGroupSize(Map<int, int> values) {
+    final maxValue = values.keys.reduce(max);
+    if (maxValue == 0) return 0;
+    return _calcResultLog(log(maxValue)).toInt();
+  }
+
+  static List<PingValueCount> _groupChartData(
+      Map<int, int> values, int firstSize) {
+    final groups = <int, int>{};
+    values.forEach((value, count) {
+      final groupKey = value > 0
+          ? max(_calcResultLog(value).round(), firstSize) - firstSize + 1
+          : 0;
+      groups[groupKey] ??= 0;
+      groups[groupKey] += count;
+    });
+    return groups.entries
+        .map((it) => PingValueCount(it.key, it.value))
+        .toList();
+  }
+
+  static int _insertUserResultSpot(
+      int value, int firstGroupSize, List<FlSpot> spots) {
+    final valueX = value > 0 ? _calcResultLog(value) - firstGroupSize + 1 : 0;
     var spot = FlSpot.nullSpot;
-    var index = spots.indexWhere((it) => it.x >= result);
+    var index = spots.indexWhere((it) => it.x >= valueX);
     if (index == 0) {
       spot = spots.first;
     } else if (index == -1) {
       index = spots.length - 1;
       spot = spots.last;
-    } else if (spots[index].x == result) {
+    } else if (spots[index].x == valueX) {
       spot = spots[index];
     } else {
       final s1 = spots[index - 1], s2 = spots[index];
-      final x = result.toDouble().clamp(spots.first.x, spots.last.x);
-      final y = s1.y + (s2.y - s1.y) * (result - s1.x) / (s2.x - s1.x);
+      final x = valueX.clamp(spots.first.x, spots.last.x);
+      final y = s1.y + (s2.y - s1.y) * (valueX - s1.x) / (s2.x - s1.x);
       spot = FlSpot(x, y);
     }
     spots.insert(index, spot);
     return index;
   }
+
+  static double _calcResultLog(num value) => log(value) / log(_logBase);
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +112,13 @@ class GlobalDistributionChart extends StatelessWidget {
         leftTitles: SideTitles(
           showTitles: true,
           interval: (maxY - minY) / 4,
-          getTitles: (it) => it.toInt().toString(),
+          getTitles: getLabelY,
           textStyle: R.styles.chartLabel,
         ),
         bottomTitles: SideTitles(
           showTitles: true,
-          interval: (maxX - minX) / 5,
-          getTitles: (it) => it.toStringAsFixed(0),
+          interval: (maxX - minX) / 6,
+          getTitles: getLabelX,
           textStyle: R.styles.chartLabel,
         ),
       ),
