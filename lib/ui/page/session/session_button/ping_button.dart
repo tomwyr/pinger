@@ -98,7 +98,7 @@ class _PingButtonState extends State<PingButton> {
       _isSwiping = false;
       if (_lockSwipe.value == 1.0 && _didLongPress) {
         _didLockSwipe = true;
-        widget.onLockSwipe();
+        widget.onLockSwipe?.call();
       }
       _lockSwipe.value = 0.0;
       _swipeTotalDelta = 0.0;
