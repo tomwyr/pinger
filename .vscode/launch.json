@@ -5,12 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tst",
-            "request": "launch",
-            "type": "dart",
-            "args": ["--flavor", "tst", "--dart-define", "APP_ENV=test"]
-        },
-        {
             "name": "dev",
             "request": "launch",
             "type": "dart",
