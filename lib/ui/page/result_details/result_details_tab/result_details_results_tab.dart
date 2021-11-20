@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/ui/page/session/session_summary_section.dart';
@@ -11,15 +10,15 @@ import 'package:pinger/ui/shared/view_type/view_type_row.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class ResultDetailsResultsTab extends StatefulWidget {
-  final List<int> values;
+  final List<int?> values;
   final PingStats stats;
   final Widget Function(List<Widget> slivers) scrollBuilder;
 
   const ResultDetailsResultsTab({
-    Key key,
-    @required this.values,
-    @required this.stats,
-    @required this.scrollBuilder,
+    Key? key,
+    required this.values,
+    required this.stats,
+    required this.scrollBuilder,
   }) : super(key: key);
 
   @override
@@ -67,7 +66,7 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
                     PingValuesType.chart: S.current.viewTypeChartLabel,
                   },
                   selection: _viewType,
-                  onChanged: (it) => setState(() => _viewType = it),
+                  onChanged: (dynamic it) => setState(() => _viewType = it),
                 ),
               ),
             ]),

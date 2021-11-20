@@ -38,14 +38,14 @@ class _SessionPageState extends BaseState<SessionPage> {
     return Scaffold(
       // Ignore resize caused by hiding keyboard
       // when navigating back from search page.
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Observer(builder: (_) {
-          final session = _pingStore.currentSession;
+          final session = _pingStore.currentSession!;
           final sessionDuration = _pingStore.pingDuration;
           final prevSession = _pingStore.prevSession;
           final canArchive = _pingStore.canArchiveResult;
-          final isFavorite = _hostsStore.favorites.contains(session.host);
+          final isFavorite = _hostsStore.favorites!.contains(session.host);
           final didChangeSettings = _pingStore.didChangeSettings;
           final status = session.status;
           final prevStatus = _pingStore.prevStatus;
@@ -64,7 +64,7 @@ class _SessionPageState extends BaseState<SessionPage> {
                   child: session.status.isInitial && prevSession?.values == null
                       ? _buildStartPrompt()
                       : _buildResults(
-                          session.status.isInitial ? prevSession : session,
+                          session.status.isInitial ? prevSession! : session,
                           sessionDuration,
                           status.isInitial,
                         ),
@@ -134,7 +134,7 @@ class _SessionPageState extends BaseState<SessionPage> {
           padding: const EdgeInsets.symmetric(vertical: 24.0),
           child: PingSettingsSection(
             showHeader: false,
-            settings: _pingStore.currentSession.settings,
+            settings: _pingStore.currentSession!.settings,
             onChanged: _pingStore.updateSettings,
           ),
         ),
@@ -155,7 +155,7 @@ class _SessionPageState extends BaseState<SessionPage> {
   }
 
   Widget _buildResults(
-      PingSession session, Duration sessionDuration, bool isExpanded) {
+      PingSession session, Duration? sessionDuration, bool isExpanded) {
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 8.0),
@@ -183,7 +183,7 @@ class _SessionPageState extends BaseState<SessionPage> {
   }
 
   Widget _buildPingButton(
-      PingStatus status, PingStatus prevStatus, bool canArchive) {
+      PingStatus status, PingStatus? prevStatus, bool canArchive) {
     final showArchive = status.isSessionDone || prevStatus.isSessionDone;
     final secondaryIcon = showArchive ? Icons.archive : Icons.stop;
     switch (status) {
@@ -237,6 +237,5 @@ class _SessionPageState extends BaseState<SessionPage> {
           onSecondaryPressed: canArchive ? _pingStore.archiveResult : null,
         );
     }
-    throw StateError("Unhandled session status: $status");
   }
 }

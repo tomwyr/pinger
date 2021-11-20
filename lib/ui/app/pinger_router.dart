@@ -16,29 +16,29 @@ import 'package:pinger/ui/page/session/session_page.dart';
 import 'package:pinger/ui/page/settings/settings_page.dart';
 
 abstract class PingerRouter {
-  String get currentRoute;
+  String? get currentRoute;
 
-  Stream<String> get route;
+  Stream<String?> get route;
 
-  Future<T> show<T>(RouteConfig config);
+  Future<T?> show<T>(RouteConfig config);
 
-  void pop<T>([T result]);
+  void pop<T>([T? result]);
 }
 
 class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   @override
-  String get currentRoute => _currentRoute;
-  String _currentRoute;
+  String? get currentRoute => _currentRoute;
+  String? _currentRoute;
 
   @override
-  Stream<String> get route => _routeController.stream;
-  StreamController<String> _routeController = StreamController.broadcast();
+  Stream<String?> get route => _routeController.stream;
+  StreamController<String?> _routeController = StreamController.broadcast();
 
   @override
-  void pop<T>([T result]) => navigator.pop(result);
+  void pop<T>([T? result]) => navigator!.pop(result);
 
   @override
-  Future<T> show<T>(RouteConfig config) async {
+  Future<T?> show<T>(RouteConfig config) async {
     if (config is _PageRouteConfig) {
       switch (config.name) {
         case PingerRoutes.INIT:
@@ -65,21 +65,21 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
     throw ArgumentError("Unhandled route config with name: ${config.name}");
   }
 
-  Future<T> _push<T>(_PageRouteConfig config) =>
-      navigator.pushNamed(config.name, arguments: config.widget);
+  Future<T?> _push<T>(_PageRouteConfig config) =>
+      navigator!.pushNamed(config.name, arguments: config.widget);
 
-  Future<T> _replace<T>(_PageRouteConfig config) =>
-      navigator.pushReplacementNamed(config.name, arguments: config.widget);
+  Future<T?> _replace<T>(_PageRouteConfig config) =>
+      navigator!.pushReplacementNamed(config.name, arguments: config.widget);
 
-  Future<T> _pushOnHome<T>(_PageRouteConfig config) =>
-      navigator.pushNamedAndRemoveUntil(
+  Future<T?> _pushOnHome<T>(_PageRouteConfig config) =>
+      navigator!.pushNamedAndRemoveUntil(
         config.name,
         (it) => it.settings.name == PingerRoutes.HOME,
         arguments: config.widget,
       );
 
-  Future<T> _showSheet<T>(_SheetRouteConfig config) => showGeneralDialog(
-        context: navigator.overlay.context,
+  Future<T?> _showSheet<T>(_SheetRouteConfig config) => showGeneralDialog(
+        context: navigator!.overlay!.context,
         routeSettings: RouteSettings(name: config.name),
         barrierDismissible: false,
         barrierLabel: "PingerSheet",
@@ -89,15 +89,15 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
       );
 
   @override
-  void didPush(Route route, Route previousRoute) => _onRouteChanged(route);
+  void didPush(Route route, Route? previousRoute) => _onRouteChanged(route);
 
   @override
-  void didPop(Route route, Route previousRoute) =>
-      _onRouteChanged(previousRoute);
+  void didPop(Route route, Route? previousRoute) =>
+      _onRouteChanged(previousRoute!);
 
   @override
-  void didReplace({Route newRoute, Route oldRoute}) =>
-      _onRouteChanged(newRoute);
+  void didReplace({Route? newRoute, Route? oldRoute}) =>
+      _onRouteChanged(newRoute!);
 
   void _onRouteChanged(Route activeRoute) {
     _currentRoute = activeRoute.settings.name;
@@ -112,7 +112,7 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
     return MaterialPageRoute(
       settings: RouteSettings(name: settings.name),
       builder: (_) =>
-          settings.name == PingerRoutes.INIT ? InitPage() : settings.arguments,
+          settings.name == PingerRoutes.INIT ? InitPage() : settings.arguments as Widget,
     );
   }
 }
@@ -133,7 +133,7 @@ class RouteConfig {
   factory RouteConfig.archive() =>
       _PageRouteConfig(PingerRoutes.ARCHIVE, ArchivePage());
 
-  factory RouteConfig.results(PingResult result) =>
+  factory RouteConfig.results(PingResult? result) =>
       _PageRouteConfig(PingerRoutes.RESULTS, ResultDetailsPage(result: result));
 
   factory RouteConfig.favorites() =>
@@ -142,7 +142,7 @@ class RouteConfig {
   factory RouteConfig.recents() =>
       _PageRouteConfig(PingerRoutes.RECENTS, RecentsPage());
 
-  factory RouteConfig.search([String initialQuery]) => _PageRouteConfig(
+  factory RouteConfig.search([String? initialQuery]) => _PageRouteConfig(
       PingerRoutes.SEARCH, SearchPage(initialQuery: initialQuery));
 
   factory RouteConfig.session() =>

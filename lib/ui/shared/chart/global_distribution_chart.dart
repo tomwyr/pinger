@@ -15,28 +15,28 @@ class GlobalDistributionChart extends StatelessWidget {
   final String Function(double) getLabelY;
 
   const GlobalDistributionChart._({
-    Key key,
-    @required this.highlightIndex,
-    @required this.minX,
-    @required this.maxX,
-    @required this.minY,
-    @required this.maxY,
-    @required this.spots,
-    @required this.getLabelX,
-    @required this.getLabelY,
+    Key? key,
+    required this.highlightIndex,
+    required this.minX,
+    required this.maxX,
+    required this.minY,
+    required this.maxY,
+    required this.spots,
+    required this.getLabelX,
+    required this.getLabelY,
   }) : super(key: key);
 
   factory GlobalDistributionChart({
-    Key key,
-    @required Map<int, int> values,
-    @required int dataCount,
-    @required int userResult,
+    Key? key,
+    required Map<int, int> values,
+    required int dataCount,
+    required int userResult,
   }) {
     final firstGroupSize = _calcFistGroupSize(values);
     final spots = _groupChartData(values, firstGroupSize)
         .map((it) => FlSpot(it.value.toDouble(), it.count / dataCount * 100))
         .toList()
-          ..sort((e1, e2) => e1.x.compareTo(e2.x));
+      ..sort((e1, e2) => e1.x.compareTo(e2.x));
     final highlightIndex =
         _insertUserResultSpot(userResult, firstGroupSize, spots);
     return GlobalDistributionChart._(
@@ -69,8 +69,8 @@ class GlobalDistributionChart extends StatelessWidget {
       final groupKey = value > 0
           ? max(_calcResultLog(value).round(), firstSize) - firstSize + 1
           : 0;
-      groups[groupKey] ??= 0;
-      groups[groupKey] += count;
+      final groupCount = groups[groupKey] ?? 0;
+      groups[groupKey] = groupCount + count;
     });
     return groups.entries
         .map((it) => PingValueCount(it.key, it.value))
@@ -93,7 +93,7 @@ class GlobalDistributionChart extends StatelessWidget {
       final s1 = spots[index - 1], s2 = spots[index];
       final x = valueX.clamp(spots.first.x, spots.last.x);
       final y = s1.y + (s2.y - s1.y) * (valueX - s1.x) / (s2.x - s1.x);
-      spot = FlSpot(x, y);
+      spot = FlSpot(x as double, y);
     }
     spots.insert(index, spot);
     return index;
@@ -113,13 +113,13 @@ class GlobalDistributionChart extends StatelessWidget {
           showTitles: true,
           interval: (maxY - minY) / 4,
           getTitles: getLabelY,
-          textStyle: R.styles.chartLabel,
+          getTextStyles: (_, __) => R.styles.chartLabel,
         ),
         bottomTitles: SideTitles(
           showTitles: true,
           interval: (maxX - minX) / 6,
           getTitles: getLabelX,
-          textStyle: R.styles.chartLabel,
+          getTextStyles: (_, __) => R.styles.chartLabel,
         ),
       ),
       axisTitleData: FlAxisTitleData(show: false),

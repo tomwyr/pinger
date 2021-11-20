@@ -6,14 +6,14 @@ class SessionHostButton extends StatelessWidget {
   final String label;
   final bool enabled;
   final bool active;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const SessionHostButton({
-    Key key,
-    @required this.icon,
-    @required this.label,
-    @required this.enabled,
-    @required this.active,
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.enabled,
+    required this.active,
     this.onPressed,
   }) : super(key: key);
 
@@ -28,13 +28,16 @@ class SessionHostButton extends StatelessWidget {
           children: <Widget>[
             SizedBox.fromSize(
               size: Size.square(40.0),
-              child: OutlineButton(
-                padding: EdgeInsets.zero,
-                shape: CircleBorder(),
-                color: color,
-                borderSide: BorderSide(color: color),
-                highlightedBorderColor: color,
-                splashColor: color.withOpacity(0.5),
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  shape: CircleBorder(),
+                  side: BorderSide(color: color),
+                  // TODO verify how to apply colors
+                  // color: color,
+                  // highlightedBorderColor: color,
+                  // splashColor: color.withOpacity(0.5),
+                ),
                 onPressed: onPressed,
                 child: Icon(icon, color: color),
               ),

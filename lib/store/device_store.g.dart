@@ -12,13 +12,13 @@ mixin _$DeviceStore on DeviceStoreBase, Store {
   final _$isNetworkEnabledAtom = Atom(name: 'DeviceStoreBase.isNetworkEnabled');
 
   @override
-  bool get isNetworkEnabled {
+  bool? get isNetworkEnabled {
     _$isNetworkEnabledAtom.reportRead();
     return super.isNetworkEnabled;
   }
 
   @override
-  set isNetworkEnabled(bool value) {
+  set isNetworkEnabled(bool? value) {
     _$isNetworkEnabledAtom.reportWrite(value, super.isNetworkEnabled, () {
       super.isNetworkEnabled = value;
     });

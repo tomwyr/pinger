@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'ping_session.dart';
 
@@ -9,15 +10,19 @@ part of 'ping_session.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
 class _$PingSessionTearOff {
   const _$PingSessionTearOff();
 
   _PingSession call(
-      {@required String host,
-      @required PingStatus status,
-      @required PingSettings settings,
-      List<int> values,
-      DateTime startTime}) {
+      {required String host,
+      required PingStatus status,
+      required PingSettings settings,
+      List<int?>? values,
+      DateTime? startTime}) {
     return _PingSession(
       host: host,
       status: status,
@@ -28,19 +33,23 @@ class _$PingSessionTearOff {
   }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $PingSession = _$PingSessionTearOff();
 
+/// @nodoc
 mixin _$PingSession {
-  String get host;
-  PingStatus get status;
-  PingSettings get settings;
-  List<int> get values;
-  DateTime get startTime;
+  String get host => throw _privateConstructorUsedError;
+  PingStatus get status => throw _privateConstructorUsedError;
+  PingSettings get settings => throw _privateConstructorUsedError;
+  List<int?>? get values => throw _privateConstructorUsedError;
+  DateTime? get startTime => throw _privateConstructorUsedError;
 
-  $PingSessionCopyWith<PingSession> get copyWith;
+  @JsonKey(ignore: true)
+  $PingSessionCopyWith<PingSession> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $PingSessionCopyWith<$Res> {
   factory $PingSessionCopyWith(
           PingSession value, $Res Function(PingSession) then) =
@@ -49,12 +58,13 @@ abstract class $PingSessionCopyWith<$Res> {
       {String host,
       PingStatus status,
       PingSettings settings,
-      List<int> values,
-      DateTime startTime});
+      List<int?>? values,
+      DateTime? startTime});
 
   $PingSettingsCopyWith<$Res> get settings;
 }
 
+/// @nodoc
 class _$PingSessionCopyWithImpl<$Res> implements $PingSessionCopyWith<$Res> {
   _$PingSessionCopyWithImpl(this._value, this._then);
 
@@ -64,34 +74,45 @@ class _$PingSessionCopyWithImpl<$Res> implements $PingSessionCopyWith<$Res> {
 
   @override
   $Res call({
-    Object host = freezed,
-    Object status = freezed,
-    Object settings = freezed,
-    Object values = freezed,
-    Object startTime = freezed,
+    Object? host = freezed,
+    Object? status = freezed,
+    Object? settings = freezed,
+    Object? values = freezed,
+    Object? startTime = freezed,
   }) {
     return _then(_value.copyWith(
-      host: host == freezed ? _value.host : host as String,
-      status: status == freezed ? _value.status : status as PingStatus,
-      settings:
-          settings == freezed ? _value.settings : settings as PingSettings,
-      values: values == freezed ? _value.values : values as List<int>,
-      startTime:
-          startTime == freezed ? _value.startTime : startTime as DateTime,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PingStatus,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as PingSettings,
+      values: values == freezed
+          ? _value.values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      startTime: startTime == freezed
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 
   @override
   $PingSettingsCopyWith<$Res> get settings {
-    if (_value.settings == null) {
-      return null;
-    }
     return $PingSettingsCopyWith<$Res>(_value.settings, (value) {
       return _then(_value.copyWith(settings: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$PingSessionCopyWith<$Res>
     implements $PingSessionCopyWith<$Res> {
   factory _$PingSessionCopyWith(
@@ -102,13 +123,14 @@ abstract class _$PingSessionCopyWith<$Res>
       {String host,
       PingStatus status,
       PingSettings settings,
-      List<int> values,
-      DateTime startTime});
+      List<int?>? values,
+      DateTime? startTime});
 
   @override
   $PingSettingsCopyWith<$Res> get settings;
 }
 
+/// @nodoc
 class __$PingSessionCopyWithImpl<$Res> extends _$PingSessionCopyWithImpl<$Res>
     implements _$PingSessionCopyWith<$Res> {
   __$PingSessionCopyWithImpl(
@@ -120,34 +142,47 @@ class __$PingSessionCopyWithImpl<$Res> extends _$PingSessionCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object host = freezed,
-    Object status = freezed,
-    Object settings = freezed,
-    Object values = freezed,
-    Object startTime = freezed,
+    Object? host = freezed,
+    Object? status = freezed,
+    Object? settings = freezed,
+    Object? values = freezed,
+    Object? startTime = freezed,
   }) {
     return _then(_PingSession(
-      host: host == freezed ? _value.host : host as String,
-      status: status == freezed ? _value.status : status as PingStatus,
-      settings:
-          settings == freezed ? _value.settings : settings as PingSettings,
-      values: values == freezed ? _value.values : values as List<int>,
-      startTime:
-          startTime == freezed ? _value.startTime : startTime as DateTime,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as PingStatus,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as PingSettings,
+      values: values == freezed
+          ? _value.values
+          : values // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      startTime: startTime == freezed
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
 
-class _$_PingSession implements _PingSession {
+/// @nodoc
+
+class _$_PingSession extends _PingSession {
   _$_PingSession(
-      {@required this.host,
-      @required this.status,
-      @required this.settings,
+      {required this.host,
+      required this.status,
+      required this.settings,
       this.values,
       this.startTime})
-      : assert(host != null),
-        assert(status != null),
-        assert(settings != null);
+      : super._();
 
   @override
   final String host;
@@ -156,66 +191,47 @@ class _$_PingSession implements _PingSession {
   @override
   final PingSettings settings;
   @override
-  final List<int> values;
+  final List<int?>? values;
   @override
-  final DateTime startTime;
-
-  bool _didstats = false;
-  PingStats _stats;
-
-  @override
-  PingStats get stats {
-    if (_didstats == false) {
-      _didstats = true;
-      _stats = values != null ? PingStats.fromValues(values) : null;
-    }
-    return _stats;
-  }
+  final DateTime? startTime;
 
   @override
   String toString() {
-    return 'PingSession(host: $host, status: $status, settings: $settings, values: $values, startTime: $startTime, stats: $stats)';
+    return 'PingSession(host: $host, status: $status, settings: $settings, values: $values, startTime: $startTime)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingSession &&
-            (identical(other.host, host) ||
-                const DeepCollectionEquality().equals(other.host, host)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
+        (other.runtimeType == runtimeType &&
+            other is _PingSession &&
+            (identical(other.host, host) || other.host == host) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.settings, settings) ||
-                const DeepCollectionEquality()
-                    .equals(other.settings, settings)) &&
-            (identical(other.values, values) ||
-                const DeepCollectionEquality().equals(other.values, values)) &&
+                other.settings == settings) &&
+            const DeepCollectionEquality().equals(other.values, values) &&
             (identical(other.startTime, startTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.startTime, startTime)));
+                other.startTime == startTime));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(host) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(settings) ^
-      const DeepCollectionEquality().hash(values) ^
-      const DeepCollectionEquality().hash(startTime);
+  int get hashCode => Object.hash(runtimeType, host, status, settings,
+      const DeepCollectionEquality().hash(values), startTime);
 
+  @JsonKey(ignore: true)
   @override
   _$PingSessionCopyWith<_PingSession> get copyWith =>
       __$PingSessionCopyWithImpl<_PingSession>(this, _$identity);
 }
 
-abstract class _PingSession implements PingSession {
+abstract class _PingSession extends PingSession {
   factory _PingSession(
-      {@required String host,
-      @required PingStatus status,
-      @required PingSettings settings,
-      List<int> values,
-      DateTime startTime}) = _$_PingSession;
+      {required String host,
+      required PingStatus status,
+      required PingSettings settings,
+      List<int?>? values,
+      DateTime? startTime}) = _$_PingSession;
+  _PingSession._() : super._();
 
   @override
   String get host;
@@ -224,9 +240,11 @@ abstract class _PingSession implements PingSession {
   @override
   PingSettings get settings;
   @override
-  List<int> get values;
+  List<int?>? get values;
   @override
-  DateTime get startTime;
+  DateTime? get startTime;
   @override
-  _$PingSessionCopyWith<_PingSession> get copyWith;
+  @JsonKey(ignore: true)
+  _$PingSessionCopyWith<_PingSession> get copyWith =>
+      throw _privateConstructorUsedError;
 }

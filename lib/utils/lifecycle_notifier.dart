@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 @injectable
 class LifecycleNotifier extends WidgetsBindingObserver {
   LifecycleNotifier() {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   final Set<LifecycleAware> _listeners = {};
@@ -34,10 +34,10 @@ class LifecycleNotifier extends WidgetsBindingObserver {
 
 class LifecycleAware {
   factory LifecycleAware({
-    VoidCallback onPaused,
-    VoidCallback onResumed,
-    VoidCallback onInactive,
-    VoidCallback onDetached,
+    VoidCallback? onPaused,
+    VoidCallback? onResumed,
+    VoidCallback? onInactive,
+    VoidCallback? onDetached,
   }) =>
       _FunLifecycleAware(onPaused, onResumed, onInactive, onDetached);
 
@@ -48,10 +48,10 @@ class LifecycleAware {
 }
 
 class _FunLifecycleAware implements LifecycleAware {
-  final VoidCallback _onPaused;
-  final VoidCallback _onResumed;
-  final VoidCallback _onInactive;
-  final VoidCallback _onDetached;
+  final VoidCallback? _onPaused;
+  final VoidCallback? _onResumed;
+  final VoidCallback? _onInactive;
+  final VoidCallback? _onDetached;
 
   _FunLifecycleAware(
     this._onPaused,

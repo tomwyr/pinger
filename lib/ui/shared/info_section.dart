@@ -10,10 +10,10 @@ class InfoSection extends StatelessWidget {
   final double size = 144.0;
 
   const InfoSection({
-    Key key,
-    @required this.image,
-    @required this.title,
-    @required this.description,
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.description,
     this.risksOverflow = false,
   }) : super(key: key);
 

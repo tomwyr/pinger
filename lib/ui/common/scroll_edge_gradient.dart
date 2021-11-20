@@ -3,19 +3,19 @@ import 'package:flutter/widgets.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
 
 class ScrollEdgeGradient extends StatefulWidget {
-  final Widget Function(ScrollController) builder;
+  final Widget Function(ScrollController?) builder;
   final Color color;
   final double extentThreshold;
   final bool start;
   final bool end;
   final Axis axis;
   final double sliverOverlap;
-  final ScrollController controller;
+  final ScrollController? controller;
 
   const ScrollEdgeGradient({
-    Key key,
-    @required this.builder,
-    @required this.color,
+    Key? key,
+    required this.builder,
+    required this.color,
     this.extentThreshold = 48.0,
     this.start = true,
     this.end = true,
@@ -30,10 +30,10 @@ class ScrollEdgeGradient extends StatefulWidget {
 
 class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   final _internalController = ScrollController();
-  final _extent = ValueNotifier<ScrollExtent>(null);
+  final _extent = ValueNotifier<ScrollExtent?>(null);
 
-  ScrollController _scroller;
-  BoxConstraints _lastConstraints;
+  ScrollController? _scroller;
+  BoxConstraints? _lastConstraints;
 
   @override
   void initState() {
@@ -44,8 +44,8 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
 
   void _updateExtent() {
     _extent.value = ScrollExtent(
-      _scroller.position.extentBefore,
-      _scroller.position.extentAfter,
+      _scroller!.position.extentBefore,
+      _scroller!.position.extentAfter,
     );
   }
 
@@ -56,7 +56,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
     super.dispose();
   }
 
-  Widget _content;
+  late Widget _content;
 
   void _updateContent() {
     final isVertical = widget.axis == Axis.vertical;
@@ -67,7 +67,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
       if (widget.end)
         _buildGradient(isVertical ? AxisDirection.up : AxisDirection.left),
     ]);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _updateExtent());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _updateExtent());
   }
 
   @override
@@ -87,7 +87,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   Widget _buildGradient(AxisDirection direction) {
     final isStart =
         direction == AxisDirection.down || direction == AxisDirection.right;
-    return ValueListenableBuilder<ScrollExtent>(
+    return ValueListenableBuilder<ScrollExtent?>(
       valueListenable: _extent,
       builder: (_, value, __) => IgnorePointer(
         child: Padding(
@@ -119,10 +119,9 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
       case AxisDirection.down:
         return Alignment.topCenter;
     }
-    throw ArgumentError("Unhandled $AxisDirection: $direction");
   }
 
-  double _calcOpacity(ScrollExtent value, bool isTop) {
+  double _calcOpacity(ScrollExtent? value, bool isTop) {
     if (value == null) return 0.0;
     final extent = (isTop ? value.before : value.after);
     return (extent / widget.extentThreshold).clamp(0.0, 1.0);
@@ -137,10 +136,7 @@ class ScrollExtent {
 
   @override
   bool operator ==(other) =>
-      other is ScrollExtent &&
-      other != null &&
-      other.before == before &&
-      other.after == after;
+      other is ScrollExtent && other.before == before && other.after == after;
 
   @override
   int get hashCode => before.hashCode ^ after.hashCode;

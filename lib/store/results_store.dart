@@ -21,14 +21,13 @@ abstract class ResultsStoreBase with Store {
   PingerApi get _pingerApi;
 
   @observable
-  List<PingResult> localResults;
+  List<PingResult?>? localResults;
 
   @observable
-  Map<String, DataSnap<GlobalHostResults>> globalResults;
+  Map<String, DataSnap<GlobalHostResults>> globalResults = {};
 
   @action
   void init() {
-    globalResults = {};
     _emitLocalResults();
   }
 
@@ -52,7 +51,7 @@ abstract class ResultsStoreBase with Store {
   }
 
   @action
-  Future<void> deleteLocalResult(int resultId) async {
+  Future<void> deleteLocalResult(int? resultId) async {
     await _pingerPrefs.deleteArchiveResult(resultId);
     _emitLocalResults();
   }
@@ -66,6 +65,6 @@ abstract class ResultsStoreBase with Store {
 
   void _emitLocalResults() {
     localResults = _pingerPrefs.getArchiveResults()
-      ..sort((e1, e2) => e2.startTime.compareTo(e1.startTime));
+      ..sort((e1, e2) => e2!.startTime.compareTo(e1!.startTime));
   }
 }

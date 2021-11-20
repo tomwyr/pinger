@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m17(weeks) => "${weeks} w";
 
-  final messages = _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appVersion" : MessageLookupByLibrary.simpleMessage("Version"),
     "archiveEmptyDesc" : MessageLookupByLibrary.simpleMessage("Save results after pinging a host to see them later here"),

@@ -7,10 +7,10 @@ class ViewTypeRow<T> extends StatelessWidget {
   final ValueChanged<T> onChanged;
 
   const ViewTypeRow({
-    Key key,
-    @required this.labeledTypes,
-    @required this.selection,
-    @required this.onChanged,
+    Key? key,
+    required this.labeledTypes,
+    required this.selection,
+    required this.onChanged,
   }) : super(key: key);
 
   @override

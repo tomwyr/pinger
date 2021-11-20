@@ -27,8 +27,8 @@ abstract class Injector {
     resolve<PermissionStore>(PermissionStore.notification).init();
   }
 
-  static T resolve<T>([String instanceName]) =>
-      GetIt.instance.get<T>(instanceName: instanceName);
+  static T resolve<T extends Object>([String? instanceName]) =>
+      GetIt.instance.get(instanceName: instanceName);
 }
 
 @module
@@ -42,13 +42,13 @@ abstract class InjectorModule {
 
   Location get location => Location.instance;
 
-  Firestore get firestore => Firestore.instance;
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   FlutterLocalNotificationsPlugin get localNotifications =>
       FlutterLocalNotificationsPlugin()
         ..initialize(InitializationSettings(
-          AndroidInitializationSettings('ic_notification'),
-          IOSInitializationSettings(
+          android: AndroidInitializationSettings('ic_notification'),
+          iOS: IOSInitializationSettings(
             requestAlertPermission: false,
             requestBadgePermission: false,
             requestSoundPermission: false,

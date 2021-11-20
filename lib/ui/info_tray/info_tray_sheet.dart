@@ -15,15 +15,15 @@ class InfoTraySheet extends StatelessWidget {
   final VoidCallback onHandleTap;
   final ValueChanged<Set<InfoTrayItem>> onVisibilityChanged;
   final List<InfoTrayEntry> items;
-  final Widget child;
+  final Widget? child;
 
   const InfoTraySheet({
-    Key key,
-    @required this.controller,
-    @required this.onHandleTap,
-    @required this.onVisibilityChanged,
-    @required this.items,
-    @required this.child,
+    Key? key,
+    required this.controller,
+    required this.onHandleTap,
+    required this.onVisibilityChanged,
+    required this.items,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -44,14 +44,14 @@ class InfoTraySheet extends StatelessWidget {
   Widget _buildTray(List<Widget> children) {
     return Padding(
       padding: _padding.copyWith(top: 0.0),
-      child: StreamBuilder<double>(
+      child: StreamBuilder<double?>(
         initialData: controller.currentExpansion,
         stream: controller.expansion,
         builder: (_, snapshot) => DecoratedBox(
           decoration: _buildDecoration(
-            expansion: snapshot.data,
+            expansion: snapshot.data!,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(_borderRadius * (1.0 - snapshot.data) * 2),
+              top: Radius.circular(_borderRadius * (1.0 - snapshot.data!) * 2),
               bottom: Radius.circular(_borderRadius),
             ),
           ),
@@ -73,20 +73,20 @@ class InfoTraySheet extends StatelessWidget {
       child: SizedBox(
         height: _handleHeight,
         child: LayoutBuilder(
-          builder: (_, constraints) => StreamBuilder<double>(
+          builder: (_, constraints) => StreamBuilder<double?>(
             stream: controller.expansion,
             initialData: controller.currentExpansion,
             builder: (_, snapshot) => Align(
               alignment: Alignment.bottomCenter,
               child: SizedBox(
-                height: _handleHeight * (1.0 - snapshot.data / 2),
+                height: _handleHeight * (1.0 - snapshot.data! / 2),
                 width: _handleWidth +
-                    (constraints.maxWidth - _handleWidth) * snapshot.data,
+                    (constraints.maxWidth - _handleWidth) * snapshot.data!,
                 child: GestureDetector(
                   onTap: onHandleTap,
                   child: DecoratedBox(
                     decoration: _buildDecoration(
-                      expansion: snapshot.data,
+                      expansion: snapshot.data!,
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(_handleWidth),
                       ),
@@ -121,13 +121,13 @@ class InfoTraySheet extends StatelessWidget {
   }
 
   BoxDecoration _buildDecoration({
-    @required double expansion,
-    @required BorderRadiusGeometry borderRadius,
+    required double expansion,
+    required BorderRadiusGeometry borderRadius,
   }) {
     final color = ColorTween(
       begin: R.colors.secondary,
       end: R.colors.primaryLight,
-    ).transform(expansion);
+    ).transform(expansion)!;
     return BoxDecoration(
       color: color,
       boxShadow: [
@@ -144,22 +144,22 @@ class InfoTraySheet extends StatelessWidget {
 
 class InfoTrayHandlePainter extends CustomPainter {
   final Color color;
-  final double expansion;
+  final double? expansion;
   final double width;
   final double strokeWidth = 2.0;
 
   InfoTrayHandlePainter({
-    @required this.color,
-    @required this.expansion,
-    @required this.width,
+    required this.color,
+    required this.expansion,
+    required this.width,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final lineWidth = width / 3 + width / 2 * expansion;
-    final lineHeight = size.height / 6 * (1.0 - expansion);
+    final lineWidth = width / 3 + width / 2 * expansion!;
+    final lineHeight = size.height / 6 * (1.0 - expansion!);
     final startX = size.width / 2 - lineWidth;
-    final startY = (size.height + lineHeight) / 2 + (2.0 * (1.0 - expansion));
+    final startY = (size.height + lineHeight) / 2 + (2.0 * (1.0 - expansion!));
     final path = Path()
       ..moveTo(startX, startY)
       ..relativeLineTo(lineWidth, -lineHeight)

@@ -4,16 +4,16 @@ class CollapsingTabLayout extends StatefulWidget {
   final SliverAppBar appBar;
   final TabBarView tabBarView;
   final double collapsedOffset;
-  final ScrollController controller;
+  final ScrollController? controller;
   final Future<void> Function(double) scrollLayout;
 
   const CollapsingTabLayout({
-    Key key,
-    @required this.appBar,
-    @required this.tabBarView,
-    @required this.collapsedOffset,
-    @required this.controller,
-    @required this.scrollLayout,
+    Key? key,
+    required this.appBar,
+    required this.tabBarView,
+    required this.collapsedOffset,
+    required this.controller,
+    required this.scrollLayout,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class CollapsingTabLayout extends StatefulWidget {
 
 class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
   bool _isSnapping = false;
-  ScrollUpdateNotification _lastScrollUpdate;
+  ScrollUpdateNotification? _lastScrollUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,10 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
       _lastScrollUpdate = notification;
     } else if (notification is ScrollEndNotification) {
       if (_lastScrollUpdate != null &&
-          widget.controller.offset > 0.0 &&
-          widget.controller.offset < widget.collapsedOffset) {
+          widget.controller!.offset > 0.0 &&
+          widget.controller!.offset < widget.collapsedOffset) {
         _isSnapping = true;
-        _scheduleSnapScroll(_lastScrollUpdate.scrollDelta > 0.0);
+        _scheduleSnapScroll(_lastScrollUpdate!.scrollDelta! > 0.0);
         return true;
       }
     }
@@ -70,11 +70,11 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
 
 class CollapsingTabLayoutItem extends StatelessWidget {
   final List<Widget> slivers;
-  final ScrollController controller;
+  final ScrollController? controller;
 
   const CollapsingTabLayoutItem({
-    Key key,
-    @required this.slivers,
+    Key? key,
+    required this.slivers,
     this.controller,
   }) : super(key: key);
 

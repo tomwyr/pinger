@@ -15,9 +15,9 @@ import 'package:pinger/ui/info_tray/items/info_tray_connectivity_item.dart';
 import 'package:pinger/ui/info_tray/items/info_tray_session_item.dart';
 
 class InfoTray extends StatefulWidget {
-  final Widget child;
+  final Widget? child;
 
-  const InfoTray({Key key, @required this.child}) : super(key: key);
+  const InfoTray({Key? key, required this.child}) : super(key: key);
 
   @override
   _InfoTrayState createState() => _InfoTrayState();
@@ -29,17 +29,17 @@ class _InfoTrayState extends State<InfoTray>
   final DeviceStore _deviceStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
   final DraggableSheetController _controller = DraggableSheetController();
-  final ObservableStream<String> _routeObservable = ObservableStream(
+  final ObservableStream<String?> _routeObservable = ObservableStream(
     PingerApp.router.route,
     initialValue: PingerApp.router.currentRoute,
   );
 
   Set<InfoTrayItem> _visibleItems = {};
-  ReactionDisposer _settingsDisposer;
-  Map<InfoTrayItem, InfoTrayEntry> _entries;
+  late ReactionDisposer _settingsDisposer;
+  late Map<InfoTrayItem, InfoTrayEntry> _entries;
 
   Map<InfoTrayItem, InfoTrayEntry> _createEntries() => {
-        InfoTrayItem.CONNECTIVITY: InfoTrayEntry<bool>(
+        InfoTrayItem.CONNECTIVITY: InfoTrayEntry<bool?>(
           item: InfoTrayItem.CONNECTIVITY,
           valueObservable: () => _deviceStore.isNetworkEnabled,
           valueBuilder: (_) => InfoTrayConnectivityItem(),
@@ -59,7 +59,7 @@ class _InfoTrayState extends State<InfoTray>
             onPressed: _onSessionItemPressed,
           ),
           isVisible: (it) {
-            final status = it?.session?.status;
+            final status = it.session?.status;
             return (status.isSession || status.isQuickCheck) &&
                 it.route != PingerRoutes.SESSION;
           },
@@ -67,7 +67,7 @@ class _InfoTrayState extends State<InfoTray>
       };
 
   void _onSessionItemButtonPressed() {
-    final status = _pingStore.currentSession.status;
+    final status = _pingStore.currentSession!.status;
     if (status.isStarted) {
       _pingStore.pauseSession();
     } else if (status.isSessionPaused) {
@@ -87,7 +87,7 @@ class _InfoTrayState extends State<InfoTray>
     super.initState();
     _entries = _createEntries()..values.forEach((it) => it.init());
     _settingsDisposer = reaction(
-      (_) => _settingsStore.userSettings.traySettings,
+      (_) => _settingsStore.userSettings!.traySettings,
       _onTraySettings,
       fireImmediately: true,
     );
@@ -100,35 +100,35 @@ class _InfoTrayState extends State<InfoTray>
     super.dispose();
   }
 
-  void _onTraySettings(TraySettings settings) {
-    if (settings.enabled) {
-      final hasVisibleItems = _entries.values.any((it) => it.visibility.value);
-      if (hasVisibleItems && !_controller.isVisible) {
+  void _onTraySettings(TraySettings? settings) {
+    if (settings!.enabled) {
+      final hasVisibleItems = _entries.values.any((it) => it.visibility.value!);
+      if (hasVisibleItems && !_controller.isVisible!) {
         _controller.show();
-      } else if (!hasVisibleItems && _controller.isVisible) {
+      } else if (!hasVisibleItems && _controller.isVisible!) {
         _controller.hide();
       }
       final state = _controller.sheetState;
-      if (settings.autoReveal && state == SheetState.COLLAPSED) {
+      if (settings.autoReveal&& state == SheetState.COLLAPSED) {
         _controller.expand();
-      } else if (!settings.autoReveal && state == SheetState.EXPANDED) {
+      } else if (!settings.autoReveal&& state == SheetState.EXPANDED) {
         _controller.collapse();
       }
-    } else if (_controller.isVisible) {
+    } else if (_controller.isVisible!) {
       _controller.hide();
     }
   }
 
   void _onVisibilityChanged(Set<InfoTrayItem> visibleItems) {
     if (visibleItems.isEmpty) {
-      if (_controller.isVisible) _controller.hide();
+      if (_controller.isVisible!) _controller.hide();
     } else {
-      if (!_controller.isVisible) _controller.show();
+      if (!_controller.isVisible!) _controller.show();
       final added = visibleItems.toSet()..removeAll(_visibleItems);
-      final settings = _settingsStore.userSettings.traySettings;
+      final settings = _settingsStore.userSettings!.traySettings;
       final state = _controller.sheetState;
       if (added.isNotEmpty &&
-          settings.autoReveal &&
+          (settings?.autoReveal ?? false) &&
           state == SheetState.COLLAPSED) _controller.expand();
     }
     _visibleItems = visibleItems.toSet();
@@ -157,9 +157,9 @@ class _InfoTrayState extends State<InfoTray>
 enum InfoTrayItem { CONNECTIVITY, SESSION }
 
 class SessionItemModel {
-  final PingSession session;
-  final Duration duration;
-  final String route;
+  final PingSession? session;
+  final Duration? duration;
+  final String? route;
 
   SessionItemModel(this.session, this.duration, this.route);
 }

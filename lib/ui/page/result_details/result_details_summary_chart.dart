@@ -7,28 +7,28 @@ import 'package:pinger/ui/shared/chart/result_summary_chart.dart';
 
 class ResultDetailsSummaryChart extends StatelessWidget {
   const ResultDetailsSummaryChart({
-    Key key,
-    @required this.padding,
-    @required this.height,
-    @required this.result,
+    Key? key,
+    required this.padding,
+    required this.height,
+    required this.result,
   }) : super(key: key);
 
   final double padding;
   final double height;
-  final PingResult result;
+  final PingResult? result;
 
   final Size labelSize = const Size(64.0, 18.0);
 
   @override
   Widget build(BuildContext context) {
-    final meanHeightRatio = (result.stats.mean - result.stats.min) /
-        (result.stats.max - result.stats.min);
+    final meanHeightRatio = (result!.stats.mean - result!.stats.min) /
+        (result!.stats.max - result!.stats.min);
     final meanLineTop = padding + height * (1 - meanHeightRatio);
     return SizedBox(
       height: height + 2 * padding,
       child: LayoutBuilder(
         builder: (_, constraints) => Stack(
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: <Widget>[
             _buildChart(padding),
             _buildChartMeanLine(padding, meanLineTop),
@@ -48,9 +48,9 @@ class ResultDetailsSummaryChart extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: padding),
       width: double.infinity,
       child: ResultSummaryChart(
-        minIndex: result.values.indexWhere((it) => it == result.stats.min),
-        maxIndex: result.values.indexWhere((it) => it == result.stats.max),
-        values: result.values,
+        minIndex: result!.values.indexWhere((it) => it == result!.stats.min),
+        maxIndex: result!.values.indexWhere((it) => it == result!.stats.max),
+        values: result!.values,
       ),
     );
   }
@@ -72,24 +72,24 @@ class ResultDetailsSummaryChart extends StatelessWidget {
 
   List<Widget> _buildChartLabels(
       double width, double padding, double meanLineTop) {
-    final pingCount = result.values.length;
-    final indexMin = result.values.indexOf(result.stats.min);
-    final indexMax = result.values.indexOf(result.stats.max);
+    final pingCount = result!.values.length;
+    final indexMin = result!.values.indexOf(result!.stats.min);
+    final indexMax = result!.values.indexOf(result!.stats.max);
     return [
       Positioned(
         top: 0.0,
         left: width * (indexMax / (pingCount - 1)),
-        child: _buildLabel(result.stats.max, labelSize),
+        child: _buildLabel(result!.stats.max, labelSize),
       ),
       Positioned(
         top: meanLineTop - labelSize.height / 2,
         left: width / 2,
-        child: _buildLabel(result.stats.mean, labelSize),
+        child: _buildLabel(result!.stats.mean, labelSize),
       ),
       Positioned(
         bottom: 0.0,
         left: width * (indexMin / (pingCount - 1)),
-        child: _buildLabel(result.stats.min, labelSize),
+        child: _buildLabel(result!.stats.min, labelSize),
       ),
     ];
   }

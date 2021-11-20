@@ -19,9 +19,9 @@ class _IntroPageState extends BaseState<IntroPage> {
   final _nextButtonSize = 64.0;
   final _itemCount = 4;
   int _currentItem = 0;
-  double _pageWidth;
-  ValueNotifier<double> _pageProgress;
-  PageController _pageController;
+  late double _pageWidth;
+  late ValueNotifier<double> _pageProgress;
+  PageController? _pageController;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _IntroPageState extends BaseState<IntroPage> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     _pageProgress.dispose();
     super.dispose();
   }
@@ -46,15 +46,15 @@ class _IntroPageState extends BaseState<IntroPage> {
   }
 
   void _updateProgress() {
-    if (_pageController.hasClients) {
-      _pageProgress.value = _pageController.offset / _pageWidth;
+    if (_pageController!.hasClients) {
+      _pageProgress.value = _pageController!.offset / _pageWidth;
     }
   }
 
   void _onNextPressed() => _moveToPage(_currentItem + 1);
 
   void _moveToPage(int index) {
-    _pageController.animateToPage(
+    _pageController!.animateToPage(
       index,
       duration: Duration(milliseconds: 300),
       curve: Curves.easeOut,
@@ -156,9 +156,9 @@ class _IntroPageState extends BaseState<IntroPage> {
     return ValueListenableBuilder<double>(
       valueListenable: _pageProgress,
       builder: (_, progress, child) {
-        final relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
+        final num relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
         return Opacity(
-          opacity: 1 - relativeProgress,
+          opacity: 1 - (relativeProgress as double),
           child: FractionalTranslation(
             translation: Offset(relativeProgress, 0.0),
             child: child,
@@ -177,7 +177,8 @@ class _IntroPageState extends BaseState<IntroPage> {
         children: List<Widget>.generate(
           _itemCount,
           (index) {
-            final relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
+            final num relativeProgress =
+                (progress - index).clamp(-1.0, 1.0).abs();
             return GestureDetector(
               onTap: () => _moveToPage(index),
               child: Container(
@@ -185,7 +186,7 @@ class _IntroPageState extends BaseState<IntroPage> {
                 height: 16.0,
                 width: 32.0 - 16.0 * relativeProgress,
                 decoration: BoxDecoration(
-                  color: _indicatorColor.transform(relativeProgress),
+                  color: _indicatorColor.transform(relativeProgress as double),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
@@ -230,7 +231,7 @@ class _IntroPageState extends BaseState<IntroPage> {
         opacity: 1.0 - value,
         child: ButtonTheme.fromButtonThemeData(
           data: R.themes.flatButton,
-          child: FlatButton(
+          child: TextButton(
             child: Text(S.current.skipButtonLabel),
             onPressed: value < 1.0 ? PingerApp.router.pop : null,
           ),
@@ -250,12 +251,12 @@ class _IntroPageState extends BaseState<IntroPage> {
         child: ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton.copyWith(
             minWidth: raisedButtonWidth,
-          ),
-          child: RaisedButton(
             padding: EdgeInsets.only(
               left: 20.0 * expansion,
               right: 12.0 * expansion,
             ),
+          ),
+          child: ElevatedButton(
             onPressed: expansion > 0.5 ? PingerApp.router.pop : _onNextPressed,
             child: Row(
               mainAxisSize: MainAxisSize.min,

@@ -4,10 +4,10 @@ part 'geo_position.freezed.dart';
 part 'geo_position.g.dart';
 
 @freezed
-abstract class GeoPosition with _$GeoPosition {
+class GeoPosition with _$GeoPosition {
   factory GeoPosition({
-    @required double lat,
-    @required double lon,
+    required double lat,
+    required double lon,
   }) = _GeoPosition;
 
   factory GeoPosition.fromJson(Map<String, dynamic> json) =>

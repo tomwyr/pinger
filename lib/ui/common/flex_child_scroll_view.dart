@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 
 class FlexChildScrollView extends StatelessWidget {
-  final ScrollController controller;
+  final ScrollController? controller;
   final Widget child;
 
   const FlexChildScrollView({
-    Key key,
+    Key? key,
     this.controller,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   @override

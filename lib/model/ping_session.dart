@@ -5,17 +5,19 @@ import 'package:pinger/model/user_settings.dart';
 part 'ping_session.freezed.dart';
 
 @freezed
-abstract class PingSession with _$PingSession {
+class PingSession with _$PingSession {
+  PingSession._();
+
   factory PingSession({
-    @required String host,
-    @required PingStatus status,
-    @required PingSettings settings,
-    List<int> values,
-    DateTime startTime,
+    required String host,
+    required PingStatus status,
+    required PingSettings settings,
+    List<int?>? values,
+    DateTime? startTime,
   }) = _PingSession;
 
-  @late
-  PingStats get stats => values != null ? PingStats.fromValues(values) : null;
+  late final PingStats? stats =
+      values != null ? PingStats.fromValues(values!) : null;
 }
 
 enum PingStatus {
@@ -27,7 +29,7 @@ enum PingStatus {
   sessionDone,
 }
 
-extension PingStatusExtensions on PingStatus {
+extension PingStatusExtensions on PingStatus? {
   bool get isNull => this == null;
 
   bool get isInitial => this == PingStatus.initial;

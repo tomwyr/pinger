@@ -7,10 +7,10 @@ class CollapsingTile extends StatelessWidget {
   final Widget label;
 
   const CollapsingTile({
-    Key key,
-    @required this.expansion,
-    @required this.avatar,
-    @required this.label,
+    Key? key,
+    required this.expansion,
+    required this.avatar,
+    required this.label,
   }) : super(key: key);
 
   @override

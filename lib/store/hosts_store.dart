@@ -41,17 +41,17 @@ abstract class HostsStoreBase with Store {
   String _searchQuery = "";
 
   @observable
-  DataSnap<List<HostItem>> hosts;
+  DataSnap<List<HostItem>>? hosts;
 
   @observable
-  Map<String, HostStats> localStats;
+  Map<String, HostStats>? localStats;
 
   @observable
-  List<String> favorites;
+  List<String>? favorites;
 
   @computed
-  List<HostItem> get searchResults {
-    return hosts.maybeWhen(
+  List<HostItem>? get searchResults {
+    return hosts!.maybeWhen(
       data: (data) => _searchQuery.isEmpty
           ? data.toList()
           : data.where((it) => it.name.contains(_searchQuery)).toList(),
@@ -72,16 +72,16 @@ abstract class HostsStoreBase with Store {
   }
 
   void _emitFavorites() {
-    final favoriteHosts = _pingerPrefs.getFavoriteHosts();
+    final favoriteHosts = _pingerPrefs.getFavoriteHosts()!;
     favorites = favoriteHosts
       ..sort((e1, e2) {
-        if (!localStats.containsKey(e1)) return 1;
-        if (!localStats.containsKey(e2)) return -1;
-        return localStats[e2].pingCount.compareTo(localStats[e1].pingCount);
+        if (!localStats!.containsKey(e1)) return 1;
+        if (!localStats!.containsKey(e2)) return -1;
+        return localStats![e2]!.pingCount.compareTo(localStats![e1]!.pingCount);
       });
   }
 
-  void _checkRefreshIcons(bool isNetworkEnabled) {
+  void _checkRefreshIcons(bool? isNetworkEnabled) {
     if (isNetworkEnabled == true) {
       _favicons.forEach((key, value) {
         if (value.value is SnapError) _tryLoadFavicon(key);
@@ -126,7 +126,7 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> incrementStats(String host) async {
-    final hostsStats = localStats.values.toList();
+    final hostsStats = localStats!.values.toList();
     final index = hostsStats.indexWhere((it) => it.host == host);
     final updatedStats = HostStats(
       host: host,
@@ -162,7 +162,7 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> _tryLoadFavicon(String host) async {
-    final observable = _favicons[host];
+    final observable = _favicons[host]!;
     observable.value = DataSnap.loading();
     try {
       final icon = await _faviconService.load(host);

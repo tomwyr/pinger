@@ -29,8 +29,8 @@ class _PingerAppState extends State<PingerApp> {
   void initState() {
     super.initState();
     reaction(
-      (_) => _settingsStore.userSettings.nightMode,
-      (it) => setState(() => R.load(it ? Brightness.dark : Brightness.light)),
+      (_) => _settingsStore.userSettings!.nightMode,
+      (dynamic it) => setState(() => R.load(it ? Brightness.dark : Brightness.light)),
       fireImmediately: true,
     );
   }
@@ -50,7 +50,7 @@ class _PingerAppState extends State<PingerApp> {
         supportedLocales: S.delegate.supportedLocales,
         theme: R.themes.app,
         themeMode: R.themes.mode,
-        title: _settingsStore.appInfo.name,
+        title: _settingsStore.appInfo!.name,
         builder: (_, child) => PermissionsSheet(
           child: HostIconProvider(
             getIcon: _hostsStore.getFavicon,

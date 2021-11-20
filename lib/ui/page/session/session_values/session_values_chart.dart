@@ -8,15 +8,15 @@ import 'package:pinger/ui/page/session/session_values/session_values_scrollable.
 import 'package:pinger/ui/shared/chart/ping_results_chart.dart';
 
 class SessionValuesChart extends StatefulWidget {
-  final List<int> values;
-  final PingStats stats;
+  final List<int?>? values;
+  final PingStats? stats;
   final bool shouldFollowHead;
 
   SessionValuesChart({
-    Key key,
-    @required this.values,
-    @required this.stats,
-    @required this.shouldFollowHead,
+    Key? key,
+    required this.values,
+    required this.stats,
+    required this.shouldFollowHead,
   }) : super(key: key);
 
   @override
@@ -32,11 +32,11 @@ class _SessionValuesChartState extends State<SessionValuesChart>
   bool _isMovingToNewHead = false;
   int _visibleDotsCount = 0;
   double _lastTickValue = 0.0;
-  double _maxStartX;
-  ValueNotifier<bool> _didReachHead;
-  ValueNotifier<double> _startX;
-  AnimationController _animator;
-  Animation<double> _startAnim;
+  double? _maxStartX;
+  ValueNotifier<bool>? _didReachHead;
+  late ValueNotifier<double?> _startX;
+  late AnimationController _animator;
+  late Animation<double> _startAnim;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
     _animator
       ..stop(canceled: false)
       ..dispose();
-    _didReachHead.dispose();
+    _didReachHead!.dispose();
     _startX.dispose();
     super.dispose();
   }
@@ -66,17 +66,17 @@ class _SessionValuesChartState extends State<SessionValuesChart>
   void didUpdateWidget(SessionValuesChart old) {
     super.didUpdateWidget(old);
     _updateDotsCount();
-    if (old.values.length != widget.values.length) {
+    if (old.values!.length != widget.values!.length) {
       _updateMaxStart();
       _animateToNewHead();
     }
   }
 
   void _updateDotsCount() =>
-      _visibleDotsCount = widget.values.length.clamp(5, 20);
+      _visibleDotsCount = widget.values!.length.clamp(5, 20);
 
   void _updateMaxStart() {
-    _maxStartX = max(0, widget.values.length - _visibleDotsCount).toDouble();
+    _maxStartX = max(0, widget.values!.length - _visibleDotsCount).toDouble();
   }
 
   void _animateToNewHead() async {
@@ -86,7 +86,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
   }
 
   Future<void> _animateToHead() async {
-    await _animateBy(_maxStartX - _startX.value);
+    await _animateBy(_maxStartX! - _startX.value!);
   }
 
   void _onDragDown(DragDownDetails details) {
@@ -100,7 +100,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
   void _onDragEnd(DragEndDetails details) {
     final dx = details.velocity.pixelsPerSecond.dx;
     if (dx.abs() > 200) {
-      final deltaTarget = -(dx ~/ 200).toDouble() - (_startX.value % 1.0);
+      final deltaTarget = -(dx ~/ 200).toDouble() - (_startX.value! % 1.0);
       _animateBy(deltaTarget);
     } else {
       _settleStart();
@@ -129,16 +129,16 @@ class _SessionValuesChartState extends State<SessionValuesChart>
 
   void _onDragCancel() => _settleStart();
 
-  void _settleStart() => _updateStart(_startX.value.roundToDouble());
+  void _settleStart() => _updateStart(_startX.value!.roundToDouble());
 
   void _moveStartBy(double delta) {
-    _updateStart((_startX.value + delta).clamp(0.0, _maxStartX).toDouble());
+    _updateStart((_startX.value! + delta).clamp(0.0, _maxStartX!).toDouble());
   }
 
-  void _updateStart(double value) {
+  void _updateStart(double? value) {
     _startX.value = value;
-    _didReachHead.value = _isMovingToNewHead ||
-        _startX.value + _visibleDotsCount >= widget.values.length;
+    _didReachHead!.value = _isMovingToNewHead ||
+        _startX.value! + _visibleDotsCount >= widget.values!.length;
   }
 
   @override
@@ -158,7 +158,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
             onHorizontalDragCancel: _onDragCancel,
             child: ValueListenableBuilder(
               valueListenable: _startX,
-              builder: (_, value, __) => PingResultsChart(
+              builder: (_, dynamic value, __) => PingResultsChart(
                 values: widget.values,
                 maxValue: widget.stats?.max,
                 dotsCount: _visibleDotsCount,

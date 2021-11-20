@@ -31,7 +31,7 @@ class FaviconService {
 
   Future<Uint8List> _tryFetchIcon(String url) async {
     try {
-      final response = await http.get("$baseUrl$url");
+      final response = await http.get(Uri.parse("$baseUrl$url"));
       final contentType = response.headers['content-type'];
       if (response.statusCode != 200) {
         throw FaviconError.SERVER_ERROR;

@@ -10,23 +10,23 @@ class PingerApi {
   final String _resultsPath = 'results-monthly';
   final String _sessionsPath = 'sessions';
 
-  final Firestore _firestore;
+  final FirebaseFirestore _firestore;
 
   PingerApi(this._firestore);
 
   Future<GlobalPingCounts> getPingCounts() async {
-    final countsDoc = _firestore.collection(_countsPath).document(_allPath);
+    final countsDoc = _firestore.collection(_countsPath).doc(_allPath);
     final countsSnap = await _runCall(countsDoc.get);
-    return countsSnap.data != null
-        ? GlobalPingCounts.fromJson(countsSnap.data)
+    return countsSnap.data() != null
+        ? GlobalPingCounts.fromJson(countsSnap.data()!)
         : GlobalPingCounts.empty();
   }
 
   Future<GlobalHostResults> getHostResults(String host) async {
-    final hostDoc = _firestore.collection(_resultsPath).document(host);
+    final hostDoc = _firestore.collection(_resultsPath).doc(host);
     final resultsSnap = await _runCall(hostDoc.get);
-    return resultsSnap.data != null
-        ? GlobalHostResults.fromJson(resultsSnap.data)
+    return resultsSnap.data() != null
+        ? GlobalHostResults.fromJson(resultsSnap.data()!)
         : GlobalHostResults.empty();
   }
 

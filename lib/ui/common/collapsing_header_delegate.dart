@@ -16,14 +16,14 @@ class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Color color;
 
   CollapsingHeaderDelegate({
-    @required this.topItemExtent,
-    @required this.bottomItemExtent,
-    @required this.bottomGradientExtent,
-    @required this.topItemPadding,
-    @required this.topItem,
-    @required this.bottomItem,
-    @required this.bottomGradient,
-    @required this.color,
+    required this.topItemExtent,
+    required this.bottomItemExtent,
+    required this.bottomGradientExtent,
+    required this.topItemPadding,
+    required this.topItem,
+    required this.bottomItem,
+    required this.bottomGradient,
+    required this.color,
   }) : topItemMaxExtent = topItemExtent + 2 * topItemPadding;
 
   @override
@@ -35,7 +35,7 @@ class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
         maxExtent * expansion - topItemTop + bottomItemExtent;
     final bottomItemEnd = bottomItemTop + bottomItemExtent;
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: <Widget>[
         Positioned(
           top: 0.0,

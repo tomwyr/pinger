@@ -6,18 +6,18 @@ import 'package:pinger/resources.dart';
 
 class SessionValuesScrollable extends StatefulWidget {
   final Axis axis;
-  final ValueNotifier<bool> didReachHead;
+  final ValueNotifier<bool>? didReachHead;
   final bool shouldFollowHead;
   final Future<void> Function() moveToHeadValue;
   final Widget child;
 
   const SessionValuesScrollable({
-    Key key,
-    @required this.axis,
-    @required this.didReachHead,
-    @required this.shouldFollowHead,
-    @required this.moveToHeadValue,
-    @required this.child,
+    Key? key,
+    required this.axis,
+    required this.didReachHead,
+    required this.shouldFollowHead,
+    required this.moveToHeadValue,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class SessionValuesScrollable extends StatefulWidget {
 class _SessionValuesScrollableState extends State<SessionValuesScrollable> {
   final _forwardButtonSize = 40.0;
 
-  ValueNotifier<bool> _isFollowingHead;
+  late ValueNotifier<bool> _isFollowingHead;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _SessionValuesScrollableState extends State<SessionValuesScrollable> {
             child: ValueListenableBuilder<bool>(
               valueListenable: _isFollowingHead,
               builder: (_, isFollowingHead, __) => ValueListenableBuilder<bool>(
-                valueListenable: widget.didReachHead,
+                valueListenable: widget.didReachHead!,
                 builder: (_, didReachHead, __) =>
                     _buildFollowButton(!isFollowingHead && !didReachHead),
               ),
@@ -104,7 +104,7 @@ class _SessionValuesScrollableState extends State<SessionValuesScrollable> {
                   color: ColorTween(
                     begin: R.colors.none,
                     end: R.colors.shadow,
-                  ).transform(value),
+                  ).transform(value)!,
                   spreadRadius: 1.0,
                   blurRadius: 4.0,
                 )

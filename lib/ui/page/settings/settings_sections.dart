@@ -7,14 +7,14 @@ import 'package:pinger/ui/page/settings/settings_items.dart';
 
 class PingSettingsSection extends StatelessWidget {
   final bool showHeader;
-  final PingSettings settings;
+  final PingSettings? settings;
   final ValueChanged<PingSettings> onChanged;
 
   const PingSettingsSection({
-    Key key,
+    Key? key,
     this.showHeader = true,
-    @required this.settings,
-    @required this.onChanged,
+    required this.settings,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -27,35 +27,35 @@ class PingSettingsSection extends StatelessWidget {
         PingSettingItem(
           label: S.current.settingsPingCountLabel,
           unit: S.current.settingsPingCountUnit,
-          value: settings.count,
-          onChanged: (it) => onChanged(settings.copyWith(count: it)),
+          value: settings!.count,
+          onChanged: (it) => onChanged(settings!.copyWith(count: it)),
           allowInfinite: true,
         ),
         PingSettingItem(
           label: S.current.settingsPingPacketSizeLabel,
           unit: S.current.settingsPingPacketSizeUnit,
-          value: NumSetting.finite(settings.packetSize),
+          value: NumSetting.finite(value: settings!.packetSize),
           onChanged: (it) => _onFiniteSettingChanged(
             it,
-            (value) => settings.copyWith(packetSize: value),
+            (value) => settings!.copyWith(packetSize: value),
           ),
         ),
         PingSettingItem(
           label: S.current.settingsPingIntervalLabel,
           unit: S.current.settingsPingIntervalUnit,
-          value: NumSetting.finite(settings.interval),
+          value: NumSetting.finite(value: settings!.interval),
           onChanged: (it) => _onFiniteSettingChanged(
             it,
-            (value) => settings.copyWith(interval: value),
+            (value) => settings!.copyWith(interval: value),
           ),
         ),
         PingSettingItem(
           label: S.current.settingsPingTimeoutLabel,
           unit: S.current.settingsPingTimeoutUnit,
-          value: NumSetting.finite(settings.timeout),
+          value: NumSetting.finite(value: settings!.timeout),
           onChanged: (it) => _onFiniteSettingChanged(
             it,
-            (value) => settings.copyWith(timeout: value),
+            (value) => settings!.copyWith(timeout: value),
           ),
         )
       ],
@@ -63,7 +63,9 @@ class PingSettingsSection extends StatelessWidget {
   }
 
   void _onFiniteSettingChanged(
-      NumSetting value, PingSettings updateSettings(int)) {
+    NumSetting value,
+    PingSettings updateSettings(int),
+  ) {
     value.when(
       finite: (it) => onChanged(updateSettings(it)),
       infinite: () => throw ArgumentError("Expected finite setting value"),
@@ -76,9 +78,9 @@ class OtherSettingsSection extends StatelessWidget {
   final ValueChanged<UserSettings> onChanged;
 
   const OtherSettingsSection({
-    Key key,
-    @required this.settings,
-    @required this.onChanged,
+    Key? key,
+    required this.settings,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -111,13 +113,13 @@ class OtherSettingsSection extends StatelessWidget {
 }
 
 class ShareSettingsSection extends StatelessWidget {
-  final ShareSettings settings;
+  final ShareSettings? settings;
   final ValueChanged<ShareSettings> onChanged;
 
   const ShareSettingsSection({
-    Key key,
-    @required this.settings,
-    @required this.onChanged,
+    Key? key,
+    required this.settings,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -129,18 +131,18 @@ class ShareSettingsSection extends StatelessWidget {
         SwitchSettingItem(
           label: S.current.settingsShareResultsLabel,
           description: S.current.settingsShareResultsDesc,
-          value: settings.shareResults,
-          onChanged: (it) => onChanged(settings.copyWith(
+          value: settings!.shareResults,
+          onChanged: (it) => onChanged(settings!.copyWith(
             shareResults: it,
-            attachLocation: it ? settings.attachLocation : false,
+            attachLocation: it ? settings!.attachLocation : false,
           )),
         ),
         SwitchSettingItem(
           label: S.current.settingsAttachLocationTitle,
           description: S.current.settingsAttachLocationDesc,
-          enabled: settings.shareResults,
-          value: settings.attachLocation,
-          onChanged: (it) => onChanged(settings.copyWith(attachLocation: it)),
+          enabled: settings!.shareResults,
+          value: settings!.attachLocation,
+          onChanged: (it) => onChanged(settings!.copyWith(attachLocation: it)),
         ),
       ],
     );
@@ -148,13 +150,13 @@ class ShareSettingsSection extends StatelessWidget {
 }
 
 class TraySettingsSection extends StatelessWidget {
-  final TraySettings settings;
-  final ValueChanged<TraySettings> onChanged;
+  final TraySettings? settings;
+  final ValueChanged<TraySettings?> onChanged;
 
   const TraySettingsSection({
-    Key key,
-    @required this.settings,
-    @required this.onChanged,
+    Key? key,
+    required this.settings,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -166,18 +168,18 @@ class TraySettingsSection extends StatelessWidget {
         SwitchSettingItem(
           label: S.current.settingsTrayEnabledTitle,
           description: S.current.settingsTrayEnabledDesc,
-          value: settings.enabled,
-          onChanged: (it) => onChanged(settings.copyWith(
+          value: settings!.enabled,
+          onChanged: (it) => onChanged(settings!.copyWith(
             enabled: it,
-            autoReveal: it ? settings.autoReveal : false,
+            autoReveal: it ? settings!.autoReveal : false,
           )),
         ),
         SwitchSettingItem(
           label: S.current.settingsTrayAutoRevealTitle,
           description: S.current.settingsTrayAutoRevealDesc,
-          enabled: settings.enabled,
-          value: settings.autoReveal,
-          onChanged: (it) => onChanged(settings.copyWith(autoReveal: it)),
+          enabled: settings!.enabled,
+          value: settings!.autoReveal,
+          onChanged: (it) => onChanged(settings!.copyWith(autoReveal: it)),
         ),
       ],
     );
@@ -185,13 +187,13 @@ class TraySettingsSection extends StatelessWidget {
 }
 
 class SettingsFooterSection extends StatelessWidget {
-  final AppInfo appInfo;
+  final AppInfo? appInfo;
   final VoidCallback onShowIntroPressed;
 
   const SettingsFooterSection({
-    Key key,
-    @required this.appInfo,
-    @required this.onShowIntroPressed,
+    Key? key,
+    required this.appInfo,
+    required this.onShowIntroPressed,
   }) : super(key: key);
 
   @override
@@ -202,7 +204,7 @@ class SettingsFooterSection extends StatelessWidget {
         Center(
           child: ButtonTheme.fromButtonThemeData(
             data: R.themes.raisedButton,
-            child: RaisedButton(
+            child: ElevatedButton(
               child: Text(S.current.showIntroButtonLabel),
               onPressed: onShowIntroPressed,
             ),
@@ -212,13 +214,13 @@ class SettingsFooterSection extends StatelessWidget {
         GestureDetector(
           onTap: () => showAboutDialog(
             context: context,
-            applicationVersion: appInfo.version,
-            applicationName: appInfo.name,
-            applicationLegalese: appInfo.copyright,
+            applicationVersion: appInfo!.version,
+            applicationName: appInfo!.name,
+            applicationLegalese: appInfo!.copyright,
             applicationIcon: ClipRRect(
               borderRadius: BorderRadius.circular(4.0),
               child: Image.asset(
-                appInfo.icon,
+                appInfo!.icon,
                 width: 36.0,
                 height: 36.0,
               ),
@@ -236,7 +238,7 @@ class SettingsFooterSection extends StatelessWidget {
                 ),
                 Container(width: 12.0),
                 Text(
-                  appInfo.version,
+                  appInfo!.version,
                   style: TextStyle(fontSize: 18.0, color: R.colors.primary),
                 ),
               ],

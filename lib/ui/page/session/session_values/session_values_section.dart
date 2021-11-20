@@ -11,16 +11,16 @@ import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class SessionValuesSection extends StatefulWidget {
   final PingSession session;
-  final Duration sessionDuration;
+  final Duration? sessionDuration;
   final PingValuesType viewType;
   final ValueChanged<PingValuesType> onViewTypeChanged;
 
   const SessionValuesSection({
-    Key key,
-    @required this.session,
-    @required this.sessionDuration,
-    @required this.viewType,
-    @required this.onViewTypeChanged,
+    Key? key,
+    required this.session,
+    required this.sessionDuration,
+    required this.viewType,
+    required this.onViewTypeChanged,
   }) : super(key: key);
 
   @override
@@ -80,7 +80,6 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
       case PingValuesType.chart:
         return _headerSafeHeight + _chartSafeHeight;
     }
-    throw StateError("Unhandled $PingValuesType: ${widget.viewType}.");
   }
 
   Widget _buildViewTypeContent() {
@@ -120,6 +119,5 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
           ),
         );
     }
-    throw StateError("Unhandled $PingValuesType: ${widget.viewType}.");
   }
 }

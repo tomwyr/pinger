@@ -30,7 +30,7 @@ class PingService {
 
   Stream<double> _pingNext(String host, PingSettings settings) async* {
     try {
-      yield await _pingCommand.execute(host, settings);
+      yield await (_pingCommand.execute(host, settings) as FutureOr<double>);
     } catch (e, stackTrace) {
       yield* Future<double>.error(e, stackTrace).asStream();
     }
@@ -39,7 +39,7 @@ class PingService {
 
 @injectable
 abstract class PingCommand {
-  Future<double> execute(String host, PingSettings settings);
+  Future<double?> execute(String host, PingSettings settings);
 
   const PingCommand();
 
@@ -69,7 +69,7 @@ class BashPingCommand extends PingCommand {
 
   double _parseResult(ProcessResult result) {
     final didSucceed =
-        (result.stderr as String ?? "").isEmpty && result.stdout != null;
+        (result.stderr as String? ?? "").isEmpty && result.stdout != null;
     if (!didSucceed) throw PingError.REQUEST_FAILED;
     final value =
         RegExp(r"time=(\d+(\.\d+)?) ms").firstMatch(result.stdout)?.group(1);
@@ -87,7 +87,7 @@ class SimplePingCommand extends PingCommand {
   final MethodChannel _channel = MethodChannel('com.tomwyr.pinger/simplePing');
 
   @override
-  Future<double> execute(String host, PingSettings settings) async {
+  Future<double?> execute(String host, PingSettings settings) async {
     try {
       return await _channel.invokeMethod('ping', {
         'hostName': host,

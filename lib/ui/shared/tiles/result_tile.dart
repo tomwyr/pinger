@@ -12,27 +12,30 @@ enum ResultTileType {
 
 class ResultTile extends StatelessWidget {
   const ResultTile({
-    Key key,
-    @required this.result,
+    Key? key,
+    required this.result,
     this.onPressed,
     this.type = ResultTileType.regular,
   }) : super(key: key);
 
-  final PingResult result;
-  final VoidCallback onPressed;
+  final PingResult? result;
+  final VoidCallback? onPressed;
   final ResultTileType type;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      key: ValueKey(result.id),
+      key: ValueKey(result!.id),
       height: 56.0,
-      child: OutlineButton(
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.only(left: 12.0),
+          side: R.styles.outlineButtonBorder,
+          // TODO verify how to apply colors
+          // highlightedBorderColor: R.styles.outlineButtonBorder.color,
+          // color: R.colors.canvas,
+        ),
         onPressed: onPressed,
-        padding: const EdgeInsets.only(left: 12.0),
-        borderSide: R.styles.outlineButtonBorder,
-        highlightedBorderColor: R.styles.outlineButtonBorder.color,
-        color: R.colors.canvas,
         child: LayoutBuilder(
           builder: (_, constraints) => Row(children: <Widget>[
             Expanded(
@@ -48,10 +51,10 @@ class ResultTile extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: LayoutBuilder(
                   builder: (_, constraints) => ResultTileChart(
-                    values: result.values,
-                    min: result.stats.min,
-                    mean: result.stats.mean,
-                    max: result.stats.max,
+                    values: result!.values,
+                    min: result!.stats.min,
+                    mean: result!.stats.mean,
+                    max: result!.stats.max,
                     barWidth: constraints.maxWidth / 3,
                   ),
                 ),
@@ -60,7 +63,7 @@ class ResultTile extends StatelessWidget {
             SizedBox(
               width: 48.0,
               child: Text(
-                FormatUtils.getSinceNowLabel(result.startTime),
+                FormatUtils.getSinceNowLabel(result!.startTime),
                 style: TextStyle(fontSize: 12.0, color: R.colors.gray),
                 textAlign: TextAlign.center,
               ),
@@ -74,12 +77,12 @@ class ResultTile extends StatelessWidget {
   Widget _buildTypeContent() {
     return type == ResultTileType.regular
         ? Row(children: <Widget>[
-            HostIconTile(host: result.host),
+            HostIconTile(host: result!.host),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(left: 18.0, right: 12.0),
                 child: Text(
-                  result.host,
+                  result!.host,
                   maxLines: 1,
                   softWrap: false,
                   overflow: TextOverflow.fade,
@@ -91,12 +94,12 @@ class ResultTile extends StatelessWidget {
         : Row(children: <Widget>[
             _buildDetail(
               Icons.compare_arrows,
-              result.values.length.toString(),
+              result!.values.length.toString(),
             ),
             Container(width: 16.0),
             _buildDetail(
               Icons.timer,
-              FormatUtils.getDurationLabel(result.duration),
+              FormatUtils.getDurationLabel(result!.duration),
             ),
           ]);
   }

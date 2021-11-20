@@ -11,14 +11,14 @@ import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 class PermissionsSheet extends StatefulWidget {
   final Widget child;
 
-  const PermissionsSheet({Key key, @required this.child}) : super(key: key);
+  const PermissionsSheet({Key? key, required this.child}) : super(key: key);
 
   @override
   _PermissionsSheetState createState() => _PermissionsSheetState();
 }
 
 class _PermissionsSheetState extends State<PermissionsSheet> {
-  List<PermissionSheetHandler> _handlers;
+  late List<PermissionSheetHandler> _handlers;
 
   PermissionSheetHandler get _notificationHandler => PermissionSheetHandler(
         title: S.current.notificationAccessDisabledTitle,
@@ -53,10 +53,10 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
 
 class PermissionSheetHandler {
   PermissionSheetHandler({
-    @required this.title,
-    @required this.subtitle,
-    @required this.openSettings,
-    @required this.store,
+    required this.title,
+    required this.subtitle,
+    required this.openSettings,
+    required this.store,
   });
 
   final String title;
@@ -65,7 +65,7 @@ class PermissionSheetHandler {
   final PermissionStore store;
 
   bool _isShowingSheet = false;
-  ReactionDisposer _disposer;
+  late ReactionDisposer _disposer;
 
   void init() {
     _disposer = autorun((_) {

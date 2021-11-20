@@ -12,15 +12,15 @@ class CollapsingHeader extends StatefulWidget {
   final Widget content;
   final Widget bottom;
   final Duration duration;
-  final CollapsingHeaderBuilder builder;
+  final CollapsingHeaderBuilder? builder;
 
   const CollapsingHeader({
-    Key key,
-    @required this.isExpanded,
-    @required this.title,
-    @required this.content,
-    @required this.bottom,
-    @required this.duration,
+    Key? key,
+    required this.isExpanded,
+    required this.title,
+    required this.content,
+    required this.bottom,
+    required this.duration,
     this.builder,
   }) : super(key: key);
 
@@ -30,10 +30,10 @@ class CollapsingHeader extends StatefulWidget {
 
 class _CollapsingHeaderState extends State<CollapsingHeader>
     with SingleTickerProviderStateMixin {
-  AnimationController _animator;
-  Animation<double> _baseAnim;
-  Animation<double> _heightAnim;
-  Animation<AlignmentGeometry> _alignAnim;
+  late AnimationController _animator;
+  late Animation<double> _baseAnim;
+  late Animation<double> _heightAnim;
+  late Animation<AlignmentGeometry?> _alignAnim;
 
   @override
   void initState() {
@@ -98,11 +98,11 @@ class _CollapsingHeaderState extends State<CollapsingHeader>
                     horizontal: 56.0 * (1 - _animator.value),
                   ),
                   child: Align(
-                    alignment: _alignAnim.value,
+                    alignment: _alignAnim.value!,
                     child: SizedBox(
                       height: kToolbarHeight,
                       child: widget.builder != null
-                          ? widget.builder(
+                          ? widget.builder!(
                               context,
                               _animator.value,
                               widget.content,

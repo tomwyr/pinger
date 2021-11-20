@@ -5,13 +5,13 @@ import 'package:flutter/widgets.dart';
 
 class ThreeBounce extends StatefulWidget {
   const ThreeBounce({
-    Key key,
+    Key? key,
     this.color,
     this.size = 48.0,
     this.duration = const Duration(milliseconds: 1500),
   }) : super(key: key);
 
-  final Color color;
+  final Color? color;
   final double size;
   final Duration duration;
 
@@ -21,7 +21,7 @@ class ThreeBounce extends StatefulWidget {
 
 class _ThreeBounceState extends State<ThreeBounce>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -73,15 +73,15 @@ class _ThreeBounceState extends State<ThreeBounce>
 
 class DelayTween extends Tween<double> {
   DelayTween({
-    @required double begin,
-    @required double end,
-    @required this.delay,
+    required double begin,
+    required double end,
+    required this.delay,
   }) : super(begin: begin, end: end);
 
-  final double delay;
+  final double? delay;
 
   @override
-  double lerp(double t) => super.lerp((sin((t - delay) * 2 * pi) + 1) / 2);
+  double lerp(double t) => super.lerp((sin((t - delay!) * 2 * pi) + 1) / 2);
 
   @override
   double evaluate(Animation<double> animation) => lerp(animation.value);

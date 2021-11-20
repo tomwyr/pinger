@@ -14,19 +14,19 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 class HomeHostSuggestions extends StatefulWidget {
   final Widget searchBar;
   final ValueChanged<String> onItemPressed;
-  final String currentHost;
-  final List<String> favorites;
+  final String? currentHost;
+  final List<String>? favorites;
   final List<String> popular;
-  final Map<String, HostStats> stats;
+  final Map<String, HostStats>? stats;
 
   const HomeHostSuggestions({
-    Key key,
-    @required this.searchBar,
-    @required this.onItemPressed,
-    @required this.currentHost,
-    @required this.favorites,
-    @required this.popular,
-    @required this.stats,
+    Key? key,
+    required this.searchBar,
+    required this.onItemPressed,
+    required this.currentHost,
+    required this.favorites,
+    required this.popular,
+    required this.stats,
   }) : super(key: key);
 
   @override
@@ -69,7 +69,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
           bottomItem: widget.currentHost != null
               ? HomeHostsSection(
                   title: S.current.homeCurrentSubtitle,
-                  hosts: [widget.currentHost],
+                  hosts: [widget.currentHost!],
                   itemLimit: 1,
                   tileType: HostTileType.highlighted,
                   onItemPressed: widget.onItemPressed,
@@ -93,7 +93,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
         child: HomeHostsSection(
           title: S.current.homeRecentsSubtitle,
           emptyLabel: S.current.homeRecentsEmptyPlaceholder,
-          hosts: widget.stats.keys.toList(),
+          hosts: widget.stats!.keys.toList(),
           itemLimit: 5,
           onItemPressed: widget.onItemPressed,
           onMorePressed: () => PingerApp.router.show(RouteConfig.recents()),

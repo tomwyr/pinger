@@ -8,16 +8,16 @@ import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsHeader extends StatelessWidget {
-  final PingResult result;
+  final PingResult? result;
   final double expansion;
   final double minExtent;
   final double maxExtent;
 
   ResultDetailsHeader({
-    @required this.result,
-    @required this.expansion,
-    @required this.minExtent,
-    @required this.maxExtent,
+    required this.result,
+    required this.expansion,
+    required this.minExtent,
+    required this.maxExtent,
   });
 
   @override
@@ -90,7 +90,7 @@ class ResultDetailsHeader extends StatelessWidget {
         size: Size.square(kToolbarHeight),
         child: Center(
           child: HostIconTile.expansion(
-            host: result.host,
+            host: result!.host,
             expansion: expansion,
           ),
         ),
@@ -101,7 +101,7 @@ class ResultDetailsHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              result.host,
+              result!.host,
               maxLines: 1,
               softWrap: false,
               overflow: TextOverflow.fade,
@@ -119,15 +119,15 @@ class ResultDetailsHeader extends StatelessWidget {
       children: <Widget>[
         _buildSummaryItem(
           S.current.pingSummaryCountLabel,
-          result.values.length.toString(),
+          result!.values.length.toString(),
         ),
         _buildSummaryItem(
           S.current.pingSummaryDurationLabel,
-          FormatUtils.getDurationLabel(result.duration),
+          FormatUtils.getDurationLabel(result!.duration),
         ),
         _buildSummaryItem(
           S.current.pingSummaryDateLabel,
-          FormatUtils.getTimestampLabel(result.startTime),
+          FormatUtils.getTimestampLabel(result!.startTime),
         ),
       ],
     );

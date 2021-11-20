@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:package_info/package_info.dart';
@@ -23,13 +22,13 @@ abstract class SettingsStoreBase with Store {
   AppConfig get _appConfig;
 
   @observable
-  UserSettings userSettings;
+  UserSettings? userSettings;
 
   @observable
-  bool didShowIntro;
+  bool? didShowIntro;
 
   @observable
-  AppInfo appInfo;
+  AppInfo? appInfo;
 
   @action
   Future<void> init() async {
@@ -43,7 +42,7 @@ abstract class SettingsStoreBase with Store {
     );
   }
 
-  UserSettings _getUserSettings() {
+  UserSettings? _getUserSettings() {
     var settings = _pingerPrefs.getUserSettings();
     if (settings == null) {
       settings = _createDefaultSettings();
@@ -65,7 +64,7 @@ abstract class SettingsStoreBase with Store {
           attachLocation: false,
         ),
         pingSettings: PingSettings(
-          count: NumSetting.finite(10),
+          count: NumSetting.finite(value: 10),
           packetSize: 56,
           interval: 1,
           timeout: 10,
@@ -95,9 +94,9 @@ class AppInfo {
   final String icon;
 
   AppInfo({
-    @required this.version,
-    @required this.name,
-    @required this.icon,
-    @required this.copyright,
+    required this.version,
+    required this.name,
+    required this.icon,
+    required this.copyright,
   });
 }

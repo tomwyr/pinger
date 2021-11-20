@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_global.dart';
@@ -20,17 +19,17 @@ import 'package:pinger/utils/data_snap.dart';
 class ResultDetailsGlobalTab extends StatelessWidget {
   final bool isSharingLocation;
   final VoidCallback onShareLocationPressed;
-  final PingResult userResult;
-  final DataSnap<GlobalHostResults> globalResults;
+  final PingResult? userResult;
+  final DataSnap<GlobalHostResults>? globalResults;
   final VoidCallback onRefreshPressed;
 
   const ResultDetailsGlobalTab({
-    Key key,
-    @required this.isSharingLocation,
-    @required this.onShareLocationPressed,
-    @required this.userResult,
-    @required this.globalResults,
-    @required this.onRefreshPressed,
+    Key? key,
+    required this.isSharingLocation,
+    required this.onShareLocationPressed,
+    required this.userResult,
+    required this.globalResults,
+    required this.onRefreshPressed,
   }) : super(key: key);
 
   @override
@@ -45,7 +44,7 @@ class ResultDetailsGlobalTab extends StatelessWidget {
           onButtonPressed: onShareLocationPressed,
         )
       else
-        globalResults.when(
+        globalResults!.when(
           data: (data) => SliverFillRemaining(
             hasScrollBody: false,
             child: GlobalResultsDataSection(
@@ -74,12 +73,12 @@ class ResultDetailsGlobalTab extends StatelessWidget {
 
 class GlobalResultsDataSection extends StatefulWidget {
   final GlobalHostResults globalResults;
-  final PingResult userResult;
+  final PingResult? userResult;
 
   const GlobalResultsDataSection({
-    Key key,
-    @required this.globalResults,
-    @required this.userResult,
+    Key? key,
+    required this.globalResults,
+    required this.userResult,
   }) : super(key: key);
 
   @override
@@ -88,17 +87,11 @@ class GlobalResultsDataSection extends StatefulWidget {
 }
 
 class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
-  UserResultType _resultType;
-
-  @override
-  void initState() {
-    super.initState();
-    _resultType = UserResultType.mean;
-  }
+  var _resultType = UserResultType.mean;
 
   @override
   Widget build(BuildContext context) {
-    final userValue = _getStatsValue(widget.userResult.stats);
+    final userValue = _getStatsValue(widget.userResult!.stats);
     final globalValues = _getGlobalValues(widget.globalResults);
     return Padding(
       padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 4.0),
@@ -174,7 +167,6 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       case UserResultType.max:
         return globalResults.valueResults.max;
     }
-    throw StateError("Unhandled $UserResultType: $_resultType.");
   }
 
   int _calcTypeMeanValue(Map<int, int> values) {
@@ -220,7 +212,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
                 UserResultType.max: S.current.viewTypeMax,
               },
               selection: _resultType,
-              onChanged: (it) => setState(() => _resultType = it),
+              onChanged: (dynamic it) => setState(() => _resultType = it),
             ),
           ),
         ]),
@@ -266,6 +258,5 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       case UserResultType.max:
         return stats.max;
     }
-    throw StateError("Unhandled $UserResultType: $_resultType.");
   }
 }

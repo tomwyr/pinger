@@ -60,7 +60,7 @@ mixin _$PermissionStore on PermissionStoreBase, Store {
       AsyncAction('PermissionStoreBase._verifySettingStatus');
 
   @override
-  Future<void> _verifySettingStatus(bool enabled) {
+  Future<void> _verifySettingStatus(bool? enabled) {
     return _$_verifySettingStatusAsyncAction
         .run(() => super._verifySettingStatus(enabled));
   }

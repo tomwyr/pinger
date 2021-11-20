@@ -8,10 +8,10 @@ class DottedMap extends StatelessWidget {
   final Color emptyDotColor;
 
   const DottedMap({
-    Key key,
-    @required this.dots,
-    @required this.dotColor,
-    @required this.emptyDotColor,
+    Key? key,
+    required this.dots,
+    required this.dotColor,
+    required this.emptyDotColor,
   }) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class DottedMap extends StatelessWidget {
 
 class DottedMapPainter extends CustomPainter {
   final double maxValue;
-  final List<List<double>> dotValueMatrix;
+  final List<List<double?>> dotValueMatrix;
   final ColorTween dotColor;
   final Color emptyDotColor;
 
@@ -44,10 +44,10 @@ class DottedMapPainter extends CustomPainter {
   );
 
   factory DottedMapPainter({
-    @required List<MapDot> dots,
-    @required double maxValue,
-    @required ColorTween dotColor,
-    @required Color emptyDotColor,
+    required List<MapDot> dots,
+    required double maxValue,
+    required ColorTween dotColor,
+    required Color emptyDotColor,
   }) {
     final degPerDot = 180.0 / WORLD_DOT_MATRIX.length;
     final dotMatrix = WORLD_DOT_MATRIX
@@ -78,7 +78,7 @@ class DottedMapPainter extends CustomPainter {
             value > 0 ? dotRadius : emptyDotRadius,
             paint
               ..color = value > 0
-                  ? dotColor.transform(min(value / maxValue, 1.0))
+                  ? dotColor.transform(min(value / maxValue, 1.0))!
                   : emptyDotColor,
           );
         }

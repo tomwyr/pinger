@@ -6,9 +6,9 @@ import 'package:pinger/ui/common/collapsing_tab_layout.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsInfoTab extends StatelessWidget {
-  final PingResult result;
+  final PingResult? result;
 
-  const ResultDetailsInfoTab({Key key, @required this.result})
+  const ResultDetailsInfoTab({Key? key, required this.result})
       : super(key: key);
 
   @override
@@ -24,29 +24,30 @@ class ResultDetailsInfoTab extends StatelessWidget {
               _buildHeader(S.current.pingInfoInfoSubtitle),
               _buildItem(
                 S.current.pingInfoDateLabel,
-                FormatUtils.getTimestampLabel(result.startTime, showTime: true),
+                FormatUtils.getTimestampLabel(result!.startTime,
+                    showTime: true),
               ),
               _buildItem(
                 S.current.pingInfoDurationLabel,
-                FormatUtils.getDurationLabel(result.duration),
+                FormatUtils.getDurationLabel(result!.duration),
               ),
               Container(height: 24.0),
               _buildHeader(S.current.pingInfoSettingsSubtitle),
               _buildItem(
                 S.current.settingsPingCountLabel,
-                "${FormatUtils.getCountLabel(result.settings.count)} ${S.current.settingsPingCountUnit}",
+                "${FormatUtils.getCountLabel(result!.settings.count)} ${S.current.settingsPingCountUnit}",
               ),
               _buildItem(
                 S.current.settingsPingPacketSizeLabel,
-                "${result.settings.packetSize}  ${S.current.settingsPingPacketSizeUnit}",
+                "${result!.settings.packetSize}  ${S.current.settingsPingPacketSizeUnit}",
               ),
               _buildItem(
                 S.current.settingsPingIntervalLabel,
-                "${result.settings.interval}  ${S.current.settingsPingIntervalUnit}",
+                "${result!.settings.interval}  ${S.current.settingsPingIntervalUnit}",
               ),
               _buildItem(
                 S.current.settingsPingTimeoutLabel,
-                "${result.settings.timeout}  ${S.current.settingsPingTimeoutUnit}",
+                "${result!.settings.timeout}  ${S.current.settingsPingTimeoutUnit}",
               ),
             ],
           ),

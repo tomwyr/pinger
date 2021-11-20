@@ -9,22 +9,22 @@ class SessionValuesItem extends StatelessWidget {
   static final double extent = indicatorSize + linkHeight;
 
   final int index;
-  final int result;
-  final int delta;
+  final int? result;
+  final int? delta;
   final bool showLink;
 
   const SessionValuesItem._({
-    Key key,
-    @required this.index,
-    @required this.result,
-    @required this.delta,
-    @required this.showLink,
+    Key? key,
+    required this.index,
+    required this.result,
+    required this.delta,
+    required this.showLink,
   }) : super(key: key);
 
   factory SessionValuesItem.reversed({
-    Key key,
-    @required List<int> values,
-    @required int index,
+    Key? key,
+    required List<int?> values,
+    required int index,
   }) {
     final reversedIndex = values.length - index - 1;
     final result = values[reversedIndex];
@@ -84,7 +84,7 @@ class SessionValuesItem extends StatelessWidget {
   Widget _buildValue() {
     return Expanded(
       child: Text(
-        result != null ? S.current.pingValueLabel(result) : "-",
+        result != null ? S.current.pingValueLabel(result!) : "-",
         style: TextStyle(fontSize: 18.0),
         textAlign: TextAlign.center,
       ),
@@ -95,7 +95,7 @@ class SessionValuesItem extends StatelessWidget {
     return SizedBox(
       width: indicatorBoxWidth,
       child: Text(
-        (delta != null && delta != 0) ? delta > 0 ? "+$delta" : "$delta" : "-",
+        (delta != null && delta != 0) ? delta! > 0 ? "+$delta" : "$delta" : "-",
         style: TextStyle(color: R.colors.gray),
         textAlign: TextAlign.center,
       ),

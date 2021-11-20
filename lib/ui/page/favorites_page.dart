@@ -21,17 +21,17 @@ class _FavoritesPageState extends BaseState<FavoritesPage> with HostTapHandler {
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
       final stats = _hostsStore.localStats;
-      final hosts = _hostsStore.favorites.toList()
+      final hosts = _hostsStore.favorites!.toList()
         ..sort((e1, e2) {
-          if (!stats.containsKey(e1)) return 1;
+          if (!stats!.containsKey(e1)) return 1;
           if (!stats.containsKey(e2)) return -1;
-          return stats[e2].pingCount.compareTo(stats[e1].pingCount);
+          return stats[e2]!.pingCount.compareTo(stats[e1]!.pingCount);
         });
       return HostsPage(
         title: S.current.favoritesPageTitle,
         hosts: hosts,
         getTrailingLabel: (it) =>
-            S.current.pingCountLabel(stats[it]?.pingCount ?? 0),
+            S.current.pingCountLabel(stats![it]?.pingCount ?? 0),
         removeHosts: _hostsStore.removeFavorites,
         onHostSelected: (it) => onHostTap(_pingStore, it),
       );

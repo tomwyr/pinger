@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'user_settings.dart';
 
@@ -8,20 +9,25 @@ part of 'user_settings.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) {
   return _UserSettings.fromJson(json);
 }
 
+/// @nodoc
 class _$UserSettingsTearOff {
   const _$UserSettingsTearOff();
 
   _UserSettings call(
-      {PingSettings pingSettings,
-      ShareSettings shareSettings,
-      TraySettings traySettings,
-      bool showSystemNotification,
-      bool restoreHost,
-      bool nightMode}) {
+      {required PingSettings pingSettings,
+      required ShareSettings shareSettings,
+      TraySettings? traySettings,
+      required bool showSystemNotification,
+      required bool restoreHost,
+      required bool nightMode}) {
     return _UserSettings(
       pingSettings: pingSettings,
       shareSettings: shareSettings,
@@ -31,23 +37,31 @@ class _$UserSettingsTearOff {
       nightMode: nightMode,
     );
   }
+
+  UserSettings fromJson(Map<String, Object?> json) {
+    return UserSettings.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $UserSettings = _$UserSettingsTearOff();
 
+/// @nodoc
 mixin _$UserSettings {
-  PingSettings get pingSettings;
-  ShareSettings get shareSettings;
-  TraySettings get traySettings;
-  bool get showSystemNotification;
-  bool get restoreHost;
-  bool get nightMode;
+  PingSettings get pingSettings => throw _privateConstructorUsedError;
+  ShareSettings get shareSettings => throw _privateConstructorUsedError;
+  TraySettings? get traySettings => throw _privateConstructorUsedError;
+  bool get showSystemNotification => throw _privateConstructorUsedError;
+  bool get restoreHost => throw _privateConstructorUsedError;
+  bool get nightMode => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $UserSettingsCopyWith<UserSettings> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserSettingsCopyWith<UserSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $UserSettingsCopyWith<$Res> {
   factory $UserSettingsCopyWith(
           UserSettings value, $Res Function(UserSettings) then) =
@@ -55,16 +69,17 @@ abstract class $UserSettingsCopyWith<$Res> {
   $Res call(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
-      TraySettings traySettings,
+      TraySettings? traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode});
 
   $PingSettingsCopyWith<$Res> get pingSettings;
   $ShareSettingsCopyWith<$Res> get shareSettings;
-  $TraySettingsCopyWith<$Res> get traySettings;
+  $TraySettingsCopyWith<$Res>? get traySettings;
 }
 
+/// @nodoc
 class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
   _$UserSettingsCopyWithImpl(this._value, this._then);
 
@@ -74,37 +89,43 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object pingSettings = freezed,
-    Object shareSettings = freezed,
-    Object traySettings = freezed,
-    Object showSystemNotification = freezed,
-    Object restoreHost = freezed,
-    Object nightMode = freezed,
+    Object? pingSettings = freezed,
+    Object? shareSettings = freezed,
+    Object? traySettings = freezed,
+    Object? showSystemNotification = freezed,
+    Object? restoreHost = freezed,
+    Object? nightMode = freezed,
   }) {
     return _then(_value.copyWith(
       pingSettings: pingSettings == freezed
           ? _value.pingSettings
-          : pingSettings as PingSettings,
+          : pingSettings // ignore: cast_nullable_to_non_nullable
+              as PingSettings,
       shareSettings: shareSettings == freezed
           ? _value.shareSettings
-          : shareSettings as ShareSettings,
+          : shareSettings // ignore: cast_nullable_to_non_nullable
+              as ShareSettings,
       traySettings: traySettings == freezed
           ? _value.traySettings
-          : traySettings as TraySettings,
+          : traySettings // ignore: cast_nullable_to_non_nullable
+              as TraySettings?,
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
-          : showSystemNotification as bool,
-      restoreHost:
-          restoreHost == freezed ? _value.restoreHost : restoreHost as bool,
-      nightMode: nightMode == freezed ? _value.nightMode : nightMode as bool,
+          : showSystemNotification // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restoreHost: restoreHost == freezed
+          ? _value.restoreHost
+          : restoreHost // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nightMode: nightMode == freezed
+          ? _value.nightMode
+          : nightMode // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
   @override
   $PingSettingsCopyWith<$Res> get pingSettings {
-    if (_value.pingSettings == null) {
-      return null;
-    }
     return $PingSettingsCopyWith<$Res>(_value.pingSettings, (value) {
       return _then(_value.copyWith(pingSettings: value));
     });
@@ -112,25 +133,24 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
 
   @override
   $ShareSettingsCopyWith<$Res> get shareSettings {
-    if (_value.shareSettings == null) {
-      return null;
-    }
     return $ShareSettingsCopyWith<$Res>(_value.shareSettings, (value) {
       return _then(_value.copyWith(shareSettings: value));
     });
   }
 
   @override
-  $TraySettingsCopyWith<$Res> get traySettings {
+  $TraySettingsCopyWith<$Res>? get traySettings {
     if (_value.traySettings == null) {
       return null;
     }
-    return $TraySettingsCopyWith<$Res>(_value.traySettings, (value) {
+
+    return $TraySettingsCopyWith<$Res>(_value.traySettings!, (value) {
       return _then(_value.copyWith(traySettings: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$UserSettingsCopyWith<$Res>
     implements $UserSettingsCopyWith<$Res> {
   factory _$UserSettingsCopyWith(
@@ -140,7 +160,7 @@ abstract class _$UserSettingsCopyWith<$Res>
   $Res call(
       {PingSettings pingSettings,
       ShareSettings shareSettings,
-      TraySettings traySettings,
+      TraySettings? traySettings,
       bool showSystemNotification,
       bool restoreHost,
       bool nightMode});
@@ -150,9 +170,10 @@ abstract class _$UserSettingsCopyWith<$Res>
   @override
   $ShareSettingsCopyWith<$Res> get shareSettings;
   @override
-  $TraySettingsCopyWith<$Res> get traySettings;
+  $TraySettingsCopyWith<$Res>? get traySettings;
 }
 
+/// @nodoc
 class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
     implements _$UserSettingsCopyWith<$Res> {
   __$UserSettingsCopyWithImpl(
@@ -164,52 +185,62 @@ class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object pingSettings = freezed,
-    Object shareSettings = freezed,
-    Object traySettings = freezed,
-    Object showSystemNotification = freezed,
-    Object restoreHost = freezed,
-    Object nightMode = freezed,
+    Object? pingSettings = freezed,
+    Object? shareSettings = freezed,
+    Object? traySettings = freezed,
+    Object? showSystemNotification = freezed,
+    Object? restoreHost = freezed,
+    Object? nightMode = freezed,
   }) {
     return _then(_UserSettings(
       pingSettings: pingSettings == freezed
           ? _value.pingSettings
-          : pingSettings as PingSettings,
+          : pingSettings // ignore: cast_nullable_to_non_nullable
+              as PingSettings,
       shareSettings: shareSettings == freezed
           ? _value.shareSettings
-          : shareSettings as ShareSettings,
+          : shareSettings // ignore: cast_nullable_to_non_nullable
+              as ShareSettings,
       traySettings: traySettings == freezed
           ? _value.traySettings
-          : traySettings as TraySettings,
+          : traySettings // ignore: cast_nullable_to_non_nullable
+              as TraySettings?,
       showSystemNotification: showSystemNotification == freezed
           ? _value.showSystemNotification
-          : showSystemNotification as bool,
-      restoreHost:
-          restoreHost == freezed ? _value.restoreHost : restoreHost as bool,
-      nightMode: nightMode == freezed ? _value.nightMode : nightMode as bool,
+          : showSystemNotification // ignore: cast_nullable_to_non_nullable
+              as bool,
+      restoreHost: restoreHost == freezed
+          ? _value.restoreHost
+          : restoreHost // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nightMode: nightMode == freezed
+          ? _value.nightMode
+          : nightMode // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_UserSettings implements _UserSettings {
   _$_UserSettings(
-      {this.pingSettings,
-      this.shareSettings,
+      {required this.pingSettings,
+      required this.shareSettings,
       this.traySettings,
-      this.showSystemNotification,
-      this.restoreHost,
-      this.nightMode});
+      required this.showSystemNotification,
+      required this.restoreHost,
+      required this.nightMode});
 
   factory _$_UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$_$_UserSettingsFromJson(json);
+      _$$_UserSettingsFromJson(json);
 
   @override
   final PingSettings pingSettings;
   @override
   final ShareSettings shareSettings;
   @override
-  final TraySettings traySettings;
+  final TraySettings? traySettings;
   @override
   final bool showSystemNotification;
   @override
@@ -225,55 +256,45 @@ class _$_UserSettings implements _UserSettings {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserSettings &&
+        (other.runtimeType == runtimeType &&
+            other is _UserSettings &&
             (identical(other.pingSettings, pingSettings) ||
-                const DeepCollectionEquality()
-                    .equals(other.pingSettings, pingSettings)) &&
+                other.pingSettings == pingSettings) &&
             (identical(other.shareSettings, shareSettings) ||
-                const DeepCollectionEquality()
-                    .equals(other.shareSettings, shareSettings)) &&
+                other.shareSettings == shareSettings) &&
             (identical(other.traySettings, traySettings) ||
-                const DeepCollectionEquality()
-                    .equals(other.traySettings, traySettings)) &&
+                other.traySettings == traySettings) &&
             (identical(other.showSystemNotification, showSystemNotification) ||
-                const DeepCollectionEquality().equals(
-                    other.showSystemNotification, showSystemNotification)) &&
+                other.showSystemNotification == showSystemNotification) &&
             (identical(other.restoreHost, restoreHost) ||
-                const DeepCollectionEquality()
-                    .equals(other.restoreHost, restoreHost)) &&
+                other.restoreHost == restoreHost) &&
             (identical(other.nightMode, nightMode) ||
-                const DeepCollectionEquality()
-                    .equals(other.nightMode, nightMode)));
+                other.nightMode == nightMode));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(pingSettings) ^
-      const DeepCollectionEquality().hash(shareSettings) ^
-      const DeepCollectionEquality().hash(traySettings) ^
-      const DeepCollectionEquality().hash(showSystemNotification) ^
-      const DeepCollectionEquality().hash(restoreHost) ^
-      const DeepCollectionEquality().hash(nightMode);
+  int get hashCode => Object.hash(runtimeType, pingSettings, shareSettings,
+      traySettings, showSystemNotification, restoreHost, nightMode);
 
+  @JsonKey(ignore: true)
   @override
   _$UserSettingsCopyWith<_UserSettings> get copyWith =>
       __$UserSettingsCopyWithImpl<_UserSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_UserSettingsToJson(this);
+    return _$$_UserSettingsToJson(this);
   }
 }
 
 abstract class _UserSettings implements UserSettings {
   factory _UserSettings(
-      {PingSettings pingSettings,
-      ShareSettings shareSettings,
-      TraySettings traySettings,
-      bool showSystemNotification,
-      bool restoreHost,
-      bool nightMode}) = _$_UserSettings;
+      {required PingSettings pingSettings,
+      required ShareSettings shareSettings,
+      TraySettings? traySettings,
+      required bool showSystemNotification,
+      required bool restoreHost,
+      required bool nightMode}) = _$_UserSettings;
 
   factory _UserSettings.fromJson(Map<String, dynamic> json) =
       _$_UserSettings.fromJson;
@@ -283,7 +304,7 @@ abstract class _UserSettings implements UserSettings {
   @override
   ShareSettings get shareSettings;
   @override
-  TraySettings get traySettings;
+  TraySettings? get traySettings;
   @override
   bool get showSystemNotification;
   @override
@@ -291,35 +312,47 @@ abstract class _UserSettings implements UserSettings {
   @override
   bool get nightMode;
   @override
-  _$UserSettingsCopyWith<_UserSettings> get copyWith;
+  @JsonKey(ignore: true)
+  _$UserSettingsCopyWith<_UserSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ShareSettings _$ShareSettingsFromJson(Map<String, dynamic> json) {
   return _ShareSettings.fromJson(json);
 }
 
+/// @nodoc
 class _$ShareSettingsTearOff {
   const _$ShareSettingsTearOff();
 
-  _ShareSettings call({bool shareResults, bool attachLocation}) {
+  _ShareSettings call(
+      {required bool shareResults, required bool attachLocation}) {
     return _ShareSettings(
       shareResults: shareResults,
       attachLocation: attachLocation,
     );
   }
+
+  ShareSettings fromJson(Map<String, Object?> json) {
+    return ShareSettings.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $ShareSettings = _$ShareSettingsTearOff();
 
+/// @nodoc
 mixin _$ShareSettings {
-  bool get shareResults;
-  bool get attachLocation;
+  bool get shareResults => throw _privateConstructorUsedError;
+  bool get attachLocation => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $ShareSettingsCopyWith<ShareSettings> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ShareSettingsCopyWith<ShareSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $ShareSettingsCopyWith<$Res> {
   factory $ShareSettingsCopyWith(
           ShareSettings value, $Res Function(ShareSettings) then) =
@@ -327,6 +360,7 @@ abstract class $ShareSettingsCopyWith<$Res> {
   $Res call({bool shareResults, bool attachLocation});
 }
 
+/// @nodoc
 class _$ShareSettingsCopyWithImpl<$Res>
     implements $ShareSettingsCopyWith<$Res> {
   _$ShareSettingsCopyWithImpl(this._value, this._then);
@@ -337,19 +371,23 @@ class _$ShareSettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object shareResults = freezed,
-    Object attachLocation = freezed,
+    Object? shareResults = freezed,
+    Object? attachLocation = freezed,
   }) {
     return _then(_value.copyWith(
-      shareResults:
-          shareResults == freezed ? _value.shareResults : shareResults as bool,
+      shareResults: shareResults == freezed
+          ? _value.shareResults
+          : shareResults // ignore: cast_nullable_to_non_nullable
+              as bool,
       attachLocation: attachLocation == freezed
           ? _value.attachLocation
-          : attachLocation as bool,
+          : attachLocation // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
+/// @nodoc
 abstract class _$ShareSettingsCopyWith<$Res>
     implements $ShareSettingsCopyWith<$Res> {
   factory _$ShareSettingsCopyWith(
@@ -359,6 +397,7 @@ abstract class _$ShareSettingsCopyWith<$Res>
   $Res call({bool shareResults, bool attachLocation});
 }
 
+/// @nodoc
 class __$ShareSettingsCopyWithImpl<$Res>
     extends _$ShareSettingsCopyWithImpl<$Res>
     implements _$ShareSettingsCopyWith<$Res> {
@@ -371,25 +410,29 @@ class __$ShareSettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object shareResults = freezed,
-    Object attachLocation = freezed,
+    Object? shareResults = freezed,
+    Object? attachLocation = freezed,
   }) {
     return _then(_ShareSettings(
-      shareResults:
-          shareResults == freezed ? _value.shareResults : shareResults as bool,
+      shareResults: shareResults == freezed
+          ? _value.shareResults
+          : shareResults // ignore: cast_nullable_to_non_nullable
+              as bool,
       attachLocation: attachLocation == freezed
           ? _value.attachLocation
-          : attachLocation as bool,
+          : attachLocation // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_ShareSettings implements _ShareSettings {
-  _$_ShareSettings({this.shareResults, this.attachLocation});
+  _$_ShareSettings({required this.shareResults, required this.attachLocation});
 
   factory _$_ShareSettings.fromJson(Map<String, dynamic> json) =>
-      _$_$_ShareSettingsFromJson(json);
+      _$$_ShareSettingsFromJson(json);
 
   @override
   final bool shareResults;
@@ -404,34 +447,32 @@ class _$_ShareSettings implements _ShareSettings {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ShareSettings &&
+        (other.runtimeType == runtimeType &&
+            other is _ShareSettings &&
             (identical(other.shareResults, shareResults) ||
-                const DeepCollectionEquality()
-                    .equals(other.shareResults, shareResults)) &&
+                other.shareResults == shareResults) &&
             (identical(other.attachLocation, attachLocation) ||
-                const DeepCollectionEquality()
-                    .equals(other.attachLocation, attachLocation)));
+                other.attachLocation == attachLocation));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(shareResults) ^
-      const DeepCollectionEquality().hash(attachLocation);
+  int get hashCode => Object.hash(runtimeType, shareResults, attachLocation);
 
+  @JsonKey(ignore: true)
   @override
   _$ShareSettingsCopyWith<_ShareSettings> get copyWith =>
       __$ShareSettingsCopyWithImpl<_ShareSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ShareSettingsToJson(this);
+    return _$$_ShareSettingsToJson(this);
   }
 }
 
 abstract class _ShareSettings implements ShareSettings {
-  factory _ShareSettings({bool shareResults, bool attachLocation}) =
-      _$_ShareSettings;
+  factory _ShareSettings(
+      {required bool shareResults,
+      required bool attachLocation}) = _$_ShareSettings;
 
   factory _ShareSettings.fromJson(Map<String, dynamic> json) =
       _$_ShareSettings.fromJson;
@@ -441,18 +482,24 @@ abstract class _ShareSettings implements ShareSettings {
   @override
   bool get attachLocation;
   @override
-  _$ShareSettingsCopyWith<_ShareSettings> get copyWith;
+  @JsonKey(ignore: true)
+  _$ShareSettingsCopyWith<_ShareSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 PingSettings _$PingSettingsFromJson(Map<String, dynamic> json) {
   return _PingSettings.fromJson(json);
 }
 
+/// @nodoc
 class _$PingSettingsTearOff {
   const _$PingSettingsTearOff();
 
   _PingSettings call(
-      {NumSetting count, int packetSize, int interval, int timeout}) {
+      {required NumSetting count,
+      required int packetSize,
+      required int interval,
+      required int timeout}) {
     return _PingSettings(
       count: count,
       packetSize: packetSize,
@@ -460,21 +507,29 @@ class _$PingSettingsTearOff {
       timeout: timeout,
     );
   }
+
+  PingSettings fromJson(Map<String, Object?> json) {
+    return PingSettings.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $PingSettings = _$PingSettingsTearOff();
 
+/// @nodoc
 mixin _$PingSettings {
-  NumSetting get count;
-  int get packetSize;
-  int get interval;
-  int get timeout;
+  NumSetting get count => throw _privateConstructorUsedError;
+  int get packetSize => throw _privateConstructorUsedError;
+  int get interval => throw _privateConstructorUsedError;
+  int get timeout => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $PingSettingsCopyWith<PingSettings> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PingSettingsCopyWith<PingSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $PingSettingsCopyWith<$Res> {
   factory $PingSettingsCopyWith(
           PingSettings value, $Res Function(PingSettings) then) =
@@ -484,6 +539,7 @@ abstract class $PingSettingsCopyWith<$Res> {
   $NumSettingCopyWith<$Res> get count;
 }
 
+/// @nodoc
 class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
   _$PingSettingsCopyWithImpl(this._value, this._then);
 
@@ -493,30 +549,40 @@ class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object count = freezed,
-    Object packetSize = freezed,
-    Object interval = freezed,
-    Object timeout = freezed,
+    Object? count = freezed,
+    Object? packetSize = freezed,
+    Object? interval = freezed,
+    Object? timeout = freezed,
   }) {
     return _then(_value.copyWith(
-      count: count == freezed ? _value.count : count as NumSetting,
-      packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
-      interval: interval == freezed ? _value.interval : interval as int,
-      timeout: timeout == freezed ? _value.timeout : timeout as int,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as NumSetting,
+      packetSize: packetSize == freezed
+          ? _value.packetSize
+          : packetSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      interval: interval == freezed
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as int,
+      timeout: timeout == freezed
+          ? _value.timeout
+          : timeout // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 
   @override
   $NumSettingCopyWith<$Res> get count {
-    if (_value.count == null) {
-      return null;
-    }
     return $NumSettingCopyWith<$Res>(_value.count, (value) {
       return _then(_value.copyWith(count: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$PingSettingsCopyWith<$Res>
     implements $PingSettingsCopyWith<$Res> {
   factory _$PingSettingsCopyWith(
@@ -529,6 +595,7 @@ abstract class _$PingSettingsCopyWith<$Res>
   $NumSettingCopyWith<$Res> get count;
 }
 
+/// @nodoc
 class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
     implements _$PingSettingsCopyWith<$Res> {
   __$PingSettingsCopyWithImpl(
@@ -540,26 +607,43 @@ class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object count = freezed,
-    Object packetSize = freezed,
-    Object interval = freezed,
-    Object timeout = freezed,
+    Object? count = freezed,
+    Object? packetSize = freezed,
+    Object? interval = freezed,
+    Object? timeout = freezed,
   }) {
     return _then(_PingSettings(
-      count: count == freezed ? _value.count : count as NumSetting,
-      packetSize: packetSize == freezed ? _value.packetSize : packetSize as int,
-      interval: interval == freezed ? _value.interval : interval as int,
-      timeout: timeout == freezed ? _value.timeout : timeout as int,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as NumSetting,
+      packetSize: packetSize == freezed
+          ? _value.packetSize
+          : packetSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      interval: interval == freezed
+          ? _value.interval
+          : interval // ignore: cast_nullable_to_non_nullable
+              as int,
+      timeout: timeout == freezed
+          ? _value.timeout
+          : timeout // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_PingSettings implements _PingSettings {
-  _$_PingSettings({this.count, this.packetSize, this.interval, this.timeout});
+  _$_PingSettings(
+      {required this.count,
+      required this.packetSize,
+      required this.interval,
+      required this.timeout});
 
   factory _$_PingSettings.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingSettingsFromJson(json);
+      _$$_PingSettingsFromJson(json);
 
   @override
   final NumSetting count;
@@ -578,43 +662,37 @@ class _$_PingSettings implements _PingSettings {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingSettings &&
-            (identical(other.count, count) ||
-                const DeepCollectionEquality().equals(other.count, count)) &&
+        (other.runtimeType == runtimeType &&
+            other is _PingSettings &&
+            (identical(other.count, count) || other.count == count) &&
             (identical(other.packetSize, packetSize) ||
-                const DeepCollectionEquality()
-                    .equals(other.packetSize, packetSize)) &&
+                other.packetSize == packetSize) &&
             (identical(other.interval, interval) ||
-                const DeepCollectionEquality()
-                    .equals(other.interval, interval)) &&
-            (identical(other.timeout, timeout) ||
-                const DeepCollectionEquality().equals(other.timeout, timeout)));
+                other.interval == interval) &&
+            (identical(other.timeout, timeout) || other.timeout == timeout));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(count) ^
-      const DeepCollectionEquality().hash(packetSize) ^
-      const DeepCollectionEquality().hash(interval) ^
-      const DeepCollectionEquality().hash(timeout);
+      Object.hash(runtimeType, count, packetSize, interval, timeout);
 
+  @JsonKey(ignore: true)
   @override
   _$PingSettingsCopyWith<_PingSettings> get copyWith =>
       __$PingSettingsCopyWithImpl<_PingSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingSettingsToJson(this);
+    return _$$_PingSettingsToJson(this);
   }
 }
 
 abstract class _PingSettings implements PingSettings {
   factory _PingSettings(
-      {NumSetting count,
-      int packetSize,
-      int interval,
-      int timeout}) = _$_PingSettings;
+      {required NumSetting count,
+      required int packetSize,
+      required int interval,
+      required int timeout}) = _$_PingSettings;
 
   factory _PingSettings.fromJson(Map<String, dynamic> json) =
       _$_PingSettings.fromJson;
@@ -628,70 +706,97 @@ abstract class _PingSettings implements PingSettings {
   @override
   int get timeout;
   @override
-  _$PingSettingsCopyWith<_PingSettings> get copyWith;
+  @JsonKey(ignore: true)
+  _$PingSettingsCopyWith<_PingSettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 NumSetting _$NumSettingFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType'] as String) {
+  switch (json['runtimeType']) {
     case 'finite':
       return _FiniteNumSetting.fromJson(json);
     case 'infinite':
       return _InfiniteNumSetting.fromJson(json);
 
     default:
-      throw FallThroughError();
+      throw CheckedFromJsonException(json, 'runtimeType', 'NumSetting',
+          'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
+/// @nodoc
 class _$NumSettingTearOff {
   const _$NumSettingTearOff();
 
-  _FiniteNumSetting finite([int value]) {
+  _FiniteNumSetting finite({required int value}) {
     return _FiniteNumSetting(
-      value,
+      value: value,
     );
   }
 
   _InfiniteNumSetting infinite() {
     return const _InfiniteNumSetting();
   }
+
+  NumSetting fromJson(Map<String, Object?> json) {
+    return NumSetting.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $NumSetting = _$NumSettingTearOff();
 
+/// @nodoc
 mixin _$NumSetting {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result finite(int value),
-    @required Result infinite(),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function(int value) finite,
+    required TResult Function() infinite,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result finite(int value),
-    Result infinite(),
-    @required Result orElse(),
-  });
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result finite(_FiniteNumSetting value),
-    @required Result infinite(_InfiniteNumSetting value),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result finite(_FiniteNumSetting value),
-    Result infinite(_InfiniteNumSetting value),
-    @required Result orElse(),
-  });
-  Map<String, dynamic> toJson();
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FiniteNumSetting value) finite,
+    required TResult Function(_InfiniteNumSetting value) infinite,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $NumSettingCopyWith<$Res> {
   factory $NumSettingCopyWith(
           NumSetting value, $Res Function(NumSetting) then) =
       _$NumSettingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$NumSettingCopyWithImpl<$Res> implements $NumSettingCopyWith<$Res> {
   _$NumSettingCopyWithImpl(this._value, this._then);
 
@@ -700,6 +805,7 @@ class _$NumSettingCopyWithImpl<$Res> implements $NumSettingCopyWith<$Res> {
   final $Res Function(NumSetting) _then;
 }
 
+/// @nodoc
 abstract class _$FiniteNumSettingCopyWith<$Res> {
   factory _$FiniteNumSettingCopyWith(
           _FiniteNumSetting value, $Res Function(_FiniteNumSetting) then) =
@@ -707,6 +813,7 @@ abstract class _$FiniteNumSettingCopyWith<$Res> {
   $Res call({int value});
 }
 
+/// @nodoc
 class __$FiniteNumSettingCopyWithImpl<$Res>
     extends _$NumSettingCopyWithImpl<$Res>
     implements _$FiniteNumSettingCopyWith<$Res> {
@@ -719,23 +826,31 @@ class __$FiniteNumSettingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object value = freezed,
+    Object? value = freezed,
   }) {
     return _then(_FiniteNumSetting(
-      value == freezed ? _value.value : value as int,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_FiniteNumSetting implements _FiniteNumSetting {
-  const _$_FiniteNumSetting([this.value]);
+  const _$_FiniteNumSetting({required this.value, String? $type})
+      : $type = $type ?? 'finite';
 
   factory _$_FiniteNumSetting.fromJson(Map<String, dynamic> json) =>
-      _$_$_FiniteNumSettingFromJson(json);
+      _$$_FiniteNumSettingFromJson(json);
 
   @override
   final int value;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -745,38 +860,44 @@ class _$_FiniteNumSetting implements _FiniteNumSetting {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _FiniteNumSetting &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)));
+        (other.runtimeType == runtimeType &&
+            other is _FiniteNumSetting &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(value);
+  int get hashCode => Object.hash(runtimeType, value);
 
+  @JsonKey(ignore: true)
   @override
   _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith =>
       __$FiniteNumSettingCopyWithImpl<_FiniteNumSetting>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result finite(int value),
-    @required Result infinite(),
+  TResult when<TResult extends Object?>({
+    required TResult Function(int value) finite,
+    required TResult Function() infinite,
   }) {
-    assert(finite != null);
-    assert(infinite != null);
     return finite(value);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result finite(int value),
-    Result infinite(),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
   }) {
-    assert(orElse != null);
+    return finite?.call(value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
+    required TResult orElse(),
+  }) {
     if (finite != null) {
       return finite(value);
     }
@@ -785,23 +906,29 @@ class _$_FiniteNumSetting implements _FiniteNumSetting {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result finite(_FiniteNumSetting value),
-    @required Result infinite(_InfiniteNumSetting value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FiniteNumSetting value) finite,
+    required TResult Function(_InfiniteNumSetting value) infinite,
   }) {
-    assert(finite != null);
-    assert(infinite != null);
     return finite(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result finite(_FiniteNumSetting value),
-    Result infinite(_InfiniteNumSetting value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
   }) {
-    assert(orElse != null);
+    return finite?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
+    required TResult orElse(),
+  }) {
     if (finite != null) {
       return finite(this);
     }
@@ -810,26 +937,30 @@ class _$_FiniteNumSetting implements _FiniteNumSetting {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_FiniteNumSettingToJson(this)..['runtimeType'] = 'finite';
+    return _$$_FiniteNumSettingToJson(this);
   }
 }
 
 abstract class _FiniteNumSetting implements NumSetting {
-  const factory _FiniteNumSetting([int value]) = _$_FiniteNumSetting;
+  const factory _FiniteNumSetting({required int value}) = _$_FiniteNumSetting;
 
   factory _FiniteNumSetting.fromJson(Map<String, dynamic> json) =
       _$_FiniteNumSetting.fromJson;
 
   int get value;
-  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith;
+  @JsonKey(ignore: true)
+  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class _$InfiniteNumSettingCopyWith<$Res> {
   factory _$InfiniteNumSettingCopyWith(
           _InfiniteNumSetting value, $Res Function(_InfiniteNumSetting) then) =
       __$InfiniteNumSettingCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class __$InfiniteNumSettingCopyWithImpl<$Res>
     extends _$NumSettingCopyWithImpl<$Res>
     implements _$InfiniteNumSettingCopyWith<$Res> {
@@ -841,12 +972,16 @@ class __$InfiniteNumSettingCopyWithImpl<$Res>
   _InfiniteNumSetting get _value => super._value as _InfiniteNumSetting;
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_InfiniteNumSetting implements _InfiniteNumSetting {
-  const _$_InfiniteNumSetting();
+  const _$_InfiniteNumSetting({String? $type}) : $type = $type ?? 'infinite';
 
   factory _$_InfiniteNumSetting.fromJson(Map<String, dynamic> json) =>
-      _$_$_InfiniteNumSettingFromJson(json);
+      _$$_InfiniteNumSettingFromJson(json);
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
@@ -855,7 +990,8 @@ class _$_InfiniteNumSetting implements _InfiniteNumSetting {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _InfiniteNumSetting);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _InfiniteNumSetting);
   }
 
   @override
@@ -863,23 +999,29 @@ class _$_InfiniteNumSetting implements _InfiniteNumSetting {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result finite(int value),
-    @required Result infinite(),
+  TResult when<TResult extends Object?>({
+    required TResult Function(int value) finite,
+    required TResult Function() infinite,
   }) {
-    assert(finite != null);
-    assert(infinite != null);
     return infinite();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result finite(int value),
-    Result infinite(),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
   }) {
-    assert(orElse != null);
+    return infinite?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int value)? finite,
+    TResult Function()? infinite,
+    required TResult orElse(),
+  }) {
     if (infinite != null) {
       return infinite();
     }
@@ -888,23 +1030,29 @@ class _$_InfiniteNumSetting implements _InfiniteNumSetting {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result finite(_FiniteNumSetting value),
-    @required Result infinite(_InfiniteNumSetting value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FiniteNumSetting value) finite,
+    required TResult Function(_InfiniteNumSetting value) infinite,
   }) {
-    assert(finite != null);
-    assert(infinite != null);
     return infinite(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result finite(_FiniteNumSetting value),
-    Result infinite(_InfiniteNumSetting value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
   }) {
-    assert(orElse != null);
+    return infinite?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FiniteNumSetting value)? finite,
+    TResult Function(_InfiniteNumSetting value)? infinite,
+    required TResult orElse(),
+  }) {
     if (infinite != null) {
       return infinite(this);
     }
@@ -913,7 +1061,7 @@ class _$_InfiniteNumSetting implements _InfiniteNumSetting {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_InfiniteNumSettingToJson(this)..['runtimeType'] = 'infinite';
+    return _$$_InfiniteNumSettingToJson(this);
   }
 }
 
@@ -928,28 +1076,37 @@ TraySettings _$TraySettingsFromJson(Map<String, dynamic> json) {
   return _TraySettings.fromJson(json);
 }
 
+/// @nodoc
 class _$TraySettingsTearOff {
   const _$TraySettingsTearOff();
 
-  _TraySettings call({bool enabled, bool autoReveal}) {
+  _TraySettings call({required bool enabled, required bool autoReveal}) {
     return _TraySettings(
       enabled: enabled,
       autoReveal: autoReveal,
     );
   }
+
+  TraySettings fromJson(Map<String, Object?> json) {
+    return TraySettings.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $TraySettings = _$TraySettingsTearOff();
 
+/// @nodoc
 mixin _$TraySettings {
-  bool get enabled;
-  bool get autoReveal;
+  bool get enabled => throw _privateConstructorUsedError;
+  bool get autoReveal => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $TraySettingsCopyWith<TraySettings> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TraySettingsCopyWith<TraySettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $TraySettingsCopyWith<$Res> {
   factory $TraySettingsCopyWith(
           TraySettings value, $Res Function(TraySettings) then) =
@@ -957,6 +1114,7 @@ abstract class $TraySettingsCopyWith<$Res> {
   $Res call({bool enabled, bool autoReveal});
 }
 
+/// @nodoc
 class _$TraySettingsCopyWithImpl<$Res> implements $TraySettingsCopyWith<$Res> {
   _$TraySettingsCopyWithImpl(this._value, this._then);
 
@@ -966,17 +1124,23 @@ class _$TraySettingsCopyWithImpl<$Res> implements $TraySettingsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object enabled = freezed,
-    Object autoReveal = freezed,
+    Object? enabled = freezed,
+    Object? autoReveal = freezed,
   }) {
     return _then(_value.copyWith(
-      enabled: enabled == freezed ? _value.enabled : enabled as bool,
-      autoReveal:
-          autoReveal == freezed ? _value.autoReveal : autoReveal as bool,
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      autoReveal: autoReveal == freezed
+          ? _value.autoReveal
+          : autoReveal // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
+/// @nodoc
 abstract class _$TraySettingsCopyWith<$Res>
     implements $TraySettingsCopyWith<$Res> {
   factory _$TraySettingsCopyWith(
@@ -986,6 +1150,7 @@ abstract class _$TraySettingsCopyWith<$Res>
   $Res call({bool enabled, bool autoReveal});
 }
 
+/// @nodoc
 class __$TraySettingsCopyWithImpl<$Res> extends _$TraySettingsCopyWithImpl<$Res>
     implements _$TraySettingsCopyWith<$Res> {
   __$TraySettingsCopyWithImpl(
@@ -997,23 +1162,29 @@ class __$TraySettingsCopyWithImpl<$Res> extends _$TraySettingsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object enabled = freezed,
-    Object autoReveal = freezed,
+    Object? enabled = freezed,
+    Object? autoReveal = freezed,
   }) {
     return _then(_TraySettings(
-      enabled: enabled == freezed ? _value.enabled : enabled as bool,
-      autoReveal:
-          autoReveal == freezed ? _value.autoReveal : autoReveal as bool,
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      autoReveal: autoReveal == freezed
+          ? _value.autoReveal
+          : autoReveal // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_TraySettings implements _TraySettings {
-  _$_TraySettings({this.enabled, this.autoReveal});
+  _$_TraySettings({required this.enabled, required this.autoReveal});
 
   factory _$_TraySettings.fromJson(Map<String, dynamic> json) =>
-      _$_$_TraySettingsFromJson(json);
+      _$$_TraySettingsFromJson(json);
 
   @override
   final bool enabled;
@@ -1028,33 +1199,30 @@ class _$_TraySettings implements _TraySettings {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TraySettings &&
-            (identical(other.enabled, enabled) ||
-                const DeepCollectionEquality()
-                    .equals(other.enabled, enabled)) &&
+        (other.runtimeType == runtimeType &&
+            other is _TraySettings &&
+            (identical(other.enabled, enabled) || other.enabled == enabled) &&
             (identical(other.autoReveal, autoReveal) ||
-                const DeepCollectionEquality()
-                    .equals(other.autoReveal, autoReveal)));
+                other.autoReveal == autoReveal));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(enabled) ^
-      const DeepCollectionEquality().hash(autoReveal);
+  int get hashCode => Object.hash(runtimeType, enabled, autoReveal);
 
+  @JsonKey(ignore: true)
   @override
   _$TraySettingsCopyWith<_TraySettings> get copyWith =>
       __$TraySettingsCopyWithImpl<_TraySettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_TraySettingsToJson(this);
+    return _$$_TraySettingsToJson(this);
   }
 }
 
 abstract class _TraySettings implements TraySettings {
-  factory _TraySettings({bool enabled, bool autoReveal}) = _$_TraySettings;
+  factory _TraySettings({required bool enabled, required bool autoReveal}) =
+      _$_TraySettings;
 
   factory _TraySettings.fromJson(Map<String, dynamic> json) =
       _$_TraySettings.fromJson;
@@ -1064,5 +1232,7 @@ abstract class _TraySettings implements TraySettings {
   @override
   bool get autoReveal;
   @override
-  _$TraySettingsCopyWith<_TraySettings> get copyWith;
+  @JsonKey(ignore: true)
+  _$TraySettingsCopyWith<_TraySettings> get copyWith =>
+      throw _privateConstructorUsedError;
 }

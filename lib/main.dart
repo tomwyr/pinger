@@ -7,7 +7,7 @@ import 'package:pinger/ui/app/pinger_app.dart';
 const APP_ENV = String.fromEnvironment("APP_ENV");
 
 void main() async {
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

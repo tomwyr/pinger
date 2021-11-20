@@ -6,10 +6,10 @@ part 'ping_global.freezed.dart';
 part 'ping_global.g.dart';
 
 @freezed
-abstract class GlobalPingCounts with _$GlobalPingCounts {
+class GlobalPingCounts with _$GlobalPingCounts {
   factory GlobalPingCounts({
-    @required int totalCount,
-    @required List<PingCount> pingCounts,
+    required int totalCount,
+    required List<PingCount> pingCounts,
   }) = _GlobalPingCounts;
 
   factory GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
@@ -20,10 +20,10 @@ abstract class GlobalPingCounts with _$GlobalPingCounts {
 }
 
 @freezed
-abstract class PingCount with _$PingCount {
+class PingCount with _$PingCount {
   factory PingCount({
-    @required String host,
-    @required int count,
+    required String host,
+    required int count,
   }) = _PingCount;
 
   factory PingCount.fromJson(Map<String, dynamic> json) =>
@@ -31,11 +31,11 @@ abstract class PingCount with _$PingCount {
 }
 
 @freezed
-abstract class GlobalHostResults with _$GlobalHostResults {
+class GlobalHostResults with _$GlobalHostResults {
   factory GlobalHostResults({
-    @required int totalCount,
-    @required ValueResults valueResults,
-    @required List<LocationResults> locationResults,
+    required int totalCount,
+    required ValueResults valueResults,
+    required List<LocationResults> locationResults,
   }) = _GlobalHostResults;
 
   factory GlobalHostResults.fromJson(Map<String, dynamic> json) =>
@@ -49,11 +49,11 @@ abstract class GlobalHostResults with _$GlobalHostResults {
 }
 
 @freezed
-abstract class ValueResults with _$ValueResults {
+class ValueResults with _$ValueResults {
   factory ValueResults({
-    @required Map<int, int> min,
-    @required Map<int, int> mean,
-    @required Map<int, int> max,
+    required Map<int, int> min,
+    required Map<int, int> mean,
+    required Map<int, int> max,
   }) = _ValueResults;
 
   factory ValueResults.fromJson(Map<String, dynamic> json) =>
@@ -61,11 +61,11 @@ abstract class ValueResults with _$ValueResults {
 }
 
 @freezed
-abstract class LocationResults with _$LocationResults {
+class LocationResults with _$LocationResults {
   factory LocationResults({
-    @required int count,
-    @required GeoPosition location,
-    @required PingStats stats,
+    required int count,
+    required GeoPosition location,
+    required PingStats stats,
   }) = _LocationResults;
 
   factory LocationResults.fromJson(Map<String, dynamic> json) =>
@@ -73,12 +73,12 @@ abstract class LocationResults with _$LocationResults {
 }
 
 @freezed
-abstract class GlobalSessionResult with _$GlobalSessionResult {
+class GlobalSessionResult with _$GlobalSessionResult {
   factory GlobalSessionResult({
-    @required int count,
-    @required String host,
-    @required PingStats stats,
-    GeoPosition location,
+    required int count,
+    required String host,
+    required PingStats stats,
+    GeoPosition? location,
   }) = _GlobalSessionResult;
 
   factory GlobalSessionResult.fromJson(Map<String, dynamic> json) =>

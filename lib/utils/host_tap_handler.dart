@@ -17,7 +17,7 @@ mixin HostTapHandler<T extends StatefulWidget> on State<T> {
     } else {
       ReplaceSessionSheet.show(
         context: context,
-        currentHost: host,
+        currentHost: host!,
         newHost: newHost,
         onAcceptPressed: () {
           pingStore.initSession(newHost);

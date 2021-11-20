@@ -42,10 +42,10 @@ abstract class DeviceStoreBase with Store {
   SettingsStore get _settingsStore;
   PermissionStore get _notificationPermissionStore;
 
-  PingSession _lastSession;
+  PingSession? _lastSession;
 
   @observable
-  bool isNetworkEnabled;
+  bool? isNetworkEnabled;
 
   @action
   Future<void> init() async {
@@ -68,12 +68,12 @@ abstract class DeviceStoreBase with Store {
   @action
   Future<GeoPosition> getCurrentPosition() async {
     final result = await _location.getLocation();
-    return GeoPosition(lat: result.latitude, lon: result.longitude);
+    return GeoPosition(lat: result.latitude!, lon: result.longitude!);
   }
 
-  void updateNotification(PingSession session) {
+  void updateNotification(PingSession? session) {
     final showNotification = _notificationPermissionStore.canAccessService &&
-        _settingsStore.userSettings.showSystemNotification;
+        _settingsStore.userSettings!.showSystemNotification;
     if (session != _lastSession) {
       if (showNotification && session != null) {
         _notificationsManager.show(session);

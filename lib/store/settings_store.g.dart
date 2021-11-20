@@ -12,13 +12,13 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   final _$userSettingsAtom = Atom(name: 'SettingsStoreBase.userSettings');
 
   @override
-  UserSettings get userSettings {
+  UserSettings? get userSettings {
     _$userSettingsAtom.reportRead();
     return super.userSettings;
   }
 
   @override
-  set userSettings(UserSettings value) {
+  set userSettings(UserSettings? value) {
     _$userSettingsAtom.reportWrite(value, super.userSettings, () {
       super.userSettings = value;
     });
@@ -27,13 +27,13 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   final _$didShowIntroAtom = Atom(name: 'SettingsStoreBase.didShowIntro');
 
   @override
-  bool get didShowIntro {
+  bool? get didShowIntro {
     _$didShowIntroAtom.reportRead();
     return super.didShowIntro;
   }
 
   @override
-  set didShowIntro(bool value) {
+  set didShowIntro(bool? value) {
     _$didShowIntroAtom.reportWrite(value, super.didShowIntro, () {
       super.didShowIntro = value;
     });
@@ -42,13 +42,13 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
   final _$appInfoAtom = Atom(name: 'SettingsStoreBase.appInfo');
 
   @override
-  AppInfo get appInfo {
+  AppInfo? get appInfo {
     _$appInfoAtom.reportRead();
     return super.appInfo;
   }
 
   @override
-  set appInfo(AppInfo value) {
+  set appInfo(AppInfo? value) {
     _$appInfoAtom.reportWrite(value, super.appInfo, () {
       super.appInfo = value;
     });

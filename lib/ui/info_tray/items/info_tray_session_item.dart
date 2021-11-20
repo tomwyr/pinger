@@ -8,8 +8,8 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class InfoTraySessionItem extends StatelessWidget {
-  final PingSession session;
-  final Duration duration;
+  final PingSession? session;
+  final Duration? duration;
   final VoidCallback onButtonPressed;
   final VoidCallback onPressed;
   final Duration barAnimDuration = const Duration(milliseconds: 300);
@@ -18,11 +18,11 @@ class InfoTraySessionItem extends StatelessWidget {
   final double gapWidth = 3.0;
 
   const InfoTraySessionItem({
-    Key key,
-    @required this.session,
-    @required this.duration,
-    @required this.onButtonPressed,
-    @required this.onPressed,
+    Key? key,
+    required this.session,
+    required this.duration,
+    required this.onButtonPressed,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -71,7 +71,7 @@ class InfoTraySessionItem extends StatelessWidget {
   }
 
   Widget _buildResultsChart() {
-    if (session.values.isNullOrEmpty) return Container();
+    if (session!.values!.isNullOrEmpty) return Container();
     return LayoutBuilder(
       builder: (_, constraints) => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -99,14 +99,14 @@ class InfoTraySessionItem extends StatelessWidget {
   }
 
   Iterable<_ChartBarItem> _createChartBarItems(BoxConstraints constraints) {
-    final barCount = session.settings.count.when(
+    final barCount = session!.settings.count.when(
       finite: (it) => min(it, maxBarCount),
       infinite: () => maxBarCount,
     );
     final visibleBarCount =
-        session.status.isSessionDone ? barCount : barCount - 1;
-    final firstVisible = max(session.values.length - visibleBarCount, 0);
-    final visibleValues = session.values.skip(firstVisible);
+        session!.status.isSessionDone ? barCount : barCount - 1;
+    final firstVisible = max(session!.values!.length - visibleBarCount, 0);
+    final visibleValues = session!.values!.skip(firstVisible);
     final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);
     final barWidth = barsSpace / barCount;
     final visibleMax = PingStats.fromValues(visibleValues)?.max ?? 0.0;
@@ -123,8 +123,8 @@ class InfoTraySessionItem extends StatelessWidget {
   }
 
   Widget _buildProgressIndicator() {
-    final valuesCount = session.values?.length ?? 0;
-    final progress = session.settings.count.when(
+    final valuesCount = session!.values?.length ?? 0;
+    final progress = session!.settings.count.when(
       finite: (it) => valuesCount / it,
       infinite: () => min(valuesCount, maxBarCount - 1) / maxBarCount,
     );
@@ -211,14 +211,14 @@ class InfoTraySessionItem extends StatelessWidget {
       SizedBox(
         width: sideWidth,
         child: Text(
-          duration != null ? FormatUtils.getDurationLabel(duration) : "",
+          duration != null ? FormatUtils.getDurationLabel(duration!) : "",
           style: style,
           textAlign: TextAlign.start,
         ),
       ),
       Expanded(
         child: Text(
-          session.host,
+          session!.host,
           style: style,
           textAlign: TextAlign.center,
           maxLines: 1,
@@ -229,8 +229,8 @@ class InfoTraySessionItem extends StatelessWidget {
       SizedBox(
         width: sideWidth,
         child: Text(
-          session.values != null
-              ? "${session.values.length}/${FormatUtils.getCountLabel(session.settings.count)}"
+          session!.values != null
+              ? "${session!.values!.length}/${FormatUtils.getCountLabel(session!.settings.count)}"
               : "",
           textAlign: TextAlign.end,
           style: style,
@@ -240,7 +240,7 @@ class InfoTraySessionItem extends StatelessWidget {
   }
 
   Widget _buildButton() {
-    if (!session.status.isSession) return Container();
+    if (!session!.status.isSession) return Container();
     return SizedBox.fromSize(
       size: Size.square(56.0),
       child: Stack(
@@ -256,9 +256,9 @@ class InfoTraySessionItem extends StatelessWidget {
             child: IconButton(
               onPressed: onButtonPressed,
               icon: Icon(
-                session.status.isSessionStarted
+                session!.status.isSessionStarted
                     ? Icons.pause
-                    : session.status.isSessionPaused
+                    : session!.status.isSessionPaused
                         ? Icons.play_arrow
                         : Icons.undo,
                 color: R.colors.secondary,
@@ -278,9 +278,9 @@ class _ChartBarItem {
   final Size size;
 
   _ChartBarItem({
-    @required this.key,
-    @required this.margin,
-    @required this.color,
-    @required this.size,
+    required this.key,
+    required this.margin,
+    required this.color,
+    required this.size,
   });
 }
