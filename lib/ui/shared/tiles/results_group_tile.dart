@@ -6,22 +6,25 @@ import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 class ResultsGroupTile extends StatelessWidget {
   final String host;
   final int resultsCount;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const ResultsGroupTile({
-    Key key,
-    @required this.host,
-    @required this.resultsCount,
+    Key? key,
+    required this.host,
+    required this.resultsCount,
     this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
+    return OutlinedButton(
       key: ValueKey(host),
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      borderSide: R.styles.outlineButtonBorder,
-      highlightedBorderColor: R.styles.outlineButtonBorder.color,
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        side: R.styles.outlineButtonBorder,
+        // TODO verify where to apply colors
+        // highlightedBorderColor: R.styles.outlineButtonBorder.color,
+      ),
       onPressed: onPressed,
       child: Column(
         mainAxisSize: MainAxisSize.min,

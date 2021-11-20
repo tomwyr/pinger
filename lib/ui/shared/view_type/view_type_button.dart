@@ -6,15 +6,15 @@ import 'package:pinger/resources.dart';
 class ViewTypeButton extends StatelessWidget {
   static final height = 26.0;
   
-  final String label;
+  final String? label;
   final bool selected;
   final VoidCallback onPressed;
 
   const ViewTypeButton({
-    Key key,
-    @required this.label,
-    @required this.selected,
-    @required this.onPressed,
+    Key? key,
+    required this.label,
+    required this.selected,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class ViewTypeButton extends StatelessWidget {
           onTap: onPressed,
           child: Center(
             child: Text(
-              label,
+              label!,
               style: TextStyle(
                 fontSize: 12.0,
                 color: selected ? R.colors.accent : R.colors.gray,

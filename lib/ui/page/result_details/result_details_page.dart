@@ -24,9 +24,9 @@ import 'package:pinger/utils/host_tap_handler.dart';
 enum ResultDetailsTab { results, global, info, more }
 
 class ResultDetailsPage extends StatefulWidget {
-  final PingResult result;
+  final PingResult? result;
 
-  const ResultDetailsPage({Key key, @required this.result}) : super(key: key);
+  const ResultDetailsPage({Key? key, required this.result}) : super(key: key);
 
   @override
   _ResultDetailsPageState createState() => _ResultDetailsPageState();
@@ -45,8 +45,8 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       Injector.resolve(PermissionStore.location);
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
-  ScrollController _scrollController;
-  TabController _tabController;
+  ScrollController? _scrollController;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -56,13 +56,13 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       vsync: this,
       length: ResultDetailsTab.values.length,
     );
-    _resultsStore.fetchGlobalResults(widget.result.host);
+    _resultsStore.fetchGlobalResults(widget.result!.host);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _scrollController.dispose();
+    _tabController!.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -130,7 +130,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: () {
         PingerApp.router..pop()..pop();
-        _resultsStore.deleteLocalResult(widget.result.id);
+        _resultsStore.deleteLocalResult(widget.result!.id);
       },
     );
   }
@@ -139,19 +139,19 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     final tab = ResultDetailsTab.values[index];
     if (_selectedTab == tab) {
       final offset =
-          _scrollController.offset == _collapsedOffset ? 0.0 : _collapsedOffset;
+          _scrollController!.offset == _collapsedOffset ? 0.0 : _collapsedOffset;
       _scrollLayoutTo(offset);
     } else {
       _selectedTab = tab;
-      _tabController.animateTo(ResultDetailsTab.values.indexOf(tab));
-      if (_scrollController.offset < _collapsedOffset) {
+      _tabController!.animateTo(ResultDetailsTab.values.indexOf(tab));
+      if (_scrollController!.offset < _collapsedOffset) {
         _scrollLayoutTo(_collapsedOffset);
       }
     }
   }
 
   Future<void> _scrollLayoutTo(double offset) async {
-    await _scrollController.animateTo(
+    await _scrollController!.animateTo(
       offset,
       duration: Duration(milliseconds: 200),
       curve: Curves.easeOut,
@@ -163,8 +163,8 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       controller: _tabController,
       children: <Widget>[
         ResultDetailsResultsTab(
-          values: widget.result.values,
-          stats: widget.result.stats,
+          values: widget.result!.values,
+          stats: widget.result!.stats,
           scrollBuilder: (slivers) => CollapsingTabLayoutItem(slivers: slivers),
         ),
         Observer(
@@ -172,21 +172,21 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
             isSharingLocation: _checkIsSharingLocation(),
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
-            globalResults: _resultsStore.globalResults[widget.result.host],
+            globalResults: _resultsStore.globalResults[widget.result!.host],
             onRefreshPressed: () =>
-                _resultsStore.fetchGlobalResults(widget.result.host),
+                _resultsStore.fetchGlobalResults(widget.result!.host),
           ),
         ),
         ResultDetailsInfoTab(result: widget.result),
         Observer(
           builder: (_) => ResultDetailsMoreTab(
-            results: _resultsStore.localResults
+            results: _resultsStore.localResults!
                 .where((it) =>
-                    it.host == widget.result.host && it.id != widget.result.id)
+                    it!.host == widget.result!.host && it.id != widget.result!.id)
                 .toList(),
             onItemSelected: (item) =>
                 PingerApp.router.show(RouteConfig.results(item)),
-            onStartPingPressed: () => onHostTap(_pingStore, widget.result.host),
+            onStartPingPressed: () => onHostTap(_pingStore, widget.result!.host),
           ),
         ),
       ],
@@ -194,15 +194,15 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
   }
 
   bool _checkIsSharingLocation() {
-    final shareSettings = _settingsStore.userSettings.shareSettings;
-    return shareSettings.shareResults &&
-        shareSettings.attachLocation &&
+    final shareSettings = _settingsStore.userSettings!.shareSettings;
+    return shareSettings.shareResults&&
+        shareSettings.attachLocation&&
         _locationPermissionStore.canAccessService;
   }
 
   void _enableShareSettings() {
     _settingsStore.updateSettings(
-      _settingsStore.userSettings.copyWith(
+      _settingsStore.userSettings!.copyWith(
         shareSettings: ShareSettings(
           shareResults: true,
           attachLocation: true,

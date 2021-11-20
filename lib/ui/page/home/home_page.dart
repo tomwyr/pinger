@@ -30,7 +30,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
     return Scaffold(
       // Ignore resize caused by hiding keyboard
       // when navigating back from search page.
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.settings),
@@ -50,16 +50,16 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
       ),
       body: Observer(
         builder: (context) {
-          final shouldShowIntroPrompt = !_settingsStore.didShowIntro &&
+          final shouldShowIntroPrompt = !_settingsStore.didShowIntro! &&
               _pingStore.currentHost == null &&
-              _hostsStore.favorites.isEmpty &&
-              _hostsStore.localStats.isEmpty;
+              _hostsStore.favorites!.isEmpty &&
+              _hostsStore.localStats!.isEmpty;
           return shouldShowIntroPrompt
               ? _buildIntroContent(_settingsStore.notifyDidShowIntro)
               : HomeHostSuggestions(
                   currentHost: _pingStore.currentHost,
                   favorites: _hostsStore.favorites,
-                  popular: _hostsStore.hosts.maybeWhen(
+                  popular: _hostsStore.hosts!.maybeWhen(
                     data: (data) => data.take(5).map((it) => it.name).toList(),
                     orElse: () => [],
                   ),
@@ -85,7 +85,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         ),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text(S.current.showIntroButtonLabel),
             onPressed: () => PingerApp.router
                 .show(RouteConfig.intro())
@@ -95,7 +95,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         Container(height: 8.0),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.flatButton,
-          child: FlatButton(
+          child: TextButton(
             child: Text(S.current.skipButtonLabel),
             onPressed: onIntroDone,
           ),

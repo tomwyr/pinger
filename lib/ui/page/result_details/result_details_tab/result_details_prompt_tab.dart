@@ -10,12 +10,12 @@ class ResultDetailsPromptTab extends StatelessWidget {
   final VoidCallback onButtonPressed;
 
   const ResultDetailsPromptTab({
-    Key key,
-    @required this.image,
-    @required this.title,
-    @required this.description,
-    @required this.buttonLabel,
-    @required this.onButtonPressed,
+    Key? key,
+    required this.image,
+    required this.title,
+    required this.description,
+    required this.buttonLabel,
+    required this.onButtonPressed,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class ResultDetailsPromptTab extends StatelessWidget {
         child: Column(children: <Widget>[
           Expanded(
             child: InfoSection(
-              image: image,
+              image: image as AssetImage,
               title: title,
               description: description,
             ),
@@ -36,7 +36,7 @@ class ResultDetailsPromptTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 40.0),
             child: ButtonTheme.fromButtonThemeData(
               data: R.themes.raisedButton,
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text(buttonLabel),
                 onPressed: onButtonPressed,
               ),

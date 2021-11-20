@@ -4,19 +4,19 @@ import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 
 class SessionSummarySection extends StatelessWidget {
-  final List<int> values;
-  final PingStats stats;
+  final List<int?>? values;
+  final PingStats? stats;
 
   const SessionSummarySection({
-    Key key,
-    @required this.values,
-    @required this.stats,
+    Key? key,
+    required this.values,
+    required this.stats,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final totalCount = values.length;
-    final successCount = values.where((it) => it != null).length;
+    final totalCount = values!.length;
+    final successCount = values!.where((it) => it != null).length;
     final failedCount = totalCount - successCount;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class SessionSummarySection extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryItem(String label, Color color, int value) {
+  Widget _buildSummaryItem(String label, Color color, int? value) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),

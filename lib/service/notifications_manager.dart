@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/utils/notification_messages.dart';
@@ -9,7 +10,7 @@ class NotificationsManager {
   final FlutterLocalNotificationsPlugin _localNotifications;
   final NotificationMessages _messages;
 
-  Future<void> _currentNotification;
+  Future<void>? _currentNotification;
 
   NotificationsManager(this._localNotifications, this._messages);
 
@@ -19,9 +20,9 @@ class NotificationsManager {
       case PingStatus.quickCheckLocked:
         _showNotification(
           _messages.startedTitle(session.host),
-          session.values.isNotEmpty
-              ? session.values.last != null
-                  ? _messages.startedBody(session.values.last)
+          session.values!.isNotEmpty
+              ? session.values!.lastOrNull != null
+                  ? _messages.startedBody(session.values!.last!)
                   : "-"
               : "",
         );
@@ -30,7 +31,7 @@ class NotificationsManager {
         _showNotification(
           _messages.pausedTitle(session.host),
           _messages.pausedBody(
-            session.values.length,
+            session.values!.length,
             FormatUtils.getCountLabel(session.settings.count),
           ),
         );
@@ -40,9 +41,9 @@ class NotificationsManager {
           _messages.doneTitle(session.host),
           session.stats != null
               ? _messages.doneBody(
-                  session.stats.min,
-                  session.stats.mean,
-                  session.stats.max,
+                  session.stats!.min,
+                  session.stats!.mean,
+                  session.stats!.max,
                 )
               : "",
         );
@@ -56,14 +57,14 @@ class NotificationsManager {
 
   void _showNotification(String title, String body) {
     final details = NotificationDetails(
-      AndroidNotificationDetails(
+      android: AndroidNotificationDetails(
         'pingerChannelId',
         'pingerChannelName',
-        'Pinger notifications channel',
+        channelDescription: 'Pinger notifications channel',
         playSound: false,
         enableVibration: false,
       ),
-      IOSNotificationDetails(
+      iOS: IOSNotificationDetails(
         presentAlert: false,
         presentSound: false,
       ),

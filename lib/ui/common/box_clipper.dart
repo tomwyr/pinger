@@ -2,15 +2,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class ClipBox extends StatelessWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final Widget child;
 
   const ClipBox({
-    Key key,
+    Key? key,
     this.width,
     this.height,
-    @required this.child,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -23,8 +23,8 @@ class ClipBox extends StatelessWidget {
 }
 
 class BoxClipper extends CustomClipper<Rect> {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
 
   BoxClipper(this.width, this.height);
 

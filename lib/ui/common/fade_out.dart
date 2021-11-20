@@ -6,10 +6,10 @@ class FadeOut extends StatefulWidget {
   final Widget child;
 
   const FadeOut({
-    Key key,
-    @required this.duration,
-    @required this.visible,
-    @required this.child,
+    Key? key,
+    required this.duration,
+    required this.visible,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class FadeOut extends StatefulWidget {
 }
 
 class _FadeOutState extends State<FadeOut> with SingleTickerProviderStateMixin {
-  AnimationController _animator;
+  late AnimationController _animator;
 
   @override
   void initState() {

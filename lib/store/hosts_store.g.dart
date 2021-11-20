@@ -9,11 +9,11 @@ part of 'hosts_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HostsStore on HostsStoreBase, Store {
-  Computed<List<HostItem>> _$searchResultsComputed;
+  Computed<List<HostItem>?>? _$searchResultsComputed;
 
   @override
-  List<HostItem> get searchResults => (_$searchResultsComputed ??=
-          Computed<List<HostItem>>(() => super.searchResults,
+  List<HostItem>? get searchResults => (_$searchResultsComputed ??=
+          Computed<List<HostItem>?>(() => super.searchResults,
               name: 'HostsStoreBase.searchResults'))
       .value;
 
@@ -35,13 +35,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
   final _$hostsAtom = Atom(name: 'HostsStoreBase.hosts');
 
   @override
-  DataSnap<List<HostItem>> get hosts {
+  DataSnap<List<HostItem>>? get hosts {
     _$hostsAtom.reportRead();
     return super.hosts;
   }
 
   @override
-  set hosts(DataSnap<List<HostItem>> value) {
+  set hosts(DataSnap<List<HostItem>>? value) {
     _$hostsAtom.reportWrite(value, super.hosts, () {
       super.hosts = value;
     });
@@ -50,13 +50,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
   final _$localStatsAtom = Atom(name: 'HostsStoreBase.localStats');
 
   @override
-  Map<String, HostStats> get localStats {
+  Map<String, HostStats>? get localStats {
     _$localStatsAtom.reportRead();
     return super.localStats;
   }
 
   @override
-  set localStats(Map<String, HostStats> value) {
+  set localStats(Map<String, HostStats>? value) {
     _$localStatsAtom.reportWrite(value, super.localStats, () {
       super.localStats = value;
     });
@@ -65,13 +65,13 @@ mixin _$HostsStore on HostsStoreBase, Store {
   final _$favoritesAtom = Atom(name: 'HostsStoreBase.favorites');
 
   @override
-  List<String> get favorites {
+  List<String>? get favorites {
     _$favoritesAtom.reportRead();
     return super.favorites;
   }
 
   @override
-  set favorites(List<String> value) {
+  set favorites(List<String>? value) {
     _$favoritesAtom.reportWrite(value, super.favorites, () {
       super.favorites = value;
     });

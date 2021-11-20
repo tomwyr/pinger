@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'ping_global.dart';
 
@@ -8,33 +9,46 @@ part of 'ping_global.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 GlobalPingCounts _$GlobalPingCountsFromJson(Map<String, dynamic> json) {
   return _GlobalPingCounts.fromJson(json);
 }
 
+/// @nodoc
 class _$GlobalPingCountsTearOff {
   const _$GlobalPingCountsTearOff();
 
   _GlobalPingCounts call(
-      {@required int totalCount, @required List<PingCount> pingCounts}) {
+      {required int totalCount, required List<PingCount> pingCounts}) {
     return _GlobalPingCounts(
       totalCount: totalCount,
       pingCounts: pingCounts,
     );
   }
+
+  GlobalPingCounts fromJson(Map<String, Object?> json) {
+    return GlobalPingCounts.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $GlobalPingCounts = _$GlobalPingCountsTearOff();
 
+/// @nodoc
 mixin _$GlobalPingCounts {
-  int get totalCount;
-  List<PingCount> get pingCounts;
+  int get totalCount => throw _privateConstructorUsedError;
+  List<PingCount> get pingCounts => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $GlobalPingCountsCopyWith<GlobalPingCounts> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalPingCountsCopyWith<GlobalPingCounts> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $GlobalPingCountsCopyWith<$Res> {
   factory $GlobalPingCountsCopyWith(
           GlobalPingCounts value, $Res Function(GlobalPingCounts) then) =
@@ -42,6 +56,7 @@ abstract class $GlobalPingCountsCopyWith<$Res> {
   $Res call({int totalCount, List<PingCount> pingCounts});
 }
 
+/// @nodoc
 class _$GlobalPingCountsCopyWithImpl<$Res>
     implements $GlobalPingCountsCopyWith<$Res> {
   _$GlobalPingCountsCopyWithImpl(this._value, this._then);
@@ -52,18 +67,23 @@ class _$GlobalPingCountsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object totalCount = freezed,
-    Object pingCounts = freezed,
+    Object? totalCount = freezed,
+    Object? pingCounts = freezed,
   }) {
     return _then(_value.copyWith(
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       pingCounts: pingCounts == freezed
           ? _value.pingCounts
-          : pingCounts as List<PingCount>,
+          : pingCounts // ignore: cast_nullable_to_non_nullable
+              as List<PingCount>,
     ));
   }
 }
 
+/// @nodoc
 abstract class _$GlobalPingCountsCopyWith<$Res>
     implements $GlobalPingCountsCopyWith<$Res> {
   factory _$GlobalPingCountsCopyWith(
@@ -73,6 +93,7 @@ abstract class _$GlobalPingCountsCopyWith<$Res>
   $Res call({int totalCount, List<PingCount> pingCounts});
 }
 
+/// @nodoc
 class __$GlobalPingCountsCopyWithImpl<$Res>
     extends _$GlobalPingCountsCopyWithImpl<$Res>
     implements _$GlobalPingCountsCopyWith<$Res> {
@@ -85,26 +106,29 @@ class __$GlobalPingCountsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object totalCount = freezed,
-    Object pingCounts = freezed,
+    Object? totalCount = freezed,
+    Object? pingCounts = freezed,
   }) {
     return _then(_GlobalPingCounts(
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       pingCounts: pingCounts == freezed
           ? _value.pingCounts
-          : pingCounts as List<PingCount>,
+          : pingCounts // ignore: cast_nullable_to_non_nullable
+              as List<PingCount>,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_GlobalPingCounts implements _GlobalPingCounts {
-  _$_GlobalPingCounts({@required this.totalCount, @required this.pingCounts})
-      : assert(totalCount != null),
-        assert(pingCounts != null);
+  _$_GlobalPingCounts({required this.totalCount, required this.pingCounts});
 
   factory _$_GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
-      _$_$_GlobalPingCountsFromJson(json);
+      _$$_GlobalPingCountsFromJson(json);
 
   @override
   final int totalCount;
@@ -119,35 +143,33 @@ class _$_GlobalPingCounts implements _GlobalPingCounts {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GlobalPingCounts &&
+        (other.runtimeType == runtimeType &&
+            other is _GlobalPingCounts &&
             (identical(other.totalCount, totalCount) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalCount, totalCount)) &&
-            (identical(other.pingCounts, pingCounts) ||
-                const DeepCollectionEquality()
-                    .equals(other.pingCounts, pingCounts)));
+                other.totalCount == totalCount) &&
+            const DeepCollectionEquality()
+                .equals(other.pingCounts, pingCounts));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(totalCount) ^
-      const DeepCollectionEquality().hash(pingCounts);
+  int get hashCode => Object.hash(
+      runtimeType, totalCount, const DeepCollectionEquality().hash(pingCounts));
 
+  @JsonKey(ignore: true)
   @override
   _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith =>
       __$GlobalPingCountsCopyWithImpl<_GlobalPingCounts>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_GlobalPingCountsToJson(this);
+    return _$$_GlobalPingCountsToJson(this);
   }
 }
 
 abstract class _GlobalPingCounts implements GlobalPingCounts {
   factory _GlobalPingCounts(
-      {@required int totalCount,
-      @required List<PingCount> pingCounts}) = _$_GlobalPingCounts;
+      {required int totalCount,
+      required List<PingCount> pingCounts}) = _$_GlobalPingCounts;
 
   factory _GlobalPingCounts.fromJson(Map<String, dynamic> json) =
       _$_GlobalPingCounts.fromJson;
@@ -157,41 +179,53 @@ abstract class _GlobalPingCounts implements GlobalPingCounts {
   @override
   List<PingCount> get pingCounts;
   @override
-  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith;
+  @JsonKey(ignore: true)
+  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 PingCount _$PingCountFromJson(Map<String, dynamic> json) {
   return _PingCount.fromJson(json);
 }
 
+/// @nodoc
 class _$PingCountTearOff {
   const _$PingCountTearOff();
 
-  _PingCount call({@required String host, @required int count}) {
+  _PingCount call({required String host, required int count}) {
     return _PingCount(
       host: host,
       count: count,
     );
   }
+
+  PingCount fromJson(Map<String, Object?> json) {
+    return PingCount.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $PingCount = _$PingCountTearOff();
 
+/// @nodoc
 mixin _$PingCount {
-  String get host;
-  int get count;
+  String get host => throw _privateConstructorUsedError;
+  int get count => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $PingCountCopyWith<PingCount> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PingCountCopyWith<PingCount> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $PingCountCopyWith<$Res> {
   factory $PingCountCopyWith(PingCount value, $Res Function(PingCount) then) =
       _$PingCountCopyWithImpl<$Res>;
   $Res call({String host, int count});
 }
 
+/// @nodoc
 class _$PingCountCopyWithImpl<$Res> implements $PingCountCopyWith<$Res> {
   _$PingCountCopyWithImpl(this._value, this._then);
 
@@ -201,16 +235,23 @@ class _$PingCountCopyWithImpl<$Res> implements $PingCountCopyWith<$Res> {
 
   @override
   $Res call({
-    Object host = freezed,
-    Object count = freezed,
+    Object? host = freezed,
+    Object? count = freezed,
   }) {
     return _then(_value.copyWith(
-      host: host == freezed ? _value.host : host as String,
-      count: count == freezed ? _value.count : count as int,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
+/// @nodoc
 abstract class _$PingCountCopyWith<$Res> implements $PingCountCopyWith<$Res> {
   factory _$PingCountCopyWith(
           _PingCount value, $Res Function(_PingCount) then) =
@@ -219,6 +260,7 @@ abstract class _$PingCountCopyWith<$Res> implements $PingCountCopyWith<$Res> {
   $Res call({String host, int count});
 }
 
+/// @nodoc
 class __$PingCountCopyWithImpl<$Res> extends _$PingCountCopyWithImpl<$Res>
     implements _$PingCountCopyWith<$Res> {
   __$PingCountCopyWithImpl(_PingCount _value, $Res Function(_PingCount) _then)
@@ -229,24 +271,29 @@ class __$PingCountCopyWithImpl<$Res> extends _$PingCountCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object host = freezed,
-    Object count = freezed,
+    Object? host = freezed,
+    Object? count = freezed,
   }) {
     return _then(_PingCount(
-      host: host == freezed ? _value.host : host as String,
-      count: count == freezed ? _value.count : count as int,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_PingCount implements _PingCount {
-  _$_PingCount({@required this.host, @required this.count})
-      : assert(host != null),
-        assert(count != null);
+  _$_PingCount({required this.host, required this.count});
 
   factory _$_PingCount.fromJson(Map<String, dynamic> json) =>
-      _$_$_PingCountFromJson(json);
+      _$$_PingCountFromJson(json);
 
   @override
   final String host;
@@ -261,32 +308,28 @@ class _$_PingCount implements _PingCount {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PingCount &&
-            (identical(other.host, host) ||
-                const DeepCollectionEquality().equals(other.host, host)) &&
-            (identical(other.count, count) ||
-                const DeepCollectionEquality().equals(other.count, count)));
+        (other.runtimeType == runtimeType &&
+            other is _PingCount &&
+            (identical(other.host, host) || other.host == host) &&
+            (identical(other.count, count) || other.count == count));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(host) ^
-      const DeepCollectionEquality().hash(count);
+  int get hashCode => Object.hash(runtimeType, host, count);
 
+  @JsonKey(ignore: true)
   @override
   _$PingCountCopyWith<_PingCount> get copyWith =>
       __$PingCountCopyWithImpl<_PingCount>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_PingCountToJson(this);
+    return _$$_PingCountToJson(this);
   }
 }
 
 abstract class _PingCount implements PingCount {
-  factory _PingCount({@required String host, @required int count}) =
-      _$_PingCount;
+  factory _PingCount({required String host, required int count}) = _$_PingCount;
 
   factory _PingCount.fromJson(Map<String, dynamic> json) =
       _$_PingCount.fromJson;
@@ -296,40 +339,52 @@ abstract class _PingCount implements PingCount {
   @override
   int get count;
   @override
-  _$PingCountCopyWith<_PingCount> get copyWith;
+  @JsonKey(ignore: true)
+  _$PingCountCopyWith<_PingCount> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 GlobalHostResults _$GlobalHostResultsFromJson(Map<String, dynamic> json) {
   return _GlobalHostResults.fromJson(json);
 }
 
+/// @nodoc
 class _$GlobalHostResultsTearOff {
   const _$GlobalHostResultsTearOff();
 
   _GlobalHostResults call(
-      {@required int totalCount,
-      @required ValueResults valueResults,
-      @required List<LocationResults> locationResults}) {
+      {required int totalCount,
+      required ValueResults valueResults,
+      required List<LocationResults> locationResults}) {
     return _GlobalHostResults(
       totalCount: totalCount,
       valueResults: valueResults,
       locationResults: locationResults,
     );
   }
+
+  GlobalHostResults fromJson(Map<String, Object?> json) {
+    return GlobalHostResults.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $GlobalHostResults = _$GlobalHostResultsTearOff();
 
+/// @nodoc
 mixin _$GlobalHostResults {
-  int get totalCount;
-  ValueResults get valueResults;
-  List<LocationResults> get locationResults;
+  int get totalCount => throw _privateConstructorUsedError;
+  ValueResults get valueResults => throw _privateConstructorUsedError;
+  List<LocationResults> get locationResults =>
+      throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $GlobalHostResultsCopyWith<GlobalHostResults> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalHostResultsCopyWith<GlobalHostResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $GlobalHostResultsCopyWith<$Res> {
   factory $GlobalHostResultsCopyWith(
           GlobalHostResults value, $Res Function(GlobalHostResults) then) =
@@ -342,6 +397,7 @@ abstract class $GlobalHostResultsCopyWith<$Res> {
   $ValueResultsCopyWith<$Res> get valueResults;
 }
 
+/// @nodoc
 class _$GlobalHostResultsCopyWithImpl<$Res>
     implements $GlobalHostResultsCopyWith<$Res> {
   _$GlobalHostResultsCopyWithImpl(this._value, this._then);
@@ -352,32 +408,35 @@ class _$GlobalHostResultsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object totalCount = freezed,
-    Object valueResults = freezed,
-    Object locationResults = freezed,
+    Object? totalCount = freezed,
+    Object? valueResults = freezed,
+    Object? locationResults = freezed,
   }) {
     return _then(_value.copyWith(
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       valueResults: valueResults == freezed
           ? _value.valueResults
-          : valueResults as ValueResults,
+          : valueResults // ignore: cast_nullable_to_non_nullable
+              as ValueResults,
       locationResults: locationResults == freezed
           ? _value.locationResults
-          : locationResults as List<LocationResults>,
+          : locationResults // ignore: cast_nullable_to_non_nullable
+              as List<LocationResults>,
     ));
   }
 
   @override
   $ValueResultsCopyWith<$Res> get valueResults {
-    if (_value.valueResults == null) {
-      return null;
-    }
     return $ValueResultsCopyWith<$Res>(_value.valueResults, (value) {
       return _then(_value.copyWith(valueResults: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$GlobalHostResultsCopyWith<$Res>
     implements $GlobalHostResultsCopyWith<$Res> {
   factory _$GlobalHostResultsCopyWith(
@@ -393,6 +452,7 @@ abstract class _$GlobalHostResultsCopyWith<$Res>
   $ValueResultsCopyWith<$Res> get valueResults;
 }
 
+/// @nodoc
 class __$GlobalHostResultsCopyWithImpl<$Res>
     extends _$GlobalHostResultsCopyWithImpl<$Res>
     implements _$GlobalHostResultsCopyWith<$Res> {
@@ -405,34 +465,37 @@ class __$GlobalHostResultsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object totalCount = freezed,
-    Object valueResults = freezed,
-    Object locationResults = freezed,
+    Object? totalCount = freezed,
+    Object? valueResults = freezed,
+    Object? locationResults = freezed,
   }) {
     return _then(_GlobalHostResults(
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       valueResults: valueResults == freezed
           ? _value.valueResults
-          : valueResults as ValueResults,
+          : valueResults // ignore: cast_nullable_to_non_nullable
+              as ValueResults,
       locationResults: locationResults == freezed
           ? _value.locationResults
-          : locationResults as List<LocationResults>,
+          : locationResults // ignore: cast_nullable_to_non_nullable
+              as List<LocationResults>,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_GlobalHostResults implements _GlobalHostResults {
   _$_GlobalHostResults(
-      {@required this.totalCount,
-      @required this.valueResults,
-      @required this.locationResults})
-      : assert(totalCount != null),
-        assert(valueResults != null),
-        assert(locationResults != null);
+      {required this.totalCount,
+      required this.valueResults,
+      required this.locationResults});
 
   factory _$_GlobalHostResults.fromJson(Map<String, dynamic> json) =>
-      _$_$_GlobalHostResultsFromJson(json);
+      _$$_GlobalHostResultsFromJson(json);
 
   @override
   final int totalCount;
@@ -449,40 +512,36 @@ class _$_GlobalHostResults implements _GlobalHostResults {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GlobalHostResults &&
+        (other.runtimeType == runtimeType &&
+            other is _GlobalHostResults &&
             (identical(other.totalCount, totalCount) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalCount, totalCount)) &&
+                other.totalCount == totalCount) &&
             (identical(other.valueResults, valueResults) ||
-                const DeepCollectionEquality()
-                    .equals(other.valueResults, valueResults)) &&
-            (identical(other.locationResults, locationResults) ||
-                const DeepCollectionEquality()
-                    .equals(other.locationResults, locationResults)));
+                other.valueResults == valueResults) &&
+            const DeepCollectionEquality()
+                .equals(other.locationResults, locationResults));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(totalCount) ^
-      const DeepCollectionEquality().hash(valueResults) ^
-      const DeepCollectionEquality().hash(locationResults);
+  int get hashCode => Object.hash(runtimeType, totalCount, valueResults,
+      const DeepCollectionEquality().hash(locationResults));
 
+  @JsonKey(ignore: true)
   @override
   _$GlobalHostResultsCopyWith<_GlobalHostResults> get copyWith =>
       __$GlobalHostResultsCopyWithImpl<_GlobalHostResults>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_GlobalHostResultsToJson(this);
+    return _$$_GlobalHostResultsToJson(this);
   }
 }
 
 abstract class _GlobalHostResults implements GlobalHostResults {
   factory _GlobalHostResults(
-      {@required int totalCount,
-      @required ValueResults valueResults,
-      @required List<LocationResults> locationResults}) = _$_GlobalHostResults;
+      {required int totalCount,
+      required ValueResults valueResults,
+      required List<LocationResults> locationResults}) = _$_GlobalHostResults;
 
   factory _GlobalHostResults.fromJson(Map<String, dynamic> json) =
       _$_GlobalHostResults.fromJson;
@@ -494,40 +553,51 @@ abstract class _GlobalHostResults implements GlobalHostResults {
   @override
   List<LocationResults> get locationResults;
   @override
-  _$GlobalHostResultsCopyWith<_GlobalHostResults> get copyWith;
+  @JsonKey(ignore: true)
+  _$GlobalHostResultsCopyWith<_GlobalHostResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ValueResults _$ValueResultsFromJson(Map<String, dynamic> json) {
   return _ValueResults.fromJson(json);
 }
 
+/// @nodoc
 class _$ValueResultsTearOff {
   const _$ValueResultsTearOff();
 
   _ValueResults call(
-      {@required Map<int, int> min,
-      @required Map<int, int> mean,
-      @required Map<int, int> max}) {
+      {required Map<int, int> min,
+      required Map<int, int> mean,
+      required Map<int, int> max}) {
     return _ValueResults(
       min: min,
       mean: mean,
       max: max,
     );
   }
+
+  ValueResults fromJson(Map<String, Object?> json) {
+    return ValueResults.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $ValueResults = _$ValueResultsTearOff();
 
+/// @nodoc
 mixin _$ValueResults {
-  Map<int, int> get min;
-  Map<int, int> get mean;
-  Map<int, int> get max;
+  Map<int, int> get min => throw _privateConstructorUsedError;
+  Map<int, int> get mean => throw _privateConstructorUsedError;
+  Map<int, int> get max => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $ValueResultsCopyWith<ValueResults> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ValueResultsCopyWith<ValueResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $ValueResultsCopyWith<$Res> {
   factory $ValueResultsCopyWith(
           ValueResults value, $Res Function(ValueResults) then) =
@@ -535,6 +605,7 @@ abstract class $ValueResultsCopyWith<$Res> {
   $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
 }
 
+/// @nodoc
 class _$ValueResultsCopyWithImpl<$Res> implements $ValueResultsCopyWith<$Res> {
   _$ValueResultsCopyWithImpl(this._value, this._then);
 
@@ -544,18 +615,28 @@ class _$ValueResultsCopyWithImpl<$Res> implements $ValueResultsCopyWith<$Res> {
 
   @override
   $Res call({
-    Object min = freezed,
-    Object mean = freezed,
-    Object max = freezed,
+    Object? min = freezed,
+    Object? mean = freezed,
+    Object? max = freezed,
   }) {
     return _then(_value.copyWith(
-      min: min == freezed ? _value.min : min as Map<int, int>,
-      mean: mean == freezed ? _value.mean : mean as Map<int, int>,
-      max: max == freezed ? _value.max : max as Map<int, int>,
+      min: min == freezed
+          ? _value.min
+          : min // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
+      mean: mean == freezed
+          ? _value.mean
+          : mean // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
+      max: max == freezed
+          ? _value.max
+          : max // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
     ));
   }
 }
 
+/// @nodoc
 abstract class _$ValueResultsCopyWith<$Res>
     implements $ValueResultsCopyWith<$Res> {
   factory _$ValueResultsCopyWith(
@@ -565,6 +646,7 @@ abstract class _$ValueResultsCopyWith<$Res>
   $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
 }
 
+/// @nodoc
 class __$ValueResultsCopyWithImpl<$Res> extends _$ValueResultsCopyWithImpl<$Res>
     implements _$ValueResultsCopyWith<$Res> {
   __$ValueResultsCopyWithImpl(
@@ -576,27 +658,34 @@ class __$ValueResultsCopyWithImpl<$Res> extends _$ValueResultsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object min = freezed,
-    Object mean = freezed,
-    Object max = freezed,
+    Object? min = freezed,
+    Object? mean = freezed,
+    Object? max = freezed,
   }) {
     return _then(_ValueResults(
-      min: min == freezed ? _value.min : min as Map<int, int>,
-      mean: mean == freezed ? _value.mean : mean as Map<int, int>,
-      max: max == freezed ? _value.max : max as Map<int, int>,
+      min: min == freezed
+          ? _value.min
+          : min // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
+      mean: mean == freezed
+          ? _value.mean
+          : mean // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
+      max: max == freezed
+          ? _value.max
+          : max // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_ValueResults implements _ValueResults {
-  _$_ValueResults({@required this.min, @required this.mean, @required this.max})
-      : assert(min != null),
-        assert(mean != null),
-        assert(max != null);
+  _$_ValueResults({required this.min, required this.mean, required this.max});
 
   factory _$_ValueResults.fromJson(Map<String, dynamic> json) =>
-      _$_$_ValueResultsFromJson(json);
+      _$$_ValueResultsFromJson(json);
 
   @override
   final Map<int, int> min;
@@ -613,37 +702,36 @@ class _$_ValueResults implements _ValueResults {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ValueResults &&
-            (identical(other.min, min) ||
-                const DeepCollectionEquality().equals(other.min, min)) &&
-            (identical(other.mean, mean) ||
-                const DeepCollectionEquality().equals(other.mean, mean)) &&
-            (identical(other.max, max) ||
-                const DeepCollectionEquality().equals(other.max, max)));
+        (other.runtimeType == runtimeType &&
+            other is _ValueResults &&
+            const DeepCollectionEquality().equals(other.min, min) &&
+            const DeepCollectionEquality().equals(other.mean, mean) &&
+            const DeepCollectionEquality().equals(other.max, max));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(min) ^
-      const DeepCollectionEquality().hash(mean) ^
-      const DeepCollectionEquality().hash(max);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(min),
+      const DeepCollectionEquality().hash(mean),
+      const DeepCollectionEquality().hash(max));
 
+  @JsonKey(ignore: true)
   @override
   _$ValueResultsCopyWith<_ValueResults> get copyWith =>
       __$ValueResultsCopyWithImpl<_ValueResults>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ValueResultsToJson(this);
+    return _$$_ValueResultsToJson(this);
   }
 }
 
 abstract class _ValueResults implements ValueResults {
   factory _ValueResults(
-      {@required Map<int, int> min,
-      @required Map<int, int> mean,
-      @required Map<int, int> max}) = _$_ValueResults;
+      {required Map<int, int> min,
+      required Map<int, int> mean,
+      required Map<int, int> max}) = _$_ValueResults;
 
   factory _ValueResults.fromJson(Map<String, dynamic> json) =
       _$_ValueResults.fromJson;
@@ -655,40 +743,51 @@ abstract class _ValueResults implements ValueResults {
   @override
   Map<int, int> get max;
   @override
-  _$ValueResultsCopyWith<_ValueResults> get copyWith;
+  @JsonKey(ignore: true)
+  _$ValueResultsCopyWith<_ValueResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 LocationResults _$LocationResultsFromJson(Map<String, dynamic> json) {
   return _LocationResults.fromJson(json);
 }
 
+/// @nodoc
 class _$LocationResultsTearOff {
   const _$LocationResultsTearOff();
 
   _LocationResults call(
-      {@required int count,
-      @required GeoPosition location,
-      @required PingStats stats}) {
+      {required int count,
+      required GeoPosition location,
+      required PingStats stats}) {
     return _LocationResults(
       count: count,
       location: location,
       stats: stats,
     );
   }
+
+  LocationResults fromJson(Map<String, Object?> json) {
+    return LocationResults.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $LocationResults = _$LocationResultsTearOff();
 
+/// @nodoc
 mixin _$LocationResults {
-  int get count;
-  GeoPosition get location;
-  PingStats get stats;
+  int get count => throw _privateConstructorUsedError;
+  GeoPosition get location => throw _privateConstructorUsedError;
+  PingStats get stats => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $LocationResultsCopyWith<LocationResults> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LocationResultsCopyWith<LocationResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $LocationResultsCopyWith<$Res> {
   factory $LocationResultsCopyWith(
           LocationResults value, $Res Function(LocationResults) then) =
@@ -699,6 +798,7 @@ abstract class $LocationResultsCopyWith<$Res> {
   $PingStatsCopyWith<$Res> get stats;
 }
 
+/// @nodoc
 class _$LocationResultsCopyWithImpl<$Res>
     implements $LocationResultsCopyWith<$Res> {
   _$LocationResultsCopyWithImpl(this._value, this._then);
@@ -709,22 +809,28 @@ class _$LocationResultsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object count = freezed,
-    Object location = freezed,
-    Object stats = freezed,
+    Object? count = freezed,
+    Object? location = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_value.copyWith(
-      count: count == freezed ? _value.count : count as int,
-      location: location == freezed ? _value.location : location as GeoPosition,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoPosition,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as PingStats,
     ));
   }
 
   @override
   $GeoPositionCopyWith<$Res> get location {
-    if (_value.location == null) {
-      return null;
-    }
     return $GeoPositionCopyWith<$Res>(_value.location, (value) {
       return _then(_value.copyWith(location: value));
     });
@@ -732,15 +838,13 @@ class _$LocationResultsCopyWithImpl<$Res>
 
   @override
   $PingStatsCopyWith<$Res> get stats {
-    if (_value.stats == null) {
-      return null;
-    }
     return $PingStatsCopyWith<$Res>(_value.stats, (value) {
       return _then(_value.copyWith(stats: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$LocationResultsCopyWith<$Res>
     implements $LocationResultsCopyWith<$Res> {
   factory _$LocationResultsCopyWith(
@@ -755,6 +859,7 @@ abstract class _$LocationResultsCopyWith<$Res>
   $PingStatsCopyWith<$Res> get stats;
 }
 
+/// @nodoc
 class __$LocationResultsCopyWithImpl<$Res>
     extends _$LocationResultsCopyWithImpl<$Res>
     implements _$LocationResultsCopyWith<$Res> {
@@ -767,28 +872,35 @@ class __$LocationResultsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object count = freezed,
-    Object location = freezed,
-    Object stats = freezed,
+    Object? count = freezed,
+    Object? location = freezed,
+    Object? stats = freezed,
   }) {
     return _then(_LocationResults(
-      count: count == freezed ? _value.count : count as int,
-      location: location == freezed ? _value.location : location as GeoPosition,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoPosition,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as PingStats,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_LocationResults implements _LocationResults {
   _$_LocationResults(
-      {@required this.count, @required this.location, @required this.stats})
-      : assert(count != null),
-        assert(location != null),
-        assert(stats != null);
+      {required this.count, required this.location, required this.stats});
 
   factory _$_LocationResults.fromJson(Map<String, dynamic> json) =>
-      _$_$_LocationResultsFromJson(json);
+      _$$_LocationResultsFromJson(json);
 
   @override
   final int count;
@@ -805,38 +917,33 @@ class _$_LocationResults implements _LocationResults {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LocationResults &&
-            (identical(other.count, count) ||
-                const DeepCollectionEquality().equals(other.count, count)) &&
+        (other.runtimeType == runtimeType &&
+            other is _LocationResults &&
+            (identical(other.count, count) || other.count == count) &&
             (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)) &&
-            (identical(other.stats, stats) ||
-                const DeepCollectionEquality().equals(other.stats, stats)));
+                other.location == location) &&
+            (identical(other.stats, stats) || other.stats == stats));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(count) ^
-      const DeepCollectionEquality().hash(location) ^
-      const DeepCollectionEquality().hash(stats);
+  int get hashCode => Object.hash(runtimeType, count, location, stats);
 
+  @JsonKey(ignore: true)
   @override
   _$LocationResultsCopyWith<_LocationResults> get copyWith =>
       __$LocationResultsCopyWithImpl<_LocationResults>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_LocationResultsToJson(this);
+    return _$$_LocationResultsToJson(this);
   }
 }
 
 abstract class _LocationResults implements LocationResults {
   factory _LocationResults(
-      {@required int count,
-      @required GeoPosition location,
-      @required PingStats stats}) = _$_LocationResults;
+      {required int count,
+      required GeoPosition location,
+      required PingStats stats}) = _$_LocationResults;
 
   factory _LocationResults.fromJson(Map<String, dynamic> json) =
       _$_LocationResults.fromJson;
@@ -848,21 +955,24 @@ abstract class _LocationResults implements LocationResults {
   @override
   PingStats get stats;
   @override
-  _$LocationResultsCopyWith<_LocationResults> get copyWith;
+  @JsonKey(ignore: true)
+  _$LocationResultsCopyWith<_LocationResults> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 GlobalSessionResult _$GlobalSessionResultFromJson(Map<String, dynamic> json) {
   return _GlobalSessionResult.fromJson(json);
 }
 
+/// @nodoc
 class _$GlobalSessionResultTearOff {
   const _$GlobalSessionResultTearOff();
 
   _GlobalSessionResult call(
-      {@required int count,
-      @required String host,
-      @required PingStats stats,
-      GeoPosition location}) {
+      {required int count,
+      required String host,
+      required PingStats stats,
+      GeoPosition? location}) {
     return _GlobalSessionResult(
       count: count,
       host: host,
@@ -870,31 +980,40 @@ class _$GlobalSessionResultTearOff {
       location: location,
     );
   }
+
+  GlobalSessionResult fromJson(Map<String, Object?> json) {
+    return GlobalSessionResult.fromJson(json);
+  }
 }
 
-// ignore: unused_element
+/// @nodoc
 const $GlobalSessionResult = _$GlobalSessionResultTearOff();
 
+/// @nodoc
 mixin _$GlobalSessionResult {
-  int get count;
-  String get host;
-  PingStats get stats;
-  GeoPosition get location;
+  int get count => throw _privateConstructorUsedError;
+  String get host => throw _privateConstructorUsedError;
+  PingStats get stats => throw _privateConstructorUsedError;
+  GeoPosition? get location => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $GlobalSessionResultCopyWith<GlobalSessionResult> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalSessionResultCopyWith<GlobalSessionResult> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
+/// @nodoc
 abstract class $GlobalSessionResultCopyWith<$Res> {
   factory $GlobalSessionResultCopyWith(
           GlobalSessionResult value, $Res Function(GlobalSessionResult) then) =
       _$GlobalSessionResultCopyWithImpl<$Res>;
-  $Res call({int count, String host, PingStats stats, GeoPosition location});
+  $Res call({int count, String host, PingStats stats, GeoPosition? location});
 
   $PingStatsCopyWith<$Res> get stats;
-  $GeoPositionCopyWith<$Res> get location;
+  $GeoPositionCopyWith<$Res>? get location;
 }
 
+/// @nodoc
 class _$GlobalSessionResultCopyWithImpl<$Res>
     implements $GlobalSessionResultCopyWith<$Res> {
   _$GlobalSessionResultCopyWithImpl(this._value, this._then);
@@ -905,54 +1024,66 @@ class _$GlobalSessionResultCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object count = freezed,
-    Object host = freezed,
-    Object stats = freezed,
-    Object location = freezed,
+    Object? count = freezed,
+    Object? host = freezed,
+    Object? stats = freezed,
+    Object? location = freezed,
   }) {
     return _then(_value.copyWith(
-      count: count == freezed ? _value.count : count as int,
-      host: host == freezed ? _value.host : host as String,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
-      location: location == freezed ? _value.location : location as GeoPosition,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as PingStats,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoPosition?,
     ));
   }
 
   @override
   $PingStatsCopyWith<$Res> get stats {
-    if (_value.stats == null) {
-      return null;
-    }
     return $PingStatsCopyWith<$Res>(_value.stats, (value) {
       return _then(_value.copyWith(stats: value));
     });
   }
 
   @override
-  $GeoPositionCopyWith<$Res> get location {
+  $GeoPositionCopyWith<$Res>? get location {
     if (_value.location == null) {
       return null;
     }
-    return $GeoPositionCopyWith<$Res>(_value.location, (value) {
+
+    return $GeoPositionCopyWith<$Res>(_value.location!, (value) {
       return _then(_value.copyWith(location: value));
     });
   }
 }
 
+/// @nodoc
 abstract class _$GlobalSessionResultCopyWith<$Res>
     implements $GlobalSessionResultCopyWith<$Res> {
   factory _$GlobalSessionResultCopyWith(_GlobalSessionResult value,
           $Res Function(_GlobalSessionResult) then) =
       __$GlobalSessionResultCopyWithImpl<$Res>;
   @override
-  $Res call({int count, String host, PingStats stats, GeoPosition location});
+  $Res call({int count, String host, PingStats stats, GeoPosition? location});
 
   @override
   $PingStatsCopyWith<$Res> get stats;
   @override
-  $GeoPositionCopyWith<$Res> get location;
+  $GeoPositionCopyWith<$Res>? get location;
 }
 
+/// @nodoc
 class __$GlobalSessionResultCopyWithImpl<$Res>
     extends _$GlobalSessionResultCopyWithImpl<$Res>
     implements _$GlobalSessionResultCopyWith<$Res> {
@@ -965,33 +1096,43 @@ class __$GlobalSessionResultCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object count = freezed,
-    Object host = freezed,
-    Object stats = freezed,
-    Object location = freezed,
+    Object? count = freezed,
+    Object? host = freezed,
+    Object? stats = freezed,
+    Object? location = freezed,
   }) {
     return _then(_GlobalSessionResult(
-      count: count == freezed ? _value.count : count as int,
-      host: host == freezed ? _value.host : host as String,
-      stats: stats == freezed ? _value.stats : stats as PingStats,
-      location: location == freezed ? _value.location : location as GeoPosition,
+      count: count == freezed
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      host: host == freezed
+          ? _value.host
+          : host // ignore: cast_nullable_to_non_nullable
+              as String,
+      stats: stats == freezed
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as PingStats,
+      location: location == freezed
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoPosition?,
     ));
   }
 }
 
+/// @nodoc
 @JsonSerializable()
 class _$_GlobalSessionResult implements _GlobalSessionResult {
   _$_GlobalSessionResult(
-      {@required this.count,
-      @required this.host,
-      @required this.stats,
-      this.location})
-      : assert(count != null),
-        assert(host != null),
-        assert(stats != null);
+      {required this.count,
+      required this.host,
+      required this.stats,
+      this.location});
 
   factory _$_GlobalSessionResult.fromJson(Map<String, dynamic> json) =>
-      _$_$_GlobalSessionResultFromJson(json);
+      _$$_GlobalSessionResultFromJson(json);
 
   @override
   final int count;
@@ -1000,7 +1141,7 @@ class _$_GlobalSessionResult implements _GlobalSessionResult {
   @override
   final PingStats stats;
   @override
-  final GeoPosition location;
+  final GeoPosition? location;
 
   @override
   String toString() {
@@ -1010,26 +1151,19 @@ class _$_GlobalSessionResult implements _GlobalSessionResult {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GlobalSessionResult &&
-            (identical(other.count, count) ||
-                const DeepCollectionEquality().equals(other.count, count)) &&
-            (identical(other.host, host) ||
-                const DeepCollectionEquality().equals(other.host, host)) &&
-            (identical(other.stats, stats) ||
-                const DeepCollectionEquality().equals(other.stats, stats)) &&
+        (other.runtimeType == runtimeType &&
+            other is _GlobalSessionResult &&
+            (identical(other.count, count) || other.count == count) &&
+            (identical(other.host, host) || other.host == host) &&
+            (identical(other.stats, stats) || other.stats == stats) &&
             (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)));
+                other.location == location));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(count) ^
-      const DeepCollectionEquality().hash(host) ^
-      const DeepCollectionEquality().hash(stats) ^
-      const DeepCollectionEquality().hash(location);
+  int get hashCode => Object.hash(runtimeType, count, host, stats, location);
 
+  @JsonKey(ignore: true)
   @override
   _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith =>
       __$GlobalSessionResultCopyWithImpl<_GlobalSessionResult>(
@@ -1037,16 +1171,16 @@ class _$_GlobalSessionResult implements _GlobalSessionResult {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_GlobalSessionResultToJson(this);
+    return _$$_GlobalSessionResultToJson(this);
   }
 }
 
 abstract class _GlobalSessionResult implements GlobalSessionResult {
   factory _GlobalSessionResult(
-      {@required int count,
-      @required String host,
-      @required PingStats stats,
-      GeoPosition location}) = _$_GlobalSessionResult;
+      {required int count,
+      required String host,
+      required PingStats stats,
+      GeoPosition? location}) = _$_GlobalSessionResult;
 
   factory _GlobalSessionResult.fromJson(Map<String, dynamic> json) =
       _$_GlobalSessionResult.fromJson;
@@ -1058,7 +1192,9 @@ abstract class _GlobalSessionResult implements GlobalSessionResult {
   @override
   PingStats get stats;
   @override
-  GeoPosition get location;
+  GeoPosition? get location;
   @override
-  _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith;
+  @JsonKey(ignore: true)
+  _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith =>
+      throw _privateConstructorUsedError;
 }

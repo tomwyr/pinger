@@ -17,9 +17,9 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class SearchPage extends StatefulWidget {
-  final String initialQuery;
+  final String? initialQuery;
 
-  const SearchPage({Key key, this.initialQuery}) : super(key: key);
+  const SearchPage({Key? key, this.initialQuery}) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -29,8 +29,8 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
   final HostsStore _hostsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
 
-  ValueNotifier<String> _highlightHost;
-  TextEditingController _inputController;
+  late ValueNotifier<String> _highlightHost;
+  TextEditingController? _inputController;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputController!.dispose();
     _highlightHost.dispose();
     super.dispose();
   }
@@ -58,8 +58,8 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
   }
 
   void _onClearPressed() {
-    if (_inputController.text.isNotEmpty) {
-      _inputController.clear();
+    if (_inputController!.text.isNotEmpty) {
+      _inputController!.clear();
       _onQueryChanged("");
     } else {
       PingerApp.router.pop();
@@ -83,7 +83,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
                 onPressed: () => onHostTap(_pingStore, value),
               ),
             ),
-          child,
+          child!,
         ]),
         child: Expanded(child: _buildSearchResults()),
       ),
@@ -92,8 +92,8 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
 
   Widget _buildSearchResults() {
     return Observer(
-      builder: (_) => _hostsStore.hosts.when(
-        data: (_) => _hostsStore.searchResults.isNotEmpty
+      builder: (_) => _hostsStore.hosts!.when(
+        data: (_) => _hostsStore.searchResults!.isNotEmpty
             ? _buildResultsList(_hostsStore.searchResults)
             : _buildNoResults(
                 Images.undrawVoid,
@@ -112,7 +112,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
           S.current.dataFetchFailedDesc,
           action: ButtonTheme.fromButtonThemeData(
             data: R.themes.raisedButton,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: _hostsStore.fetchHosts,
               child: Text(S.current.tryAgainButtonLabel),
             ),
@@ -123,7 +123,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
   }
 
   Widget _buildNoResults(AssetImage image, String title, String description,
-      {Widget action}) {
+      {Widget? action}) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
       builder: (controller) => FlexChildScrollView(
@@ -153,14 +153,14 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
     );
   }
 
-  Widget _buildResultsList(List<HostItem> results) {
+  Widget _buildResultsList(List<HostItem>? results) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
       builder: (controller) => ListView.builder(
         controller: controller,
         shrinkWrap: true,
         padding: const EdgeInsets.all(16.0),
-        itemCount: results.length,
+        itemCount: results!.length,
         itemBuilder: (_, index) => Padding(
           padding: EdgeInsets.only(top: index == 0 ? 0.0 : 16.0),
           child: HostTile(

@@ -9,29 +9,34 @@ import 'package:pinger/utils/format_utils.dart';
 
 class SessionPingGauge extends StatelessWidget {
   SessionPingGauge({
-    Key key,
-    @required this.session,
-    @required this.duration,
+    Key? key,
+    required this.session,
+    required this.duration,
   })  : minValue = _getMinValue(session),
         maxValue = _getMaxValue(session),
         super(key: key);
 
   final PingSession session;
-  final Duration duration;
-  final int minValue;
-  final int maxValue;
+  final Duration? duration;
+  final int? minValue;
+  final int? maxValue;
   final Size edgeValuesSize = Size(48.0, 24.0);
 
-  static int _getMinValue(PingSession session) =>
+  static int? _getMinValue(PingSession session) =>
       session.stats != null ? 0 : null;
 
-  static int _getMaxValue(PingSession session) {
+  static int? _getMaxValue(PingSession session) {
     if (session.stats != null) {
-      final max = session.stats.max;
+      final max = session.stats!.max;
       final firstDigit = int.parse(max.toString().substring(0, 1));
-      final maxFirstDigit =
-          firstDigit < 1 ? 1 : firstDigit < 2 ? 2 : firstDigit < 5 ? 5 : 10;
-      return maxFirstDigit * pow(10, max.toString().length - 1);
+      final maxFirstDigit = firstDigit < 1
+          ? 1
+          : firstDigit < 2
+              ? 2
+              : firstDigit < 5
+                  ? 5
+                  : 10;
+      return maxFirstDigit * (pow(10, max.toString().length - 1) as int);
     }
     return null;
   }
@@ -89,7 +94,7 @@ class SessionPingGauge extends StatelessWidget {
         height: 24.0,
         alignment: Alignment.bottomCenter,
         child: Text(
-          _getDeltaLabel(session.values),
+          _getDeltaLabel(session.values!),
           style: TextStyle(fontSize: 24.0, color: R.colors.gray),
         ),
       ),
@@ -98,7 +103,7 @@ class SessionPingGauge extends StatelessWidget {
         height: 40.0,
         alignment: Alignment.center,
         child: Text(
-          _getValueLabel(session.values.lastOrNull),
+          _getValueLabel(session.values!.lastOrNull),
           style: TextStyle(fontSize: 36.0),
         ),
       ),
@@ -107,54 +112,54 @@ class SessionPingGauge extends StatelessWidget {
         height: 24.0,
         alignment: Alignment.bottomCenter,
         child: Text(
-          FormatUtils.getDurationLabel(duration),
+          FormatUtils.getDurationLabel(duration!),
           style: TextStyle(fontSize: 24.0, color: R.colors.secondary),
         ),
       ),
     ]);
   }
 
-  String _getDeltaLabel(List<int> values) {
+  String _getDeltaLabel(List<int?> values) {
     if (values.length > 1 && values.last != null) {
       final previous = values.reversed
           .skip(1)
           .firstWhere((it) => it != null, orElse: () => null);
       if (previous != null) {
-        final delta = (values.last - previous).round();
+        final delta = (values.last! - previous).round();
         return delta < 0 ? "$delta" : "+$delta";
       }
     }
     return "-";
   }
 
-  String _getValueLabel(int value) =>
+  String _getValueLabel(int? value) =>
       value != null ? S.current.pingValueLabel(value) : "-";
 }
 
 class PingGaugeArc extends StatefulWidget {
-  final double value;
+  final double? value;
   final double progress;
   final bool isActive;
   final Duration duration;
 
   const PingGaugeArc({
-    Key key,
-    @required this.progress,
-    @required this.value,
-    @required this.isActive,
-    @required this.duration,
+    Key? key,
+    required this.progress,
+    required this.value,
+    required this.isActive,
+    required this.duration,
   }) : super(key: key);
 
-  factory PingGaugeArc.forSession(PingSession session, int gaugeMaxValue) {
+  factory PingGaugeArc.forSession(PingSession session, int? gaugeMaxValue) {
     final progress = !session.status.isQuickCheck
         ? session.settings.count.when(
-            finite: (it) => session.values.length / it,
+            finite: (it) => session.values!.length / it,
             infinite: () => 0.0,
           )
         : 0.0;
     final lastResult =
-        session.values.lastWhere((it) => it != null, orElse: () => null);
-    final value = lastResult != null ? lastResult / gaugeMaxValue : null;
+        session.values!.lastWhere((it) => it != null, orElse: () => null);
+    final value = lastResult != null ? lastResult / gaugeMaxValue! : null;
     return PingGaugeArc(
       progress: progress,
       value: value,
@@ -169,9 +174,9 @@ class PingGaugeArc extends StatefulWidget {
 
 class _PingGaugeArcState extends State<PingGaugeArc>
     with SingleTickerProviderStateMixin {
-  AnimationController _animator;
-  Animation<double> _arcProgressAnim;
-  Animation<double> _dotValueAnim;
+  late AnimationController _animator;
+  late Animation<double> _arcProgressAnim;
+  late Animation<double> _dotValueAnim;
 
   @override
   void initState() {
@@ -224,12 +229,11 @@ class _PingGaugeArcState extends State<PingGaugeArc>
               color: R.colors.primaryLight,
             ),
           ),
-          if (_dotValueAnim.value != null)
-            PingGaugeDot(
-              value: _dotValueAnim.value,
-              isActive: widget.isActive,
-              duration: widget.duration,
-            ),
+          PingGaugeDot(
+            value: _dotValueAnim.value,
+            isActive: widget.isActive,
+            duration: widget.duration,
+          ),
         ],
       ),
     );
@@ -242,10 +246,10 @@ class PingGaugeDot extends StatefulWidget {
   final Duration duration;
 
   const PingGaugeDot({
-    Key key,
-    @required this.value,
-    @required this.isActive,
-    @required this.duration,
+    Key? key,
+    required this.value,
+    required this.isActive,
+    required this.duration,
   }) : super(key: key);
 
   @override
@@ -254,8 +258,8 @@ class PingGaugeDot extends StatefulWidget {
 
 class _PingGaugeDotState extends State<PingGaugeDot>
     with SingleTickerProviderStateMixin {
-  Animation<Color> _dotColorAnim;
-  AnimationController _animator;
+  late Animation<Color?> _dotColorAnim;
+  late AnimationController _animator;
 
   @override
   void initState() {
@@ -271,7 +275,7 @@ class _PingGaugeDotState extends State<PingGaugeDot>
     if (old.isActive != widget.isActive) {
       _dotColorAnim = ColorTween(
         begin: _dotColorAnim.value,
-        end: !widget.isActive || widget.value == null
+        end: !widget.isActive
             ? R.colors.gray
             : R.colors.secondary,
       ).animate(_animator);
@@ -302,9 +306,9 @@ class _PingGaugeDotState extends State<PingGaugeDot>
 
 class PingGaugeArcPainter extends CustomPainter {
   PingGaugeArcPainter({
-    @required this.progress,
-    @required this.width,
-    @required this.color,
+    required this.progress,
+    required this.width,
+    required this.color,
   });
 
   final double progress;
@@ -329,21 +333,21 @@ class PingGaugeArcPainter extends CustomPainter {
 
 class PingGaugeDotPainter extends CustomPainter {
   PingGaugeDotPainter({
-    @required this.value,
-    @required this.radius,
-    @required this.color,
+    required this.value,
+    required this.radius,
+    required this.color,
   });
 
   final double value;
   final double radius;
-  final Color color;
+  final Color? color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final offset = _calcDotPosition(size);
-    final paint = Paint()..color = color;
+    final paint = Paint()..color = color!;
     final shadowPaint = Paint()
-      ..color = color
+      ..color = color!
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 4.0);
     canvas
       ..drawCircle(offset, radius + 1.0, shadowPaint)

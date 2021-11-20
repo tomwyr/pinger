@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 typedef InlinePerformLayout = void Function(
@@ -15,9 +14,9 @@ class InlineMultiChildLayoutDelegate<T> extends MultiChildLayoutDelegate {
       this.performLayoutDelegate, this.shouldRelayoutDelegate, this.config);
 
   factory InlineMultiChildLayoutDelegate({
-    @required InlinePerformLayout performLayout,
-    InlineShouldRelayout shouldRelayout,
-    @required T config,
+    required InlinePerformLayout performLayout,
+    InlineShouldRelayout? shouldRelayout,
+    required T config,
   }) {
     shouldRelayout ??= (old) => old.config != config;
     return InlineMultiChildLayoutDelegate._(

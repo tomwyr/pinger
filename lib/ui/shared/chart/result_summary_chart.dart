@@ -5,15 +5,15 @@ import 'package:pinger/resources.dart';
 
 class ResultSummaryChart extends StatelessWidget {
   const ResultSummaryChart({
-    Key key,
-    @required this.minIndex,
-    @required this.maxIndex,
-    @required this.values,
+    Key? key,
+    required this.minIndex,
+    required this.maxIndex,
+    required this.values,
   }) : super(key: key);
 
   final int minIndex;
   final int maxIndex;
-  final List<int> values;
+  final List<int?> values;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,10 @@ class ResultSummaryChart extends StatelessWidget {
           ),
           colors: [R.colors.primaryLight],
           spots: values
-              .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+              .mapIndexed(
+                (i, e) => e != null ? FlSpot(i.toDouble(), e.toDouble()) : null,
+              )
+              .whereNotNull()
               .toList(),
         ),
         // Add invisible line to prevent chart from being cut if there are values on the edges
@@ -57,7 +60,7 @@ class ResultSummaryChart extends StatelessWidget {
           colors: [R.colors.none],
           spots: values
               .mapIndexed(
-                  (i, _) => FlSpot(i.toDouble(), values[minIndex].toDouble()))
+                  (i, _) => FlSpot(i.toDouble(), values[minIndex]!.toDouble()))
               .toList(),
         ),
       ],

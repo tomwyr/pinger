@@ -9,18 +9,18 @@ class PingButton extends StatefulWidget {
   final IconData primaryIcon;
   final IconData secondaryIcon;
   final bool isExpanded;
-  final bool isLocked;
-  final VoidCallback onPrimaryPressed;
-  final VoidCallback onPrimaryLongPressStart;
-  final VoidCallback onPrimaryLongPressEnd;
-  final VoidCallback onSecondaryPressed;
-  final VoidCallback onLockSwipe;
+  final bool? isLocked;
+  final VoidCallback? onPrimaryPressed;
+  final VoidCallback? onPrimaryLongPressStart;
+  final VoidCallback? onPrimaryLongPressEnd;
+  final VoidCallback? onSecondaryPressed;
+  final VoidCallback? onLockSwipe;
 
   const PingButton({
-    Key key,
-    @required this.primaryIcon,
-    @required this.secondaryIcon,
-    @required this.isExpanded,
+    Key? key,
+    required this.primaryIcon,
+    required this.secondaryIcon,
+    required this.isExpanded,
     this.isLocked,
     this.onPrimaryPressed,
     this.onPrimaryLongPressStart,
@@ -38,7 +38,7 @@ class _PingButtonState extends State<PingButton> {
   final _fullSize = 56.0;
   final _spacing = 48.0;
   final _lockDimens = PingLockIndicatorDimens();
-  final _lockSwipe = ValueNotifier<double>(null);
+  final _lockSwipe = ValueNotifier<double?>(null);
 
   bool _didLongPress = false;
   bool _didLockSwipe = false;
@@ -139,8 +139,8 @@ class _PingButtonState extends State<PingButton> {
   }
 
   Widget _animateChild({
-    @required Widget child,
-    @required EdgeInsets calcMargin(double value),
+    required Widget child,
+    required EdgeInsets calcMargin(double value),
   }) {
     final expansion = widget.isExpanded ? 1.0 : 0.0;
     return TweenAnimationBuilder<double>(

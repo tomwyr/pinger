@@ -7,11 +7,11 @@ final R = PingerResources._();
 class PingerResources {
   PingerResources._();
 
-  PingerColors _colors;
-  PingerDimens _dimens;
-  PingerThemes _themes;
-  PingerStyles _styles;
-  PingerSymbols _symbols;
+  late PingerColors _colors;
+  late PingerDimens _dimens;
+  late PingerThemes _themes;
+  late PingerStyles _styles;
+  late PingerSymbols _symbols;
 
   PingerColors get colors => _colors;
   PingerDimens get dimens => _dimens;
@@ -20,9 +20,9 @@ class PingerResources {
   PingerSymbols get symbols => _symbols;
 
   void load(Brightness brightness) {
-    _dimens ??= PingerDimens();
-    _styles ??= PingerStyles();
-    _symbols ??= PingerSymbols();
+    _dimens = PingerDimens();
+    _styles = PingerStyles();
+    _symbols = PingerSymbols();
     if (brightness == Brightness.dark) {
       _colors = PingerDarkColors();
       _themes = PingerDarkThemes();
@@ -99,16 +99,13 @@ abstract class PingerThemes {
   static ThemeData get _appTheme => ThemeData(
         fontFamily: GoogleFonts.roboto().fontFamily,
         canvasColor: R.colors.canvas,
-        cursorColor: R.colors.secondary,
-        textSelectionColor: R.colors.primaryLight.withOpacity(0.5),
-        textSelectionHandleColor: R.colors.primaryLight,
         primaryColor: R.colors.secondary,
-        accentColor: R.colors.secondary,
         hintColor: R.colors.gray,
         textTheme: _textTheme,
         buttonTheme: _buttonTheme,
         appBarTheme: _appBarTheme,
         toggleButtonsTheme: _toggleButtonsTheme,
+        textSelectionTheme: _textSelectionTheme,
       );
 
   static TextTheme get _textTheme => TextTheme(
@@ -134,11 +131,9 @@ abstract class PingerThemes {
         elevation: 0.0,
         color: R.colors.canvas,
         iconTheme: IconThemeData(color: R.colors.primaryLight),
-        textTheme: TextTheme(
-          headline6: GoogleFonts.orbitron(
-            color: R.colors.secondary,
-            fontSize: 24.0,
-          ),
+        toolbarTextStyle: GoogleFonts.orbitron(
+          color: R.colors.secondary,
+          fontSize: 24.0,
         ),
       );
 
@@ -149,6 +144,13 @@ abstract class PingerThemes {
         splashColor: R.colors.primaryLight.withOpacity(0.5),
         selectedBorderColor: R.colors.secondary,
         borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
+      );
+
+  static TextSelectionThemeData get _textSelectionTheme =>
+      TextSelectionThemeData(
+        cursorColor: R.colors.secondary,
+        selectionColor: R.colors.primaryLight.withOpacity(0.5),
+        selectionHandleColor: R.colors.primaryLight,
       );
 }
 
@@ -166,9 +168,9 @@ class PingerDarkThemes extends PingerThemes {
 
 class PingerStyles {
   // Theme references
-  TextStyle get textFieldText => R.themes.app.textTheme.subtitle1;
-  TextStyle get appBarTitle => R.themes.app.appBarTheme.textTheme.headline6;
-  TextStyle get text => R.themes.app.textTheme.bodyText2;
+  TextStyle? get textFieldText => R.themes.app.textTheme.subtitle1;
+  TextStyle? get appBarTitle => R.themes.app.appBarTheme.toolbarTextStyle;
+  TextStyle? get text => R.themes.app.textTheme.bodyText2;
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);
@@ -181,5 +183,5 @@ class PingerStyles {
 }
 
 class PingerSymbols {
-  String get infty => "∞";
+  String get infinity => "∞";
 }

@@ -7,14 +7,14 @@ import 'package:pinger/ui/app/pinger_router.dart';
 
 class PingerBottomSheet extends StatelessWidget {
   static Future<T> show<T>({
-    Widget title,
-    Widget subtitle,
-    IconData acceptIcon,
-    String rejectLabel,
-    VoidCallback onRejectPressed,
-    VoidCallback onAcceptPressed,
-    ValueGetter<bool> canAccept,
-    Widget builder(VoidCallback rebuild),
+    Widget? title,
+    Widget? subtitle,
+    IconData? acceptIcon,
+    String? rejectLabel,
+    VoidCallback? onRejectPressed,
+    VoidCallback? onAcceptPressed,
+    ValueGetter<bool>? canAccept,
+    Widget builder(VoidCallback rebuild)?,
   }) async {
     var didPop = false;
     final result = await PingerApp.router.show(RouteConfig.sheet(
@@ -36,27 +36,27 @@ class PingerBottomSheet extends StatelessWidget {
   }
 
   const PingerBottomSheet._({
-    Key key,
-    @required this.title,
-    @required this.subtitle,
-    @required this.acceptIcon,
-    @required this.rejectLabel,
-    @required this.onRejectPressed,
-    @required this.onAcceptPressed,
-    @required this.canAccept,
-    @required this.didPop,
-    @required this.animation,
-    @required this.builder,
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.acceptIcon,
+    required this.rejectLabel,
+    required this.onRejectPressed,
+    required this.onAcceptPressed,
+    required this.canAccept,
+    required this.didPop,
+    required this.animation,
+    required this.builder,
   }) : super(key: key);
 
   final Animation<double> animation;
-  final Widget title;
-  final Widget subtitle;
+  final Widget? title;
+  final Widget? subtitle;
   final IconData acceptIcon;
-  final String rejectLabel;
-  final VoidCallback onRejectPressed;
-  final VoidCallback onAcceptPressed;
-  final ValueGetter<bool> canAccept;
+  final String? rejectLabel;
+  final VoidCallback? onRejectPressed;
+  final VoidCallback? onAcceptPressed;
+  final ValueGetter<bool>? canAccept;
   final ValueGetter<bool> didPop;
   final Widget Function(VoidCallback) builder;
 
@@ -110,9 +110,9 @@ class PingerBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (title != null) title,
+          if (title != null) title!,
           if (title != null && subtitle != null) Container(height: 8.0),
-          if (subtitle != null) subtitle,
+          if (subtitle != null) subtitle!,
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: builder(() => setState(() {})),
@@ -122,19 +122,22 @@ class PingerBottomSheet extends StatelessWidget {
             children: <Widget>[
               if (rejectLabel != null)
                 ButtonTheme.fromButtonThemeData(
-                  data: R.themes.flatButton,
-                  child: FlatButton(
+                  data: R.themes.flatButton.copyWith(
                     padding: EdgeInsets.zero,
+                  ),
+                  child: TextButton(
                     onPressed: onRejectPressed ?? _tryPop,
-                    child: Text(rejectLabel),
+                    child: Text(rejectLabel!),
                   ),
                 ),
               if (rejectLabel != null) Spacer(),
               SizedBox.fromSize(
                 size: Size.square(48.0),
-                child: RaisedButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: canAccept == null || canAccept()
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                  ),
+                  onPressed: canAccept == null || canAccept!()
                       ? onAcceptPressed ?? _tryPop
                       : null,
                   child: Icon(acceptIcon),

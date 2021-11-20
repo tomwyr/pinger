@@ -12,13 +12,13 @@ mixin _$ResultsStore on ResultsStoreBase, Store {
   final _$localResultsAtom = Atom(name: 'ResultsStoreBase.localResults');
 
   @override
-  List<PingResult> get localResults {
+  List<PingResult?>? get localResults {
     _$localResultsAtom.reportRead();
     return super.localResults;
   }
 
   @override
-  set localResults(List<PingResult> value) {
+  set localResults(List<PingResult?>? value) {
     _$localResultsAtom.reportWrite(value, super.localResults, () {
       super.localResults = value;
     });
@@ -52,7 +52,7 @@ mixin _$ResultsStore on ResultsStoreBase, Store {
       AsyncAction('ResultsStoreBase.deleteLocalResult');
 
   @override
-  Future<void> deleteLocalResult(int resultId) {
+  Future<void> deleteLocalResult(int? resultId) {
     return _$deleteLocalResultAsyncAction
         .run(() => super.deleteLocalResult(resultId));
   }

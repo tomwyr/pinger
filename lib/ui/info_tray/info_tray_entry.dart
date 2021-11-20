@@ -6,24 +6,24 @@ import 'package:pinger/ui/info_tray/info_tray.dart';
 
 class InfoTrayEntry<T> implements SeparatedItem<InfoTrayItem> {
   InfoTrayEntry({
-    @required this.item,
-    @required this.valueObservable,
-    @required this.valueBuilder,
-    @required this.isVisible,
+    required this.item,
+    required this.valueObservable,
+    required this.valueBuilder,
+    required this.isVisible,
   });
 
   final InfoTrayItem item;
   final ValueGetter<T> valueObservable;
   final Widget Function(T value) valueBuilder;
   final bool Function(T value) isVisible;
-  final ValueNotifier<bool> visibility = ValueNotifier(null);
+  final ValueNotifier<bool?> visibility = ValueNotifier(null);
 
-  ReactionDisposer _reactionDisposer;
+  late ReactionDisposer _reactionDisposer;
 
   void init() {
     _reactionDisposer = reaction(
       (_) => isVisible(valueObservable()),
-      (it) => visibility.value = it,
+      (dynamic it) => visibility.value = it,
       fireImmediately: true,
     );
   }

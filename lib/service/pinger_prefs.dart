@@ -20,9 +20,9 @@ class PingerPrefs {
 
   PingerPrefs(this._sharedPrefs);
 
-  UserSettings getUserSettings() {
+  UserSettings? getUserSettings() {
     if (_sharedPrefs.containsKey(_userSettingsKey)) {
-      final json = jsonDecode(_sharedPrefs.getString(_userSettingsKey));
+      final json = jsonDecode(_sharedPrefs.getString(_userSettingsKey)!);
       return UserSettings.fromJson(json);
     }
     return null;
@@ -33,10 +33,10 @@ class PingerPrefs {
     await _sharedPrefs.setString(_userSettingsKey, jsonString);
   }
 
-  List<PingResult> getArchiveResults() {
+  List<PingResult?> getArchiveResults() {
     if (_sharedPrefs.containsKey(_archiveResultsKey)) {
       return _sharedPrefs
-          .getStringList(_archiveResultsKey)
+          .getStringList(_archiveResultsKey)!
           .map(jsonDecode)
           .map((it) => PingResult.fromJson(it as Map<String, dynamic>))
           .toList();
@@ -49,29 +49,29 @@ class PingerPrefs {
     final resultId = _getNewResultId(allResults);
     allResults.add(result.copyWith(id: resultId));
     final jsonStringList =
-        allResults.map((it) => it.toJson()).map(jsonEncode).toList();
+        allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
     return resultId;
   }
 
-  int _getNewResultId(List<PingResult> results) {
+  int _getNewResultId(List<PingResult?> results) {
     while (true) {
       final id = Random().nextInt(100000);
-      if (results.every((it) => it.id != id)) {
+      if (results.every((it) => it!.id != id)) {
         return id;
       }
     }
   }
 
-  Future<void> deleteArchiveResult(int resultId) async {
+  Future<void> deleteArchiveResult(int? resultId) async {
     final allResults = getArchiveResults();
-    allResults.removeWhere((it) => it.id == resultId);
+    allResults.removeWhere((it) => it!.id == resultId);
     final jsonStringList =
-        allResults.map((it) => it.toJson()).map(jsonEncode).toList();
+        allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
   }
 
-  List<String> getFavoriteHosts() {
+  List<String>? getFavoriteHosts() {
     if (_sharedPrefs.containsKey(_favoriteHostsKey)) {
       return _sharedPrefs.getStringList(_favoriteHostsKey);
     }
@@ -79,7 +79,7 @@ class PingerPrefs {
   }
 
   Future<void> addFavoriteHost(String host) async {
-    final allHosts = getFavoriteHosts();
+    final allHosts = getFavoriteHosts()!;
     if (!allHosts.contains(host)) {
       allHosts.add(host);
       await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
@@ -87,7 +87,7 @@ class PingerPrefs {
   }
 
   Future<void> removeFavoriteHosts(List<String> hosts) async {
-    final allHosts = getFavoriteHosts();
+    final allHosts = getFavoriteHosts()!;
     hosts.forEach(allHosts.remove);
     await _sharedPrefs.setStringList(_favoriteHostsKey, allHosts);
   }
@@ -95,9 +95,9 @@ class PingerPrefs {
   List<HostStats> getHostsStats() {
     if (_sharedPrefs.containsKey(_hostsStatsKey)) {
       return _sharedPrefs
-          .getStringList(_hostsStatsKey)
-          .map((it) => jsonDecode(it) as Map<String, dynamic>)
-          .map((it) => HostStats.fromJson(it))
+          .getStringList(_hostsStatsKey)!
+          .map((it) => jsonDecode(it) as Map<String, dynamic>?)
+          .map((it) => HostStats.fromJson(it!))
           .toList();
     }
     return [];
@@ -114,12 +114,12 @@ class PingerPrefs {
     await saveHostsStats(allStats);
   }
 
-  String getLastHost() => _sharedPrefs.getString(_lastHostKey);
+  String? getLastHost() => _sharedPrefs.getString(_lastHostKey);
 
   Future<void> setLastHost(String host) =>
       _sharedPrefs.setString(_lastHostKey, host);
 
-  bool getDidShowIntro() => _sharedPrefs.getBool(_didShowIntroKey);
+  bool? getDidShowIntro() => _sharedPrefs.getBool(_didShowIntroKey);
 
   Future<void> setDidShowIntro(bool value) =>
       _sharedPrefs.setBool(_didShowIntroKey, value);

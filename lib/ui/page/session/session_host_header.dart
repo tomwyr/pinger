@@ -11,11 +11,11 @@ class SessionHostHeader extends StatelessWidget {
   final List<Widget> buttons;
 
   const SessionHostHeader({
-    Key key,
-    @required this.session,
-    @required this.isExpanded,
-    @required this.buttons,
-    @required this.animDuration,
+    Key? key,
+    required this.session,
+    required this.isExpanded,
+    required this.buttons,
+    required this.animDuration,
   }) : super(key: key);
 
   @override

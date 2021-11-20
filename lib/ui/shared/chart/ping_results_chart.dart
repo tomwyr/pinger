@@ -6,38 +6,38 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class PingResultsChart extends StatelessWidget {
-  final List<int> values;
-  final int maxValue;
+  final List<int?>? values;
+  final int? maxValue;
   final int dotsCount;
-  final double startX;
+  final double? startX;
   final double valueLabelSize;
   final double valueLabelMargin;
 
   PingResultsChart({
-    Key key,
-    @required this.values,
-    @required this.maxValue,
-    @required this.startX,
-    @required this.dotsCount,
-    @required this.valueLabelSize,
-    @required this.valueLabelMargin,
+    Key? key,
+    required this.values,
+    required this.maxValue,
+    required this.startX,
+    required this.dotsCount,
+    required this.valueLabelSize,
+    required this.valueLabelMargin,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dotsSpacing = (dotsCount / 10).ceilToDouble();
     final titlesHorizontalInterval = dotsSpacing;
-    final endX = startX + dotsCount - 1;
-    final titlesVerticalInterval = maxValue != null
-        ? (maxValue / min(dotsCount, 8)).clamp(1.0, double.infinity)
+    final endX = startX! + dotsCount - 1;
+    final num? titlesVerticalInterval = maxValue != null
+        ? (maxValue! / min(dotsCount, 8)).clamp(1.0, double.infinity)
         : null;
     final maxY = (titlesVerticalInterval != null
-            ? maxValue + titlesVerticalInterval / 2
+            ? maxValue! + titlesVerticalInterval / 2
             : null)
         ?.ceilToDouble();
     return LineChart(
       LineChartData(
-        minX: startX - dotsSpacing,
+        minX: startX! - dotsSpacing,
         maxX: endX + dotsSpacing,
         minY: 0.0,
         maxY: maxY ?? 0.0,
@@ -51,15 +51,15 @@ class PingResultsChart extends StatelessWidget {
             margin: valueLabelMargin,
             interval: titlesVerticalInterval?.ceilToDouble(),
             getTitles: (it) => it.toInt().toString(),
-            textStyle: R.styles.chartLabel,
+            getTextStyles: (_, __) => R.styles.chartLabel,
           ),
           bottomTitles: SideTitles(
             showTitles: true,
-            getTitles: (it) => it >= startX && it <= endX && it % 1.0 == 0.0
+            getTitles: (it) => it >= startX! && it <= endX && it % 1.0 == 0.0
                 ? (it + 1.5).toInt().toString()
-                : null,
+                : '',
             interval: titlesHorizontalInterval,
-            textStyle: R.styles.chartLabel,
+            getTextStyles: (_, __) => R.styles.chartLabel,
           ),
         ),
         gridData: FlGridData(
@@ -68,19 +68,19 @@ class PingResultsChart extends StatelessWidget {
               FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
           getDrawingVerticalLine: (_) =>
               FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
-          drawHorizontalLine: values.isNotEmpty,
-          drawVerticalLine: values.isNotEmpty,
-          horizontalInterval: titlesVerticalInterval,
+          drawHorizontalLine: values!.isNotEmpty,
+          drawVerticalLine: values!.isNotEmpty,
+          horizontalInterval: titlesVerticalInterval as double?,
           verticalInterval: titlesHorizontalInterval,
         ),
         lineTouchData: LineTouchData(
           enabled: true,
           touchTooltipData: LineTouchTooltipData(
             tooltipRoundedRadius: 8.0,
-            tooltipBottomMargin: 32.0,
+            tooltipPadding: EdgeInsets.only(bottom: 32.0),
             tooltipBgColor: R.colors.canvas.withOpacity(0.85),
             getTooltipItems: (it) => it
-                .map((spot) => values[spot.spotIndex] != null
+                .map((spot) => values![spot.spotIndex] != null
                     ? LineTooltipItem(
                         spot.y.toInt().toString(),
                         TextStyle(
@@ -93,7 +93,7 @@ class PingResultsChart extends StatelessWidget {
           ),
         ),
         lineBarsData: [
-          if (values.isNotEmpty)
+          if (values!.isNotEmpty)
             LineChartBarData(
               dotData: FlDotData(
                 show: true,
@@ -106,11 +106,13 @@ class PingResultsChart extends StatelessWidget {
               isCurved: true,
               preventCurveOverShooting: true,
               colors: [R.colors.primaryLight],
-              spots: values
-                  .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+              spots: values!
+                  .mapIndexed((i, e) =>
+                      e != null ? FlSpot(i.toDouble(), e.toDouble()) : null)
+                  .whereNotNull()
                   .toList(),
             ),
-          if (values.isNotEmpty)
+          if (values!.isNotEmpty)
             LineChartBarData(
               dotData: FlDotData(
                 show: true,
@@ -122,9 +124,11 @@ class PingResultsChart extends StatelessWidget {
                 ),
               ),
               colors: [R.colors.none],
-              spots: values
+              spots: values!
                   .mapIndexed(
-                      (i, e) => FlSpot(i.toDouble(), e == null ? 0.0 : null))
+                    (i, e) => e == null ? FlSpot(i.toDouble(), 0.0) : null,
+                  )
+                  .whereNotNull()
                   .toList(),
             ),
         ],

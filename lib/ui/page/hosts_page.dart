@@ -9,12 +9,12 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HostsPage extends StatefulWidget {
   const HostsPage({
-    Key key,
-    @required this.title,
-    @required this.hosts,
-    @required this.getTrailingLabel,
-    @required this.removeHosts,
-    @required this.onHostSelected,
+    Key? key,
+    required this.title,
+    required this.hosts,
+    required this.getTrailingLabel,
+    required this.removeHosts,
+    required this.onHostSelected,
   }) : super(key: key);
 
   final String title;
@@ -54,7 +54,7 @@ class _HostsPageState extends BaseState<HostsPage> {
     }
   }
 
-  void _showConfirmRemoveSheet({@required VoidCallback onConfirmed}) {
+  void _showConfirmRemoveSheet({required VoidCallback onConfirmed}) {
     PingerBottomSheet.show(
       title: Text(
         S.current.confirmHostRemoveTitle,

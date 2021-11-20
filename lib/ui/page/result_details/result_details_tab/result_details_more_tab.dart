@@ -10,15 +10,15 @@ import 'package:pinger/ui/page/result_details/result_details_tab/result_details_
 import 'package:pinger/ui/shared/tiles/result_tile.dart';
 
 class ResultDetailsMoreTab extends StatefulWidget {
-  final List<PingResult> results;
-  final ValueChanged<PingResult> onItemSelected;
+  final List<PingResult?> results;
+  final ValueChanged<PingResult?> onItemSelected;
   final VoidCallback onStartPingPressed;
 
   const ResultDetailsMoreTab({
-    Key key,
-    @required this.results,
-    @required this.onItemSelected,
-    @required this.onStartPingPressed,
+    Key? key,
+    required this.results,
+    required this.onItemSelected,
+    required this.onStartPingPressed,
   }) : super(key: key);
 
   @override

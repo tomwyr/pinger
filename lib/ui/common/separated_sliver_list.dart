@@ -6,10 +6,10 @@ class SeparatedSliverList extends StatelessWidget {
   final IndexedWidgetBuilder separatorBuilder;
 
   const SeparatedSliverList({
-    Key key,
-    @required this.itemCount,
-    @required this.itemBuilder,
-    @required this.separatorBuilder,
+    Key? key,
+    required this.itemCount,
+    required this.itemBuilder,
+    required this.separatorBuilder,
   }) : super(key: key);
 
   @override

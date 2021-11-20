@@ -6,13 +6,13 @@ import 'package:pinger/ui/page/session/session_values/session_values_item.dart';
 import 'package:pinger/ui/page/session/session_values/session_values_scrollable.dart';
 
 class SessionValuesList extends StatefulWidget {
-  final List<int> values;
+  final List<int?>? values;
   final bool shouldFollowHead;
 
   const SessionValuesList({
-    Key key,
-    @required this.values,
-    @required this.shouldFollowHead,
+    Key? key,
+    required this.values,
+    required this.shouldFollowHead,
   }) : super(key: key);
 
   @override
@@ -25,8 +25,8 @@ class _SessionValuesListState extends State<SessionValuesList>
 
   var _listKey = GlobalKey<AnimatedListState>();
 
-  ScrollController _scroller;
-  ValueNotifier<bool> _didReachHead;
+  ScrollController? _scroller;
+  ValueNotifier<bool>? _didReachHead;
 
   @override
   void initState() {
@@ -37,31 +37,31 @@ class _SessionValuesListState extends State<SessionValuesList>
 
   @override
   void dispose() {
-    _scroller.dispose();
-    _didReachHead.dispose();
+    _scroller!.dispose();
+    _didReachHead!.dispose();
     super.dispose();
   }
 
   @override
   void didUpdateWidget(SessionValuesList old) {
     super.didUpdateWidget(old);
-    if (widget.values.isEmpty && old.values.isNotEmpty) {
+    if (widget.values!.isEmpty && old.values!.isNotEmpty) {
       // Reassign key to drop old state that keeps reference to previous results
       _listKey = GlobalKey();
     } else {
-      final lengthDiff = widget.values.length - old.values.length;
+      final lengthDiff = widget.values!.length - old.values!.length;
       for (var i = 0; i < lengthDiff; i++) {
-        _listKey.currentState.insertItem(0, duration: _insertDuration);
+        _listKey.currentState!.insertItem(0, duration: _insertDuration);
       }
     }
   }
 
   void _updateDidReachHead() {
-    _didReachHead.value = _scroller.offset == 0.0;
+    _didReachHead!.value = _scroller!.offset == 0.0;
   }
 
   Future<void> _animateToHead() async {
-    await _scroller.animateTo(
+    await _scroller!.animateTo(
       0.0,
       duration: Duration(seconds: 1),
       curve: Curves.easeOutQuad,
@@ -82,7 +82,7 @@ class _SessionValuesListState extends State<SessionValuesList>
           key: _listKey,
           padding: const EdgeInsets.all(16.0),
           controller: controller,
-          initialItemCount: widget.values.length,
+          initialItemCount: widget.values!.length,
           itemBuilder: (_, index, animation) => AnimatedBuilder(
             animation: animation,
             builder: (_, child) => Stack(children: <Widget>[
@@ -103,7 +103,7 @@ class _SessionValuesListState extends State<SessionValuesList>
               ),
             ]),
             child: SessionValuesItem.reversed(
-              values: widget.values,
+              values: widget.values!,
               index: index,
             ),
           ),

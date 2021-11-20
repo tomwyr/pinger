@@ -5,10 +5,10 @@ import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 
 class ReplaceSessionSheet {
   static Future<void> show({
-    @required BuildContext context,
-    @required String currentHost,
-    @required String newHost,
-    @required VoidCallback onAcceptPressed,
+    required BuildContext context,
+    required String currentHost,
+    required String newHost,
+    required VoidCallback onAcceptPressed,
   }) async {
     final subStyle = R.styles.bottomSheetSubtitle;
     final subPaths = S.current

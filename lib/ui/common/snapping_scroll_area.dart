@@ -11,11 +11,11 @@ class SnappingScrollArea extends StatefulWidget {
   final ValueChanged<int> onPositionChanged;
 
   const SnappingScrollArea({
-    Key key,
-    @required this.child,
-    @required this.itemInterval,
-    @required this.itemCount,
-    @required this.onPositionChanged,
+    Key? key,
+    required this.child,
+    required this.itemInterval,
+    required this.itemCount,
+    required this.onPositionChanged,
     this.scrollDirection = Axis.horizontal,
     this.snapDuration = const Duration(milliseconds: 300),
     this.mainAxisPadding = 0.0,
@@ -27,8 +27,8 @@ class SnappingScrollArea extends StatefulWidget {
 }
 
 class _SnappingScrollAreaState extends State<SnappingScrollArea> {
-  ScrollController _scrollController;
-  int _snapPosition;
+  ScrollController? _scrollController;
+  int? _snapPosition;
   bool _isSnapping = false;
 
   @override
@@ -36,26 +36,26 @@ class _SnappingScrollAreaState extends State<SnappingScrollArea> {
     super.initState();
     _snapPosition = widget.initialPosition;
     _scrollController = ScrollController(
-      initialScrollOffset: _calcPositionOffset(_snapPosition),
+      initialScrollOffset: _calcPositionOffset(_snapPosition!),
     );
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
   bool _onScrollEnd(ScrollEndNotification notification) {
     if (!_isSnapping) {
-      final relativeOffset = _scrollController.offset +
+      final relativeOffset = _scrollController!.offset +
           (widget.itemInterval - widget.mainAxisPadding) / 2;
-      final position = (relativeOffset ~/ widget.itemInterval)
+      final num position = (relativeOffset ~/ widget.itemInterval)
           .clamp(0, widget.itemCount - 1);
-      Future(() => _snapChartTo(position));
+      Future(() => _snapChartTo(position as int));
       if (position != _snapPosition) {
-        _snapPosition = position;
-        widget.onPositionChanged(position);
+        _snapPosition = position as int?;
+        widget.onPositionChanged(position as int);
       }
     }
     return true;
@@ -63,9 +63,9 @@ class _SnappingScrollAreaState extends State<SnappingScrollArea> {
 
   void _snapChartTo(int position) async {
     final offset = _calcPositionOffset(position);
-    if (offset != _scrollController.offset) {
+    if (offset != _scrollController!.offset) {
       _isSnapping = true;
-      await _scrollController.animateTo(
+      await _scrollController!.animateTo(
         offset,
         duration: widget.snapDuration,
         curve: Curves.easeOut,

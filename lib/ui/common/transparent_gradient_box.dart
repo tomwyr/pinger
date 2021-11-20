@@ -9,18 +9,18 @@ class TransparentGradientBox extends StatelessWidget {
   final Alignment endAlignment;
 
   const TransparentGradientBox._({
-    Key key,
-    @required this.color,
-    @required this.width,
-    @required this.height,
-    @required this.beginAlignment,
-    @required this.endAlignment,
+    Key? key,
+    required this.color,
+    required this.width,
+    required this.height,
+    required this.beginAlignment,
+    required this.endAlignment,
   }) : super(key: key);
 
   factory TransparentGradientBox({
-    Key key,
-    @required Color color,
-    @required AxisDirection direction,
+    Key? key,
+    required Color color,
+    required AxisDirection direction,
     double size = double.infinity,
   }) =>
       TransparentGradientBox._(
@@ -57,7 +57,7 @@ class TransparentGradientBox extends StatelessWidget {
       child: TweenAnimationBuilder(
         tween: ColorTween(begin: color, end: color),
         duration: kThemeChangeDuration,
-        builder: (_, value, __) => DecoratedBox(
+        builder: (_, dynamic value, __) => DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [value, value.withOpacity(0.0)],

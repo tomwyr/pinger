@@ -6,19 +6,19 @@ import 'package:pinger/resources.dart';
 class ResultTileChart extends StatelessWidget {
   final Radius barRadius = const Radius.circular(2.0);
 
-  final List<int> values;
+  final List<int?> values;
   final int min;
   final int mean;
   final int max;
   final double barWidth;
 
   const ResultTileChart({
-    Key key,
-    @required this.values,
-    @required this.min,
-    @required this.mean,
-    @required this.max,
-    @required this.barWidth,
+    Key? key,
+    required this.values,
+    required this.min,
+    required this.mean,
+    required this.max,
+    required this.barWidth,
   }) : super(key: key);
 
   @override
@@ -50,7 +50,11 @@ class ResultTileChart extends StatelessWidget {
             colors: [R.colors.secondary],
             barWidth: 1.0,
             spots: values
-                .mapIndexed((i, e) => FlSpot(i.toDouble(), e?.toDouble()))
+                .mapIndexed(
+                  (i, e) =>
+                      e != null ? FlSpot(i.toDouble(), e.toDouble()) : null,
+                )
+                .whereNotNull()
                 .toList(),
           ),
         ],
@@ -63,7 +67,7 @@ class ResultTileChart extends StatelessWidget {
       BarChartRodData(
         y: value.toDouble(),
         width: width,
-        color: R.colors.primaryLight.withOpacity(0.5),
+        colors: [R.colors.primaryLight.withOpacity(0.5)],
         borderRadius: BorderRadius.only(
           topLeft: barRadius,
           topRight: barRadius,

@@ -33,7 +33,7 @@ class FormatUtils {
   static String getCountLabel(NumSetting setting) {
     return setting.when(
       finite: (it) => it.toString(),
-      infinite: () => R.symbols.infty,
+      infinite: () => R.symbols.infinity,
     );
   }
 }

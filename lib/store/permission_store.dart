@@ -32,12 +32,12 @@ class NotificationPermissionStore extends PermissionStore {
   Permission get _permission => Permission.notification;
 
   @override
-  bool _getSetting() => _settingsStore.userSettings.showSystemNotification;
+  bool? _getSetting() => _settingsStore.userSettings!.showSystemNotification;
 
   @override
   Future<void> _updateSetting(bool value) async {
     await _settingsStore.updateSettings(
-      _settingsStore.userSettings.copyWith(showSystemNotification: value),
+      _settingsStore.userSettings!.copyWith(showSystemNotification: value),
     );
   }
 }
@@ -54,13 +54,13 @@ class LocationPermissionStore extends PermissionStore {
   Permission get _permission => Permission.locationWhenInUse;
 
   @override
-  bool _getSetting() =>
-      _settingsStore.userSettings.shareSettings.attachLocation;
+  bool? _getSetting() =>
+      _settingsStore.userSettings!.shareSettings.attachLocation;
 
   @override
   Future<void> _updateSetting(bool value) async {
     await _settingsStore.updateSettings(
-      _settingsStore.userSettings.copyWith.shareSettings(attachLocation: value),
+      _settingsStore.userSettings!.copyWith.shareSettings(attachLocation: value),
     );
   }
 }
@@ -68,7 +68,7 @@ class LocationPermissionStore extends PermissionStore {
 abstract class PermissionStoreBase with Store, LifecycleAware {
   LifecycleNotifier get _lifecycleNotifier;
   Permission get _permission;
-  bool _getSetting();
+  bool? _getSetting();
   Future<void> _updateSetting(bool value);
 
   @observable
@@ -77,7 +77,7 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
   @observable
   bool canAccessService = false;
 
-  ReactionDisposer _reactionDisposer;
+  late ReactionDisposer _reactionDisposer;
 
   @action
   Future<void> init() async {
@@ -102,7 +102,7 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
     if (didRejectSetting && canAccessService) {
       didRejectSetting = false;
       await _updateSetting(true);
-    } else if (_getSetting() && !canAccessService) {
+    } else if (_getSetting()! && !canAccessService) {
       await _updateSetting(false);
     }
   }
@@ -113,8 +113,8 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
   }
 
   @action
-  Future<void> _verifySettingStatus(bool enabled) async {
-    if (enabled && !canAccessService) {
+  Future<void> _verifySettingStatus(bool? enabled) async {
+    if (enabled! && !canAccessService) {
       await _permission.request();
       await _checkAccessStatus();
       if (!canAccessService) {

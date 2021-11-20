@@ -21,20 +21,20 @@ class PingLockIndicator extends StatelessWidget {
   final Duration duration;
   final TextDirection direction;
   final double margin;
-  final bool isLocked;
+  final bool? isLocked;
   final ColorTween color;
   final PingLockIndicatorDimens dimens;
-  final ValueNotifier<double> swipe;
+  final ValueNotifier<double?> swipe;
 
   PingLockIndicator({
-    Key key,
-    @required this.duration,
-    @required this.direction,
-    @required this.margin,
-    @required this.isLocked,
-    @required this.color,
-    @required this.dimens,
-    @required this.swipe,
+    Key? key,
+    required this.duration,
+    required this.direction,
+    required this.margin,
+    required this.isLocked,
+    required this.color,
+    required this.dimens,
+    required this.swipe,
   }) : super(key: key);
 
   @override
@@ -47,9 +47,9 @@ class PingLockIndicator extends StatelessWidget {
       child: AnimatedOpacity(
         duration: duration,
         opacity: isLocked != null ? 1.0 : 0.0,
-        child: ValueListenableBuilder<double>(
+        child: ValueListenableBuilder<double?>(
           valueListenable: swipe,
-          builder: (_, value, __) => _buildIndicatorRow(value),
+          builder: (_, value, __) => _buildIndicatorRow(value!),
         ),
       ),
     );
@@ -82,14 +82,14 @@ class PingLockIndicator extends StatelessWidget {
     );
   }
 
-  Color _calcLockArrowColor(int index, double value) {
+  Color? _calcLockArrowColor(int index, double value) {
     return color.transform(Interval(
       index / (dimens.arrowCount + 1),
       (index + 1) / (dimens.arrowCount + 1),
     ).transform(value));
   }
 
-  Color _calcLockIconColor(double value) {
+  Color? _calcLockIconColor(double value) {
     return color.transform(Interval(
       dimens.arrowCount / (dimens.arrowCount + 1),
       1.0,

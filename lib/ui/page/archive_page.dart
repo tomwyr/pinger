@@ -27,7 +27,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
   final ResultsStore _resultsStore = Injector.resolve();
 
   ArchiveViewType _viewType = ArchiveViewType.list;
-  String _selectedHost;
+  String? _selectedHost;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       },
       child: Observer(
         builder: (_) => Scaffold(
-          appBar: _buildAppBar(_resultsStore.localResults.isNotEmpty),
+          appBar: _buildAppBar(_resultsStore.localResults!.isNotEmpty)
+              as PreferredSizeWidget?,
           body: _buildBody(_resultsStore.localResults),
         ),
       ),
@@ -58,11 +59,11 @@ class _ArchivePageState extends BaseState<ArchivePage> {
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                HostIconTile(host: _selectedHost, isRaised: false),
+                HostIconTile(host: _selectedHost!, isRaised: false),
                 Container(width: 12.0),
                 Text(
-                  _selectedHost,
-                  style: R.styles.text.copyWith(fontSize: 18.0),
+                  _selectedHost!,
+                  style: R.styles.text!.copyWith(fontSize: 18.0),
                 ),
               ],
             ),
@@ -86,7 +87,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
           );
   }
 
-  Widget _buildBody(List<PingResult> results) {
+  Widget _buildBody(List<PingResult?>? results) {
     if (results == null) return Container();
     if (results.isEmpty) return _buildEmptyResults();
     switch (_viewType) {
@@ -96,10 +97,9 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         return _buildResultsList(results, ResultTileType.regular);
       case ArchiveViewType.host:
         final hostResults =
-            results.where((it) => it.host == _selectedHost).toList();
+            results.where((it) => it!.host == _selectedHost).toList();
         return _buildResultsList(hostResults, ResultTileType.detailed);
     }
-    throw StateError("Unrecognized $ArchiveViewType selected: $_viewType.");
   }
 
   Widget _buildEmptyResults() {
@@ -115,7 +115,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         ),
         ButtonTheme.fromButtonThemeData(
           data: R.themes.raisedButton,
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text(S.current.startNowButtonLabel),
             onPressed: () => PingerApp.router.show(RouteConfig.search()),
           ),
@@ -125,10 +125,10 @@ class _ArchivePageState extends BaseState<ArchivePage> {
     );
   }
 
-  List<MapEntry<String, int>> _groupHosts(List<PingResult> results) {
+  List<MapEntry<String, int>> _groupHosts(List<PingResult?> results) {
     final map = <String, int>{};
     results.forEach((it) => map.update(
-          it.host,
+          it!.host,
           (value) => ++value,
           ifAbsent: () => 1,
         ));
@@ -159,7 +159,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
     );
   }
 
-  Widget _buildResultsList(List<PingResult> results, ResultTileType type) {
+  Widget _buildResultsList(List<PingResult?> results, ResultTileType type) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
       builder: (controller) => ListView.builder(

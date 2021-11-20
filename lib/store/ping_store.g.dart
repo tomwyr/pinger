@@ -9,38 +9,38 @@ part of 'ping_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PingStore on PingStoreBase, Store {
-  Computed<bool> _$canArchiveResultComputed;
+  Computed<bool>? _$canArchiveResultComputed;
 
   @override
   bool get canArchiveResult => (_$canArchiveResultComputed ??= Computed<bool>(
           () => super.canArchiveResult,
           name: 'PingStoreBase.canArchiveResult'))
       .value;
-  Computed<bool> _$didChangeSettingsComputed;
+  Computed<bool>? _$didChangeSettingsComputed;
 
   @override
   bool get didChangeSettings => (_$didChangeSettingsComputed ??= Computed<bool>(
           () => super.didChangeSettings,
           name: 'PingStoreBase.didChangeSettings'))
       .value;
-  Computed<String> _$currentHostComputed;
+  Computed<String?>? _$currentHostComputed;
 
   @override
-  String get currentHost =>
-      (_$currentHostComputed ??= Computed<String>(() => super.currentHost,
+  String? get currentHost =>
+      (_$currentHostComputed ??= Computed<String?>(() => super.currentHost,
               name: 'PingStoreBase.currentHost'))
           .value;
 
   final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
 
   @override
-  Duration get pingDuration {
+  Duration? get pingDuration {
     _$pingDurationAtom.reportRead();
     return super.pingDuration;
   }
 
   @override
-  set pingDuration(Duration value) {
+  set pingDuration(Duration? value) {
     _$pingDurationAtom.reportWrite(value, super.pingDuration, () {
       super.pingDuration = value;
     });
@@ -49,13 +49,13 @@ mixin _$PingStore on PingStoreBase, Store {
   final _$currentSessionAtom = Atom(name: 'PingStoreBase.currentSession');
 
   @override
-  PingSession get currentSession {
+  PingSession? get currentSession {
     _$currentSessionAtom.reportRead();
     return super.currentSession;
   }
 
   @override
-  set currentSession(PingSession value) {
+  set currentSession(PingSession? value) {
     _$currentSessionAtom.reportWrite(value, super.currentSession, () {
       super.currentSession = value;
     });
@@ -64,13 +64,13 @@ mixin _$PingStore on PingStoreBase, Store {
   final _$prevSessionAtom = Atom(name: 'PingStoreBase.prevSession');
 
   @override
-  PingSession get prevSession {
+  PingSession? get prevSession {
     _$prevSessionAtom.reportRead();
     return super.prevSession;
   }
 
   @override
-  set prevSession(PingSession value) {
+  set prevSession(PingSession? value) {
     _$prevSessionAtom.reportWrite(value, super.prevSession, () {
       super.prevSession = value;
     });
@@ -79,13 +79,13 @@ mixin _$PingStore on PingStoreBase, Store {
   final _$prevStatusAtom = Atom(name: 'PingStoreBase.prevStatus');
 
   @override
-  PingStatus get prevStatus {
+  PingStatus? get prevStatus {
     _$prevStatusAtom.reportRead();
     return super.prevStatus;
   }
 
   @override
-  set prevStatus(PingStatus value) {
+  set prevStatus(PingStatus? value) {
     _$prevStatusAtom.reportWrite(value, super.prevStatus, () {
       super.prevStatus = value;
     });
@@ -94,13 +94,13 @@ mixin _$PingStore on PingStoreBase, Store {
   final _$_archivedIdAtom = Atom(name: 'PingStoreBase._archivedId');
 
   @override
-  int get _archivedId {
+  int? get _archivedId {
     _$_archivedIdAtom.reportRead();
     return super._archivedId;
   }
 
   @override
-  set _archivedId(int value) {
+  set _archivedId(int? value) {
     _$_archivedIdAtom.reportWrite(value, super._archivedId, () {
       super._archivedId = value;
     });

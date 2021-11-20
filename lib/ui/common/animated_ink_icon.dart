@@ -6,10 +6,10 @@ class AnimatedInkIcon extends StatefulWidget {
   final VoidCallback onPressed;
 
   const AnimatedInkIcon({
-    Key key,
-    @required this.icon,
-    @required this.transition,
-    @required this.onPressed,
+    Key? key,
+    required this.icon,
+    required this.transition,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class AnimatedInkIcon extends StatefulWidget {
 
 class _AnimatedInkIconState extends State<AnimatedInkIcon>
     with SingleTickerProviderStateMixin {
-  AnimationController _animator;
+  late AnimationController _animator;
 
   @override
   void initState() {

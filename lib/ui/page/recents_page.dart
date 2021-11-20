@@ -21,12 +21,12 @@ class _RecentsPageState extends BaseState<RecentsPage> with HostTapHandler {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (_) {
-      final stats = _hostsStore.localStats;
+      final stats = _hostsStore.localStats!;
       return HostsPage(
         title: S.current.recentsPageTitle,
         hosts: stats.keys.toList(),
         getTrailingLabel: (it) =>
-            FormatUtils.getSinceNowLabel(stats[it].pingTime),
+            FormatUtils.getSinceNowLabel(stats[it]!.pingTime),
         removeHosts: _hostsStore.removeStats,
         onHostSelected: (it) => onHostTap(_pingStore, it),
       );
