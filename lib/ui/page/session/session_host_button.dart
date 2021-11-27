@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class SessionHostButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool enabled;
-  final bool active;
-  final VoidCallback? onPressed;
-
   const SessionHostButton({
     Key? key,
     required this.icon,
@@ -17,6 +11,12 @@ class SessionHostButton extends StatelessWidget {
     required this.active,
     this.onPressed,
   }) : super(key: key);
+
+  final IconData icon;
+  final String label;
+  final bool enabled;
+  final bool active;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class SessionHostButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox.fromSize(
-              size: Size.square(40.0),
+              size: const Size.square(40.0),
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   padding: EdgeInsets.zero,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   side: BorderSide(color: color),
                   // TODO verify how to apply colors
                   // color: color,

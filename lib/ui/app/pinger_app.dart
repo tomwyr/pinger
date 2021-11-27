@@ -16,6 +16,8 @@ import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class PingerApp extends StatefulWidget {
+  const PingerApp({Key? key}) : super(key: key);
+
   static final PingerNavigatorRouter _router = PingerNavigatorRouter();
   static PingerRouter get router => _router;
 
@@ -41,12 +43,12 @@ class _PingerAppState extends State<PingerApp> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => MaterialApp(
-        localizationsDelegates: [
+        localizationsDelegates: const [
           GlobalWidgetsLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           S.delegate,
         ],
-        initialRoute: PingerRoutes.INIT,
+        initialRoute: PingerRoutes.init,
         onGenerateRoute: PingerApp._router.generateRoute,
         navigatorObservers: [PingerApp._router],
         supportedLocales: S.delegate.supportedLocales,

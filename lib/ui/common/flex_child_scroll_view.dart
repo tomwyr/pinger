@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class FlexChildScrollView extends StatelessWidget {
-  final ScrollController? controller;
-  final Widget child;
-
   const FlexChildScrollView({
     Key? key,
     this.controller,
     required this.child,
   }) : super(key: key);
+
+  final ScrollController? controller;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

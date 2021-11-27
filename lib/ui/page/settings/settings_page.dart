@@ -13,6 +13,8 @@ import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/page/settings/settings_sections.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -24,7 +26,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CloseButton(),
+        leading: const CloseButton(),
         title: Text(S.current.settingsPageTitle),
         centerTitle: true,
       ),

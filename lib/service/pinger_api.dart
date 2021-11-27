@@ -7,14 +7,14 @@ import 'package:pinger/model/ping_global.dart';
 
 @injectable
 class PingerApi {
+  PingerApi(this._firestore);
+
   final String _allPath = 'all';
   final String _countsPath = 'counts-monthly';
   final String _resultsPath = 'results-monthly';
   final String _sessionsPath = 'sessions';
 
   final FirebaseFirestore _firestore;
-
-  PingerApi(this._firestore);
 
   Future<GlobalPingCounts> getPingCounts() async {
     final countsDoc = _firestore.collection(_countsPath).doc(_allPath);
@@ -37,15 +37,15 @@ class PingerApi {
     await _runCall(() => sessionsCol.add(result.toJson()));
   }
 
-  Future<T> _runCall<T>(Future<T> call()) async {
+  Future<T> _runCall<T>(Future<T> Function() call) async {
     try {
       return await call();
     } on PlatformException catch (e) {
       switch (e.message) {
         case "Failed to get document because the client is offline.":
-          throw ApiError.CLIENT_OFFLINE;
+          throw ApiError.clientOffline;
         case "PERMISSION_DENIED: Missing or insufficient permissions.":
-          throw ApiError.ACCESS_DENIED;
+          throw ApiError.accessDenied;
       }
       rethrow;
     }
@@ -53,6 +53,6 @@ class PingerApi {
 }
 
 enum ApiError {
-  CLIENT_OFFLINE,
-  ACCESS_DENIED,
+  clientOffline,
+  accessDenied,
 }

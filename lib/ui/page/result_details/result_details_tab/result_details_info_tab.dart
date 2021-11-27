@@ -7,9 +7,12 @@ import 'package:pinger/ui/common/collapsing_tab_layout.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsInfoTab extends StatelessWidget {
-  final PingResult? result;
+  const ResultDetailsInfoTab({
+    Key? key,
+    required this.result,
+  }) : super(key: key);
 
-  const ResultDetailsInfoTab({Key? key, required this.result}) : super(key: key);
+  final PingResult? result;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class ResultDetailsInfoTab extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(
         name,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
       ),
     );
   }
@@ -70,8 +73,8 @@ class ResultDetailsInfoTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(children: <Widget>[
         Text(name, style: TextStyle(color: R.colors.gray, fontSize: 18.0)),
-        Spacer(),
-        Text(value, style: TextStyle(fontSize: 18.0)),
+        const Spacer(),
+        Text(value, style: const TextStyle(fontSize: 18.0)),
       ]),
     );
   }

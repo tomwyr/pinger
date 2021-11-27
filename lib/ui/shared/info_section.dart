@@ -3,12 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class InfoSection extends StatelessWidget {
-  final AssetImage image;
-  final String title;
-  final String description;
-  final bool risksOverflow;
-  final double size = 144.0;
-
   const InfoSection({
     Key? key,
     required this.image,
@@ -16,6 +10,13 @@ class InfoSection extends StatelessWidget {
     required this.description,
     this.risksOverflow = false,
   }) : super(key: key);
+
+  final double size = 144.0;
+
+  final AssetImage image;
+  final String title;
+  final String description;
+  final bool risksOverflow;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +27,13 @@ class InfoSection extends StatelessWidget {
         Container(height: 36.0),
         Text(
           title,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         Container(height: 12.0),
         Text(
           description,
-          style: TextStyle(fontSize: 18.0),
+          style: const TextStyle(fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       ],

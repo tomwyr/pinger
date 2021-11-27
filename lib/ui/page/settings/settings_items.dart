@@ -8,12 +8,12 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/utils/format_utils.dart';
 
-const double _SWITCH_WIDTH = 60.0;
+const double _switchWidth = 60.0;
 
 class SettingsHeaderItem extends StatelessWidget {
-  final String? title;
-
   const SettingsHeaderItem({Key? key, this.title}) : super(key: key);
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SettingsHeaderItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(
         title!,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 24.0,
           fontWeight: FontWeight.bold,
         ),
@@ -32,12 +32,6 @@ class SettingsHeaderItem extends StatelessWidget {
 }
 
 class PingSettingItem extends StatelessWidget {
-  final String label;
-  final String unit;
-  final NumSetting? value;
-  final ValueChanged<NumSetting> onChanged;
-  final bool allowInfinite;
-
   const PingSettingItem({
     Key? key,
     required this.label,
@@ -47,11 +41,17 @@ class PingSettingItem extends StatelessWidget {
     this.allowInfinite = false,
   }) : super(key: key);
 
+  final String label;
+  final String unit;
+  final NumSetting? value;
+  final ValueChanged<NumSetting> onChanged;
+  final bool allowInfinite;
+
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      Text(label, style: TextStyle(fontSize: 18.0)),
-      Spacer(),
+      Text(label, style: const TextStyle(fontSize: 18.0)),
+      const Spacer(),
       InkWell(
         onTap: () async {
           final result = await SettingItemSheet.show(
@@ -63,7 +63,7 @@ class PingSettingItem extends StatelessWidget {
           if (result != value) onChanged(result);
         },
         child: Container(
-          constraints: BoxConstraints(minWidth: _SWITCH_WIDTH),
+          constraints: const BoxConstraints(minWidth: _switchWidth),
           padding: const EdgeInsets.symmetric(
             horizontal: 10.0,
             vertical: 6.0,
@@ -92,13 +92,6 @@ class PingSettingItem extends StatelessWidget {
 }
 
 class SettingItemSheet extends StatefulWidget {
-  static const _digitsRegExp = r"[1-9]\d{0,2})";
-
-  final String unit;
-  final bool allowInfinite;
-  final NumSetting? value;
-  final ValueChanged<NumSetting?> onValueChanged;
-
   const SettingItemSheet({
     Key? key,
     required this.unit,
@@ -106,6 +99,13 @@ class SettingItemSheet extends StatefulWidget {
     required this.value,
     required this.onValueChanged,
   }) : super(key: key);
+
+  static const _digitsRegExp = r"[1-9]\d{0,2})";
+
+  final String unit;
+  final bool allowInfinite;
+  final NumSetting? value;
+  final ValueChanged<NumSetting?> onValueChanged;
 
   static Future<NumSetting> show({
     required NumSetting? value,
@@ -174,7 +174,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
     } else if (pressIndex == 1) {
       return TextEditingValue(
         text: R.symbols.infinity,
-        selection: TextSelection(baseOffset: 0, extentOffset: 1),
+        selection: const TextSelection(baseOffset: 0, extentOffset: 1),
       );
     }
     return null;
@@ -182,7 +182,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
 
   void _onInputChanged(String text) {
     final value = text == R.symbols.infinity
-        ? NumSetting.infinite()
+        ? const NumSetting.infinite()
         : text.isNotEmpty
             ? NumSetting.finite(value: int.parse(text))
             : null;
@@ -204,7 +204,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
           child!,
           Container(height: 4.0),
         ]),
-        child: Container(
+        child: SizedBox(
           width: 24.0 + _controller!.text.length * 14.0,
           child: _buildValueInput(),
         ),
@@ -215,7 +215,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
   Widget _buildToggleButtons(String text) {
     final isInfinite = text == R.symbols.infinity;
     return ToggleButtons(
-      children: [Icon(Icons.edit, size: 12.0), Text(R.symbols.infinity)],
+      children: [const Icon(Icons.edit, size: 12.0), Text(R.symbols.infinity)],
       isSelected: [!isInfinite, isInfinite],
       onPressed: (index) {
         final text = _controller!.text;
@@ -238,7 +238,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
       maxLength: 3,
       controller: _controller,
       decoration: InputDecoration(
-        counter: SizedBox.shrink(),
+        counter: const SizedBox.shrink(),
         contentPadding: EdgeInsets.zero,
         suffixText: widget.unit,
       ),
@@ -253,12 +253,6 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
 }
 
 class SwitchSettingItem extends StatelessWidget {
-  final String label;
-  final String? description;
-  final bool? enabled;
-  final bool? value;
-  final ValueChanged<bool> onChanged;
-
   const SwitchSettingItem({
     Key? key,
     required this.label,
@@ -267,6 +261,13 @@ class SwitchSettingItem extends StatelessWidget {
     required this.value,
     required this.onChanged,
   }) : super(key: key);
+
+  final String label;
+
+  final String? description;
+  final bool? enabled;
+  final bool? value;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +284,7 @@ class SwitchSettingItem extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(label, style: TextStyle(fontSize: 18.0)),
+                    child: Text(label, style: const TextStyle(fontSize: 18.0)),
                   ),
                   if (description != null)
                     Text(

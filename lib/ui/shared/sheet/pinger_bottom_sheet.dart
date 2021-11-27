@@ -7,35 +7,6 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 
 class PingerBottomSheet extends StatelessWidget {
-  static Future<T> show<T>({
-    Widget? title,
-    Widget? subtitle,
-    IconData? acceptIcon,
-    String? rejectLabel,
-    VoidCallback? onRejectPressed,
-    VoidCallback? onAcceptPressed,
-    ValueGetter<bool>? canAccept,
-    Widget builder(VoidCallback rebuild)?,
-  }) async {
-    var didPop = false;
-    final result = await PingerApp.router.show(RouteConfig.sheet(
-      (_, animation, __) => PingerBottomSheet._(
-        title: title,
-        subtitle: subtitle,
-        acceptIcon: acceptIcon ?? Icons.check,
-        rejectLabel: rejectLabel,
-        onRejectPressed: onRejectPressed,
-        onAcceptPressed: onAcceptPressed,
-        canAccept: canAccept,
-        didPop: () => didPop,
-        animation: animation,
-        builder: builder ?? (_) => SizedBox.shrink(),
-      ),
-    ));
-    didPop = true;
-    return result;
-  }
-
   const PingerBottomSheet._({
     Key? key,
     required this.title,
@@ -49,6 +20,35 @@ class PingerBottomSheet extends StatelessWidget {
     required this.animation,
     required this.builder,
   }) : super(key: key);
+
+  static Future<T> show<T>({
+    Widget? title,
+    Widget? subtitle,
+    IconData? acceptIcon,
+    String? rejectLabel,
+    VoidCallback? onRejectPressed,
+    VoidCallback? onAcceptPressed,
+    ValueGetter<bool>? canAccept,
+    Widget Function(VoidCallback rebuild)? builder,
+  }) async {
+    var didPop = false;
+    final result = await PingerApp.router.show(RouteConfig.sheet(
+      (_, animation, __) => PingerBottomSheet._(
+        title: title,
+        subtitle: subtitle,
+        acceptIcon: acceptIcon ?? Icons.check,
+        rejectLabel: rejectLabel,
+        onRejectPressed: onRejectPressed,
+        onAcceptPressed: onAcceptPressed,
+        canAccept: canAccept,
+        didPop: () => didPop,
+        animation: animation,
+        builder: builder ?? (_) => const SizedBox.shrink(),
+      ),
+    ));
+    didPop = true;
+    return result;
+  }
 
   final Animation<double> animation;
   final Widget? title;
@@ -88,7 +88,7 @@ class PingerBottomSheet extends StatelessWidget {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           )),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
             color: R.colors.canvas,
             boxShadow: [
               BoxShadow(
@@ -131,9 +131,9 @@ class PingerBottomSheet extends StatelessWidget {
                     child: Text(rejectLabel!),
                   ),
                 ),
-              if (rejectLabel != null) Spacer(),
+              if (rejectLabel != null) const Spacer(),
               SizedBox.fromSize(
-                size: Size.square(48.0),
+                size: const Size.square(48.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,

@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/ui/app/pinger_app.dart';
 
-const APP_ENV = String.fromEnvironment("APP_ENV");
+const appEnvironment = String.fromEnvironment("APP_ENV");
 
 void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
@@ -15,6 +15,6 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await Injector.configure(APP_ENV);
-  runApp(PingerApp());
+  await Injector.configure(appEnvironment);
+  runApp(const PingerApp());
 }

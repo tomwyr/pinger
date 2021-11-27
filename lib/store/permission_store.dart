@@ -17,6 +17,7 @@ abstract class PermissionStore extends PermissionStoreBase with _$PermissionStor
   static const notification = 'notification';
 
   final SettingsStore _settingsStore;
+  @override
   final LifecycleNotifier _lifecycleNotifier;
 }
 

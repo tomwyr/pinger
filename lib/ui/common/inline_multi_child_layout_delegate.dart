@@ -4,12 +4,11 @@ typedef InlinePerformLayout = void Function(Size size, MultiChildLayoutDelegate 
 typedef InlineShouldRelayout = bool Function(InlineMultiChildLayoutDelegate old);
 
 class InlineMultiChildLayoutDelegate<T> extends MultiChildLayoutDelegate {
-  final InlinePerformLayout performLayoutDelegate;
-  final InlineShouldRelayout shouldRelayoutDelegate;
-  final T config;
-
   InlineMultiChildLayoutDelegate._(
-      this.performLayoutDelegate, this.shouldRelayoutDelegate, this.config);
+    this.performLayoutDelegate,
+    this.shouldRelayoutDelegate,
+    this.config,
+  );
 
   factory InlineMultiChildLayoutDelegate({
     required InlinePerformLayout performLayout,
@@ -20,9 +19,14 @@ class InlineMultiChildLayoutDelegate<T> extends MultiChildLayoutDelegate {
     return InlineMultiChildLayoutDelegate._(performLayout, shouldRelayout, config);
   }
 
+  final InlinePerformLayout performLayoutDelegate;
+  final InlineShouldRelayout shouldRelayoutDelegate;
+  final T config;
+
   @override
   void performLayout(Size size) => performLayoutDelegate(size, this);
 
   @override
-  bool shouldRelayout(InlineMultiChildLayoutDelegate old) => shouldRelayoutDelegate(old);
+  bool shouldRelayout(InlineMultiChildLayoutDelegate oldDelegate) =>
+      shouldRelayoutDelegate(oldDelegate);
 }

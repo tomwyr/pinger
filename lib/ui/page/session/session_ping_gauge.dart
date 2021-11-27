@@ -21,7 +21,7 @@ class SessionPingGauge extends StatelessWidget {
   final Duration? duration;
   final int? minValue;
   final int? maxValue;
-  final Size edgeValuesSize = Size(48.0, 24.0);
+  final Size edgeValuesSize = const Size(48.0, 24.0);
 
   static int? _getMinValue(PingSession session) => session.stats != null ? 0 : null;
 
@@ -72,7 +72,7 @@ class SessionPingGauge extends StatelessWidget {
   }
 
   Widget _buildArcEdgeLabel(bool isMin) {
-    return Container(
+    return SizedBox(
       width: edgeValuesSize.width,
       child: Align(
         alignment: isMin ? Alignment.bottomLeft : Alignment.bottomRight,
@@ -89,7 +89,7 @@ class SessionPingGauge extends StatelessWidget {
 
   Widget _buildResultsLabels() {
     return Column(children: <Widget>[
-      Spacer(flex: 4),
+      const Spacer(flex: 4),
       Container(
         height: 24.0,
         alignment: Alignment.bottomCenter,
@@ -98,16 +98,16 @@ class SessionPingGauge extends StatelessWidget {
           style: TextStyle(fontSize: 24.0, color: R.colors.gray),
         ),
       ),
-      Spacer(flex: 1),
+      const Spacer(flex: 1),
       Container(
         height: 40.0,
         alignment: Alignment.center,
         child: Text(
           _getValueLabel(session.values!.lastOrNull),
-          style: TextStyle(fontSize: 36.0),
+          style: const TextStyle(fontSize: 36.0),
         ),
       ),
-      Spacer(flex: 1),
+      const Spacer(flex: 1),
       Container(
         height: 24.0,
         alignment: Alignment.bottomCenter,
@@ -134,11 +134,6 @@ class SessionPingGauge extends StatelessWidget {
 }
 
 class PingGaugeArc extends StatefulWidget {
-  final double? value;
-  final double progress;
-  final bool isActive;
-  final Duration duration;
-
   const PingGaugeArc({
     Key? key,
     required this.progress,
@@ -160,9 +155,14 @@ class PingGaugeArc extends StatefulWidget {
       progress: progress,
       value: value,
       isActive: session.status.isStarted,
-      duration: Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 800),
     );
   }
+
+  final double? value;
+  final double progress;
+  final bool isActive;
+  final Duration duration;
 
   @override
   _PingGaugeArcState createState() => _PingGaugeArcState();
@@ -236,16 +236,16 @@ class _PingGaugeArcState extends State<PingGaugeArc> with SingleTickerProviderSt
 }
 
 class PingGaugeDot extends StatefulWidget {
-  final double value;
-  final bool isActive;
-  final Duration duration;
-
   const PingGaugeDot({
     Key? key,
     required this.value,
     required this.isActive,
     required this.duration,
   }) : super(key: key);
+
+  final double value;
+  final bool isActive;
+  final Duration duration;
 
   @override
   _PingGaugeDotState createState() => _PingGaugeDotState();
@@ -318,8 +318,8 @@ class PingGaugeArcPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PingGaugeArcPainter old) =>
-      old.progress != progress || old.width != width || old.color != color;
+  bool shouldRepaint(PingGaugeArcPainter oldDelegate) =>
+      oldDelegate.progress != progress || oldDelegate.width != width || oldDelegate.color != color;
 }
 
 class PingGaugeDotPainter extends CustomPainter {
@@ -339,7 +339,7 @@ class PingGaugeDotPainter extends CustomPainter {
     final paint = Paint()..color = color!;
     final shadowPaint = Paint()
       ..color = color!
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 4.0);
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4.0);
     canvas
       ..drawCircle(offset, radius + 1.0, shadowPaint)
       ..drawCircle(offset, radius, paint);
@@ -353,6 +353,6 @@ class PingGaugeDotPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PingGaugeDotPainter old) =>
-      old.value != value || old.radius != radius || old.color != color;
+  bool shouldRepaint(PingGaugeDotPainter oldDelegate) =>
+      oldDelegate.value != value || oldDelegate.radius != radius || oldDelegate.color != color;
 }

@@ -19,9 +19,12 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class SearchPage extends StatefulWidget {
-  final String? initialQuery;
+  const SearchPage({
+    Key? key,
+    this.initialQuery,
+  }) : super(key: key);
 
-  const SearchPage({Key? key, this.initialQuery}) : super(key: key);
+  final String? initialQuery;
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -194,7 +197,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
         autofocus: true,
         controller: _inputController,
         onChanged: _onQueryChanged,
-        style: TextStyle(fontSize: 18.0),
+        style: const TextStyle(fontSize: 18.0),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r"^[A-Za-z0-9-\.]+")),
           FilteringTextInputFormatter.deny(RegExp(r"^\.")),
@@ -205,12 +208,12 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
         ],
         decoration: InputDecoration(
           hintText: S.current.searchHostHint,
-          border: OutlineInputBorder(borderSide: BorderSide.none),
+          border: const OutlineInputBorder(borderSide: BorderSide.none),
         ),
       ),
       actions: <Widget>[
         SizedBox.fromSize(
-          size: Size.square(56.0),
+          size: const Size.square(56.0),
           child: IconButton(
             icon: Icon(Icons.clear, color: R.colors.primaryLight),
             onPressed: _onClearPressed,

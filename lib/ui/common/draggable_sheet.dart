@@ -18,12 +18,6 @@ class DraggableSheetController {
 }
 
 class DraggableSheet extends StatefulWidget {
-  final DraggableSheetController controller;
-  final Duration duration;
-  final Widget? child;
-  final WidgetBuilder handleBuilder;
-  final WidgetBuilder contentBuilder;
-
   const DraggableSheet({
     Key? key,
     required this.controller,
@@ -32,6 +26,12 @@ class DraggableSheet extends StatefulWidget {
     required this.handleBuilder,
     required this.contentBuilder,
   }) : super(key: key);
+
+  final DraggableSheetController controller;
+  final Duration duration;
+  final Widget? child;
+  final WidgetBuilder handleBuilder;
+  final WidgetBuilder contentBuilder;
 
   @override
   _DraggableSheetState createState() => _DraggableSheetState();
@@ -44,7 +44,7 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
   final _sheetHeight = ValueNotifier(_SheetHeight.zero);
   final _expansion = StreamController<double?>.broadcast();
 
-  SheetState _sheetState = SheetState.COLLAPSED;
+  SheetState _sheetState = SheetState.collapsed;
   _SheetHeight _lastHeight = _SheetHeight.zero;
   late AnimationController _animator;
   double? _currentExpansion;
@@ -91,13 +91,13 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
       ..addStatusListener((it) {
         if (it == AnimationStatus.completed) {
           _lastAnimValue = null;
-          _sheetState = _dragDelta.value == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
+          _sheetState = _dragDelta.value == 0.0 ? SheetState.collapsed : SheetState.expanded;
         }
       });
   }
 
   void _onSheetHeight() {
-    if (_sheetState == SheetState.EXPANDED || _sheetState == SheetState.EXPANDING) {
+    if (_sheetState == SheetState.expanded || _sheetState == SheetState.expanding) {
       final heightDiff = (_lastHeight - _sheetHeight.value).total;
       Future(() => _dragDelta.value += heightDiff);
     } else {
@@ -117,7 +117,7 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
 
   void _onDragUpdate(double delta) {
     if (!_animator.isAnimating) {
-      _sheetState = SheetState.DRAGGING;
+      _sheetState = SheetState.dragging;
       _dragDelta.value = (_dragDelta.value + delta).clamp(-_sheetHeight.value.content, 0.0);
     }
   }
@@ -128,7 +128,7 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
       final didReachEnd = endDelta == 0.0 ? _dragDelta.value >= 0.0 : _dragDelta.value <= endDelta;
       if (didReachEnd) {
         _dragDelta.value = endDelta;
-        _sheetState = endDelta == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
+        _sheetState = endDelta == 0.0 ? SheetState.collapsed : SheetState.expanded;
       } else {
         _animateTo(endDelta);
       }
@@ -146,7 +146,7 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
       _dragAnimTween
         ..begin = 0.0
         ..end = delta - _dragDelta.value;
-      _sheetState = _dragAnimTween.end! > 0 ? SheetState.COLLAPSING : SheetState.EXPANDING;
+      _sheetState = _dragAnimTween.end! > 0 ? SheetState.collapsing : SheetState.expanding;
       _animator.forward(from: 0.0);
     }
   }
@@ -192,8 +192,8 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
             return CustomMultiChildLayout(
               delegate: _SheetLayoutDelegate(value, _sheetState, _sheetHeight),
               children: <Widget>[
-                LayoutId(id: _SheetItem.HANDLE, child: _handle),
-                LayoutId(id: _SheetItem.CONTENT, child: _content),
+                LayoutId(id: _SheetItem.handle, child: _handle),
+                LayoutId(id: _SheetItem.content, child: _content),
               ],
             );
           },
@@ -203,16 +203,16 @@ class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProvid
   }
 }
 
-enum _SheetItem { HANDLE, CONTENT }
+enum _SheetItem { handle, content }
 
-enum SheetState { EXPANDING, EXPANDED, COLLAPSING, COLLAPSED, DRAGGING }
+enum SheetState { expanding, expanded, collapsing, collapsed, dragging }
 
 class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
+  _SheetLayoutDelegate(this.dragDelta, this.sheetState, this.sheetHeight);
+
   final double dragDelta;
   final SheetState sheetState;
   final ValueNotifier<_SheetHeight> sheetHeight;
-
-  _SheetLayoutDelegate(this.dragDelta, this.sheetState, this.sheetHeight);
 
   @override
   void performLayout(Size size) {
@@ -220,22 +220,22 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
     final num contentOffset = (size.height + dragDelta + _calcHeightDiff(height))
         .clamp(size.height - height.content, size.height);
     final num handleOffset = contentOffset - height.handle;
-    positionChild(_SheetItem.CONTENT, Offset(0.0, contentOffset as double));
-    positionChild(_SheetItem.HANDLE, Offset(0.0, handleOffset as double));
+    positionChild(_SheetItem.content, Offset(0.0, contentOffset as double));
+    positionChild(_SheetItem.handle, Offset(0.0, handleOffset as double));
     sheetHeight.value = height;
   }
 
   _SheetHeight layoutItems(Size size) {
     final constraints = BoxConstraints(maxWidth: size.width);
-    final handleHeight = layoutChild(_SheetItem.HANDLE, constraints).height;
-    final contentHeight = layoutChild(_SheetItem.CONTENT, constraints).height;
+    final handleHeight = layoutChild(_SheetItem.handle, constraints).height;
+    final contentHeight = layoutChild(_SheetItem.content, constraints).height;
     return _SheetHeight(handleHeight, contentHeight);
   }
 
   double _calcHeightDiff(_SheetHeight height) {
     final diff = sheetHeight.value - height;
     if (diff != _SheetHeight.zero) {
-      return sheetState == SheetState.EXPANDING || sheetState == SheetState.EXPANDED
+      return sheetState == SheetState.expanding || sheetState == SheetState.expanded
           ? min(diff.total, 0.0)
           : max(diff.total, 0.0);
     }
@@ -270,16 +270,6 @@ class _SheetHeight {
 }
 
 class SeparatedDraggableSheet<T> extends StatefulWidget {
-  final DraggableSheetController controller;
-  final Duration duration;
-  final bool animateVisibility;
-  final Widget? child;
-  final List<SeparatedItem<T>> items;
-  final ValueChanged<Set<T>> onVisibilityChanged;
-  final WidgetBuilder handleBuilder;
-  final WidgetBuilder separatorBuilder;
-  final Widget Function(BuildContext, List<Widget>) contentBuilder;
-
   const SeparatedDraggableSheet({
     Key? key,
     required this.controller,
@@ -292,6 +282,16 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
     required this.separatorBuilder,
     required this.contentBuilder,
   }) : super(key: key);
+
+  final DraggableSheetController controller;
+  final Duration duration;
+  final bool animateVisibility;
+  final Widget? child;
+  final List<SeparatedItem<T>> items;
+  final ValueChanged<Set<T>> onVisibilityChanged;
+  final WidgetBuilder handleBuilder;
+  final WidgetBuilder separatorBuilder;
+  final Widget Function(BuildContext, List<Widget>) contentBuilder;
 
   @override
   _SeparatedDraggableSheetState<T> createState() => _SeparatedDraggableSheetState<T>();
@@ -310,8 +310,9 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
     super.initState();
     _items = widget.items
       ..forEach((it) {
+        void listener() => _onItemVisibility(it.value, it.visibility.value!);
+
         _separatorVisibilities[it.value] = ValueNotifier(it.visibility.value);
-        final listener = () => _onItemVisibility(it.value, it.visibility.value!);
         _visibilityListeners[it.value] = listener;
         it.visibility.addListener(listener);
         Future(listener);
@@ -320,10 +321,10 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
 
   @override
   void dispose() {
-    _items.forEach((it) {
+    for (var it in _items) {
       it.visibility.removeListener(_visibilityListeners[it.value]!);
       _separatorVisibilities[it.value]!.dispose();
-    });
+    }
     super.dispose();
   }
 
@@ -400,7 +401,7 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
                   child: child,
                 ),
               ),
-              child: value! ? child : SizedBox.shrink(),
+              child: value! ? child : const SizedBox.shrink(),
             )
           : Visibility(visible: value!, child: child!),
       child: child,
@@ -409,13 +410,13 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
 }
 
 class SeparatedItem<T> {
-  final T value;
-  final ValueNotifier<bool?> visibility;
-  final WidgetBuilder builder;
-
   SeparatedItem({
     required this.value,
     required this.visibility,
     required this.builder,
   });
+
+  final T value;
+  final ValueNotifier<bool?> visibility;
+  final WidgetBuilder builder;
 }

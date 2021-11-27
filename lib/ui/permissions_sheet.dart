@@ -11,9 +11,12 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 
 class PermissionsSheet extends StatefulWidget {
-  final Widget child;
+  const PermissionsSheet({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
-  const PermissionsSheet({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
   _PermissionsSheetState createState() => _PermissionsSheetState();
@@ -44,7 +47,9 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
 
   @override
   void dispose() {
-    _handlers.forEach((it) => it.dispose());
+    for (var it in _handlers) {
+      it.dispose();
+    }
     super.dispose();
   }
 

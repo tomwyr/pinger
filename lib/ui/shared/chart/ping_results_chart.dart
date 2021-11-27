@@ -8,14 +8,7 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class PingResultsChart extends StatelessWidget {
-  final List<int?>? values;
-  final int? maxValue;
-  final int dotsCount;
-  final double? startX;
-  final double valueLabelSize;
-  final double valueLabelMargin;
-
-  PingResultsChart({
+  const PingResultsChart({
     Key? key,
     required this.values,
     required this.maxValue,
@@ -24,6 +17,13 @@ class PingResultsChart extends StatelessWidget {
     required this.valueLabelSize,
     required this.valueLabelMargin,
   }) : super(key: key);
+
+  final List<int?>? values;
+  final int? maxValue;
+  final int dotsCount;
+  final double? startX;
+  final double valueLabelSize;
+  final double valueLabelMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class PingResultsChart extends StatelessWidget {
           enabled: true,
           touchTooltipData: LineTouchTooltipData(
             tooltipRoundedRadius: 8.0,
-            tooltipPadding: EdgeInsets.only(bottom: 32.0),
+            tooltipPadding: const EdgeInsets.only(bottom: 32.0),
             tooltipBgColor: R.colors.canvas.withOpacity(0.85),
             getTooltipItems: (it) => it
                 .map((spot) => values![spot.spotIndex] != null

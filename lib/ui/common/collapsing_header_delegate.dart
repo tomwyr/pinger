@@ -5,16 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/ui/common/box_clipper.dart';
 
 class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double topItemMaxExtent;
-  final double topItemExtent;
-  final double topItemPadding;
-  final double bottomItemExtent;
-  final double bottomGradientExtent;
-  final Widget topItem;
-  final Widget bottomItem;
-  final Widget bottomGradient;
-  final Color color;
-
   CollapsingHeaderDelegate({
     required this.topItemExtent,
     required this.bottomItemExtent,
@@ -26,8 +16,18 @@ class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.color,
   }) : topItemMaxExtent = topItemExtent + 2 * topItemPadding;
 
+  final double topItemMaxExtent;
+  final double topItemExtent;
+  final double topItemPadding;
+  final double bottomItemExtent;
+  final double bottomGradientExtent;
+  final Widget topItem;
+  final Widget bottomItem;
+  final Widget bottomGradient;
+  final Color color;
+
   @override
-  Widget build(BuildContext context, double shrinkOffset, _) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final expansion = 1 - shrinkOffset / maxExtent;
     final topItemTop = topItemPadding * expansion;
     final bottomItemTop = topItemMaxExtent * expansion;
@@ -102,5 +102,5 @@ class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => bottomItemExtent + bottomGradientExtent;
 
   @override
-  bool shouldRebuild(CollapsingHeaderDelegate old) => true;
+  bool shouldRebuild(CollapsingHeaderDelegate oldDelegate) => true;
 }

@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 
-typedef Widget CollapsingHeaderBuilder(
+typedef CollapsingHeaderBuilder = Widget Function(
   BuildContext context,
   double expansion,
   Widget content,
 );
 
 class CollapsingHeader extends StatefulWidget {
-  final bool isExpanded;
-  final String title;
-  final Widget content;
-  final Widget bottom;
-  final Duration duration;
-  final CollapsingHeaderBuilder? builder;
-
   const CollapsingHeader({
     Key? key,
     required this.isExpanded,
@@ -23,6 +16,13 @@ class CollapsingHeader extends StatefulWidget {
     required this.duration,
     this.builder,
   }) : super(key: key);
+
+  final bool isExpanded;
+  final String title;
+  final Widget content;
+  final Widget bottom;
+  final Duration duration;
+  final CollapsingHeaderBuilder? builder;
 
   @override
   _CollapsingHeaderState createState() => _CollapsingHeaderState();
@@ -82,7 +82,7 @@ class _CollapsingHeaderState extends State<CollapsingHeader> with SingleTickerPr
               Align(
                 alignment: Alignment.topCenter,
                 child: AppBar(
-                  leading: BackButton(),
+                  leading: const BackButton(),
                   title: FadeTransition(
                     opacity: _baseAnim,
                     child: Text(widget.title),

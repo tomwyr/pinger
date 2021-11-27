@@ -120,7 +120,7 @@ class _HostsPageState extends BaseState<HostsPage> {
           centerTitle: true,
           actions: <Widget>[
             SizedBox.fromSize(
-              size: Size.square(56.0),
+              size: const Size.square(56.0),
               child: IconButton(
                 icon: Icon(_isEditing ? Icons.delete : Icons.delete_outline),
                 onPressed: !_isEditing || _selection.isNotEmpty ? _onEditPressed : null,
@@ -161,7 +161,7 @@ class _HostsPageState extends BaseState<HostsPage> {
                 ? HostTileType.removableSelected
                 : HostTileType.removable,
         trailing: !_isEditing
-            ? Container(
+            ? SizedBox(
                 width: 40.0,
                 child: Text(
                   widget.getTrailingLabel(item),

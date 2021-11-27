@@ -50,8 +50,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m14(currentHost, newHost) =>
       "Arrêter la session actuelle ${currentHost} et commencer une nouvelle ${newHost}?";
 
-  static m15(count) =>
-      "${Intl.plural(count, zero: '0 résultats', one: '1 résultat', two: '2 résultats', few: '${count} résultats', many: '${count} résultats', other: '${count} résultats')}";
+  static m15(count) => Intl.plural(count,
+      zero: '0 résultats',
+      one: '1 résultat',
+      two: '2 résultats',
+      few: '${count} résultats',
+      many: '${count} résultats',
+      other: '${count} résultats');
 
   static m16(seconds) => "${seconds} s";
 
@@ -69,7 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmRemoveDesc": MessageLookupByLibrary.simpleMessage("Cette action est irréversible"),
         "confirmResultRemoveTitle": MessageLookupByLibrary.simpleMessage("Supprimer ce résultat?"),
         "dataFetchFailedDesc": MessageLookupByLibrary.simpleMessage(
-            "Quelque chose s\'est mal passé lors du chargement des données - retentez après quelque temps"),
+            "Quelque chose s'est mal passé lors du chargement des données - retentez après quelque temps"),
         "dataFetchFailedTitle":
             MessageLookupByLibrary.simpleMessage("A échoué de charger des données"),
         "daysSinceNow": m0,
@@ -84,9 +89,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Marquez les hôtes pingés afin de les accéder rapidement par ici"),
         "homeFavoritesSubtitle": MessageLookupByLibrary.simpleMessage("Favoris"),
         "homeIntroDesc": MessageLookupByLibrary.simpleMessage(
-            "Ou sautez-la et commencez d\'utiliser l\'appli tout de suite"),
+            "Ou sautez-la et commencez d'utiliser l'appli tout de suite"),
         "homeIntroTitle": MessageLookupByLibrary.simpleMessage(
-            "Regardez une introduction brève qui présente les fonctionnalités principales de l\'appli"),
+            "Regardez une introduction brève qui présente les fonctionnalités principales de l'appli"),
         "homePageTitle": MessageLookupByLibrary.simpleMessage("Pinger"),
         "homePopularSubtitle": MessageLookupByLibrary.simpleMessage("Populaires"),
         "homeRecentsEmptyPlaceholder": MessageLookupByLibrary.simpleMessage(
@@ -94,29 +99,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeRecentsSubtitle": MessageLookupByLibrary.simpleMessage("Derniers"),
         "hoursSinceNow": m1,
         "infoTrayNetworkDisabled": MessageLookupByLibrary.simpleMessage(
-            "La connectivité d\'appareil semble être éteinte. Vérifiez que vous avez l\'accés au réseau afin de pinger des hôtes"),
+            "La connectivité d'appareil semble être éteinte. Vérifiez que vous avez l'accés au réseau afin de pinger des hôtes"),
         "introAdjustSettingsDesc": MessageLookupByLibrary.simpleMessage(
-            "Modifiez les paramètres de pinger et les préférences pour adapter le fonctionnement de l\'appli aux vos besoins"),
+            "Modifiez les paramètres de pinger et les préférences pour adapter le fonctionnement de l'appli aux vos besoins"),
         "introAdjustSettingsTitle": MessageLookupByLibrary.simpleMessage("Réglez les paramètres"),
         "introPingHostDesc": MessageLookupByLibrary.simpleMessage(
             "Soit faites un ping-rapide en appuyant sur le bouton longtemps ou tapez-le pour commencer une nouvelle session"),
-        "introPingHostTitle": MessageLookupByLibrary.simpleMessage("Pingez l\'hôte"),
+        "introPingHostTitle": MessageLookupByLibrary.simpleMessage("Pingez l'hôte"),
         "introSaveResultsDesc": MessageLookupByLibrary.simpleMessage(
-            "Archivez les résultats de pinger pour les revoir plus tard et les comparer avec d\'autres utilisateurs de l\'appli"),
+            "Archivez les résultats de pinger pour les revoir plus tard et les comparer avec d'autres utilisateurs de l'appli"),
         "introSaveResultsTitle": MessageLookupByLibrary.simpleMessage("Sauvegardez le résultat"),
         "introSelectHostDesc": MessageLookupByLibrary.simpleMessage(
-            "Soit sélectionnez l\'un des hôtes suggérés, trouvez-le parmi les hôtes pingés par les autres utilisateurs ou tapez votre propre"),
+            "Soit sélectionnez l'un des hôtes suggérés, trouvez-le parmi les hôtes pingés par les autres utilisateurs ou tapez votre propre"),
         "introSelectHostTitle": MessageLookupByLibrary.simpleMessage("Sélectionnez un hôte"),
         "locationAccessDisabledDesc": MessageLookupByLibrary.simpleMessage(
-            "Ajustez les paramètres de permissions pour autoriser l\'appli d\'accéder la localisation d\'appareil"),
+            "Ajustez les paramètres de permissions pour autoriser l'appli d'accéder la localisation d'appareil"),
         "locationAccessDisabledTitle":
             MessageLookupByLibrary.simpleMessage("Localisation désactivée"),
         "minutesSinceNow": m2,
         "moreHostsButtonLabel": MessageLookupByLibrary.simpleMessage("Plus"),
         "moreHostsCountButtonLabel": m3,
-        "nothingToShowTitle": MessageLookupByLibrary.simpleMessage("Il n\'y a encore rien ici"),
+        "nothingToShowTitle": MessageLookupByLibrary.simpleMessage("Il n'y a encore rien ici"),
         "notificationAccessDisabledDesc": MessageLookupByLibrary.simpleMessage(
-            "Ajustez les paramètres de permissions pour autoriser l\'appli de montrer des notifications"),
+            "Ajustez les paramètres de permissions pour autoriser l'appli de montrer des notifications"),
         "notificationAccessDisabledTitle":
             MessageLookupByLibrary.simpleMessage("Notifications désactivées"),
         "notificationDoneBody": m4,
@@ -159,7 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resultGlobalEmptyDesc": MessageLookupByLibrary.simpleMessage(
             "Revenez après quelque temps quand il y a des données disponible pour cet hôte"),
         "resultOtherEmptyDesc": MessageLookupByLibrary.simpleMessage(
-            "Les autres résultats apparaîtront ici après il\'y en a plus pour cet hôte"),
+            "Les autres résultats apparaîtront ici après il'y en a plus pour cet hôte"),
         "resultPageTitle": MessageLookupByLibrary.simpleMessage("Résultats"),
         "resultResultsSubtitle": MessageLookupByLibrary.simpleMessage("Résultats"),
         "resultsGlobalTabLabel": MessageLookupByLibrary.simpleMessage("Comparer"),
@@ -169,7 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resultsResultsTabLabel": MessageLookupByLibrary.simpleMessage("Résultats"),
         "searchHostHint": MessageLookupByLibrary.simpleMessage("Rechercher un hôte..."),
         "searchResultsEmptyDesc": MessageLookupByLibrary.simpleMessage(
-            "Il n\'y a aucun hôte qui correspond à la requête donnée - vous pouvez toujours le selectionner et essayer de pinger"),
+            "Il n'y a aucun hôte qui correspond à la requête donnée - vous pouvez toujours le selectionner et essayer de pinger"),
         "searchResultsEmptyTitle": MessageLookupByLibrary.simpleMessage("Aucuns résultats trouvés"),
         "secondsSinceNow": m16,
         "sessionAdjustButtonLabel": MessageLookupByLibrary.simpleMessage("Régler"),
@@ -190,7 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsAttachLocationTitle":
             MessageLookupByLibrary.simpleMessage("Attacher la localisation"),
         "settingsInfoTraySectionTitle":
-            MessageLookupByLibrary.simpleMessage("Panneau d\'informations"),
+            MessageLookupByLibrary.simpleMessage("Panneau d'informations"),
         "settingsNightModeTitle": MessageLookupByLibrary.simpleMessage("Mode nuit"),
         "settingsOtherSectionTitle": MessageLookupByLibrary.simpleMessage("Autres"),
         "settingsPageTitle": MessageLookupByLibrary.simpleMessage("Paramètres"),
@@ -205,21 +210,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsPingTimeoutUnit": MessageLookupByLibrary.simpleMessage("s"),
         "settingsRestoreHostDesc": MessageLookupByLibrary.simpleMessage(
             "Une nouvelle session sera automatiquement créée pour le dernier hôte pingé"),
-        "settingsRestoreHostTitle": MessageLookupByLibrary.simpleMessage("Retenir l\'hôte"),
+        "settingsRestoreHostTitle": MessageLookupByLibrary.simpleMessage("Retenir l'hôte"),
         "settingsResultsSectionTitle": MessageLookupByLibrary.simpleMessage("Résultats"),
         "settingsShareResultsDesc": MessageLookupByLibrary.simpleMessage(
-            "Les statistiques de session seront partagées pour permettre aux autres utilisateurs de l\'appli de les comparer avec leurs résultats"),
+            "Les statistiques de session seront partagées pour permettre aux autres utilisateurs de l'appli de les comparer avec leurs résultats"),
         "settingsShareResultsLabel": MessageLookupByLibrary.simpleMessage("Partager les résultats"),
         "settingsSystemNotificationDesc": MessageLookupByLibrary.simpleMessage(
             "Le statut actuel des sessions en cours apparaîtra sur la barre de notification"),
         "settingsSystemNotificationTitle":
             MessageLookupByLibrary.simpleMessage("Notifications système"),
         "settingsTrayAutoRevealDesc": MessageLookupByLibrary.simpleMessage(
-            "Le panneau apparaîtra automatiquement à chaque fois qu\'il y aura un nouvel élément"),
+            "Le panneau apparaîtra automatiquement à chaque fois qu'il y aura un nouvel élément"),
         "settingsTrayAutoRevealTitle":
             MessageLookupByLibrary.simpleMessage("Révéler automatiquement"),
         "settingsTrayEnabledDesc": MessageLookupByLibrary.simpleMessage(
-            "Les informations sur l\'appli apparaîtront dans un panneau glissant en bas de l\'écran"),
+            "Les informations sur l'appli apparaîtront dans un panneau glissant en bas de l'écran"),
         "settingsTrayEnabledTitle": MessageLookupByLibrary.simpleMessage("Afficher le panneau"),
         "shareLocationButtonLabel":
             MessageLookupByLibrary.simpleMessage("Partager la localisation"),

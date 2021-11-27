@@ -6,14 +6,6 @@ import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
 class ResultTileChart extends StatelessWidget {
-  final Radius barRadius = const Radius.circular(2.0);
-
-  final List<int?> values;
-  final int min;
-  final int mean;
-  final int max;
-  final double barWidth;
-
   const ResultTileChart({
     Key? key,
     required this.values,
@@ -22,6 +14,14 @@ class ResultTileChart extends StatelessWidget {
     required this.max,
     required this.barWidth,
   }) : super(key: key);
+
+  final Radius barRadius = const Radius.circular(2.0);
+
+  final List<int?> values;
+  final int min;
+  final int mean;
+  final int max;
+  final double barWidth;
 
   @override
   Widget build(BuildContext context) {

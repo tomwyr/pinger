@@ -7,16 +7,16 @@ import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/ui/page/settings/settings_items.dart';
 
 class PingSettingsSection extends StatelessWidget {
-  final bool showHeader;
-  final PingSettings? settings;
-  final ValueChanged<PingSettings> onChanged;
-
   const PingSettingsSection({
     Key? key,
     this.showHeader = true,
     required this.settings,
     required this.onChanged,
   }) : super(key: key);
+
+  final bool showHeader;
+  final PingSettings? settings;
+  final ValueChanged<PingSettings> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class PingSettingsSection extends StatelessWidget {
 
   void _onFiniteSettingChanged(
     NumSetting value,
-    PingSettings updateSettings(int),
+    PingSettings Function(int value) updateSettings,
   ) {
     value.when(
       finite: (it) => onChanged(updateSettings(it)),
@@ -74,14 +74,14 @@ class PingSettingsSection extends StatelessWidget {
 }
 
 class OtherSettingsSection extends StatelessWidget {
-  final UserSettings settings;
-  final ValueChanged<UserSettings> onChanged;
-
   const OtherSettingsSection({
     Key? key,
     required this.settings,
     required this.onChanged,
   }) : super(key: key);
+
+  final UserSettings settings;
+  final ValueChanged<UserSettings> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -112,14 +112,14 @@ class OtherSettingsSection extends StatelessWidget {
 }
 
 class ShareSettingsSection extends StatelessWidget {
-  final ShareSettings? settings;
-  final ValueChanged<ShareSettings> onChanged;
-
   const ShareSettingsSection({
     Key? key,
     required this.settings,
     required this.onChanged,
   }) : super(key: key);
+
+  final ShareSettings? settings;
+  final ValueChanged<ShareSettings> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -149,14 +149,14 @@ class ShareSettingsSection extends StatelessWidget {
 }
 
 class TraySettingsSection extends StatelessWidget {
-  final TraySettings? settings;
-  final ValueChanged<TraySettings?> onChanged;
-
   const TraySettingsSection({
     Key? key,
     required this.settings,
     required this.onChanged,
   }) : super(key: key);
+
+  final TraySettings? settings;
+  final ValueChanged<TraySettings?> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -186,14 +186,14 @@ class TraySettingsSection extends StatelessWidget {
 }
 
 class SettingsFooterSection extends StatelessWidget {
-  final AppInfo? appInfo;
-  final VoidCallback onShowIntroPressed;
-
   const SettingsFooterSection({
     Key? key,
     required this.appInfo,
     required this.onShowIntroPressed,
   }) : super(key: key);
+
+  final AppInfo? appInfo;
+  final VoidCallback onShowIntroPressed;
 
   @override
   Widget build(BuildContext context) {

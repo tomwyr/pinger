@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:pinger/ui/shared/view_type/view_type_button.dart';
 
 class ViewTypeRow<T> extends StatelessWidget {
-  final Map<T, String> labeledTypes;
-  final T selection;
-  final ValueChanged<T> onChanged;
-
   const ViewTypeRow({
     Key? key,
     required this.labeledTypes,
     required this.selection,
     required this.onChanged,
   }) : super(key: key);
+
+  final Map<T, String> labeledTypes;
+  final T selection;
+  final ValueChanged<T> onChanged;
 
   @override
   Widget build(BuildContext context) {

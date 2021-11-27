@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:pinger/ui/common/inline_multi_child_layout_delegate.dart';
 
 class CollapsingTile extends StatelessWidget {
-  final double expansion;
-  final Widget avatar;
-  final Widget label;
-
   const CollapsingTile({
     Key? key,
     required this.expansion,
     required this.avatar,
     required this.label,
   }) : super(key: key);
+
+  final double expansion;
+  final Widget avatar;
+  final Widget label;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CollapsingTile extends StatelessWidget {
               2;
           final labelX =
               (constraints.maxWidth - labelSize.width + avatarSize.width * (1 - expansion)) / 2;
-          final avatarY = 0.0;
+          const avatarY = 0.0;
           final labelY = avatarSize.height * expansion;
           self.positionChild(CollapsingTileItem.avatar, Offset(avatarX, avatarY));
           self.positionChild(CollapsingTileItem.label, Offset(labelX, labelY));

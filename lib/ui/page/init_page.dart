@@ -8,6 +8,8 @@ import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/page/base_page.dart';
 
 class InitPage extends StatefulWidget {
+  const InitPage({Key? key}) : super(key: key);
+
   @override
   InitPageState createState() => InitPageState();
 }

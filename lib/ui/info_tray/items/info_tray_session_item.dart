@@ -9,6 +9,14 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class InfoTraySessionItem extends StatelessWidget {
+  const InfoTraySessionItem({
+    Key? key,
+    required this.session,
+    required this.duration,
+    required this.onButtonPressed,
+    required this.onPressed,
+  }) : super(key: key);
+
   final PingSession? session;
   final Duration? duration;
   final VoidCallback onButtonPressed;
@@ -17,14 +25,6 @@ class InfoTraySessionItem extends StatelessWidget {
   final Duration dotAnimDuration = const Duration(milliseconds: 500);
   final int maxBarCount = 30;
   final double gapWidth = 3.0;
-
-  const InfoTraySessionItem({
-    Key? key,
-    required this.session,
-    required this.duration,
-    required this.onButtonPressed,
-    required this.onPressed,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +128,9 @@ class InfoTraySessionItem extends StatelessWidget {
       finite: (it) => valuesCount / it,
       infinite: () => min(valuesCount, maxBarCount - 1) / maxBarCount,
     );
-    final dotSize = 6.0;
+    const dotSize = 6.0;
     return FractionalTranslation(
-      translation: Offset(0.0, 0.5),
+      translation: const Offset(0.0, 0.5),
       child: SizedBox(
         height: dotSize,
         child: Stack(children: [
@@ -206,7 +206,7 @@ class InfoTraySessionItem extends StatelessWidget {
 
   Widget _buildTextInfo() {
     final style = TextStyle(color: R.colors.white);
-    final sideWidth = 48.0;
+    const sideWidth = 48.0;
     return Row(children: <Widget>[
       SizedBox(
         width: sideWidth,
@@ -242,7 +242,7 @@ class InfoTraySessionItem extends StatelessWidget {
   Widget _buildButton() {
     if (!session!.status.isSession) return Container();
     return SizedBox.fromSize(
-      size: Size.square(56.0),
+      size: const Size.square(56.0),
       child: Stack(
         children: <Widget>[
           Container(
@@ -272,15 +272,15 @@ class InfoTraySessionItem extends StatelessWidget {
 }
 
 class _ChartBarItem {
-  final int key;
-  final double margin;
-  final Color color;
-  final Size size;
-
   _ChartBarItem({
     required this.key,
     required this.margin,
     required this.color,
     required this.size,
   });
+
+  final int key;
+  final double margin;
+  final Color color;
+  final Size size;
 }

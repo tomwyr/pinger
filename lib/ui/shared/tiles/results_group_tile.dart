@@ -5,16 +5,16 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class ResultsGroupTile extends StatelessWidget {
-  final String host;
-  final int resultsCount;
-  final VoidCallback? onPressed;
-
   const ResultsGroupTile({
     Key? key,
     required this.host,
     required this.resultsCount,
     this.onPressed,
   }) : super(key: key);
+
+  final String host;
+  final int resultsCount;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +30,9 @@ class ResultsGroupTile extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Spacer(),
+          const Spacer(),
           HostIconTile(host: host),
-          Spacer(),
+          const Spacer(),
           Text(
             host,
             maxLines: 1,
@@ -44,7 +44,7 @@ class ResultsGroupTile extends StatelessWidget {
             S.current.resultsGroupCount(resultsCount),
             style: TextStyle(fontSize: 12.0, color: R.colors.gray),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

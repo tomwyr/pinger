@@ -7,14 +7,6 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HomeHostsSection extends StatelessWidget {
-  final String title;
-  final List<String>? hosts;
-  final int itemLimit;
-  final String? emptyLabel;
-  final HostTileType tileType;
-  final ValueChanged<String> onItemPressed;
-  final VoidCallback? onMorePressed;
-
   const HomeHostsSection({
     Key? key,
     required this.title,
@@ -25,6 +17,14 @@ class HomeHostsSection extends StatelessWidget {
     this.emptyLabel,
     this.onMorePressed,
   }) : super(key: key);
+
+  final String title;
+  final List<String>? hosts;
+  final int itemLimit;
+  final String? emptyLabel;
+  final HostTileType tileType;
+  final ValueChanged<String> onItemPressed;
+  final VoidCallback? onMorePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class HomeHostsSection extends StatelessWidget {
         Expanded(
           child: Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
         ),
         if (hosts!.isNotEmpty && onMorePressed != null)
@@ -99,7 +99,7 @@ class HomeHostsSection extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       color: R.colors.gray,
       borderType: BorderType.RRect,
-      radius: Radius.circular(12.0),
+      radius: const Radius.circular(12.0),
       child: Text(
         emptyLabel!,
         textAlign: TextAlign.center,

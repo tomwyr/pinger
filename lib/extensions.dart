@@ -1,5 +1,5 @@
 extension IterableExtensions<E> on Iterable<E> {
-  Iterable<T> mapIndexed<T>(T f(int i, E e)) {
+  Iterable<T> mapIndexed<T>(T Function(int i, E e) f) {
     int index = -1;
     return map((e) => f(++index, e));
   }

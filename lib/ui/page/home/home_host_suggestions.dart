@@ -13,13 +13,6 @@ import 'package:pinger/ui/page/home/home_hosts_section.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HomeHostSuggestions extends StatefulWidget {
-  final Widget searchBar;
-  final ValueChanged<String> onItemPressed;
-  final String? currentHost;
-  final List<String>? favorites;
-  final List<String> popular;
-  final Map<String, HostStats>? stats;
-
   const HomeHostSuggestions({
     Key? key,
     required this.searchBar,
@@ -29,6 +22,13 @@ class HomeHostSuggestions extends StatefulWidget {
     required this.popular,
     required this.stats,
   }) : super(key: key);
+
+  final Widget searchBar;
+  final ValueChanged<String> onItemPressed;
+  final String? currentHost;
+  final List<String>? favorites;
+  final List<String> popular;
+  final Map<String, HostStats>? stats;
 
   @override
   _HomeHostSuggestionsState createState() => _HomeHostSuggestionsState();
@@ -75,7 +75,7 @@ class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {
                   tileType: HostTileType.highlighted,
                   onItemPressed: widget.onItemPressed,
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ),
       ),
       SliverToBoxAdapter(child: Container(height: 24.0)),

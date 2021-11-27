@@ -18,6 +18,8 @@ import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -35,16 +37,16 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.settings),
+          icon: const Icon(Icons.settings),
           onPressed: () => PingerApp.router.show(RouteConfig.settings()),
         ),
         title: Text(S.current.homePageTitle),
         centerTitle: true,
         actions: <Widget>[
           SizedBox.fromSize(
-            size: Size.square(56.0),
+            size: const Size.square(56.0),
             child: IconButton(
-              icon: Icon(Icons.unarchive),
+              icon: const Icon(Icons.unarchive),
               onPressed: () => PingerApp.router.show(RouteConfig.archive()),
             ),
           ),
@@ -107,7 +109,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
 
   Widget _buildSearchBar() {
     return TextField(
-      style: TextStyle(fontSize: 18.0),
+      style: const TextStyle(fontSize: 18.0),
       readOnly: true,
       onTap: () => PingerApp.router.show(RouteConfig.search()),
       decoration: InputDecoration(

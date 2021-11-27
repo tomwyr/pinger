@@ -3,15 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
 
 class ScrollEdgeGradient extends StatefulWidget {
-  final Widget Function(ScrollController?) builder;
-  final Color color;
-  final double extentThreshold;
-  final bool start;
-  final bool end;
-  final Axis axis;
-  final double sliverOverlap;
-  final ScrollController? controller;
-
   const ScrollEdgeGradient({
     Key? key,
     required this.builder,
@@ -23,6 +14,15 @@ class ScrollEdgeGradient extends StatefulWidget {
     this.sliverOverlap = 0.0,
     this.controller,
   }) : super(key: key);
+
+  final Widget Function(ScrollController?) builder;
+  final Color color;
+  final double extentThreshold;
+  final bool start;
+  final bool end;
+  final Axis axis;
+  final double sliverOverlap;
+  final ScrollController? controller;
 
   @override
   _ScrollEdgeGradientState createState() => _ScrollEdgeGradientState();
@@ -125,10 +125,10 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
 }
 
 class ScrollExtent {
+  ScrollExtent(this.before, this.after);
+
   final double before;
   final double after;
-
-  ScrollExtent(this.before, this.after);
 
   @override
   bool operator ==(other) =>

@@ -30,6 +30,8 @@ class PingStats with _$PingStats {
     required int mean,
   }) = _PingStats;
 
+  factory PingStats.fromJson(Map<String, dynamic> json) => _$PingStatsFromJson(json);
+
   static PingStats? fromValues(Iterable<int?> values) {
     bool hasValue = false;
     int min = double.maxFinite.toInt();
@@ -48,6 +50,4 @@ class PingStats with _$PingStats {
       mean: sum ~/ values.length,
     );
   }
-
-  factory PingStats.fromJson(Map<String, dynamic> json) => _$PingStatsFromJson(json);
 }

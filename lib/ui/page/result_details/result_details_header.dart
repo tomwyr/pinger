@@ -9,17 +9,18 @@ import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsHeader extends StatelessWidget {
-  final PingResult? result;
-  final double expansion;
-  final double minExtent;
-  final double maxExtent;
-
-  ResultDetailsHeader({
+  const ResultDetailsHeader({
+    Key? key,
     required this.result,
     required this.expansion,
     required this.minExtent,
     required this.maxExtent,
-  });
+  }) : super(key: key);
+
+  final PingResult? result;
+  final double expansion;
+  final double minExtent;
+  final double maxExtent;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class ResultDetailsHeader extends StatelessWidget {
           ),
         ),
         Container(height: 16.0),
-        Container(
+        SizedBox(
           height: 64.0,
           child: Opacity(
             opacity: expansion,
@@ -88,7 +89,7 @@ class ResultDetailsHeader extends StatelessWidget {
     return CollapsingTile(
       expansion: expansion,
       avatar: SizedBox.fromSize(
-        size: Size.square(kToolbarHeight),
+        size: const Size.square(kToolbarHeight),
         child: Center(
           child: HostIconTile.expansion(
             host: result!.host,
@@ -141,7 +142,7 @@ class ResultDetailsHeader extends StatelessWidget {
         children: <Widget>[
           Text(
             value,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
           ),
           Container(height: 4.0),
           Text(label, style: TextStyle(color: R.colors.gray)),

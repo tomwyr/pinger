@@ -11,11 +11,6 @@ import 'package:pinger/ui/shared/view_type/view_type_row.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class SessionValuesSection extends StatefulWidget {
-  final PingSession session;
-  final Duration? sessionDuration;
-  final PingValuesType viewType;
-  final ValueChanged<PingValuesType> onViewTypeChanged;
-
   const SessionValuesSection({
     Key? key,
     required this.session,
@@ -23,6 +18,11 @@ class SessionValuesSection extends StatefulWidget {
     required this.viewType,
     required this.onViewTypeChanged,
   }) : super(key: key);
+
+  final PingSession session;
+  final Duration? sessionDuration;
+  final PingValuesType viewType;
+  final ValueChanged<PingValuesType> onViewTypeChanged;
 
   @override
   _SessionValuesSectionState createState() => _SessionValuesSectionState();
@@ -49,7 +49,7 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
               child: Row(children: <Widget>[
                 Text(
                   S.current.sessionResultsSubtitle,
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
                 if (widget.session.status.isSession)
                   Expanded(

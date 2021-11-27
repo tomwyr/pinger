@@ -26,9 +26,12 @@ import 'package:pinger/utils/host_tap_handler.dart';
 enum ResultDetailsTab { results, global, info, more }
 
 class ResultDetailsPage extends StatefulWidget {
-  final PingResult? result;
+  const ResultDetailsPage({
+    Key? key,
+    required this.result,
+  }) : super(key: key);
 
-  const ResultDetailsPage({Key? key, required this.result}) : super(key: key);
+  final PingResult? result;
 
   @override
   _ResultDetailsPageState createState() => _ResultDetailsPageState();
@@ -36,9 +39,9 @@ class ResultDetailsPage extends StatefulWidget {
 
 class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
     with SingleTickerProviderStateMixin, HostTapHandler {
-  static final _collapsingTileHeight = 480.0;
-  static final _collapsedHeight = kToolbarHeight + 48.0;
-  static final _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
+  static const _collapsingTileHeight = 480.0;
+  static const _collapsedHeight = kToolbarHeight + 48.0;
+  static const _collapsedOffset = _collapsingTileHeight - _collapsedHeight;
 
   final ResultsStore _resultsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
@@ -87,10 +90,10 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       pinned: true,
       elevation: 0.0,
       expandedHeight: _collapsingTileHeight,
-      leading: BackButton(),
+      leading: const BackButton(),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: _showConfirmDeleteSheet,
         ),
       ],
@@ -155,7 +158,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
   Future<void> _scrollLayoutTo(double offset) async {
     await _scrollController!.animateTo(
       offset,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
     );
   }

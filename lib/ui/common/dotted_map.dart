@@ -3,10 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class DottedMap extends StatelessWidget {
-  final List<MapDot> dots;
-  final ColorTween dotColor;
-  final Color emptyDotColor;
-
   const DottedMap({
     Key? key,
     required this.dots,
@@ -14,10 +10,14 @@ class DottedMap extends StatelessWidget {
     required this.emptyDotColor,
   }) : super(key: key);
 
+  final List<MapDot> dots;
+  final ColorTween dotColor;
+  final Color emptyDotColor;
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: WORLD_DRAWN_SIZE.width / WORLD_DRAWN_SIZE.height,
+      aspectRatio: worldDrawnSize.width / worldDrawnSize.height,
       child: CustomPaint(
         painter: DottedMapPainter(
           dots: dots,
@@ -31,11 +31,6 @@ class DottedMap extends StatelessWidget {
 }
 
 class DottedMapPainter extends CustomPainter {
-  final double maxValue;
-  final List<List<double?>> dotValueMatrix;
-  final ColorTween dotColor;
-  final Color emptyDotColor;
-
   DottedMapPainter._(
     this.dotValueMatrix,
     this.maxValue,
@@ -49,26 +44,31 @@ class DottedMapPainter extends CustomPainter {
     required ColorTween dotColor,
     required Color emptyDotColor,
   }) {
-    final degPerDot = 180.0 / WORLD_DOT_MATRIX.length;
+    final degPerDot = 180.0 / worldDotMatrix.length;
     final dotMatrix =
-        WORLD_DOT_MATRIX.map((row) => row.map((it) => it == 1 ? 0.0 : null).toList()).toList();
-    dots.forEach((it) {
+        worldDotMatrix.map((row) => row.map((it) => it == 1 ? 0.0 : null).toList()).toList();
+    for (var it in dots) {
       final x = (180 + it.lon) ~/ degPerDot;
       final y = (90 - it.lat) ~/ degPerDot;
       if (dotMatrix[y][x] != null) dotMatrix[y][x] = it.value;
-    });
+    }
     return DottedMapPainter._(dotMatrix, maxValue, dotColor, emptyDotColor);
   }
+
+  final double maxValue;
+  final List<List<double?>> dotValueMatrix;
+  final ColorTween dotColor;
+  final Color emptyDotColor;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
-    final dotSize = size.height / WORLD_DRAWN_SIZE.height;
+    final dotSize = size.height / worldDrawnSize.height;
     final dotRadius = dotSize / 2 * 0.8;
     final emptyDotRadius = dotRadius * 0.7;
     // Skip empty rows above 85 N and below 55 S
-    for (var row = 1; row < WORLD_TOTAL_SIZE.height - 6; row++) {
-      for (var col = 0; col < WORLD_TOTAL_SIZE.width; col++) {
+    for (var row = 1; row < worldTotalSize.height - 6; row++) {
+      for (var col = 0; col < worldTotalSize.width; col++) {
         final value = dotValueMatrix[row][col];
         if (value != null) {
           canvas.drawCircle(
@@ -84,20 +84,20 @@ class DottedMapPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DottedMapPainter old) => true;
+  bool shouldRepaint(DottedMapPainter oldDelegate) => true;
 }
 
 class MapDot {
+  MapDot(this.value, this.lat, this.lon);
+
   final double value;
   final double lat;
   final double lon;
-
-  MapDot(this.value, this.lat, this.lon);
 }
 
-const WORLD_DRAWN_SIZE = Size(72, 28);
-const WORLD_TOTAL_SIZE = Size(72, 36);
-const WORLD_DOT_MATRIX = [
+const worldDrawnSize = Size(72, 28);
+const worldTotalSize = Size(72, 36);
+const worldDotMatrix = [
   [
     0,
     0,

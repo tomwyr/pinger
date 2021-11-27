@@ -50,8 +50,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m14(currentHost, newHost) =>
       "Zatrzymać obecną sesję ${currentHost} i uruchomić nową ${newHost}?";
 
-  static m15(count) =>
-      "${Intl.plural(count, zero: '0 wyników', one: '1 wynik', two: '2 wyniki', few: '${count} wyniki', many: '${count} wyników', other: '${count} wyników')}";
+  static m15(count) => Intl.plural(count,
+      zero: '0 wyników',
+      one: '1 wynik',
+      two: '2 wyniki',
+      few: '${count} wyniki',
+      many: '${count} wyników',
+      other: '${count} wyników');
 
   static m16(seconds) => "${seconds} s";
 

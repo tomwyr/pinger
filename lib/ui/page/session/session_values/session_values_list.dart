@@ -7,14 +7,14 @@ import 'package:pinger/ui/page/session/session_values/session_values_item.dart';
 import 'package:pinger/ui/page/session/session_values/session_values_scrollable.dart';
 
 class SessionValuesList extends StatefulWidget {
-  final List<int?>? values;
-  final bool shouldFollowHead;
-
   const SessionValuesList({
     Key? key,
     required this.values,
     required this.shouldFollowHead,
   }) : super(key: key);
+
+  final List<int?>? values;
+  final bool shouldFollowHead;
 
   @override
   _SessionValuesListState createState() => _SessionValuesListState();
@@ -63,7 +63,7 @@ class _SessionValuesListState extends State<SessionValuesList> with SingleTicker
   Future<void> _animateToHead() async {
     await _scroller!.animateTo(
       0.0,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       curve: Curves.easeOutQuad,
     );
   }

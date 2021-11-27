@@ -18,12 +18,6 @@ import 'package:pinger/ui/shared/view_type/view_types.dart';
 import 'package:pinger/utils/data_snap.dart';
 
 class ResultDetailsGlobalTab extends StatelessWidget {
-  final bool isSharingLocation;
-  final VoidCallback onShareLocationPressed;
-  final PingResult? userResult;
-  final DataSnap<GlobalHostResults>? globalResults;
-  final VoidCallback onRefreshPressed;
-
   const ResultDetailsGlobalTab({
     Key? key,
     required this.isSharingLocation,
@@ -32,6 +26,12 @@ class ResultDetailsGlobalTab extends StatelessWidget {
     required this.globalResults,
     required this.onRefreshPressed,
   }) : super(key: key);
+
+  final bool isSharingLocation;
+  final VoidCallback onShareLocationPressed;
+  final PingResult? userResult;
+  final DataSnap<GlobalHostResults>? globalResults;
+  final VoidCallback onRefreshPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +73,14 @@ class ResultDetailsGlobalTab extends StatelessWidget {
 }
 
 class GlobalResultsDataSection extends StatefulWidget {
-  final GlobalHostResults globalResults;
-  final PingResult? userResult;
-
   const GlobalResultsDataSection({
     Key? key,
     required this.globalResults,
     required this.userResult,
   }) : super(key: key);
+
+  final GlobalHostResults globalResults;
+  final PingResult? userResult;
 
   @override
   _GlobalResultsDataSectionState createState() => _GlobalResultsDataSectionState();
@@ -141,7 +141,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
         ),
         Expanded(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minWidth: double.infinity,
               minHeight: 96.0,
             ),
@@ -183,11 +183,11 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
     int lower = 0;
     int higher = 0;
     globalValues.forEach((ping, count) {
-      if (ping < userValue)
+      if (ping < userValue) {
         lower += count;
-      else if (ping > userValue)
+      } else if (ping > userValue) {
         higher += count;
-      else {
+      } else {
         lower += count ~/ 2;
         higher += count ~/ 2;
       }
@@ -220,7 +220,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       Container(height: 4.0),
       Text(
         S.current.pingValueLabel(userValue),
-        style: TextStyle(fontSize: 36.0),
+        style: const TextStyle(fontSize: 36.0),
       ),
       Container(height: 4.0),
     ];
@@ -231,7 +231,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
       Container(height: 12.0),
       Text(title, style: TextStyle(color: R.colors.gray, fontSize: 18.0)),
       Container(height: 4.0),
-      Text(description, style: TextStyle(fontWeight: FontWeight.bold)),
+      Text(description, style: const TextStyle(fontWeight: FontWeight.bold)),
       Container(height: 16.0),
       content,
       Container(height: 8.0),

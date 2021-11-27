@@ -21,6 +21,8 @@ import 'package:pinger/ui/shared/tiles/results_group_tile.dart';
 enum ArchiveViewType { list, groups, host }
 
 class ArchivePage extends StatefulWidget {
+  const ArchivePage({Key? key}) : super(key: key);
+
   @override
   _ArchivePageState createState() => _ArchivePageState();
 }
@@ -70,7 +72,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
             ),
           )
         : AppBar(
-            leading: CloseButton(),
+            leading: const CloseButton(),
             centerTitle: true,
             title: Text(S.current.archivePageTitle),
             actions: <Widget>[
@@ -127,11 +129,13 @@ class _ArchivePageState extends BaseState<ArchivePage> {
 
   List<MapEntry<String, int>> _groupHosts(List<PingResult?> results) {
     final map = <String, int>{};
-    results.forEach((it) => map.update(
-          it!.host,
-          (value) => ++value,
-          ifAbsent: () => 1,
-        ));
+    for (var it in results) {
+      map.update(
+        it!.host,
+        (value) => ++value,
+        ifAbsent: () => 1,
+      );
+    }
     return map.entries.toList()..sort((e1, e2) => e2.value - e1.value);
   }
 
@@ -141,7 +145,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       builder: (controller) => GridView.builder(
         controller: controller,
         padding: const EdgeInsets.all(16.0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,

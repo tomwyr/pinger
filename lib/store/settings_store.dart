@@ -10,11 +10,14 @@ part 'settings_store.g.dart';
 
 @singleton
 class SettingsStore extends SettingsStoreBase with _$SettingsStore {
-  final PackageInfo _packageInfo;
-  final PingerPrefs _pingerPrefs;
-  final AppConfig _appConfig;
-
   SettingsStore(this._packageInfo, this._pingerPrefs, this._appConfig);
+
+  @override
+  final PackageInfo _packageInfo;
+  @override
+  final PingerPrefs _pingerPrefs;
+  @override
+  final AppConfig _appConfig;
 }
 
 abstract class SettingsStoreBase with Store {
@@ -65,7 +68,7 @@ abstract class SettingsStoreBase with Store {
           attachLocation: false,
         ),
         pingSettings: PingSettings(
-          count: NumSetting.finite(value: 10),
+          count: const NumSetting.finite(value: 10),
           packetSize: 56,
           interval: 1,
           timeout: 10,
@@ -88,15 +91,15 @@ abstract class SettingsStoreBase with Store {
 }
 
 class AppInfo {
-  final String version;
-  final String name;
-  final String copyright;
-  final String icon;
-
   AppInfo({
     required this.version,
     required this.name,
     required this.icon,
     required this.copyright,
   });
+
+  final String version;
+  final String name;
+  final String copyright;
+  final String icon;
 }

@@ -6,11 +6,6 @@ import 'package:pinger/ui/common/collapsing_header.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class SessionHostHeader extends StatelessWidget {
-  final PingSession session;
-  final bool isExpanded;
-  final Duration animDuration;
-  final List<Widget> buttons;
-
   const SessionHostHeader({
     Key? key,
     required this.session,
@@ -18,6 +13,11 @@ class SessionHostHeader extends StatelessWidget {
     required this.buttons,
     required this.animDuration,
   }) : super(key: key);
+
+  final PingSession session;
+  final bool isExpanded;
+  final Duration animDuration;
+  final List<Widget> buttons;
 
   @override
   Widget build(BuildContext context) {

@@ -50,8 +50,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m14(currentHost, newHost) =>
       "Stop current session ${currentHost} and start new one ${newHost}?";
 
-  static m15(count) =>
-      "${Intl.plural(count, zero: '0 results', one: '1 result', two: '2 results', few: '${count} results', many: '${count} results', other: '${count} results')}";
+  static m15(count) => Intl.plural(count,
+      zero: '0 results',
+      one: '1 result',
+      two: '2 results',
+      few: '${count} results',
+      many: '${count} results',
+      other: '${count} results');
 
   static m16(seconds) => "${seconds} s";
 
@@ -212,7 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Tray will become visible automatically each time a new item appears"),
         "settingsTrayAutoRevealTitle": MessageLookupByLibrary.simpleMessage("Reveal automatically"),
         "settingsTrayEnabledDesc": MessageLookupByLibrary.simpleMessage(
-            "Informations about app\'s state will appear in an expandable tray at the bottom of the screen"),
+            "Informations about app's state will appear in an expandable tray at the bottom of the screen"),
         "settingsTrayEnabledTitle": MessageLookupByLibrary.simpleMessage("Show tray"),
         "shareLocationButtonLabel": MessageLookupByLibrary.simpleMessage("Share location"),
         "showIntroButtonLabel": MessageLookupByLibrary.simpleMessage("Show intro"),

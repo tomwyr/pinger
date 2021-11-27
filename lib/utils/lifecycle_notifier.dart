@@ -18,16 +18,24 @@ class LifecycleNotifier extends WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.paused:
-        _listeners.forEach((it) => it.onPaused());
+        for (var it in _listeners) {
+          it.onPaused();
+        }
         break;
       case AppLifecycleState.resumed:
-        _listeners.forEach((it) => it.onResumed());
+        for (var it in _listeners) {
+          it.onResumed();
+        }
         break;
       case AppLifecycleState.detached:
-        _listeners.forEach((it) => it.onDetached());
+        for (var it in _listeners) {
+          it.onDetached();
+        }
         break;
       case AppLifecycleState.inactive:
-        _listeners.forEach((it) => it.onInactive());
+        for (var it in _listeners) {
+          it.onInactive();
+        }
         break;
     }
   }
@@ -49,17 +57,17 @@ class LifecycleAware {
 }
 
 class _FunLifecycleAware implements LifecycleAware {
-  final VoidCallback? _onPaused;
-  final VoidCallback? _onResumed;
-  final VoidCallback? _onInactive;
-  final VoidCallback? _onDetached;
-
   _FunLifecycleAware(
     this._onPaused,
     this._onResumed,
     this._onInactive,
     this._onDetached,
   );
+
+  final VoidCallback? _onPaused;
+  final VoidCallback? _onResumed;
+  final VoidCallback? _onInactive;
+  final VoidCallback? _onDetached;
 
   @override
   void onPaused() => _onPaused?.call();

@@ -12,6 +12,8 @@ import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class RecentsPage extends StatefulWidget {
+  const RecentsPage({Key? key}) : super(key: key);
+
   @override
   _RecentsPageState createState() => _RecentsPageState();
 }
