@@ -3,30 +3,22 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class PingLockIndicatorDimens {
-  final Size arrowSize;
-  final double arrowCount;
-  final double iconSize;
-  final double iconMargin;
-  final double totalWidth;
-
   PingLockIndicatorDimens({
     this.arrowSize = const Size(8.0, 16.0),
     this.arrowCount = 4,
     this.iconSize = 18.0,
     this.iconMargin = 8.0,
-  }) : this.totalWidth = arrowCount * arrowSize.width + iconSize + iconMargin;
+  }) : totalWidth = arrowCount * arrowSize.width + iconSize + iconMargin;
+
+  final Size arrowSize;
+  final double arrowCount;
+  final double iconSize;
+  final double iconMargin;
+  final double totalWidth;
 }
 
 class PingLockIndicator extends StatelessWidget {
-  final Duration duration;
-  final TextDirection direction;
-  final double margin;
-  final bool? isLocked;
-  final ColorTween color;
-  final PingLockIndicatorDimens dimens;
-  final ValueNotifier<double?> swipe;
-
-  PingLockIndicator({
+  const PingLockIndicator({
     Key? key,
     required this.duration,
     required this.direction,
@@ -36,6 +28,14 @@ class PingLockIndicator extends StatelessWidget {
     required this.dimens,
     required this.swipe,
   }) : super(key: key);
+
+  final Duration duration;
+  final TextDirection direction;
+  final double margin;
+  final bool? isLocked;
+  final ColorTween color;
+  final PingLockIndicatorDimens dimens;
+  final ValueNotifier<double?> swipe;
 
   @override
   Widget build(BuildContext context) {

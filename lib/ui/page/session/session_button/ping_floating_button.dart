@@ -3,18 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class PingFloatingButton extends StatelessWidget {
-  final Duration duration;
-  final bool raised;
-  final double size;
-  final IconData icon;
-  final Color iconColor;
-  final Color backgroundColor;
-  final VoidCallback? onTap;
-  final VoidCallback? onLongPressStart;
-  final VoidCallback? onLongPressEnd;
-  final ValueChanged<double>? onSwipeUpdate;
-  final VoidCallback? onSwipeEnd;
-
   const PingFloatingButton({
     Key? key,
     required this.duration,
@@ -29,6 +17,18 @@ class PingFloatingButton extends StatelessWidget {
     this.onSwipeUpdate,
     this.onSwipeEnd,
   }) : super(key: key);
+
+  final Duration duration;
+  final bool raised;
+  final double size;
+  final IconData icon;
+  final Color iconColor;
+  final Color backgroundColor;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPressStart;
+  final VoidCallback? onLongPressEnd;
+  final ValueChanged<double>? onSwipeUpdate;
+  final VoidCallback? onSwipeEnd;
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,8 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/page/base_page.dart';
 
 class IntroPage extends StatefulWidget {
+  const IntroPage({Key? key}) : super(key: key);
+
   @override
   _IntroPageState createState() => _IntroPageState();
 }
@@ -56,7 +58,7 @@ class _IntroPageState extends BaseState<IntroPage> {
   void _moveToPage(int index) {
     _pageController!.animateToPage(
       index,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
     );
   }
@@ -78,7 +80,7 @@ class _IntroPageState extends BaseState<IntroPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildItemsIndicator(),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   _buildButtons(),
                 ],
               ),
@@ -132,17 +134,17 @@ class _IntroPageState extends BaseState<IntroPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Spacer(),
+            const Spacer(),
             _buildItemImage(index, image),
-            Spacer(),
+            const Spacer(),
             Text(
               title,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             Container(height: 16.0),
             Text(
               description,
-              style: TextStyle(fontSize: 18.0),
+              style: const TextStyle(fontSize: 18.0),
               textAlign: TextAlign.center,
             ),
           ],

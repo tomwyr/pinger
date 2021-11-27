@@ -24,16 +24,18 @@ import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class SessionPage extends StatefulWidget {
+  const SessionPage({Key? key}) : super(key: key);
+
   @override
   _SessionPageState createState() => _SessionPageState();
 }
 
 class _SessionPageState extends BaseState<SessionPage> {
-  final Duration _animDuration = Duration(milliseconds: 500);
+  final Duration _animDuration = const Duration(milliseconds: 500);
   final PingStore _pingStore = Injector.resolve();
   final HostsStore _hostsStore = Injector.resolve();
 
-  ValueNotifier<PingValuesType> _viewType = ValueNotifier(PingValuesType.gauge);
+  final ValueNotifier<PingValuesType> _viewType = ValueNotifier(PingValuesType.gauge);
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,6 @@ import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 
 class ResultDetailsPromptTab extends StatelessWidget {
-  final ImageProvider image;
-  final String title;
-  final String description;
-  final String buttonLabel;
-  final VoidCallback onButtonPressed;
-
   const ResultDetailsPromptTab({
     Key? key,
     required this.image,
@@ -18,6 +12,12 @@ class ResultDetailsPromptTab extends StatelessWidget {
     required this.buttonLabel,
     required this.onButtonPressed,
   }) : super(key: key);
+
+  final ImageProvider image;
+  final String title;
+  final String description;
+  final String buttonLabel;
+  final VoidCallback onButtonPressed;
 
   @override
   Widget build(BuildContext context) {

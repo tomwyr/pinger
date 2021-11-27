@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SnappingScrollArea extends StatefulWidget {
-  final int initialPosition;
-  final int itemCount;
-  final Widget child;
-  final double itemInterval;
-  final double mainAxisPadding;
-  final Axis scrollDirection;
-  final Duration snapDuration;
-  final ValueChanged<int> onPositionChanged;
-
   const SnappingScrollArea({
     Key? key,
     required this.child,
@@ -21,6 +12,15 @@ class SnappingScrollArea extends StatefulWidget {
     this.mainAxisPadding = 0.0,
     this.initialPosition = 0,
   }) : super(key: key);
+
+  final int initialPosition;
+  final int itemCount;
+  final Widget child;
+  final double itemInterval;
+  final double mainAxisPadding;
+  final Axis scrollDirection;
+  final Duration snapDuration;
+  final ValueChanged<int> onPositionChanged;
 
   @override
   _SnappingScrollAreaState createState() => _SnappingScrollAreaState();

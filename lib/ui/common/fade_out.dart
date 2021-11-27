@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class FadeOut extends StatefulWidget {
-  final Duration duration;
-  final bool visible;
-  final Widget child;
-
   const FadeOut({
     Key? key,
     required this.duration,
     required this.visible,
     required this.child,
   }) : super(key: key);
+
+  final Duration duration;
+  final bool visible;
+  final Widget child;
 
   @override
   _FadeOutState createState() => _FadeOutState();

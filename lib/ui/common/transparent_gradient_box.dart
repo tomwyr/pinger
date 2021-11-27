@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TransparentGradientBox extends StatelessWidget {
-  final Color color;
-  final double width;
-  final double height;
-  final Alignment beginAlignment;
-  final Alignment endAlignment;
-
   const TransparentGradientBox._({
     Key? key,
     required this.color,
@@ -46,6 +40,12 @@ class TransparentGradientBox extends StatelessWidget {
                     ? Alignment.centerLeft
                     : Alignment.centerRight,
       );
+
+  final Color color;
+  final double width;
+  final double height;
+  final Alignment beginAlignment;
+  final Alignment endAlignment;
 
   @override
   Widget build(BuildContext context) {

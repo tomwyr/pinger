@@ -6,6 +6,15 @@ import 'package:pinger/ui/info_tray/info_tray.dart';
 import 'package:pinger/ui/info_tray/info_tray_entry.dart';
 
 class InfoTraySheet extends StatelessWidget {
+  const InfoTraySheet({
+    Key? key,
+    required this.controller,
+    required this.onHandleTap,
+    required this.onVisibilityChanged,
+    required this.items,
+    required this.child,
+  }) : super(key: key);
+
   static const _handleWidth = 64.0;
   static const _handleHeight = 32.0;
   static const _borderRadius = 12.0;
@@ -17,15 +26,6 @@ class InfoTraySheet extends StatelessWidget {
   final ValueChanged<Set<InfoTrayItem>> onVisibilityChanged;
   final List<InfoTrayEntry> items;
   final Widget? child;
-
-  const InfoTraySheet({
-    Key? key,
-    required this.controller,
-    required this.onHandleTap,
-    required this.onVisibilityChanged,
-    required this.items,
-    required this.child,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class InfoTraySheet extends StatelessWidget {
             expansion: snapshot.data!,
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(_borderRadius * (1.0 - snapshot.data!) * 2),
-              bottom: Radius.circular(_borderRadius),
+              bottom: const Radius.circular(_borderRadius),
             ),
           ),
           child: Padding(
@@ -87,7 +87,7 @@ class InfoTraySheet extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: _buildDecoration(
                       expansion: snapshot.data!,
-                      borderRadius: BorderRadius.vertical(
+                      borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(_handleWidth),
                       ),
                     ),
@@ -143,16 +143,16 @@ class InfoTraySheet extends StatelessWidget {
 }
 
 class InfoTrayHandlePainter extends CustomPainter {
-  final Color color;
-  final double? expansion;
-  final double width;
-  final double strokeWidth = 2.0;
-
   InfoTrayHandlePainter({
     required this.color,
     required this.expansion,
     required this.width,
   });
+
+  final Color color;
+  final double? expansion;
+  final double width;
+  final double strokeWidth = 2.0;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -174,9 +174,9 @@ class InfoTrayHandlePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(InfoTrayHandlePainter old) =>
-      old.color != color ||
-      old.expansion != expansion ||
-      old.width != width ||
-      old.strokeWidth != strokeWidth;
+  bool shouldRepaint(InfoTrayHandlePainter oldDelegate) =>
+      oldDelegate.color != color ||
+      oldDelegate.expansion != expansion ||
+      oldDelegate.width != width ||
+      oldDelegate.strokeWidth != strokeWidth;
 }

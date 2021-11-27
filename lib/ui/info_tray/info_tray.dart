@@ -17,9 +17,12 @@ import 'package:pinger/ui/info_tray/items/info_tray_connectivity_item.dart';
 import 'package:pinger/ui/info_tray/items/info_tray_session_item.dart';
 
 class InfoTray extends StatefulWidget {
-  final Widget? child;
+  const InfoTray({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
-  const InfoTray({Key? key, required this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   _InfoTrayState createState() => _InfoTrayState();
@@ -40,14 +43,14 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
   late Map<InfoTrayItem, InfoTrayEntry> _entries;
 
   Map<InfoTrayItem, InfoTrayEntry> _createEntries() => {
-        InfoTrayItem.CONNECTIVITY: InfoTrayEntry<bool?>(
-          item: InfoTrayItem.CONNECTIVITY,
+        InfoTrayItem.connectivity: InfoTrayEntry<bool?>(
+          item: InfoTrayItem.connectivity,
           valueObservable: () => _deviceStore.isNetworkEnabled,
-          valueBuilder: (_) => InfoTrayConnectivityItem(),
+          valueBuilder: (_) => const InfoTrayConnectivityItem(),
           isVisible: (it) => it == false,
         ),
-        InfoTrayItem.SESSION: InfoTrayEntry<SessionItemModel>(
-          item: InfoTrayItem.SESSION,
+        InfoTrayItem.session: InfoTrayEntry<SessionItemModel>(
+          item: InfoTrayItem.session,
           valueObservable: () => SessionItemModel(
             _pingStore.currentSession,
             _pingStore.pingDuration,
@@ -61,7 +64,7 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
           ),
           isVisible: (it) {
             final status = it.session?.status;
-            return (status.isSession || status.isQuickCheck) && it.route != PingerRoutes.SESSION;
+            return (status.isSession || status.isQuickCheck) && it.route != PingerRoutes.session;
           },
         ),
       };
@@ -96,7 +99,9 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
   @override
   void dispose() {
     _settingsDisposer();
-    _entries.values.forEach((it) => it.dispose());
+    for (var it in _entries.values) {
+      it.dispose();
+    }
     super.dispose();
   }
 
@@ -109,9 +114,9 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
         _controller.hide();
       }
       final state = _controller.sheetState;
-      if (settings.autoReveal && state == SheetState.COLLAPSED) {
+      if (settings.autoReveal && state == SheetState.collapsed) {
         _controller.expand();
-      } else if (!settings.autoReveal && state == SheetState.EXPANDED) {
+      } else if (!settings.autoReveal && state == SheetState.expanded) {
         _controller.collapse();
       }
     } else if (_controller.isVisible!) {
@@ -127,16 +132,17 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
       final added = visibleItems.toSet()..removeAll(_visibleItems);
       final settings = _settingsStore.userSettings!.traySettings;
       final state = _controller.sheetState;
-      if (added.isNotEmpty && (settings?.autoReveal ?? false) && state == SheetState.COLLAPSED)
+      if (added.isNotEmpty && (settings?.autoReveal ?? false) && state == SheetState.collapsed) {
         _controller.expand();
+      }
     }
     _visibleItems = visibleItems.toSet();
   }
 
   void _onHandleTap() {
-    if (_controller.sheetState == SheetState.EXPANDED) {
+    if (_controller.sheetState == SheetState.expanded) {
       _controller.collapse();
-    } else if (_controller.sheetState == SheetState.COLLAPSED) {
+    } else if (_controller.sheetState == SheetState.collapsed) {
       _controller.expand();
     }
   }
@@ -153,12 +159,12 @@ class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin
   }
 }
 
-enum InfoTrayItem { CONNECTIVITY, SESSION }
+enum InfoTrayItem { connectivity, session }
 
 class SessionItemModel {
+  SessionItemModel(this.session, this.duration, this.route);
+
   final PingSession? session;
   final Duration? duration;
   final String? route;
-
-  SessionItemModel(this.session, this.duration, this.route);
 }

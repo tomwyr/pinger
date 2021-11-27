@@ -20,15 +20,11 @@ class HostIconProvider extends InheritedWidget {
   final HostIconGetter getIcon;
 
   @override
-  bool updateShouldNotify(HostIconProvider old) => old.getIcon != getIcon;
+  bool updateShouldNotify(HostIconProvider oldWidget) => oldWidget.getIcon != getIcon;
 }
 
 class HostIconTile extends StatefulWidget {
-  final String? host;
-  final Duration duration;
-  final Color? shadowColor;
-
-  HostIconTile._({
+  const HostIconTile._({
     Key? key,
     required this.host,
     required this.duration,
@@ -59,6 +55,10 @@ class HostIconTile extends StatefulWidget {
             end: R.colors.shadow,
           ).transform(expansion),
         );
+
+  final String? host;
+  final Duration duration;
+  final Color? shadowColor;
 
   @override
   _HostIconTileState createState() => _HostIconTileState();
@@ -91,7 +91,7 @@ class _HostIconTileState extends State<HostIconTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
-      size: Size.square(36.0),
+      size: const Size.square(36.0),
       child: TweenAnimationBuilder<Color?>(
         tween: ColorTween(begin: widget.shadowColor, end: widget.shadowColor),
         duration: widget.duration,

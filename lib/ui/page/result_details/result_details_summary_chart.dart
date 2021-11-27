@@ -65,7 +65,7 @@ class ResultDetailsSummaryChart extends StatelessWidget {
       child: DottedBorder(
         customPath: (size) => Path()..lineTo(size.width, 0.0),
         color: R.colors.secondary,
-        dashPattern: [4, 4],
+        dashPattern: const [4, 4],
         strokeWidth: 2.0,
         child: Container(),
       ),
@@ -97,7 +97,7 @@ class ResultDetailsSummaryChart extends StatelessWidget {
 
   Widget _buildLabel(int value, Size size) {
     return FractionalTranslation(
-      translation: Offset(-0.5, 0.0),
+      translation: const Offset(-0.5, 0.0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4.0),
         decoration: BoxDecoration(

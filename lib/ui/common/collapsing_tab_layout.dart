@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CollapsingTabLayout extends StatefulWidget {
-  final SliverAppBar appBar;
-  final TabBarView tabBarView;
-  final double collapsedOffset;
-  final ScrollController? controller;
-  final Future<void> Function(double) scrollLayout;
-
   const CollapsingTabLayout({
     Key? key,
     required this.appBar,
@@ -15,6 +9,12 @@ class CollapsingTabLayout extends StatefulWidget {
     required this.controller,
     required this.scrollLayout,
   }) : super(key: key);
+
+  final SliverAppBar appBar;
+  final TabBarView tabBarView;
+  final double collapsedOffset;
+  final ScrollController? controller;
+  final Future<void> Function(double) scrollLayout;
 
   @override
   _CollapsingTabLayoutState createState() => _CollapsingTabLayoutState();
@@ -69,14 +69,14 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
 }
 
 class CollapsingTabLayoutItem extends StatelessWidget {
-  final List<Widget> slivers;
-  final ScrollController? controller;
-
   const CollapsingTabLayoutItem({
     Key? key,
     required this.slivers,
     this.controller,
   }) : super(key: key);
+
+  final List<Widget> slivers;
+  final ScrollController? controller;
 
   @override
   Widget build(BuildContext context) {

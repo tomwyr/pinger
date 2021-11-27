@@ -33,7 +33,7 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
 
   @override
   Stream<String?> get route => _routeController.stream;
-  StreamController<String?> _routeController = StreamController.broadcast();
+  final StreamController<String?> _routeController = StreamController.broadcast();
 
   @override
   void pop<T>([T? result]) => navigator!.pop(result);
@@ -42,20 +42,20 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   Future<T?> show<T>(RouteConfig config) async {
     if (config is _PageRouteConfig) {
       switch (config.name) {
-        case PingerRoutes.INIT:
-        case PingerRoutes.INTRO:
-        case PingerRoutes.SETTINGS:
-        case PingerRoutes.ARCHIVE:
-        case PingerRoutes.FAVORITES:
-        case PingerRoutes.RECENTS:
+        case PingerRoutes.init:
+        case PingerRoutes.intro:
+        case PingerRoutes.settings:
+        case PingerRoutes.archive:
+        case PingerRoutes.favorites:
+        case PingerRoutes.recents:
           return _push(config);
-        case PingerRoutes.SEARCH:
-        case PingerRoutes.SESSION:
+        case PingerRoutes.search:
+        case PingerRoutes.session:
           return _pushOnHome(config);
-        case PingerRoutes.HOME:
+        case PingerRoutes.home:
           return _replace(config);
-        case PingerRoutes.RESULTS:
-          if (currentRoute == PingerRoutes.ARCHIVE) {
+        case PingerRoutes.results:
+          if (currentRoute == PingerRoutes.archive) {
             return _push(config);
           }
           return _replace(config);
@@ -74,7 +74,7 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
 
   Future<T?> _pushOnHome<T>(_PageRouteConfig config) => navigator!.pushNamedAndRemoveUntil(
         config.name,
-        (it) => it.settings.name == PingerRoutes.HOME,
+        (it) => it.settings.name == PingerRoutes.home,
         arguments: config.widget,
       );
 
@@ -110,73 +110,80 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
     return MaterialPageRoute(
       settings: RouteSettings(name: settings.name),
       builder: (_) =>
-          settings.name == PingerRoutes.INIT ? InitPage() : settings.arguments as Widget,
+          settings.name == PingerRoutes.init ? const InitPage() : settings.arguments as Widget,
     );
   }
 }
 
 class RouteConfig {
-  final String name;
-
   RouteConfig._(this.name);
 
-  factory RouteConfig.home() => _PageRouteConfig(PingerRoutes.HOME, HomePage());
+  factory RouteConfig.home() => _PageRouteConfig(PingerRoutes.home, const HomePage());
 
-  factory RouteConfig.intro() => _PageRouteConfig(PingerRoutes.INTRO, IntroPage());
+  factory RouteConfig.intro() => _PageRouteConfig(PingerRoutes.intro, const IntroPage());
 
-  factory RouteConfig.settings() => _PageRouteConfig(PingerRoutes.SETTINGS, SettingsPage());
+  factory RouteConfig.settings() => _PageRouteConfig(PingerRoutes.settings, const SettingsPage());
 
-  factory RouteConfig.archive() => _PageRouteConfig(PingerRoutes.ARCHIVE, ArchivePage());
+  factory RouteConfig.archive() => _PageRouteConfig(PingerRoutes.archive, const ArchivePage());
 
   factory RouteConfig.results(PingResult? result) =>
-      _PageRouteConfig(PingerRoutes.RESULTS, ResultDetailsPage(result: result));
+      _PageRouteConfig(PingerRoutes.results, ResultDetailsPage(result: result));
 
-  factory RouteConfig.favorites() => _PageRouteConfig(PingerRoutes.FAVORITES, FavoritesPage());
+  factory RouteConfig.favorites() =>
+      _PageRouteConfig(PingerRoutes.favorites, const FavoritesPage());
 
-  factory RouteConfig.recents() => _PageRouteConfig(PingerRoutes.RECENTS, RecentsPage());
+  factory RouteConfig.recents() => _PageRouteConfig(PingerRoutes.recents, const RecentsPage());
 
   factory RouteConfig.search([String? initialQuery]) =>
-      _PageRouteConfig(PingerRoutes.SEARCH, SearchPage(initialQuery: initialQuery));
+      _PageRouteConfig(PingerRoutes.search, SearchPage(initialQuery: initialQuery));
 
-  factory RouteConfig.session() => _PageRouteConfig(PingerRoutes.SESSION, SessionPage());
+  factory RouteConfig.session() => _PageRouteConfig(PingerRoutes.session, const SessionPage());
 
   factory RouteConfig.sheet(RoutePageBuilder builder) =>
-      _SheetRouteConfig(PingerRoutes.SHEET, builder);
+      _SheetRouteConfig(PingerRoutes.sheet, builder);
+
+  final String name;
 }
 
 class _PageRouteConfig extends RouteConfig {
-  final Widget widget;
-
   _PageRouteConfig(String name, this.widget) : super._(name);
+
+  final Widget widget;
 }
 
 class _SheetRouteConfig extends RouteConfig {
-  final RoutePageBuilder builder;
-
   _SheetRouteConfig(String name, this.builder) : super._(name);
+
+  final RoutePageBuilder builder;
 }
 
 class PingerRoutes {
   PingerRoutes._();
 
-  static const INIT = '/';
-  static const HOME = '/home';
-  static const INTRO = '/intro';
-  static const SETTINGS = '/settings';
-  static const ARCHIVE = '/archive';
-  static const RESULTS = '/results';
-  static const FAVORITES = '/favorites';
-  static const RECENTS = '/recents';
-  static const SEARCH = '/search';
-  static const SESSION = '/session';
-  static const SHEET = '/sheet';
+  static const init = '/';
+  static const home = '/home';
+  static const intro = '/intro';
+  static const settings = '/settings';
+  static const archive = '/archive';
+  static const results = '/results';
+  static const favorites = '/favorites';
+  static const recents = '/recents';
+  static const search = '/search';
+  static const session = '/session';
+  static const sheet = '/sheet';
 }
 
 class PingerTransitions {
   PingerTransitions._();
 
-  static RouteTransitionsBuilder blurBackground = (_, animation, __, child) {
-    final _blurSigma = 3.0;
+  static Widget blurBackground(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    const _blurSigma = 3.0;
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
@@ -192,5 +199,5 @@ class PingerTransitions {
         child,
       ],
     );
-  };
+  }
 }

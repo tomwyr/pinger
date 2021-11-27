@@ -23,15 +23,6 @@ part 'ping_store.g.dart';
 
 @singleton
 class PingStore extends PingStoreBase with _$PingStore {
-  final PingerPrefs _pingerPrefs;
-  final PingerApi _pingerApi;
-  final PingService _pingService;
-  final SettingsStore _settingsStore;
-  final ResultsStore _resultsStore;
-  final HostsStore _hostsStore;
-  final DeviceStore _deviceStore;
-  final PermissionStore _locationPermissionStore;
-
   PingStore(
     this._pingerPrefs,
     this._pingerApi,
@@ -42,6 +33,23 @@ class PingStore extends PingStoreBase with _$PingStore {
     this._deviceStore,
     @Named(PermissionStore.location) this._locationPermissionStore,
   );
+
+  @override
+  final PingerPrefs _pingerPrefs;
+  @override
+  final PingerApi _pingerApi;
+  @override
+  final PingService _pingService;
+  @override
+  final SettingsStore _settingsStore;
+  @override
+  final ResultsStore _resultsStore;
+  @override
+  final HostsStore _hostsStore;
+  @override
+  final DeviceStore _deviceStore;
+  @override
+  final PermissionStore _locationPermissionStore;
 }
 
 abstract class PingStoreBase with Store {
@@ -156,7 +164,7 @@ abstract class PingStoreBase with Store {
     _timer!.reset();
     _sessionLastSettings = currentSession!.settings;
     currentSession = currentSession!.copyWith(
-      settings: currentSession!.settings.copyWith(count: NumSetting.infinite()),
+      settings: currentSession!.settings.copyWith(count: const NumSetting.infinite()),
       status: PingStatus.quickCheckStarted,
       startTime: DateTime.now(),
       values: [],
@@ -208,7 +216,7 @@ abstract class PingStoreBase with Store {
       finite: (it) => NumSetting.finite(
         value: it - currentSession!.values!.length,
       ),
-      infinite: () => NumSetting.infinite(),
+      infinite: () => const NumSetting.infinite(),
     );
     final isDone = remainingCount.when(
       finite: (it) => it == 0,
@@ -229,7 +237,7 @@ abstract class PingStoreBase with Store {
         .listen(_onPingResult, onDone: onDone, onError: _onPingError);
     _timer!.start();
     _timerSub =
-        Stream.periodic(Duration(seconds: 1)).listen((it) => pingDuration = _timer!.elapsed);
+        Stream.periodic(const Duration(seconds: 1)).listen((it) => pingDuration = _timer!.elapsed);
   }
 
   void _onPingError(error, StackTrace stackTrace) async {
@@ -263,7 +271,7 @@ abstract class PingStoreBase with Store {
       );
       try {
         await _pingerApi.saveSessionResult(result);
-      } on ApiError {}
+      } on ApiError {/* ignore */}
     }
   }
 

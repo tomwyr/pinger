@@ -45,7 +45,7 @@ abstract class InjectorModule {
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   FlutterLocalNotificationsPlugin get localNotifications => FlutterLocalNotificationsPlugin()
-    ..initialize(InitializationSettings(
+    ..initialize(const InitializationSettings(
       android: AndroidInitializationSettings('ic_notification'),
       iOS: IOSInitializationSettings(
         requestAlertPermission: false,

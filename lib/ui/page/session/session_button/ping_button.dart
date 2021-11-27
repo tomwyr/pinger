@@ -5,18 +5,6 @@ import 'package:pinger/ui/page/session/session_button/ping_floating_button.dart'
 import 'package:pinger/ui/page/session/session_button/ping_lock_indicator.dart';
 
 class PingButton extends StatefulWidget {
-  final Duration animDuration = const Duration(milliseconds: 500);
-
-  final IconData primaryIcon;
-  final IconData secondaryIcon;
-  final bool isExpanded;
-  final bool? isLocked;
-  final VoidCallback? onPrimaryPressed;
-  final VoidCallback? onPrimaryLongPressStart;
-  final VoidCallback? onPrimaryLongPressEnd;
-  final VoidCallback? onSecondaryPressed;
-  final VoidCallback? onLockSwipe;
-
   const PingButton({
     Key? key,
     required this.primaryIcon,
@@ -29,6 +17,18 @@ class PingButton extends StatefulWidget {
     this.onSecondaryPressed,
     this.onLockSwipe,
   }) : super(key: key);
+
+  final Duration animDuration = const Duration(milliseconds: 500);
+
+  final IconData primaryIcon;
+  final IconData secondaryIcon;
+  final bool isExpanded;
+  final bool? isLocked;
+  final VoidCallback? onPrimaryPressed;
+  final VoidCallback? onPrimaryLongPressStart;
+  final VoidCallback? onPrimaryLongPressEnd;
+  final VoidCallback? onSecondaryPressed;
+  final VoidCallback? onLockSwipe;
 
   @override
   _PingButtonState createState() => _PingButtonState();
@@ -139,7 +139,7 @@ class _PingButtonState extends State<PingButton> {
 
   Widget _animateChild({
     required Widget child,
-    required EdgeInsets calcMargin(double value),
+    required EdgeInsets Function(double value) calcMargin,
   }) {
     final expansion = widget.isExpanded ? 1.0 : 0.0;
     return TweenAnimationBuilder<double>(

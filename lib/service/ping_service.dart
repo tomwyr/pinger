@@ -41,8 +41,6 @@ class PingService {
 
 @injectable
 abstract class PingCommand {
-  Future<double?> execute(String host, PingSettings settings);
-
   const PingCommand();
 
   @factoryMethod
@@ -51,6 +49,8 @@ abstract class PingCommand {
     if (Platform.isIOS) return SimplePingCommand();
     throw UnsupportedError("Unhandled platform.");
   }
+
+  Future<double?> execute(String host, PingSettings settings);
 }
 
 class BashPingCommand extends PingCommand {
@@ -71,19 +71,19 @@ class BashPingCommand extends PingCommand {
 
   double _parseResult(ProcessResult result) {
     final didSucceed = (result.stderr as String? ?? "").isEmpty && result.stdout != null;
-    if (!didSucceed) throw PingError.REQUEST_FAILED;
+    if (!didSucceed) throw PingError.requestFailed;
     final value = RegExp(r"time=(\d+(\.\d+)?) ms").firstMatch(result.stdout)?.group(1);
     if (value == null) {
       final didLosePacket = (result.stdout as String).contains("100% packet loss");
-      if (didLosePacket) throw PingError.PACKET_LOST;
-      throw PingError.INVALID_FORMAT;
+      if (didLosePacket) throw PingError.packetLost;
+      throw PingError.invalidFormat;
     }
     return double.parse(value);
   }
 }
 
 class SimplePingCommand extends PingCommand {
-  final MethodChannel _channel = MethodChannel('com.tomwyr.pinger/simplePing');
+  final MethodChannel _channel = const MethodChannel('com.tomwyr.pinger/simplePing');
 
   @override
   Future<double?> execute(String host, PingSettings settings) async {
@@ -94,13 +94,13 @@ class SimplePingCommand extends PingCommand {
         'timeout': settings.timeout,
       });
     } on PlatformException {
-      throw PingError.REQUEST_FAILED;
+      throw PingError.requestFailed;
     }
   }
 }
 
 enum PingError {
-  REQUEST_FAILED,
-  PACKET_LOST,
-  INVALID_FORMAT,
+  requestFailed,
+  packetLost,
+  invalidFormat,
 }

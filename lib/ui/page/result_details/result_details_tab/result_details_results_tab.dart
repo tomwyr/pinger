@@ -11,16 +11,16 @@ import 'package:pinger/ui/shared/view_type/view_type_row.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class ResultDetailsResultsTab extends StatefulWidget {
-  final List<int?> values;
-  final PingStats stats;
-  final Widget Function(List<Widget> slivers) scrollBuilder;
-
   const ResultDetailsResultsTab({
     Key? key,
     required this.values,
     required this.stats,
     required this.scrollBuilder,
   }) : super(key: key);
+
+  final List<int?> values;
+  final PingStats stats;
+  final Widget Function(List<Widget> slivers) scrollBuilder;
 
   @override
   _ResultDetailsResultsTabState createState() => _ResultDetailsResultsTabState();
@@ -57,7 +57,7 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
             Row(children: <Widget>[
               Text(
                 S.current.resultResultsSubtitle,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
               Expanded(
                 child: ViewTypeRow(
@@ -106,7 +106,7 @@ class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 128.0),
+          constraints: const BoxConstraints(minHeight: 128.0),
           child: SessionValuesChart(
             values: widget.values,
             stats: widget.stats,

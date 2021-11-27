@@ -11,10 +11,13 @@ part 'results_store.g.dart';
 
 @singleton
 class ResultsStore extends ResultsStoreBase with _$ResultsStore {
-  final PingerPrefs _pingerPrefs;
-  final PingerApi _pingerApi;
-
   ResultsStore(this._pingerPrefs, this._pingerApi);
+
+  @override
+  final PingerPrefs _pingerPrefs;
+
+  @override
+  final PingerApi _pingerApi;
 }
 
 abstract class ResultsStoreBase with Store {
@@ -36,12 +39,12 @@ abstract class ResultsStoreBase with Store {
   Future<void> fetchGlobalResults(String host) async {
     final needsFetch = !globalResults.containsKey(host) || globalResults[host] is SnapError;
     if (needsFetch) {
-      _setGlobalResults(host, DataSnap.loading());
+      _setGlobalResults(host, const DataSnap.loading());
       try {
         final results = await _pingerApi.getHostResults(host);
         _setGlobalResults(host, DataSnap.data(results));
       } on ApiError {
-        _setGlobalResults(host, DataSnap.error());
+        _setGlobalResults(host, const DataSnap.error());
       }
     }
   }

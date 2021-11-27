@@ -6,12 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class SessionValuesScrollable extends StatefulWidget {
-  final Axis axis;
-  final ValueNotifier<bool>? didReachHead;
-  final bool shouldFollowHead;
-  final Future<void> Function() moveToHeadValue;
-  final Widget child;
-
   const SessionValuesScrollable({
     Key? key,
     required this.axis,
@@ -20,6 +14,12 @@ class SessionValuesScrollable extends StatefulWidget {
     required this.moveToHeadValue,
     required this.child,
   }) : super(key: key);
+
+  final Axis axis;
+  final ValueNotifier<bool>? didReachHead;
+  final bool shouldFollowHead;
+  final Future<void> Function() moveToHeadValue;
+  final Widget child;
 
   @override
   _SessionValuesScrollableState createState() => _SessionValuesScrollableState();
@@ -69,7 +69,7 @@ class _SessionValuesScrollableState extends State<SessionValuesScrollable> {
       Align(
         alignment: Alignment.topRight,
         child: FractionalTranslation(
-          translation: Offset(-0.25, 0.25),
+          translation: const Offset(-0.25, 0.25),
           child: GestureDetector(
             onTap: _onFollowPressed,
             child: ValueListenableBuilder<bool>(
@@ -90,7 +90,7 @@ class _SessionValuesScrollableState extends State<SessionValuesScrollable> {
     final tweenTarget = isVisible ? 1.0 : 0.0;
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: tweenTarget, end: tweenTarget),
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       builder: (_, value, __) => Opacity(
         opacity: min(1.0, value * 2),
         child: SizedBox.fromSize(

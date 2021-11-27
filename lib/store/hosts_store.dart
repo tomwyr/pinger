@@ -17,17 +17,21 @@ part 'hosts_store.g.dart';
 
 @singleton
 class HostsStore extends HostsStoreBase with _$HostsStore {
-  final PingerPrefs _pingerPrefs;
-  final PingerApi _pingerApi;
-  final FaviconService _faviconService;
-  final DeviceStore _deviceStore;
-
   HostsStore(
     this._pingerPrefs,
     this._pingerApi,
     this._faviconService,
     this._deviceStore,
   );
+
+  @override
+  final PingerPrefs _pingerPrefs;
+  @override
+  final PingerApi _pingerApi;
+  @override
+  final FaviconService _faviconService;
+  @override
+  final DeviceStore _deviceStore;
 }
 
 abstract class HostsStoreBase with Store {
@@ -92,12 +96,12 @@ abstract class HostsStoreBase with Store {
 
   @action
   Future<void> fetchHosts() async {
-    hosts = DataSnap.loading();
+    hosts = const DataSnap.loading();
     try {
       final counts = await _pingerApi.getPingCounts();
       hosts = DataSnap.data(_createHostItems(counts));
     } on ApiError {
-      hosts = DataSnap.error();
+      hosts = const DataSnap.error();
     }
   }
 
@@ -153,7 +157,7 @@ abstract class HostsStoreBase with Store {
       Future(() => _tryLoadFavicon(host));
     }
     if (favicon == null) {
-      favicon = Observable(DataSnap.loading());
+      favicon = Observable(const DataSnap.loading());
       _favicons[host] = favicon;
     }
     return favicon;
@@ -162,19 +166,22 @@ abstract class HostsStoreBase with Store {
   @action
   Future<void> _tryLoadFavicon(String host) async {
     final observable = _favicons[host]!;
-    observable.value = DataSnap.loading();
+    observable.value = const DataSnap.loading();
     try {
       final icon = await _faviconService.load(host);
       observable.value = DataSnap.data(icon);
     } on FaviconError {
-      observable.value = DataSnap.error();
+      observable.value = const DataSnap.error();
     }
   }
 }
 
 class HostItem {
+  HostItem(
+    this.name,
+    this.popularity,
+  );
+
   final String name;
   final double popularity;
-
-  HostItem(this.name, this.popularity);
 }

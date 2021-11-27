@@ -9,16 +9,16 @@ import 'package:pinger/ui/page/session/session_values/session_values_scrollable.
 import 'package:pinger/ui/shared/chart/ping_results_chart.dart';
 
 class SessionValuesChart extends StatefulWidget {
-  final List<int?>? values;
-  final PingStats? stats;
-  final bool shouldFollowHead;
-
-  SessionValuesChart({
+  const SessionValuesChart({
     Key? key,
     required this.values,
     required this.stats,
     required this.shouldFollowHead,
   }) : super(key: key);
+
+  final List<int?>? values;
+  final PingStats? stats;
+  final bool shouldFollowHead;
 
   @override
   _SessionValuesChartState createState() => _SessionValuesChartState();
@@ -46,7 +46,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
     _didReachHead = ValueNotifier(true);
     _animator = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     _updateDotsCount();
     _updateMaxStart();

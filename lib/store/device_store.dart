@@ -15,14 +15,6 @@ part 'device_store.g.dart';
 
 @singleton
 class DeviceStore extends DeviceStoreBase with _$DeviceStore {
-  final LifecycleNotifier _lifecycleNotifier;
-  final Connectivity _connectivity;
-  final Location _location;
-  final Vibration _vibration;
-  final NotificationsManager _notificationsManager;
-  final SettingsStore _settingsStore;
-  final PermissionStore _notificationPermissionStore;
-
   DeviceStore(
     this._lifecycleNotifier,
     this._connectivity,
@@ -32,6 +24,21 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
     this._settingsStore,
     @Named(PermissionStore.notification) this._notificationPermissionStore,
   );
+
+  @override
+  final LifecycleNotifier _lifecycleNotifier;
+  @override
+  final Connectivity _connectivity;
+  @override
+  final Location _location;
+  @override
+  final Vibration _vibration;
+  @override
+  final NotificationsManager _notificationsManager;
+  @override
+  final SettingsStore _settingsStore;
+  @override
+  final PermissionStore _notificationPermissionStore;
 }
 
 abstract class DeviceStoreBase with Store {

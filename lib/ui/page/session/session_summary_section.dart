@@ -5,14 +5,14 @@ import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 
 class SessionSummarySection extends StatelessWidget {
-  final List<int?>? values;
-  final PingStats? stats;
-
   const SessionSummarySection({
     Key? key,
     required this.values,
     required this.stats,
   }) : super(key: key);
+
+  final List<int?>? values;
+  final PingStats? stats;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SessionSummarySection extends StatelessWidget {
       children: <Widget>[
         Text(
           S.current.sessionSummarySubtitle,
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         Container(height: 12.0),
         Text(
@@ -98,7 +98,7 @@ class SessionSummarySection extends StatelessWidget {
                 Container(width: 8.0),
                 Text(
                   value?.toString() ?? "-",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ),
               ],
             ),

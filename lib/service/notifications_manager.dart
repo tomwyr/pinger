@@ -8,12 +8,15 @@ import 'package:pinger/utils/notification_messages.dart';
 
 @injectable
 class NotificationsManager {
+  NotificationsManager(
+    this._localNotifications,
+    this._messages,
+  );
+
   final FlutterLocalNotificationsPlugin _localNotifications;
   final NotificationMessages _messages;
 
   Future<void>? _currentNotification;
-
-  NotificationsManager(this._localNotifications, this._messages);
 
   void show(PingSession session) {
     switch (session.status) {
@@ -57,7 +60,7 @@ class NotificationsManager {
   }
 
   void _showNotification(String title, String body) {
-    final details = NotificationDetails(
+    const details = NotificationDetails(
       android: AndroidNotificationDetails(
         'pingerChannelId',
         'pingerChannelName',

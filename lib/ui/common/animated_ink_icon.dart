@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AnimatedInkIcon extends StatefulWidget {
-  final AnimatedIconData icon;
-  final bool transition;
-  final VoidCallback onPressed;
-
   const AnimatedInkIcon({
     Key? key,
     required this.icon,
     required this.transition,
     required this.onPressed,
   }) : super(key: key);
+
+  final AnimatedIconData icon;
+  final bool transition;
+  final VoidCallback onPressed;
 
   @override
   _AnimatedInkIconState createState() => _AnimatedInkIconState();
@@ -24,7 +24,7 @@ class _AnimatedInkIconState extends State<AnimatedInkIcon> with SingleTickerProv
     super.initState();
     _animator = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       value: widget.transition ? 1.0 : 0.0,
     );
   }

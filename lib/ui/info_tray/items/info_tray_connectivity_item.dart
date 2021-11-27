@@ -4,6 +4,8 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
 class InfoTrayConnectivityItem extends StatelessWidget {
+  const InfoTrayConnectivityItem({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Material(

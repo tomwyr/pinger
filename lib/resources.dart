@@ -21,7 +21,7 @@ class PingerResources {
   PingerSymbols get symbols => _symbols;
 
   void load(Brightness brightness) {
-    _dimens = PingerDimens();
+    _dimens = const PingerDimens();
     _styles = PingerStyles();
     _symbols = PingerSymbols();
     if (brightness == Brightness.dark) {
@@ -65,26 +65,26 @@ class PingerDarkColors extends PingerColors {
   PingerDarkColors() : super._();
 
   @override
-  final primary = const Color(0xFFDEDEDE);
+  Color get primary => const Color(0xFFDEDEDE);
   @override
-  final primaryLight = const Color(0xFF4B4d75);
+  Color get primaryLight => const Color(0xFF4B4d75);
   @override
-  final gray = const Color(0xFF757575);
+  Color get gray => const Color(0xFF757575);
   @override
-  final grayLight = const Color(0xFF404040);
+  Color get grayLight => const Color(0xFF404040);
 
   @override
-  final canvas = const Color(0xFF333333);
+  Color get canvas => const Color(0xFF333333);
   @override
-  final shadow = const Color(0x22FFFFFF);
+  Color get shadow => const Color(0x22FFFFFF);
   @override
-  final none = const Color(0x00000000);
+  Color get none => const Color(0x00000000);
 }
 
 class PingerDimens {
-  final buttonThemeRadius = 12.0;
-
   const PingerDimens();
+
+  final buttonThemeRadius = 12.0;
 }
 
 abstract class PingerThemes {
@@ -110,8 +110,8 @@ abstract class PingerThemes {
       );
 
   static TextTheme get _textTheme => TextTheme(
-        bodyText2: TextStyle(),
-        button: TextStyle(fontSize: 18.0),
+        bodyText2: const TextStyle(),
+        button: const TextStyle(fontSize: 18.0),
         subtitle1: TextStyle(color: R.colors.primary),
       ).apply(
         bodyColor: R.colors.primary,
@@ -157,12 +157,12 @@ class PingerLightThemes extends PingerThemes {}
 
 class PingerDarkThemes extends PingerThemes {
   @override
-  final mode = ThemeMode.dark;
+  ThemeMode get mode => ThemeMode.dark;
 
   @override
-  final app = PingerThemes._appTheme.copyWith(
-    primaryColorBrightness: Brightness.dark,
-  );
+  ThemeData get app => PingerThemes._appTheme.copyWith(
+        primaryColorBrightness: Brightness.dark,
+      );
 }
 
 class PingerStyles {
@@ -173,7 +173,7 @@ class PingerStyles {
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);
-  TextStyle get bottomSheetTitle => TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  TextStyle get bottomSheetTitle => const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
   TextStyle get bottomSheetSubtitle => TextStyle(fontSize: 18.0, color: R.colors.gray);
   BorderSide get outlineButtonBorder => BorderSide(color: R.colors.grayLight, width: 1.5);
 }

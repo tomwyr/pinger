@@ -107,7 +107,7 @@ class ResultTile extends StatelessWidget {
 
   Widget _buildDetail(IconData icon, String label) {
     return ConstrainedBox(
-      constraints: BoxConstraints(minWidth: 56.0),
+      constraints: const BoxConstraints(minWidth: 56.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

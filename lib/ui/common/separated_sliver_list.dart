@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SeparatedSliverList extends StatelessWidget {
-  final int itemCount;
-  final IndexedWidgetBuilder itemBuilder;
-  final IndexedWidgetBuilder separatorBuilder;
-
   const SeparatedSliverList({
     Key? key,
     required this.itemCount,
     required this.itemBuilder,
     required this.separatorBuilder,
   }) : super(key: key);
+
+  final int itemCount;
+  final IndexedWidgetBuilder itemBuilder;
+  final IndexedWidgetBuilder separatorBuilder;
 
   @override
   Widget build(BuildContext context) {

@@ -4,16 +4,6 @@ import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
 class SessionValuesItem extends StatelessWidget {
-  static final double indicatorSize = 32.0;
-  static final double indicatorBoxWidth = 64.0;
-  static final double linkHeight = 12.0;
-  static final double extent = indicatorSize + linkHeight;
-
-  final int index;
-  final int? result;
-  final int? delta;
-  final bool showLink;
-
   const SessionValuesItem._({
     Key? key,
     required this.index,
@@ -41,6 +31,16 @@ class SessionValuesItem extends StatelessWidget {
     );
   }
 
+  static const double indicatorSize = 32.0;
+  static const double indicatorBoxWidth = 64.0;
+  static const double linkHeight = 12.0;
+  static const double extent = indicatorSize + linkHeight;
+
+  final int index;
+  final int? result;
+  final int? delta;
+  final bool showLink;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,7 +62,7 @@ class SessionValuesItem extends StatelessWidget {
       width: indicatorBoxWidth,
       child: Center(
         child: SizedBox.fromSize(
-          size: Size.square(indicatorSize),
+          size: const Size.square(indicatorSize),
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24.0),
@@ -84,7 +84,7 @@ class SessionValuesItem extends StatelessWidget {
     return Expanded(
       child: Text(
         result != null ? S.current.pingValueLabel(result!) : "-",
-        style: TextStyle(fontSize: 18.0),
+        style: const TextStyle(fontSize: 18.0),
         textAlign: TextAlign.center,
       ),
     );

@@ -10,6 +10,8 @@ import 'package:pinger/model/user_settings.dart';
 
 @singleton
 class PingerPrefs {
+  PingerPrefs(this._sharedPrefs);
+
   final String _userSettingsKey = 'userSettings';
   final String _archiveResultsKey = 'archiveResults';
   final String _favoriteHostsKey = 'favoriteHosts';
@@ -18,8 +20,6 @@ class PingerPrefs {
   final String _didShowIntroKey = 'didShowIntro';
 
   final SharedPreferences _sharedPrefs;
-
-  PingerPrefs(this._sharedPrefs);
 
   UserSettings? getUserSettings() {
     if (_sharedPrefs.containsKey(_userSettingsKey)) {
@@ -109,7 +109,9 @@ class PingerPrefs {
 
   Future<void> removeHostsStats(List<String> hosts) async {
     final allStats = getHostsStats();
-    hosts.forEach((it) => allStats.removeWhere((stats) => stats.host == it));
+    for (var it in hosts) {
+      allStats.removeWhere((stats) => stats.host == it);
+    }
     await saveHostsStats(allStats);
   }
 

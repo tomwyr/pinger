@@ -7,15 +7,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:pinger/resources.dart';
 
 class GlobalDistributionChart extends StatelessWidget {
-  final int highlightIndex;
-  final double minX;
-  final double maxX;
-  final double minY;
-  final double maxY;
-  final List<FlSpot> spots;
-  final String Function(double) getLabelX;
-  final String Function(double) getLabelY;
-
   const GlobalDistributionChart._({
     Key? key,
     required this.highlightIndex,
@@ -54,7 +45,16 @@ class GlobalDistributionChart extends StatelessWidget {
     );
   }
 
-  static final double _logBase = 1.25;
+  static const double _logBase = 1.25;
+
+  final int highlightIndex;
+  final double minX;
+  final double maxX;
+  final double minY;
+  final double maxY;
+  final List<FlSpot> spots;
+  final String Function(double) getLabelX;
+  final String Function(double) getLabelY;
 
   static int _calcFistGroupSize(Map<int, int> values) {
     final maxValue = values.keys.reduce(max);
@@ -155,8 +155,8 @@ class GlobalDistributionChart extends StatelessWidget {
 }
 
 class PingValueCount {
+  PingValueCount(this.value, this.count);
+
   final int value;
   final int count;
-
-  PingValueCount(this.value, this.count);
 }

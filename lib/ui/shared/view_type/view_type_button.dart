@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class ViewTypeButton extends StatelessWidget {
-  static final height = 26.0;
-
-  final String? label;
-  final bool selected;
-  final VoidCallback onPressed;
-
   const ViewTypeButton({
     Key? key,
     required this.label,
     required this.selected,
     required this.onPressed,
   }) : super(key: key);
+
+  static const height = 26.0;
+
+  final String? label;
+  final bool selected;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
