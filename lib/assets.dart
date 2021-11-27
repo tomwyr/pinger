@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Images {
   /// ![](file:///Users/tomaszwyrowinski/projects/pinger/lib/assets/icons/app-icon-dev.png)
