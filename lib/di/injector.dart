@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:package_info/package_info.dart';
-import 'package:pinger/di/injector.iconfig.dart';
+import 'package:pinger/di/injector.config.dart';
 import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/hosts_store.dart';
 import 'package:pinger/store/permission_store.dart';
