@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -22,8 +23,7 @@ class PingSettingsSection extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        if (showHeader)
-          SettingsHeaderItem(title: S.current.settingsPingSectionTitle),
+        if (showHeader) SettingsHeaderItem(title: S.current.settingsPingSectionTitle),
         PingSettingItem(
           label: S.current.settingsPingCountLabel,
           unit: S.current.settingsPingCountUnit,
@@ -99,8 +99,7 @@ class OtherSettingsSection extends StatelessWidget {
           label: S.current.settingsSystemNotificationTitle,
           description: S.current.settingsSystemNotificationDesc,
           value: settings.showSystemNotification,
-          onChanged: (it) =>
-              onChanged(settings.copyWith(showSystemNotification: it)),
+          onChanged: (it) => onChanged(settings.copyWith(showSystemNotification: it)),
         ),
         SwitchSettingItem(
           label: S.current.settingsNightModeTitle,

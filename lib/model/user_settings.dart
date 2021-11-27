@@ -14,8 +14,7 @@ class UserSettings with _$UserSettings {
     required bool nightMode,
   }) = _UserSettings;
 
-  factory UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$UserSettingsFromJson(json);
+  factory UserSettings.fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
 }
 
 @freezed
@@ -25,8 +24,7 @@ class ShareSettings with _$ShareSettings {
     required bool attachLocation,
   }) = _ShareSettings;
 
-  factory ShareSettings.fromJson(Map<String, dynamic> json) =>
-      _$ShareSettingsFromJson(json);
+  factory ShareSettings.fromJson(Map<String, dynamic> json) => _$ShareSettingsFromJson(json);
 }
 
 @freezed
@@ -38,8 +36,7 @@ class PingSettings with _$PingSettings {
     required int timeout,
   }) = _PingSettings;
 
-  factory PingSettings.fromJson(Map<String, dynamic> json) =>
-      _$PingSettingsFromJson(json);
+  factory PingSettings.fromJson(Map<String, dynamic> json) => _$PingSettingsFromJson(json);
 }
 
 @freezed
@@ -58,6 +55,5 @@ class TraySettings with _$TraySettings {
     required bool autoReveal,
   }) = _TraySettings;
 
-  factory TraySettings.fromJson(Map<String, dynamic> json) =>
-      _$TraySettingsFromJson(json);
+  factory TraySettings.fromJson(Map<String, dynamic> json) => _$TraySettingsFromJson(json);
 }

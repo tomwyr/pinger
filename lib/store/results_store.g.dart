@@ -39,40 +39,33 @@ mixin _$ResultsStore on ResultsStoreBase, Store {
     });
   }
 
-  final _$fetchGlobalResultsAsyncAction =
-      AsyncAction('ResultsStoreBase.fetchGlobalResults');
+  final _$fetchGlobalResultsAsyncAction = AsyncAction('ResultsStoreBase.fetchGlobalResults');
 
   @override
   Future<void> fetchGlobalResults(String host) {
-    return _$fetchGlobalResultsAsyncAction
-        .run(() => super.fetchGlobalResults(host));
+    return _$fetchGlobalResultsAsyncAction.run(() => super.fetchGlobalResults(host));
   }
 
-  final _$deleteLocalResultAsyncAction =
-      AsyncAction('ResultsStoreBase.deleteLocalResult');
+  final _$deleteLocalResultAsyncAction = AsyncAction('ResultsStoreBase.deleteLocalResult');
 
   @override
   Future<void> deleteLocalResult(int? resultId) {
-    return _$deleteLocalResultAsyncAction
-        .run(() => super.deleteLocalResult(resultId));
+    return _$deleteLocalResultAsyncAction.run(() => super.deleteLocalResult(resultId));
   }
 
-  final _$saveLocalResultAsyncAction =
-      AsyncAction('ResultsStoreBase.saveLocalResult');
+  final _$saveLocalResultAsyncAction = AsyncAction('ResultsStoreBase.saveLocalResult');
 
   @override
   Future<int> saveLocalResult(PingResult result) {
-    return _$saveLocalResultAsyncAction
-        .run(() => super.saveLocalResult(result));
+    return _$saveLocalResultAsyncAction.run(() => super.saveLocalResult(result));
   }
 
-  final _$ResultsStoreBaseActionController =
-      ActionController(name: 'ResultsStoreBase');
+  final _$ResultsStoreBaseActionController = ActionController(name: 'ResultsStoreBase');
 
   @override
   void init() {
-    final _$actionInfo = _$ResultsStoreBaseActionController.startAction(
-        name: 'ResultsStoreBase.init');
+    final _$actionInfo =
+        _$ResultsStoreBaseActionController.startAction(name: 'ResultsStoreBase.init');
     try {
       return super.init();
     } finally {

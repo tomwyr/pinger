@@ -10,6 +10,5 @@ class GeoPosition with _$GeoPosition {
     required double lon,
   }) = _GeoPosition;
 
-  factory GeoPosition.fromJson(Map<String, dynamic> json) =>
-      _$GeoPositionFromJson(json);
+  factory GeoPosition.fromJson(Map<String, dynamic> json) => _$GeoPositionFromJson(json);
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_result.dart';
 
@@ -12,11 +13,9 @@ class GlobalPingCounts with _$GlobalPingCounts {
     required List<PingCount> pingCounts,
   }) = _GlobalPingCounts;
 
-  factory GlobalPingCounts.fromJson(Map<String, dynamic> json) =>
-      _$GlobalPingCountsFromJson(json);
+  factory GlobalPingCounts.fromJson(Map<String, dynamic> json) => _$GlobalPingCountsFromJson(json);
 
-  factory GlobalPingCounts.empty() =>
-      GlobalPingCounts(totalCount: 0, pingCounts: []);
+  factory GlobalPingCounts.empty() => GlobalPingCounts(totalCount: 0, pingCounts: []);
 }
 
 @freezed
@@ -26,8 +25,7 @@ class PingCount with _$PingCount {
     required int count,
   }) = _PingCount;
 
-  factory PingCount.fromJson(Map<String, dynamic> json) =>
-      _$PingCountFromJson(json);
+  factory PingCount.fromJson(Map<String, dynamic> json) => _$PingCountFromJson(json);
 }
 
 @freezed
@@ -56,8 +54,7 @@ class ValueResults with _$ValueResults {
     required Map<int, int> max,
   }) = _ValueResults;
 
-  factory ValueResults.fromJson(Map<String, dynamic> json) =>
-      _$ValueResultsFromJson(json);
+  factory ValueResults.fromJson(Map<String, dynamic> json) => _$ValueResultsFromJson(json);
 }
 
 @freezed
@@ -68,8 +65,7 @@ class LocationResults with _$LocationResults {
     required PingStats stats,
   }) = _LocationResults;
 
-  factory LocationResults.fromJson(Map<String, dynamic> json) =>
-      _$LocationResultsFromJson(json);
+  factory LocationResults.fromJson(Map<String, dynamic> json) => _$LocationResultsFromJson(json);
 }
 
 @freezed

@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class SnappingScrollArea extends StatefulWidget {
   final int initialPosition;
@@ -48,10 +48,9 @@ class _SnappingScrollAreaState extends State<SnappingScrollArea> {
 
   bool _onScrollEnd(ScrollEndNotification notification) {
     if (!_isSnapping) {
-      final relativeOffset = _scrollController!.offset +
-          (widget.itemInterval - widget.mainAxisPadding) / 2;
-      final num position = (relativeOffset ~/ widget.itemInterval)
-          .clamp(0, widget.itemCount - 1);
+      final relativeOffset =
+          _scrollController!.offset + (widget.itemInterval - widget.mainAxisPadding) / 2;
+      final num position = (relativeOffset ~/ widget.itemInterval).clamp(0, widget.itemCount - 1);
       Future(() => _snapChartTo(position as int));
       if (position != _snapPosition) {
         _snapPosition = position as int?;
@@ -85,8 +84,7 @@ class _SnappingScrollAreaState extends State<SnappingScrollArea> {
         scrollDirection: widget.scrollDirection,
         controller: _scrollController,
         child: Container(
-          width: (widget.itemCount - 1) * widget.itemInterval +
-              2 * widget.mainAxisPadding,
+          width: (widget.itemCount - 1) * widget.itemInterval + 2 * widget.mainAxisPadding,
           padding: EdgeInsets.symmetric(horizontal: widget.mainAxisPadding),
           child: OverflowBox(
             alignment: Alignment.centerLeft,

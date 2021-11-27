@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/service/favicon_service.dart';
@@ -105,9 +106,7 @@ abstract class HostsStoreBase with Store {
       return counts.pingCounts.map((it) => HostItem(it.host, 0.5)).toList();
     } else {
       final maxCount = counts.pingCounts.map((it) => it.count).reduce(max);
-      return counts.pingCounts
-          .map((it) => HostItem(it.host, it.count / maxCount))
-          .toList()
+      return counts.pingCounts.map((it) => HostItem(it.host, it.count / maxCount)).toList()
         ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
     }
   }

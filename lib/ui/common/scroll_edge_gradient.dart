@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
 
 class ScrollEdgeGradient extends StatefulWidget {
@@ -38,8 +38,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   @override
   void initState() {
     super.initState();
-    _scroller = (widget.controller ?? _internalController)
-      ..addListener(_updateExtent);
+    _scroller = (widget.controller ?? _internalController)..addListener(_updateExtent);
   }
 
   void _updateExtent() {
@@ -62,10 +61,8 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
     final isVertical = widget.axis == Axis.vertical;
     _content = Stack(children: <Widget>[
       widget.builder(_scroller),
-      if (widget.start)
-        _buildGradient(isVertical ? AxisDirection.down : AxisDirection.right),
-      if (widget.end)
-        _buildGradient(isVertical ? AxisDirection.up : AxisDirection.left),
+      if (widget.start) _buildGradient(isVertical ? AxisDirection.down : AxisDirection.right),
+      if (widget.end) _buildGradient(isVertical ? AxisDirection.up : AxisDirection.left),
     ]);
     WidgetsBinding.instance!.addPostFrameCallback((_) => _updateExtent());
   }
@@ -85,8 +82,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
   }
 
   Widget _buildGradient(AxisDirection direction) {
-    final isStart =
-        direction == AxisDirection.down || direction == AxisDirection.right;
+    final isStart = direction == AxisDirection.down || direction == AxisDirection.right;
     return ValueListenableBuilder<ScrollExtent?>(
       valueListenable: _extent,
       builder: (_, value, __) => IgnorePointer(

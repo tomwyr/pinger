@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/ui/app/pinger_app.dart';

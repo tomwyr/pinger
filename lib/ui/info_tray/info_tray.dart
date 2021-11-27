@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
@@ -23,8 +25,7 @@ class InfoTray extends StatefulWidget {
   _InfoTrayState createState() => _InfoTrayState();
 }
 
-class _InfoTrayState extends State<InfoTray>
-    with SingleTickerProviderStateMixin {
+class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin {
   final PingStore _pingStore = Injector.resolve();
   final DeviceStore _deviceStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
@@ -60,8 +61,7 @@ class _InfoTrayState extends State<InfoTray>
           ),
           isVisible: (it) {
             final status = it.session?.status;
-            return (status.isSession || status.isQuickCheck) &&
-                it.route != PingerRoutes.SESSION;
+            return (status.isSession || status.isQuickCheck) && it.route != PingerRoutes.SESSION;
           },
         ),
       };
@@ -127,9 +127,8 @@ class _InfoTrayState extends State<InfoTray>
       final added = visibleItems.toSet()..removeAll(_visibleItems);
       final settings = _settingsStore.userSettings!.traySettings;
       final state = _controller.sheetState;
-      if (added.isNotEmpty &&
-          (settings?.autoReveal ?? false) &&
-          state == SheetState.COLLAPSED) _controller.expand();
+      if (added.isNotEmpty && (settings?.autoReveal ?? false) && state == SheetState.COLLAPSED)
+        _controller.expand();
     }
     _visibleItems = visibleItems.toSet();
   }

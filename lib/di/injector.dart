@@ -5,6 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:pinger/di/injector.config.dart';
 import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -13,7 +15,6 @@ import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/notification_messages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Injector {
   static Future<void> configure(String environment) async {
@@ -34,8 +35,7 @@ abstract class Injector {
 @module
 abstract class InjectorModule {
   @preResolve
-  Future<SharedPreferences> get sharedPreferences =>
-      SharedPreferences.getInstance();
+  Future<SharedPreferences> get sharedPreferences => SharedPreferences.getInstance();
 
   @preResolve
   Future<PackageInfo> get packageInfo => PackageInfo.fromPlatform();
@@ -44,16 +44,15 @@ abstract class InjectorModule {
 
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  FlutterLocalNotificationsPlugin get localNotifications =>
-      FlutterLocalNotificationsPlugin()
-        ..initialize(InitializationSettings(
-          android: AndroidInitializationSettings('ic_notification'),
-          iOS: IOSInitializationSettings(
-            requestAlertPermission: false,
-            requestBadgePermission: false,
-            requestSoundPermission: false,
-          ),
-        ));
+  FlutterLocalNotificationsPlugin get localNotifications => FlutterLocalNotificationsPlugin()
+    ..initialize(InitializationSettings(
+      android: AndroidInitializationSettings('ic_notification'),
+      iOS: IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+      ),
+    ));
 
   NotificationMessages get notificationLocalizations => NotificationMessages();
 

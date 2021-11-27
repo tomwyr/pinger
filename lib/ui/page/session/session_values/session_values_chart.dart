@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
@@ -72,8 +73,7 @@ class _SessionValuesChartState extends State<SessionValuesChart>
     }
   }
 
-  void _updateDotsCount() =>
-      _visibleDotsCount = widget.values!.length.clamp(5, 20);
+  void _updateDotsCount() => _visibleDotsCount = widget.values!.length.clamp(5, 20);
 
   void _updateMaxStart() {
     _maxStartX = max(0, widget.values!.length - _visibleDotsCount).toDouble();
@@ -112,8 +112,8 @@ class _SessionValuesChartState extends State<SessionValuesChart>
     _startAnim = Tween<double>(begin: 0.0, end: delta)
         .chain(CurveTween(curve: Curves.easeOutQuint))
         .animate(_animator)
-          ..addListener(_onAnimTick)
-          ..addStatusListener(_onAnimStatus);
+      ..addListener(_onAnimTick)
+      ..addStatusListener(_onAnimStatus);
     if (_animator.isAnimating) _animator.stop(canceled: false);
     await _animator.forward(from: 0.0).orCancel;
   }
@@ -137,8 +137,8 @@ class _SessionValuesChartState extends State<SessionValuesChart>
 
   void _updateStart(double? value) {
     _startX.value = value;
-    _didReachHead!.value = _isMovingToNewHead ||
-        _startX.value! + _visibleDotsCount >= widget.values!.length;
+    _didReachHead!.value =
+        _isMovingToNewHead || _startX.value! + _visibleDotsCount >= widget.values!.length;
   }
 
   @override

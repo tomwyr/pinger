@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -74,8 +76,7 @@ abstract class PingStoreBase with Store {
   int? _archivedId;
 
   @computed
-  bool get canArchiveResult =>
-      _archivedId == null && currentSession!.stats != null;
+  bool get canArchiveResult => _archivedId == null && currentSession!.stats != null;
 
   @computed
   bool get didChangeSettings =>
@@ -214,10 +215,8 @@ abstract class PingStoreBase with Store {
       infinite: () => false,
     );
     if (!isDone) {
-      currentSession =
-          currentSession!.copyWith(status: PingStatus.sessionStarted);
-      final PingSettings? settings =
-          currentSession!.settings.copyWith(count: remainingCount);
+      currentSession = currentSession!.copyWith(status: PingStatus.sessionStarted);
+      final PingSettings? settings = currentSession!.settings.copyWith(count: remainingCount);
       _startPing(settings: settings, onDone: _onSessionDone);
     } else {
       currentSession = currentSession!.copyWith(status: PingStatus.sessionDone);
@@ -229,8 +228,8 @@ abstract class PingStoreBase with Store {
         .ping(currentSession!.host, settings ?? currentSession!.settings)
         .listen(_onPingResult, onDone: onDone, onError: _onPingError);
     _timer!.start();
-    _timerSub = Stream.periodic(Duration(seconds: 1))
-        .listen((it) => pingDuration = _timer!.elapsed);
+    _timerSub =
+        Stream.periodic(Duration(seconds: 1)).listen((it) => pingDuration = _timer!.elapsed);
   }
 
   void _onPingError(error, StackTrace stackTrace) async {
@@ -269,16 +268,13 @@ abstract class PingStoreBase with Store {
   }
 
   bool _shouldShareResult(PingSession session) {
-    final isSessionShareable =
-        session.values!.length >= 10 && session.stats != null;
-    final isSharingEnabled =
-        _settingsStore.userSettings!.shareSettings.shareResults;
+    final isSessionShareable = session.values!.length >= 10 && session.stats != null;
+    final isSharingEnabled = _settingsStore.userSettings!.shareSettings.shareResults;
     return isSessionShareable && isSharingEnabled && !_didShareResult;
   }
 
   Future<GeoPosition?> _getResultLocation() async {
-    final attachLocation =
-        _settingsStore.userSettings!.shareSettings.attachLocation;
+    final attachLocation = _settingsStore.userSettings!.shareSettings.attachLocation;
     return attachLocation && _locationPermissionStore.canAccessService
         ? await _deviceStore.getCurrentPosition()
         : null;

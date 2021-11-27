@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -9,6 +11,7 @@ import 'package:pinger/store/permission_store.dart';
 import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/collapsing_tab_layout.dart';
 import 'package:pinger/ui/page/base_page.dart';
@@ -17,7 +20,6 @@ import 'package:pinger/ui/page/result_details/result_details_tab/result_details_
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_info_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_more_tab.dart';
 import 'package:pinger/ui/page/result_details/result_details_tab/result_details_results_tab.dart';
-import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
@@ -41,8 +43,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
   final ResultsStore _resultsStore = Injector.resolve();
   final PingStore _pingStore = Injector.resolve();
   final SettingsStore _settingsStore = Injector.resolve();
-  final PermissionStore _locationPermissionStore =
-      Injector.resolve(PermissionStore.location);
+  final PermissionStore _locationPermissionStore = Injector.resolve(PermissionStore.location);
 
   ResultDetailsTab _selectedTab = ResultDetailsTab.results;
   ScrollController? _scrollController;
@@ -129,7 +130,9 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
       ),
       rejectLabel: S.current.cancelButtonLabel,
       onAcceptPressed: () {
-        PingerApp.router..pop()..pop();
+        PingerApp.router
+          ..pop()
+          ..pop();
         _resultsStore.deleteLocalResult(widget.result!.id);
       },
     );
@@ -138,8 +141,7 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
   void _onTabTap(int index) {
     final tab = ResultDetailsTab.values[index];
     if (_selectedTab == tab) {
-      final offset =
-          _scrollController!.offset == _collapsedOffset ? 0.0 : _collapsedOffset;
+      final offset = _scrollController!.offset == _collapsedOffset ? 0.0 : _collapsedOffset;
       _scrollLayoutTo(offset);
     } else {
       _selectedTab = tab;
@@ -173,19 +175,16 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
             onShareLocationPressed: _enableShareSettings,
             userResult: widget.result,
             globalResults: _resultsStore.globalResults[widget.result!.host],
-            onRefreshPressed: () =>
-                _resultsStore.fetchGlobalResults(widget.result!.host),
+            onRefreshPressed: () => _resultsStore.fetchGlobalResults(widget.result!.host),
           ),
         ),
         ResultDetailsInfoTab(result: widget.result),
         Observer(
           builder: (_) => ResultDetailsMoreTab(
             results: _resultsStore.localResults!
-                .where((it) =>
-                    it!.host == widget.result!.host && it.id != widget.result!.id)
+                .where((it) => it!.host == widget.result!.host && it.id != widget.result!.id)
                 .toList(),
-            onItemSelected: (item) =>
-                PingerApp.router.show(RouteConfig.results(item)),
+            onItemSelected: (item) => PingerApp.router.show(RouteConfig.results(item)),
             onStartPingPressed: () => onHostTap(_pingStore, widget.result!.host),
           ),
         ),
@@ -195,8 +194,8 @@ class _ResultDetailsPageState extends BaseState<ResultDetailsPage>
 
   bool _checkIsSharingLocation() {
     final shareSettings = _settingsStore.userSettings!.shareSettings;
-    return shareSettings.shareResults&&
-        shareSettings.attachLocation&&
+    return shareSettings.shareResults &&
+        shareSettings.attachLocation &&
         _locationPermissionStore.canAccessService;
   }
 

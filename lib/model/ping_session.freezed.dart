@@ -45,14 +45,12 @@ mixin _$PingSession {
   DateTime? get startTime => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PingSessionCopyWith<PingSession> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PingSessionCopyWith<PingSession> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $PingSessionCopyWith<$Res> {
-  factory $PingSessionCopyWith(
-          PingSession value, $Res Function(PingSession) then) =
+  factory $PingSessionCopyWith(PingSession value, $Res Function(PingSession) then) =
       _$PingSessionCopyWithImpl<$Res>;
   $Res call(
       {String host,
@@ -113,10 +111,8 @@ class _$PingSessionCopyWithImpl<$Res> implements $PingSessionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PingSessionCopyWith<$Res>
-    implements $PingSessionCopyWith<$Res> {
-  factory _$PingSessionCopyWith(
-          _PingSession value, $Res Function(_PingSession) then) =
+abstract class _$PingSessionCopyWith<$Res> implements $PingSessionCopyWith<$Res> {
+  factory _$PingSessionCopyWith(_PingSession value, $Res Function(_PingSession) then) =
       __$PingSessionCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -133,8 +129,7 @@ abstract class _$PingSessionCopyWith<$Res>
 /// @nodoc
 class __$PingSessionCopyWithImpl<$Res> extends _$PingSessionCopyWithImpl<$Res>
     implements _$PingSessionCopyWith<$Res> {
-  __$PingSessionCopyWithImpl(
-      _PingSession _value, $Res Function(_PingSession) _then)
+  __$PingSessionCopyWithImpl(_PingSession _value, $Res Function(_PingSession) _then)
       : super(_value, (v) => _then(v as _PingSession));
 
   @override
@@ -207,16 +202,14 @@ class _$_PingSession extends _PingSession {
             other is _PingSession &&
             (identical(other.host, host) || other.host == host) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.settings, settings) ||
-                other.settings == settings) &&
+            (identical(other.settings, settings) || other.settings == settings) &&
             const DeepCollectionEquality().equals(other.values, values) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime));
+            (identical(other.startTime, startTime) || other.startTime == startTime));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, host, status, settings,
-      const DeepCollectionEquality().hash(values), startTime);
+  int get hashCode => Object.hash(
+      runtimeType, host, status, settings, const DeepCollectionEquality().hash(values), startTime);
 
   @JsonKey(ignore: true)
   @override
@@ -245,6 +238,5 @@ abstract class _PingSession extends PingSession {
   DateTime? get startTime;
   @override
   @JsonKey(ignore: true)
-  _$PingSessionCopyWith<_PingSession> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$PingSessionCopyWith<_PingSession> get copyWith => throw _privateConstructorUsedError;
 }

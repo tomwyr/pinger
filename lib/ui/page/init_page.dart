@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/store/ping_store.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/app/pinger_app.dart';
 
 class InitPage extends StatefulWidget {
   @override

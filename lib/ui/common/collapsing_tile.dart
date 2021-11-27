@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+
 import 'package:pinger/ui/common/inline_multi_child_layout_delegate.dart';
 
 class CollapsingTile extends StatelessWidget {
@@ -20,24 +21,19 @@ class CollapsingTile extends StatelessWidget {
         config: expansion,
         performLayout: (size, self) {
           final constraints = BoxConstraints.loose(size);
-          final avatarSize =
-              self.layoutChild(CollapsingTileItem.avatar, constraints);
-          final labelSize =
-              self.layoutChild(CollapsingTileItem.label, constraints);
-          final totalSize = Size(avatarSize.width + labelSize.width,
-              avatarSize.height + labelSize.height);
+          final avatarSize = self.layoutChild(CollapsingTileItem.avatar, constraints);
+          final labelSize = self.layoutChild(CollapsingTileItem.label, constraints);
+          final totalSize =
+              Size(avatarSize.width + labelSize.width, avatarSize.height + labelSize.height);
           final avatarX = (constraints.maxWidth -
                   (totalSize.width - avatarSize.width) * (1 - expansion) -
                   avatarSize.width) /
               2;
-          final labelX = (constraints.maxWidth -
-                  labelSize.width +
-                  avatarSize.width * (1 - expansion)) /
-              2;
+          final labelX =
+              (constraints.maxWidth - labelSize.width + avatarSize.width * (1 - expansion)) / 2;
           final avatarY = 0.0;
           final labelY = avatarSize.height * expansion;
-          self.positionChild(
-              CollapsingTileItem.avatar, Offset(avatarX, avatarY));
+          self.positionChild(CollapsingTileItem.avatar, Offset(avatarX, avatarY));
           self.positionChild(CollapsingTileItem.label, Offset(labelX, labelY));
         },
       ),

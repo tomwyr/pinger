@@ -7,11 +7,9 @@ class NotificationMessages {
 
   String pausedTitle(String host) => S.current.notificationPausedTitle(host);
 
-  String pausedBody(int length, String count) =>
-      S.current.notificationPausedBody(length, count);
+  String pausedBody(int length, String count) => S.current.notificationPausedBody(length, count);
 
   String doneTitle(String host) => S.current.notificationDoneTitle(host);
 
-  String doneBody(int min, int mean, int max) =>
-      S.current.notificationDoneBody(min, mean, max);
+  String doneBody(int min, int mean, int max) => S.current.notificationDoneBody(min, mean, max);
 }

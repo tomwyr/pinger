@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
+import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
-import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
@@ -122,9 +123,7 @@ class _HostsPageState extends BaseState<HostsPage> {
               size: Size.square(56.0),
               child: IconButton(
                 icon: Icon(_isEditing ? Icons.delete : Icons.delete_outline),
-                onPressed: !_isEditing || _selection.isNotEmpty
-                    ? _onEditPressed
-                    : null,
+                onPressed: !_isEditing || _selection.isNotEmpty ? _onEditPressed : null,
                 color: !_isEditing
                     ? R.colors.primaryLight
                     : _selection.isNotEmpty

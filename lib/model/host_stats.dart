@@ -11,6 +11,5 @@ class HostStats with _$HostStats {
     required DateTime pingTime,
   }) = _HostStats;
 
-  factory HostStats.fromJson(Map<String, dynamic> json) =>
-      _$HostStatsFromJson(json);
+  factory HostStats.fromJson(Map<String, dynamic> json) => _$HostStatsFromJson(json);
 }

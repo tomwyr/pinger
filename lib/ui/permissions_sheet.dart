@@ -1,6 +1,8 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+
+import 'package:app_settings/app_settings.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
@@ -37,8 +39,7 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
   @override
   void initState() {
     super.initState();
-    _handlers = [_notificationHandler, _locationHandler]
-      ..forEach((it) => it.init());
+    _handlers = [_notificationHandler, _locationHandler]..forEach((it) => it.init());
   }
 
   @override

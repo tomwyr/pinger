@@ -60,14 +60,12 @@ mixin _$PingResult {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PingResultCopyWith<PingResult> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PingResultCopyWith<PingResult> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $PingResultCopyWith<$Res> {
-  factory $PingResultCopyWith(
-          PingResult value, $Res Function(PingResult) then) =
+  factory $PingResultCopyWith(PingResult value, $Res Function(PingResult) then) =
       _$PingResultCopyWithImpl<$Res>;
   $Res call(
       {int? id,
@@ -149,8 +147,7 @@ class _$PingResultCopyWithImpl<$Res> implements $PingResultCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$PingResultCopyWith<$Res> implements $PingResultCopyWith<$Res> {
-  factory _$PingResultCopyWith(
-          _PingResult value, $Res Function(_PingResult) then) =
+  factory _$PingResultCopyWith(_PingResult value, $Res Function(_PingResult) then) =
       __$PingResultCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -171,8 +168,7 @@ abstract class _$PingResultCopyWith<$Res> implements $PingResultCopyWith<$Res> {
 /// @nodoc
 class __$PingResultCopyWithImpl<$Res> extends _$PingResultCopyWithImpl<$Res>
     implements _$PingResultCopyWith<$Res> {
-  __$PingResultCopyWithImpl(
-      _PingResult _value, $Res Function(_PingResult) _then)
+  __$PingResultCopyWithImpl(_PingResult _value, $Res Function(_PingResult) _then)
       : super(_value, (v) => _then(v as _PingResult));
 
   @override
@@ -233,8 +229,7 @@ class _$_PingResult implements _PingResult {
       required this.values,
       required this.stats});
 
-  factory _$_PingResult.fromJson(Map<String, dynamic> json) =>
-      _$$_PingResultFromJson(json);
+  factory _$_PingResult.fromJson(Map<String, dynamic> json) => _$$_PingResultFromJson(json);
 
   @override
   final int? id;
@@ -263,19 +258,16 @@ class _$_PingResult implements _PingResult {
             other is _PingResult &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.host, host) || other.host == host) &&
-            (identical(other.settings, settings) ||
-                other.settings == settings) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.duration, duration) ||
-                other.duration == duration) &&
+            (identical(other.settings, settings) || other.settings == settings) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
+            (identical(other.duration, duration) || other.duration == duration) &&
             const DeepCollectionEquality().equals(other.values, values) &&
             (identical(other.stats, stats) || other.stats == stats));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, host, settings, startTime,
-      duration, const DeepCollectionEquality().hash(values), stats);
+  int get hashCode => Object.hash(runtimeType, id, host, settings, startTime, duration,
+      const DeepCollectionEquality().hash(values), stats);
 
   @JsonKey(ignore: true)
   @override
@@ -298,8 +290,7 @@ abstract class _PingResult implements PingResult {
       required List<int?> values,
       required PingStats stats}) = _$_PingResult;
 
-  factory _PingResult.fromJson(Map<String, dynamic> json) =
-      _$_PingResult.fromJson;
+  factory _PingResult.fromJson(Map<String, dynamic> json) = _$_PingResult.fromJson;
 
   @override
   int? get id;
@@ -317,8 +308,7 @@ abstract class _PingResult implements PingResult {
   PingStats get stats;
   @override
   @JsonKey(ignore: true)
-  _$PingResultCopyWith<_PingResult> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$PingResultCopyWith<_PingResult> get copyWith => throw _privateConstructorUsedError;
 }
 
 PingStats _$PingStatsFromJson(Map<String, dynamic> json) {
@@ -353,8 +343,7 @@ mixin _$PingStats {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PingStatsCopyWith<PingStats> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PingStatsCopyWith<PingStats> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -397,8 +386,7 @@ class _$PingStatsCopyWithImpl<$Res> implements $PingStatsCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$PingStatsCopyWith<$Res> implements $PingStatsCopyWith<$Res> {
-  factory _$PingStatsCopyWith(
-          _PingStats value, $Res Function(_PingStats) then) =
+  factory _$PingStatsCopyWith(_PingStats value, $Res Function(_PingStats) then) =
       __$PingStatsCopyWithImpl<$Res>;
   @override
   $Res call({int min, int max, int mean});
@@ -439,11 +427,9 @@ class __$PingStatsCopyWithImpl<$Res> extends _$PingStatsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_PingStats implements _PingStats {
-  const _$_PingStats(
-      {required this.min, required this.max, required this.mean});
+  const _$_PingStats({required this.min, required this.max, required this.mean});
 
-  factory _$_PingStats.fromJson(Map<String, dynamic> json) =>
-      _$$_PingStatsFromJson(json);
+  factory _$_PingStats.fromJson(Map<String, dynamic> json) => _$$_PingStatsFromJson(json);
 
   @override
   final int min;
@@ -482,11 +468,9 @@ class _$_PingStats implements _PingStats {
 }
 
 abstract class _PingStats implements PingStats {
-  const factory _PingStats(
-      {required int min, required int max, required int mean}) = _$_PingStats;
+  const factory _PingStats({required int min, required int max, required int mean}) = _$_PingStats;
 
-  factory _PingStats.fromJson(Map<String, dynamic> json) =
-      _$_PingStats.fromJson;
+  factory _PingStats.fromJson(Map<String, dynamic> json) = _$_PingStats.fromJson;
 
   @override
   int get min;
@@ -496,6 +480,5 @@ abstract class _PingStats implements PingStats {
   int get mean;
   @override
   @JsonKey(ignore: true)
-  _$PingStatsCopyWith<_PingStats> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$PingStatsCopyWith<_PingStats> get copyWith => throw _privateConstructorUsedError;
 }

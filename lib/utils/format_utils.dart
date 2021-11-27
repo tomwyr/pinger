@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';

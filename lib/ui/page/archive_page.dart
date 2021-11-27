@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -41,8 +43,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       },
       child: Observer(
         builder: (_) => Scaffold(
-          appBar: _buildAppBar(_resultsStore.localResults!.isNotEmpty)
-              as PreferredSizeWidget?,
+          appBar: _buildAppBar(_resultsStore.localResults!.isNotEmpty) as PreferredSizeWidget?,
           body: _buildBody(_resultsStore.localResults),
         ),
       ),
@@ -96,8 +97,7 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       case ArchiveViewType.list:
         return _buildResultsList(results, ResultTileType.regular);
       case ArchiveViewType.host:
-        final hostResults =
-            results.where((it) => it!.host == _selectedHost).toList();
+        final hostResults = results.where((it) => it!.host == _selectedHost).toList();
         return _buildResultsList(hostResults, ResultTileType.detailed);
     }
   }
@@ -167,13 +167,11 @@ class _ArchivePageState extends BaseState<ArchivePage> {
         padding: const EdgeInsets.all(16.0),
         itemCount: results.length,
         itemBuilder: (_, index) => Padding(
-          padding:
-              index == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 16.0),
+          padding: index == 0 ? EdgeInsets.zero : const EdgeInsets.only(top: 16.0),
           child: ResultTile(
             result: results[index],
             type: type,
-            onPressed: () =>
-                PingerApp.router.show(RouteConfig.results(results[index])),
+            onPressed: () => PingerApp.router.show(RouteConfig.results(results[index])),
           ),
         ),
       ),

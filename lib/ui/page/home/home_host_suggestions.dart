@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/resources.dart';

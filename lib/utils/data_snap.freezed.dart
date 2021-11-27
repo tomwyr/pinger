@@ -85,8 +85,7 @@ mixin _$DataSnap<T> {
 
 /// @nodoc
 abstract class $DataSnapCopyWith<T, $Res> {
-  factory $DataSnapCopyWith(
-          DataSnap<T> value, $Res Function(DataSnap<T>) then) =
+  factory $DataSnapCopyWith(DataSnap<T> value, $Res Function(DataSnap<T>) then) =
       _$DataSnapCopyWithImpl<T, $Res>;
 }
 
@@ -101,8 +100,7 @@ class _$DataSnapCopyWithImpl<T, $Res> implements $DataSnapCopyWith<T, $Res> {
 
 /// @nodoc
 abstract class $SnapDataCopyWith<T, $Res> {
-  factory $SnapDataCopyWith(
-          SnapData<T> value, $Res Function(SnapData<T>) then) =
+  factory $SnapDataCopyWith(SnapData<T> value, $Res Function(SnapData<T>) then) =
       _$SnapDataCopyWithImpl<T, $Res>;
   $Res call({T value});
 }
@@ -151,8 +149,7 @@ class _$SnapData<T> implements SnapData<T> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
 
   @JsonKey(ignore: true)
   @override
@@ -233,22 +230,19 @@ abstract class SnapData<T> implements DataSnap<T> {
 
   T get value;
   @JsonKey(ignore: true)
-  $SnapDataCopyWith<T, SnapData<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+  $SnapDataCopyWith<T, SnapData<T>> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $SnapLoadingCopyWith<T, $Res> {
-  factory $SnapLoadingCopyWith(
-          SnapLoading<T> value, $Res Function(SnapLoading<T>) then) =
+  factory $SnapLoadingCopyWith(SnapLoading<T> value, $Res Function(SnapLoading<T>) then) =
       _$SnapLoadingCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
 class _$SnapLoadingCopyWithImpl<T, $Res> extends _$DataSnapCopyWithImpl<T, $Res>
     implements $SnapLoadingCopyWith<T, $Res> {
-  _$SnapLoadingCopyWithImpl(
-      SnapLoading<T> _value, $Res Function(SnapLoading<T>) _then)
+  _$SnapLoadingCopyWithImpl(SnapLoading<T> _value, $Res Function(SnapLoading<T>) _then)
       : super(_value, (v) => _then(v as SnapLoading<T>));
 
   @override
@@ -267,8 +261,7 @@ class _$SnapLoading<T> implements SnapLoading<T> {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SnapLoading<T>);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is SnapLoading<T>);
   }
 
   @override
@@ -349,16 +342,14 @@ abstract class SnapLoading<T> implements DataSnap<T> {
 
 /// @nodoc
 abstract class $SnapErrorCopyWith<T, $Res> {
-  factory $SnapErrorCopyWith(
-          SnapError<T> value, $Res Function(SnapError<T>) then) =
+  factory $SnapErrorCopyWith(SnapError<T> value, $Res Function(SnapError<T>) then) =
       _$SnapErrorCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
 class _$SnapErrorCopyWithImpl<T, $Res> extends _$DataSnapCopyWithImpl<T, $Res>
     implements $SnapErrorCopyWith<T, $Res> {
-  _$SnapErrorCopyWithImpl(
-      SnapError<T> _value, $Res Function(SnapError<T>) _then)
+  _$SnapErrorCopyWithImpl(SnapError<T> _value, $Res Function(SnapError<T>) _then)
       : super(_value, (v) => _then(v as SnapError<T>));
 
   @override
@@ -377,8 +368,7 @@ class _$SnapError<T> implements SnapError<T> {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is SnapError<T>);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is SnapError<T>);
   }
 
   @override

@@ -6,8 +6,7 @@ part of 'ping_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PingResult _$$_PingResultFromJson(Map<String, dynamic> json) =>
-    _$_PingResult(
+_$_PingResult _$$_PingResultFromJson(Map<String, dynamic> json) => _$_PingResult(
       id: json['id'] as int?,
       host: json['host'] as String,
       settings: PingSettings.fromJson(json['settings'] as Map<String, dynamic>),
@@ -17,8 +16,7 @@ _$_PingResult _$$_PingResultFromJson(Map<String, dynamic> json) =>
       stats: PingStats.fromJson(json['stats'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_PingResultToJson(_$_PingResult instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_PingResultToJson(_$_PingResult instance) => <String, dynamic>{
       'id': instance.id,
       'host': instance.host,
       'settings': instance.settings.toJson(),
@@ -34,8 +32,7 @@ _$_PingStats _$$_PingStatsFromJson(Map<String, dynamic> json) => _$_PingStats(
       mean: json['mean'] as int,
     );
 
-Map<String, dynamic> _$$_PingStatsToJson(_$_PingStats instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_PingStatsToJson(_$_PingStats instance) => <String, dynamic>{
       'min': instance.min,
       'max': instance.max,
       'mean': instance.mean,

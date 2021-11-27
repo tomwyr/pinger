@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
 
@@ -16,8 +17,7 @@ class PingSession with _$PingSession {
     DateTime? startTime,
   }) = _PingSession;
 
-  late final PingStats? stats =
-      values != null ? PingStats.fromValues(values!) : null;
+  late final PingStats? stats = values != null ? PingStats.fromValues(values!) : null;
 }
 
 enum PingStatus {
@@ -40,8 +40,7 @@ extension PingStatusExtensions on PingStatus? {
   bool get isSessionDone => this == PingStatus.sessionDone;
 
   bool get isQuickCheck =>
-      this == PingStatus.quickCheckStarted ||
-      this == PingStatus.quickCheckLocked;
+      this == PingStatus.quickCheckStarted || this == PingStatus.quickCheckLocked;
   bool get isStarted =>
       this == PingStatus.quickCheckStarted ||
       this == PingStatus.quickCheckLocked ||

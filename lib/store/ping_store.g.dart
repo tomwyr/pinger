@@ -12,24 +12,21 @@ mixin _$PingStore on PingStoreBase, Store {
   Computed<bool>? _$canArchiveResultComputed;
 
   @override
-  bool get canArchiveResult => (_$canArchiveResultComputed ??= Computed<bool>(
-          () => super.canArchiveResult,
-          name: 'PingStoreBase.canArchiveResult'))
+  bool get canArchiveResult => (_$canArchiveResultComputed ??=
+          Computed<bool>(() => super.canArchiveResult, name: 'PingStoreBase.canArchiveResult'))
       .value;
   Computed<bool>? _$didChangeSettingsComputed;
 
   @override
-  bool get didChangeSettings => (_$didChangeSettingsComputed ??= Computed<bool>(
-          () => super.didChangeSettings,
-          name: 'PingStoreBase.didChangeSettings'))
+  bool get didChangeSettings => (_$didChangeSettingsComputed ??=
+          Computed<bool>(() => super.didChangeSettings, name: 'PingStoreBase.didChangeSettings'))
       .value;
   Computed<String?>? _$currentHostComputed;
 
   @override
-  String? get currentHost =>
-      (_$currentHostComputed ??= Computed<String?>(() => super.currentHost,
-              name: 'PingStoreBase.currentHost'))
-          .value;
+  String? get currentHost => (_$currentHostComputed ??=
+          Computed<String?>(() => super.currentHost, name: 'PingStoreBase.currentHost'))
+      .value;
 
   final _$pingDurationAtom = Atom(name: 'PingStoreBase.pingDuration');
 
@@ -113,13 +110,11 @@ mixin _$PingStore on PingStoreBase, Store {
     return _$archiveResultAsyncAction.run(() => super.archiveResult());
   }
 
-  final _$PingStoreBaseActionController =
-      ActionController(name: 'PingStoreBase');
+  final _$PingStoreBaseActionController = ActionController(name: 'PingStoreBase');
 
   @override
   void init() {
-    final _$actionInfo =
-        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.init');
+    final _$actionInfo = _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.init');
     try {
       return super.init();
     } finally {
@@ -129,8 +124,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void initSession(String host) {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.initSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.initSession');
     try {
       return super.initSession(host);
     } finally {
@@ -140,8 +135,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void updateSettings(PingSettings settings) {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.updateSettings');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.updateSettings');
     try {
       return super.updateSettings(settings);
     } finally {
@@ -151,8 +146,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void clearSettings() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.clearSettings');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.clearSettings');
     try {
       return super.clearSettings();
     } finally {
@@ -162,8 +157,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void startQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.startQuickCheck');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.startQuickCheck');
     try {
       return super.startQuickCheck();
     } finally {
@@ -173,8 +168,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void lockQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.lockQuickCheck');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.lockQuickCheck');
     try {
       return super.lockQuickCheck();
     } finally {
@@ -184,8 +179,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void unlockQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.unlockQuickCheck');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.unlockQuickCheck');
     try {
       return super.unlockQuickCheck();
     } finally {
@@ -195,8 +190,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void stopQuickCheck() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.stopQuickCheck');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.stopQuickCheck');
     try {
       return super.stopQuickCheck();
     } finally {
@@ -206,8 +201,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void startSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.startSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.startSession');
     try {
       return super.startSession();
     } finally {
@@ -217,8 +212,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void pauseSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.pauseSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.pauseSession');
     try {
       return super.pauseSession();
     } finally {
@@ -228,8 +223,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void resumeSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.resumeSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.resumeSession');
     try {
       return super.resumeSession();
     } finally {
@@ -239,8 +234,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void stopSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.stopSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.stopSession');
     try {
       return super.stopSession();
     } finally {
@@ -250,8 +245,8 @@ mixin _$PingStore on PingStoreBase, Store {
 
   @override
   void restartSession() {
-    final _$actionInfo = _$PingStoreBaseActionController.startAction(
-        name: 'PingStoreBase.restartSession');
+    final _$actionInfo =
+        _$PingStoreBaseActionController.startAction(name: 'PingStoreBase.restartSession');
     try {
       return super.restartSession();
     } finally {

@@ -1,5 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fl_chart/fl_chart.dart';
+
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
@@ -59,8 +61,7 @@ class ResultSummaryChart extends StatelessWidget {
         LineChartBarData(
           colors: [R.colors.none],
           spots: values
-              .mapIndexed(
-                  (i, _) => FlSpot(i.toDouble(), values[minIndex]!.toDouble()))
+              .mapIndexed((i, _) => FlSpot(i.toDouble(), values[minIndex]!.toDouble()))
               .toList(),
         ),
       ],

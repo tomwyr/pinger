@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/ui/page/session/session_summary_section.dart';
@@ -22,8 +23,7 @@ class ResultDetailsResultsTab extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ResultDetailsResultsTabState createState() =>
-      _ResultDetailsResultsTabState();
+  _ResultDetailsResultsTabState createState() => _ResultDetailsResultsTabState();
 }
 
 class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {

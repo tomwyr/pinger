@@ -57,14 +57,12 @@ mixin _$UserSettings {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserSettingsCopyWith<UserSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  $UserSettingsCopyWith<UserSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserSettingsCopyWith<$Res> {
-  factory $UserSettingsCopyWith(
-          UserSettings value, $Res Function(UserSettings) then) =
+  factory $UserSettingsCopyWith(UserSettings value, $Res Function(UserSettings) then) =
       _$UserSettingsCopyWithImpl<$Res>;
   $Res call(
       {PingSettings pingSettings,
@@ -151,10 +149,8 @@ class _$UserSettingsCopyWithImpl<$Res> implements $UserSettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$UserSettingsCopyWith<$Res>
-    implements $UserSettingsCopyWith<$Res> {
-  factory _$UserSettingsCopyWith(
-          _UserSettings value, $Res Function(_UserSettings) then) =
+abstract class _$UserSettingsCopyWith<$Res> implements $UserSettingsCopyWith<$Res> {
+  factory _$UserSettingsCopyWith(_UserSettings value, $Res Function(_UserSettings) then) =
       __$UserSettingsCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -176,8 +172,7 @@ abstract class _$UserSettingsCopyWith<$Res>
 /// @nodoc
 class __$UserSettingsCopyWithImpl<$Res> extends _$UserSettingsCopyWithImpl<$Res>
     implements _$UserSettingsCopyWith<$Res> {
-  __$UserSettingsCopyWithImpl(
-      _UserSettings _value, $Res Function(_UserSettings) _then)
+  __$UserSettingsCopyWithImpl(_UserSettings _value, $Res Function(_UserSettings) _then)
       : super(_value, (v) => _then(v as _UserSettings));
 
   @override
@@ -232,8 +227,7 @@ class _$_UserSettings implements _UserSettings {
       required this.restoreHost,
       required this.nightMode});
 
-  factory _$_UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_UserSettingsFromJson(json);
+  factory _$_UserSettings.fromJson(Map<String, dynamic> json) => _$$_UserSettingsFromJson(json);
 
   @override
   final PingSettings pingSettings;
@@ -258,23 +252,19 @@ class _$_UserSettings implements _UserSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserSettings &&
-            (identical(other.pingSettings, pingSettings) ||
-                other.pingSettings == pingSettings) &&
+            (identical(other.pingSettings, pingSettings) || other.pingSettings == pingSettings) &&
             (identical(other.shareSettings, shareSettings) ||
                 other.shareSettings == shareSettings) &&
-            (identical(other.traySettings, traySettings) ||
-                other.traySettings == traySettings) &&
+            (identical(other.traySettings, traySettings) || other.traySettings == traySettings) &&
             (identical(other.showSystemNotification, showSystemNotification) ||
                 other.showSystemNotification == showSystemNotification) &&
-            (identical(other.restoreHost, restoreHost) ||
-                other.restoreHost == restoreHost) &&
-            (identical(other.nightMode, nightMode) ||
-                other.nightMode == nightMode));
+            (identical(other.restoreHost, restoreHost) || other.restoreHost == restoreHost) &&
+            (identical(other.nightMode, nightMode) || other.nightMode == nightMode));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pingSettings, shareSettings,
-      traySettings, showSystemNotification, restoreHost, nightMode);
+  int get hashCode => Object.hash(runtimeType, pingSettings, shareSettings, traySettings,
+      showSystemNotification, restoreHost, nightMode);
 
   @JsonKey(ignore: true)
   @override
@@ -296,8 +286,7 @@ abstract class _UserSettings implements UserSettings {
       required bool restoreHost,
       required bool nightMode}) = _$_UserSettings;
 
-  factory _UserSettings.fromJson(Map<String, dynamic> json) =
-      _$_UserSettings.fromJson;
+  factory _UserSettings.fromJson(Map<String, dynamic> json) = _$_UserSettings.fromJson;
 
   @override
   PingSettings get pingSettings;
@@ -313,8 +302,7 @@ abstract class _UserSettings implements UserSettings {
   bool get nightMode;
   @override
   @JsonKey(ignore: true)
-  _$UserSettingsCopyWith<_UserSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$UserSettingsCopyWith<_UserSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 ShareSettings _$ShareSettingsFromJson(Map<String, dynamic> json) {
@@ -325,8 +313,7 @@ ShareSettings _$ShareSettingsFromJson(Map<String, dynamic> json) {
 class _$ShareSettingsTearOff {
   const _$ShareSettingsTearOff();
 
-  _ShareSettings call(
-      {required bool shareResults, required bool attachLocation}) {
+  _ShareSettings call({required bool shareResults, required bool attachLocation}) {
     return _ShareSettings(
       shareResults: shareResults,
       attachLocation: attachLocation,
@@ -348,21 +335,18 @@ mixin _$ShareSettings {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ShareSettingsCopyWith<ShareSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ShareSettingsCopyWith<ShareSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ShareSettingsCopyWith<$Res> {
-  factory $ShareSettingsCopyWith(
-          ShareSettings value, $Res Function(ShareSettings) then) =
+  factory $ShareSettingsCopyWith(ShareSettings value, $Res Function(ShareSettings) then) =
       _$ShareSettingsCopyWithImpl<$Res>;
   $Res call({bool shareResults, bool attachLocation});
 }
 
 /// @nodoc
-class _$ShareSettingsCopyWithImpl<$Res>
-    implements $ShareSettingsCopyWith<$Res> {
+class _$ShareSettingsCopyWithImpl<$Res> implements $ShareSettingsCopyWith<$Res> {
   _$ShareSettingsCopyWithImpl(this._value, this._then);
 
   final ShareSettings _value;
@@ -388,21 +372,17 @@ class _$ShareSettingsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$ShareSettingsCopyWith<$Res>
-    implements $ShareSettingsCopyWith<$Res> {
-  factory _$ShareSettingsCopyWith(
-          _ShareSettings value, $Res Function(_ShareSettings) then) =
+abstract class _$ShareSettingsCopyWith<$Res> implements $ShareSettingsCopyWith<$Res> {
+  factory _$ShareSettingsCopyWith(_ShareSettings value, $Res Function(_ShareSettings) then) =
       __$ShareSettingsCopyWithImpl<$Res>;
   @override
   $Res call({bool shareResults, bool attachLocation});
 }
 
 /// @nodoc
-class __$ShareSettingsCopyWithImpl<$Res>
-    extends _$ShareSettingsCopyWithImpl<$Res>
+class __$ShareSettingsCopyWithImpl<$Res> extends _$ShareSettingsCopyWithImpl<$Res>
     implements _$ShareSettingsCopyWith<$Res> {
-  __$ShareSettingsCopyWithImpl(
-      _ShareSettings _value, $Res Function(_ShareSettings) _then)
+  __$ShareSettingsCopyWithImpl(_ShareSettings _value, $Res Function(_ShareSettings) _then)
       : super(_value, (v) => _then(v as _ShareSettings));
 
   @override
@@ -431,8 +411,7 @@ class __$ShareSettingsCopyWithImpl<$Res>
 class _$_ShareSettings implements _ShareSettings {
   _$_ShareSettings({required this.shareResults, required this.attachLocation});
 
-  factory _$_ShareSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_ShareSettingsFromJson(json);
+  factory _$_ShareSettings.fromJson(Map<String, dynamic> json) => _$$_ShareSettingsFromJson(json);
 
   @override
   final bool shareResults;
@@ -449,8 +428,7 @@ class _$_ShareSettings implements _ShareSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ShareSettings &&
-            (identical(other.shareResults, shareResults) ||
-                other.shareResults == shareResults) &&
+            (identical(other.shareResults, shareResults) || other.shareResults == shareResults) &&
             (identical(other.attachLocation, attachLocation) ||
                 other.attachLocation == attachLocation));
   }
@@ -470,12 +448,10 @@ class _$_ShareSettings implements _ShareSettings {
 }
 
 abstract class _ShareSettings implements ShareSettings {
-  factory _ShareSettings(
-      {required bool shareResults,
-      required bool attachLocation}) = _$_ShareSettings;
+  factory _ShareSettings({required bool shareResults, required bool attachLocation}) =
+      _$_ShareSettings;
 
-  factory _ShareSettings.fromJson(Map<String, dynamic> json) =
-      _$_ShareSettings.fromJson;
+  factory _ShareSettings.fromJson(Map<String, dynamic> json) = _$_ShareSettings.fromJson;
 
   @override
   bool get shareResults;
@@ -483,8 +459,7 @@ abstract class _ShareSettings implements ShareSettings {
   bool get attachLocation;
   @override
   @JsonKey(ignore: true)
-  _$ShareSettingsCopyWith<_ShareSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$ShareSettingsCopyWith<_ShareSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 PingSettings _$PingSettingsFromJson(Map<String, dynamic> json) {
@@ -525,14 +500,12 @@ mixin _$PingSettings {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PingSettingsCopyWith<PingSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PingSettingsCopyWith<PingSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $PingSettingsCopyWith<$Res> {
-  factory $PingSettingsCopyWith(
-          PingSettings value, $Res Function(PingSettings) then) =
+  factory $PingSettingsCopyWith(PingSettings value, $Res Function(PingSettings) then) =
       _$PingSettingsCopyWithImpl<$Res>;
   $Res call({NumSetting count, int packetSize, int interval, int timeout});
 
@@ -583,10 +556,8 @@ class _$PingSettingsCopyWithImpl<$Res> implements $PingSettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PingSettingsCopyWith<$Res>
-    implements $PingSettingsCopyWith<$Res> {
-  factory _$PingSettingsCopyWith(
-          _PingSettings value, $Res Function(_PingSettings) then) =
+abstract class _$PingSettingsCopyWith<$Res> implements $PingSettingsCopyWith<$Res> {
+  factory _$PingSettingsCopyWith(_PingSettings value, $Res Function(_PingSettings) then) =
       __$PingSettingsCopyWithImpl<$Res>;
   @override
   $Res call({NumSetting count, int packetSize, int interval, int timeout});
@@ -598,8 +569,7 @@ abstract class _$PingSettingsCopyWith<$Res>
 /// @nodoc
 class __$PingSettingsCopyWithImpl<$Res> extends _$PingSettingsCopyWithImpl<$Res>
     implements _$PingSettingsCopyWith<$Res> {
-  __$PingSettingsCopyWithImpl(
-      _PingSettings _value, $Res Function(_PingSettings) _then)
+  __$PingSettingsCopyWithImpl(_PingSettings _value, $Res Function(_PingSettings) _then)
       : super(_value, (v) => _then(v as _PingSettings));
 
   @override
@@ -642,8 +612,7 @@ class _$_PingSettings implements _PingSettings {
       required this.interval,
       required this.timeout});
 
-  factory _$_PingSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_PingSettingsFromJson(json);
+  factory _$_PingSettings.fromJson(Map<String, dynamic> json) => _$$_PingSettingsFromJson(json);
 
   @override
   final NumSetting count;
@@ -665,16 +634,13 @@ class _$_PingSettings implements _PingSettings {
         (other.runtimeType == runtimeType &&
             other is _PingSettings &&
             (identical(other.count, count) || other.count == count) &&
-            (identical(other.packetSize, packetSize) ||
-                other.packetSize == packetSize) &&
-            (identical(other.interval, interval) ||
-                other.interval == interval) &&
+            (identical(other.packetSize, packetSize) || other.packetSize == packetSize) &&
+            (identical(other.interval, interval) || other.interval == interval) &&
             (identical(other.timeout, timeout) || other.timeout == timeout));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, count, packetSize, interval, timeout);
+  int get hashCode => Object.hash(runtimeType, count, packetSize, interval, timeout);
 
   @JsonKey(ignore: true)
   @override
@@ -694,8 +660,7 @@ abstract class _PingSettings implements PingSettings {
       required int interval,
       required int timeout}) = _$_PingSettings;
 
-  factory _PingSettings.fromJson(Map<String, dynamic> json) =
-      _$_PingSettings.fromJson;
+  factory _PingSettings.fromJson(Map<String, dynamic> json) = _$_PingSettings.fromJson;
 
   @override
   NumSetting get count;
@@ -707,8 +672,7 @@ abstract class _PingSettings implements PingSettings {
   int get timeout;
   @override
   @JsonKey(ignore: true)
-  _$PingSettingsCopyWith<_PingSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$PingSettingsCopyWith<_PingSettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 NumSetting _$NumSettingFromJson(Map<String, dynamic> json) {
@@ -719,8 +683,8 @@ NumSetting _$NumSettingFromJson(Map<String, dynamic> json) {
       return _InfiniteNumSetting.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'NumSetting',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'runtimeType', 'NumSetting', 'Invalid union type "${json['runtimeType']}"!');
   }
 }
 
@@ -791,8 +755,7 @@ mixin _$NumSetting {
 
 /// @nodoc
 abstract class $NumSettingCopyWith<$Res> {
-  factory $NumSettingCopyWith(
-          NumSetting value, $Res Function(NumSetting) then) =
+  factory $NumSettingCopyWith(NumSetting value, $Res Function(NumSetting) then) =
       _$NumSettingCopyWithImpl<$Res>;
 }
 
@@ -814,11 +777,9 @@ abstract class _$FiniteNumSettingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$FiniteNumSettingCopyWithImpl<$Res>
-    extends _$NumSettingCopyWithImpl<$Res>
+class __$FiniteNumSettingCopyWithImpl<$Res> extends _$NumSettingCopyWithImpl<$Res>
     implements _$FiniteNumSettingCopyWith<$Res> {
-  __$FiniteNumSettingCopyWithImpl(
-      _FiniteNumSetting _value, $Res Function(_FiniteNumSetting) _then)
+  __$FiniteNumSettingCopyWithImpl(_FiniteNumSetting _value, $Res Function(_FiniteNumSetting) _then)
       : super(_value, (v) => _then(v as _FiniteNumSetting));
 
   @override
@@ -840,8 +801,7 @@ class __$FiniteNumSettingCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_FiniteNumSetting implements _FiniteNumSetting {
-  const _$_FiniteNumSetting({required this.value, String? $type})
-      : $type = $type ?? 'finite';
+  const _$_FiniteNumSetting({required this.value, String? $type}) : $type = $type ?? 'finite';
 
   factory _$_FiniteNumSetting.fromJson(Map<String, dynamic> json) =>
       _$$_FiniteNumSettingFromJson(json);
@@ -944,13 +904,11 @@ class _$_FiniteNumSetting implements _FiniteNumSetting {
 abstract class _FiniteNumSetting implements NumSetting {
   const factory _FiniteNumSetting({required int value}) = _$_FiniteNumSetting;
 
-  factory _FiniteNumSetting.fromJson(Map<String, dynamic> json) =
-      _$_FiniteNumSetting.fromJson;
+  factory _FiniteNumSetting.fromJson(Map<String, dynamic> json) = _$_FiniteNumSetting.fromJson;
 
   int get value;
   @JsonKey(ignore: true)
-  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$FiniteNumSettingCopyWith<_FiniteNumSetting> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -961,8 +919,7 @@ abstract class _$InfiniteNumSettingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InfiniteNumSettingCopyWithImpl<$Res>
-    extends _$NumSettingCopyWithImpl<$Res>
+class __$InfiniteNumSettingCopyWithImpl<$Res> extends _$NumSettingCopyWithImpl<$Res>
     implements _$InfiniteNumSettingCopyWith<$Res> {
   __$InfiniteNumSettingCopyWithImpl(
       _InfiniteNumSetting _value, $Res Function(_InfiniteNumSetting) _then)
@@ -1068,8 +1025,7 @@ class _$_InfiniteNumSetting implements _InfiniteNumSetting {
 abstract class _InfiniteNumSetting implements NumSetting {
   const factory _InfiniteNumSetting() = _$_InfiniteNumSetting;
 
-  factory _InfiniteNumSetting.fromJson(Map<String, dynamic> json) =
-      _$_InfiniteNumSetting.fromJson;
+  factory _InfiniteNumSetting.fromJson(Map<String, dynamic> json) = _$_InfiniteNumSetting.fromJson;
 }
 
 TraySettings _$TraySettingsFromJson(Map<String, dynamic> json) {
@@ -1102,14 +1058,12 @@ mixin _$TraySettings {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TraySettingsCopyWith<TraySettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TraySettingsCopyWith<TraySettings> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TraySettingsCopyWith<$Res> {
-  factory $TraySettingsCopyWith(
-          TraySettings value, $Res Function(TraySettings) then) =
+  factory $TraySettingsCopyWith(TraySettings value, $Res Function(TraySettings) then) =
       _$TraySettingsCopyWithImpl<$Res>;
   $Res call({bool enabled, bool autoReveal});
 }
@@ -1141,10 +1095,8 @@ class _$TraySettingsCopyWithImpl<$Res> implements $TraySettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$TraySettingsCopyWith<$Res>
-    implements $TraySettingsCopyWith<$Res> {
-  factory _$TraySettingsCopyWith(
-          _TraySettings value, $Res Function(_TraySettings) then) =
+abstract class _$TraySettingsCopyWith<$Res> implements $TraySettingsCopyWith<$Res> {
+  factory _$TraySettingsCopyWith(_TraySettings value, $Res Function(_TraySettings) then) =
       __$TraySettingsCopyWithImpl<$Res>;
   @override
   $Res call({bool enabled, bool autoReveal});
@@ -1153,8 +1105,7 @@ abstract class _$TraySettingsCopyWith<$Res>
 /// @nodoc
 class __$TraySettingsCopyWithImpl<$Res> extends _$TraySettingsCopyWithImpl<$Res>
     implements _$TraySettingsCopyWith<$Res> {
-  __$TraySettingsCopyWithImpl(
-      _TraySettings _value, $Res Function(_TraySettings) _then)
+  __$TraySettingsCopyWithImpl(_TraySettings _value, $Res Function(_TraySettings) _then)
       : super(_value, (v) => _then(v as _TraySettings));
 
   @override
@@ -1183,8 +1134,7 @@ class __$TraySettingsCopyWithImpl<$Res> extends _$TraySettingsCopyWithImpl<$Res>
 class _$_TraySettings implements _TraySettings {
   _$_TraySettings({required this.enabled, required this.autoReveal});
 
-  factory _$_TraySettings.fromJson(Map<String, dynamic> json) =>
-      _$$_TraySettingsFromJson(json);
+  factory _$_TraySettings.fromJson(Map<String, dynamic> json) => _$$_TraySettingsFromJson(json);
 
   @override
   final bool enabled;
@@ -1202,8 +1152,7 @@ class _$_TraySettings implements _TraySettings {
         (other.runtimeType == runtimeType &&
             other is _TraySettings &&
             (identical(other.enabled, enabled) || other.enabled == enabled) &&
-            (identical(other.autoReveal, autoReveal) ||
-                other.autoReveal == autoReveal));
+            (identical(other.autoReveal, autoReveal) || other.autoReveal == autoReveal));
   }
 
   @override
@@ -1221,11 +1170,9 @@ class _$_TraySettings implements _TraySettings {
 }
 
 abstract class _TraySettings implements TraySettings {
-  factory _TraySettings({required bool enabled, required bool autoReveal}) =
-      _$_TraySettings;
+  factory _TraySettings({required bool enabled, required bool autoReveal}) = _$_TraySettings;
 
-  factory _TraySettings.fromJson(Map<String, dynamic> json) =
-      _$_TraySettings.fromJson;
+  factory _TraySettings.fromJson(Map<String, dynamic> json) = _$_TraySettings.fromJson;
 
   @override
   bool get enabled;
@@ -1233,6 +1180,5 @@ abstract class _TraySettings implements TraySettings {
   bool get autoReveal;
   @override
   @JsonKey(ignore: true)
-  _$TraySettingsCopyWith<_TraySettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$TraySettingsCopyWith<_TraySettings> get copyWith => throw _privateConstructorUsedError;
 }

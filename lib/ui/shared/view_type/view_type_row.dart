@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/ui/shared/view_type/view_type_button.dart';
 
 class ViewTypeRow<T> extends StatelessWidget {
@@ -20,9 +21,8 @@ class ViewTypeRow<T> extends StatelessWidget {
         final buttonWidth = constraints.maxWidth / labeledTypes.length;
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: labeledTypes.entries
-              .map((it) => _buildViewTypeButton(it.key, buttonWidth))
-              .toList(),
+          children:
+              labeledTypes.entries.map((it) => _buildViewTypeButton(it.key, buttonWidth)).toList(),
         );
       },
     );

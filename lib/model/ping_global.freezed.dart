@@ -21,8 +21,7 @@ GlobalPingCounts _$GlobalPingCountsFromJson(Map<String, dynamic> json) {
 class _$GlobalPingCountsTearOff {
   const _$GlobalPingCountsTearOff();
 
-  _GlobalPingCounts call(
-      {required int totalCount, required List<PingCount> pingCounts}) {
+  _GlobalPingCounts call({required int totalCount, required List<PingCount> pingCounts}) {
     return _GlobalPingCounts(
       totalCount: totalCount,
       pingCounts: pingCounts,
@@ -44,21 +43,18 @@ mixin _$GlobalPingCounts {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GlobalPingCountsCopyWith<GlobalPingCounts> get copyWith =>
-      throw _privateConstructorUsedError;
+  $GlobalPingCountsCopyWith<GlobalPingCounts> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $GlobalPingCountsCopyWith<$Res> {
-  factory $GlobalPingCountsCopyWith(
-          GlobalPingCounts value, $Res Function(GlobalPingCounts) then) =
+  factory $GlobalPingCountsCopyWith(GlobalPingCounts value, $Res Function(GlobalPingCounts) then) =
       _$GlobalPingCountsCopyWithImpl<$Res>;
   $Res call({int totalCount, List<PingCount> pingCounts});
 }
 
 /// @nodoc
-class _$GlobalPingCountsCopyWithImpl<$Res>
-    implements $GlobalPingCountsCopyWith<$Res> {
+class _$GlobalPingCountsCopyWithImpl<$Res> implements $GlobalPingCountsCopyWith<$Res> {
   _$GlobalPingCountsCopyWithImpl(this._value, this._then);
 
   final GlobalPingCounts _value;
@@ -84,8 +80,7 @@ class _$GlobalPingCountsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GlobalPingCountsCopyWith<$Res>
-    implements $GlobalPingCountsCopyWith<$Res> {
+abstract class _$GlobalPingCountsCopyWith<$Res> implements $GlobalPingCountsCopyWith<$Res> {
   factory _$GlobalPingCountsCopyWith(
           _GlobalPingCounts value, $Res Function(_GlobalPingCounts) then) =
       __$GlobalPingCountsCopyWithImpl<$Res>;
@@ -94,11 +89,9 @@ abstract class _$GlobalPingCountsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GlobalPingCountsCopyWithImpl<$Res>
-    extends _$GlobalPingCountsCopyWithImpl<$Res>
+class __$GlobalPingCountsCopyWithImpl<$Res> extends _$GlobalPingCountsCopyWithImpl<$Res>
     implements _$GlobalPingCountsCopyWith<$Res> {
-  __$GlobalPingCountsCopyWithImpl(
-      _GlobalPingCounts _value, $Res Function(_GlobalPingCounts) _then)
+  __$GlobalPingCountsCopyWithImpl(_GlobalPingCounts _value, $Res Function(_GlobalPingCounts) _then)
       : super(_value, (v) => _then(v as _GlobalPingCounts));
 
   @override
@@ -145,15 +138,13 @@ class _$_GlobalPingCounts implements _GlobalPingCounts {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _GlobalPingCounts &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            const DeepCollectionEquality()
-                .equals(other.pingCounts, pingCounts));
+            (identical(other.totalCount, totalCount) || other.totalCount == totalCount) &&
+            const DeepCollectionEquality().equals(other.pingCounts, pingCounts));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, totalCount, const DeepCollectionEquality().hash(pingCounts));
+  int get hashCode =>
+      Object.hash(runtimeType, totalCount, const DeepCollectionEquality().hash(pingCounts));
 
   @JsonKey(ignore: true)
   @override
@@ -167,12 +158,10 @@ class _$_GlobalPingCounts implements _GlobalPingCounts {
 }
 
 abstract class _GlobalPingCounts implements GlobalPingCounts {
-  factory _GlobalPingCounts(
-      {required int totalCount,
-      required List<PingCount> pingCounts}) = _$_GlobalPingCounts;
+  factory _GlobalPingCounts({required int totalCount, required List<PingCount> pingCounts}) =
+      _$_GlobalPingCounts;
 
-  factory _GlobalPingCounts.fromJson(Map<String, dynamic> json) =
-      _$_GlobalPingCounts.fromJson;
+  factory _GlobalPingCounts.fromJson(Map<String, dynamic> json) = _$_GlobalPingCounts.fromJson;
 
   @override
   int get totalCount;
@@ -180,8 +169,7 @@ abstract class _GlobalPingCounts implements GlobalPingCounts {
   List<PingCount> get pingCounts;
   @override
   @JsonKey(ignore: true)
-  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$GlobalPingCountsCopyWith<_GlobalPingCounts> get copyWith => throw _privateConstructorUsedError;
 }
 
 PingCount _$PingCountFromJson(Map<String, dynamic> json) {
@@ -214,8 +202,7 @@ mixin _$PingCount {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PingCountCopyWith<PingCount> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PingCountCopyWith<PingCount> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -253,8 +240,7 @@ class _$PingCountCopyWithImpl<$Res> implements $PingCountCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$PingCountCopyWith<$Res> implements $PingCountCopyWith<$Res> {
-  factory _$PingCountCopyWith(
-          _PingCount value, $Res Function(_PingCount) then) =
+  factory _$PingCountCopyWith(_PingCount value, $Res Function(_PingCount) then) =
       __$PingCountCopyWithImpl<$Res>;
   @override
   $Res call({String host, int count});
@@ -292,8 +278,7 @@ class __$PingCountCopyWithImpl<$Res> extends _$PingCountCopyWithImpl<$Res>
 class _$_PingCount implements _PingCount {
   _$_PingCount({required this.host, required this.count});
 
-  factory _$_PingCount.fromJson(Map<String, dynamic> json) =>
-      _$$_PingCountFromJson(json);
+  factory _$_PingCount.fromJson(Map<String, dynamic> json) => _$$_PingCountFromJson(json);
 
   @override
   final String host;
@@ -331,8 +316,7 @@ class _$_PingCount implements _PingCount {
 abstract class _PingCount implements PingCount {
   factory _PingCount({required String host, required int count}) = _$_PingCount;
 
-  factory _PingCount.fromJson(Map<String, dynamic> json) =
-      _$_PingCount.fromJson;
+  factory _PingCount.fromJson(Map<String, dynamic> json) = _$_PingCount.fromJson;
 
   @override
   String get host;
@@ -340,8 +324,7 @@ abstract class _PingCount implements PingCount {
   int get count;
   @override
   @JsonKey(ignore: true)
-  _$PingCountCopyWith<_PingCount> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$PingCountCopyWith<_PingCount> get copyWith => throw _privateConstructorUsedError;
 }
 
 GlobalHostResults _$GlobalHostResultsFromJson(Map<String, dynamic> json) {
@@ -375,13 +358,11 @@ const $GlobalHostResults = _$GlobalHostResultsTearOff();
 mixin _$GlobalHostResults {
   int get totalCount => throw _privateConstructorUsedError;
   ValueResults get valueResults => throw _privateConstructorUsedError;
-  List<LocationResults> get locationResults =>
-      throw _privateConstructorUsedError;
+  List<LocationResults> get locationResults => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GlobalHostResultsCopyWith<GlobalHostResults> get copyWith =>
-      throw _privateConstructorUsedError;
+  $GlobalHostResultsCopyWith<GlobalHostResults> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -389,17 +370,13 @@ abstract class $GlobalHostResultsCopyWith<$Res> {
   factory $GlobalHostResultsCopyWith(
           GlobalHostResults value, $Res Function(GlobalHostResults) then) =
       _$GlobalHostResultsCopyWithImpl<$Res>;
-  $Res call(
-      {int totalCount,
-      ValueResults valueResults,
-      List<LocationResults> locationResults});
+  $Res call({int totalCount, ValueResults valueResults, List<LocationResults> locationResults});
 
   $ValueResultsCopyWith<$Res> get valueResults;
 }
 
 /// @nodoc
-class _$GlobalHostResultsCopyWithImpl<$Res>
-    implements $GlobalHostResultsCopyWith<$Res> {
+class _$GlobalHostResultsCopyWithImpl<$Res> implements $GlobalHostResultsCopyWith<$Res> {
   _$GlobalHostResultsCopyWithImpl(this._value, this._then);
 
   final GlobalHostResults _value;
@@ -437,24 +414,19 @@ class _$GlobalHostResultsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GlobalHostResultsCopyWith<$Res>
-    implements $GlobalHostResultsCopyWith<$Res> {
+abstract class _$GlobalHostResultsCopyWith<$Res> implements $GlobalHostResultsCopyWith<$Res> {
   factory _$GlobalHostResultsCopyWith(
           _GlobalHostResults value, $Res Function(_GlobalHostResults) then) =
       __$GlobalHostResultsCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int totalCount,
-      ValueResults valueResults,
-      List<LocationResults> locationResults});
+  $Res call({int totalCount, ValueResults valueResults, List<LocationResults> locationResults});
 
   @override
   $ValueResultsCopyWith<$Res> get valueResults;
 }
 
 /// @nodoc
-class __$GlobalHostResultsCopyWithImpl<$Res>
-    extends _$GlobalHostResultsCopyWithImpl<$Res>
+class __$GlobalHostResultsCopyWithImpl<$Res> extends _$GlobalHostResultsCopyWithImpl<$Res>
     implements _$GlobalHostResultsCopyWith<$Res> {
   __$GlobalHostResultsCopyWithImpl(
       _GlobalHostResults _value, $Res Function(_GlobalHostResults) _then)
@@ -490,9 +462,7 @@ class __$GlobalHostResultsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_GlobalHostResults implements _GlobalHostResults {
   _$_GlobalHostResults(
-      {required this.totalCount,
-      required this.valueResults,
-      required this.locationResults});
+      {required this.totalCount, required this.valueResults, required this.locationResults});
 
   factory _$_GlobalHostResults.fromJson(Map<String, dynamic> json) =>
       _$$_GlobalHostResultsFromJson(json);
@@ -514,17 +484,14 @@ class _$_GlobalHostResults implements _GlobalHostResults {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _GlobalHostResults &&
-            (identical(other.totalCount, totalCount) ||
-                other.totalCount == totalCount) &&
-            (identical(other.valueResults, valueResults) ||
-                other.valueResults == valueResults) &&
-            const DeepCollectionEquality()
-                .equals(other.locationResults, locationResults));
+            (identical(other.totalCount, totalCount) || other.totalCount == totalCount) &&
+            (identical(other.valueResults, valueResults) || other.valueResults == valueResults) &&
+            const DeepCollectionEquality().equals(other.locationResults, locationResults));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, totalCount, valueResults,
-      const DeepCollectionEquality().hash(locationResults));
+  int get hashCode => Object.hash(
+      runtimeType, totalCount, valueResults, const DeepCollectionEquality().hash(locationResults));
 
   @JsonKey(ignore: true)
   @override
@@ -543,8 +510,7 @@ abstract class _GlobalHostResults implements GlobalHostResults {
       required ValueResults valueResults,
       required List<LocationResults> locationResults}) = _$_GlobalHostResults;
 
-  factory _GlobalHostResults.fromJson(Map<String, dynamic> json) =
-      _$_GlobalHostResults.fromJson;
+  factory _GlobalHostResults.fromJson(Map<String, dynamic> json) = _$_GlobalHostResults.fromJson;
 
   @override
   int get totalCount;
@@ -567,9 +533,7 @@ class _$ValueResultsTearOff {
   const _$ValueResultsTearOff();
 
   _ValueResults call(
-      {required Map<int, int> min,
-      required Map<int, int> mean,
-      required Map<int, int> max}) {
+      {required Map<int, int> min, required Map<int, int> mean, required Map<int, int> max}) {
     return _ValueResults(
       min: min,
       mean: mean,
@@ -593,14 +557,12 @@ mixin _$ValueResults {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ValueResultsCopyWith<ValueResults> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ValueResultsCopyWith<ValueResults> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ValueResultsCopyWith<$Res> {
-  factory $ValueResultsCopyWith(
-          ValueResults value, $Res Function(ValueResults) then) =
+  factory $ValueResultsCopyWith(ValueResults value, $Res Function(ValueResults) then) =
       _$ValueResultsCopyWithImpl<$Res>;
   $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
 }
@@ -637,10 +599,8 @@ class _$ValueResultsCopyWithImpl<$Res> implements $ValueResultsCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ValueResultsCopyWith<$Res>
-    implements $ValueResultsCopyWith<$Res> {
-  factory _$ValueResultsCopyWith(
-          _ValueResults value, $Res Function(_ValueResults) then) =
+abstract class _$ValueResultsCopyWith<$Res> implements $ValueResultsCopyWith<$Res> {
+  factory _$ValueResultsCopyWith(_ValueResults value, $Res Function(_ValueResults) then) =
       __$ValueResultsCopyWithImpl<$Res>;
   @override
   $Res call({Map<int, int> min, Map<int, int> mean, Map<int, int> max});
@@ -649,8 +609,7 @@ abstract class _$ValueResultsCopyWith<$Res>
 /// @nodoc
 class __$ValueResultsCopyWithImpl<$Res> extends _$ValueResultsCopyWithImpl<$Res>
     implements _$ValueResultsCopyWith<$Res> {
-  __$ValueResultsCopyWithImpl(
-      _ValueResults _value, $Res Function(_ValueResults) _then)
+  __$ValueResultsCopyWithImpl(_ValueResults _value, $Res Function(_ValueResults) _then)
       : super(_value, (v) => _then(v as _ValueResults));
 
   @override
@@ -684,8 +643,7 @@ class __$ValueResultsCopyWithImpl<$Res> extends _$ValueResultsCopyWithImpl<$Res>
 class _$_ValueResults implements _ValueResults {
   _$_ValueResults({required this.min, required this.mean, required this.max});
 
-  factory _$_ValueResults.fromJson(Map<String, dynamic> json) =>
-      _$$_ValueResultsFromJson(json);
+  factory _$_ValueResults.fromJson(Map<String, dynamic> json) => _$$_ValueResultsFromJson(json);
 
   @override
   final Map<int, int> min;
@@ -710,11 +668,8 @@ class _$_ValueResults implements _ValueResults {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(min),
-      const DeepCollectionEquality().hash(mean),
-      const DeepCollectionEquality().hash(max));
+  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(min),
+      const DeepCollectionEquality().hash(mean), const DeepCollectionEquality().hash(max));
 
   @JsonKey(ignore: true)
   @override
@@ -733,8 +688,7 @@ abstract class _ValueResults implements ValueResults {
       required Map<int, int> mean,
       required Map<int, int> max}) = _$_ValueResults;
 
-  factory _ValueResults.fromJson(Map<String, dynamic> json) =
-      _$_ValueResults.fromJson;
+  factory _ValueResults.fromJson(Map<String, dynamic> json) = _$_ValueResults.fromJson;
 
   @override
   Map<int, int> get min;
@@ -744,8 +698,7 @@ abstract class _ValueResults implements ValueResults {
   Map<int, int> get max;
   @override
   @JsonKey(ignore: true)
-  _$ValueResultsCopyWith<_ValueResults> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$ValueResultsCopyWith<_ValueResults> get copyWith => throw _privateConstructorUsedError;
 }
 
 LocationResults _$LocationResultsFromJson(Map<String, dynamic> json) {
@@ -757,9 +710,7 @@ class _$LocationResultsTearOff {
   const _$LocationResultsTearOff();
 
   _LocationResults call(
-      {required int count,
-      required GeoPosition location,
-      required PingStats stats}) {
+      {required int count, required GeoPosition location, required PingStats stats}) {
     return _LocationResults(
       count: count,
       location: location,
@@ -783,14 +734,12 @@ mixin _$LocationResults {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LocationResultsCopyWith<LocationResults> get copyWith =>
-      throw _privateConstructorUsedError;
+  $LocationResultsCopyWith<LocationResults> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $LocationResultsCopyWith<$Res> {
-  factory $LocationResultsCopyWith(
-          LocationResults value, $Res Function(LocationResults) then) =
+  factory $LocationResultsCopyWith(LocationResults value, $Res Function(LocationResults) then) =
       _$LocationResultsCopyWithImpl<$Res>;
   $Res call({int count, GeoPosition location, PingStats stats});
 
@@ -799,8 +748,7 @@ abstract class $LocationResultsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LocationResultsCopyWithImpl<$Res>
-    implements $LocationResultsCopyWith<$Res> {
+class _$LocationResultsCopyWithImpl<$Res> implements $LocationResultsCopyWith<$Res> {
   _$LocationResultsCopyWithImpl(this._value, this._then);
 
   final LocationResults _value;
@@ -845,10 +793,8 @@ class _$LocationResultsCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$LocationResultsCopyWith<$Res>
-    implements $LocationResultsCopyWith<$Res> {
-  factory _$LocationResultsCopyWith(
-          _LocationResults value, $Res Function(_LocationResults) then) =
+abstract class _$LocationResultsCopyWith<$Res> implements $LocationResultsCopyWith<$Res> {
+  factory _$LocationResultsCopyWith(_LocationResults value, $Res Function(_LocationResults) then) =
       __$LocationResultsCopyWithImpl<$Res>;
   @override
   $Res call({int count, GeoPosition location, PingStats stats});
@@ -860,11 +806,9 @@ abstract class _$LocationResultsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$LocationResultsCopyWithImpl<$Res>
-    extends _$LocationResultsCopyWithImpl<$Res>
+class __$LocationResultsCopyWithImpl<$Res> extends _$LocationResultsCopyWithImpl<$Res>
     implements _$LocationResultsCopyWith<$Res> {
-  __$LocationResultsCopyWithImpl(
-      _LocationResults _value, $Res Function(_LocationResults) _then)
+  __$LocationResultsCopyWithImpl(_LocationResults _value, $Res Function(_LocationResults) _then)
       : super(_value, (v) => _then(v as _LocationResults));
 
   @override
@@ -896,8 +840,7 @@ class __$LocationResultsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_LocationResults implements _LocationResults {
-  _$_LocationResults(
-      {required this.count, required this.location, required this.stats});
+  _$_LocationResults({required this.count, required this.location, required this.stats});
 
   factory _$_LocationResults.fromJson(Map<String, dynamic> json) =>
       _$$_LocationResultsFromJson(json);
@@ -920,8 +863,7 @@ class _$_LocationResults implements _LocationResults {
         (other.runtimeType == runtimeType &&
             other is _LocationResults &&
             (identical(other.count, count) || other.count == count) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.location, location) || other.location == location) &&
             (identical(other.stats, stats) || other.stats == stats));
   }
 
@@ -945,8 +887,7 @@ abstract class _LocationResults implements LocationResults {
       required GeoPosition location,
       required PingStats stats}) = _$_LocationResults;
 
-  factory _LocationResults.fromJson(Map<String, dynamic> json) =
-      _$_LocationResults.fromJson;
+  factory _LocationResults.fromJson(Map<String, dynamic> json) = _$_LocationResults.fromJson;
 
   @override
   int get count;
@@ -956,8 +897,7 @@ abstract class _LocationResults implements LocationResults {
   PingStats get stats;
   @override
   @JsonKey(ignore: true)
-  _$LocationResultsCopyWith<_LocationResults> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$LocationResultsCopyWith<_LocationResults> get copyWith => throw _privateConstructorUsedError;
 }
 
 GlobalSessionResult _$GlobalSessionResultFromJson(Map<String, dynamic> json) {
@@ -969,10 +909,7 @@ class _$GlobalSessionResultTearOff {
   const _$GlobalSessionResultTearOff();
 
   _GlobalSessionResult call(
-      {required int count,
-      required String host,
-      required PingStats stats,
-      GeoPosition? location}) {
+      {required int count, required String host, required PingStats stats, GeoPosition? location}) {
     return _GlobalSessionResult(
       count: count,
       host: host,
@@ -1014,8 +951,7 @@ abstract class $GlobalSessionResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GlobalSessionResultCopyWithImpl<$Res>
-    implements $GlobalSessionResultCopyWith<$Res> {
+class _$GlobalSessionResultCopyWithImpl<$Res> implements $GlobalSessionResultCopyWith<$Res> {
   _$GlobalSessionResultCopyWithImpl(this._value, this._then);
 
   final GlobalSessionResult _value;
@@ -1069,10 +1005,9 @@ class _$GlobalSessionResultCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$GlobalSessionResultCopyWith<$Res>
-    implements $GlobalSessionResultCopyWith<$Res> {
-  factory _$GlobalSessionResultCopyWith(_GlobalSessionResult value,
-          $Res Function(_GlobalSessionResult) then) =
+abstract class _$GlobalSessionResultCopyWith<$Res> implements $GlobalSessionResultCopyWith<$Res> {
+  factory _$GlobalSessionResultCopyWith(
+          _GlobalSessionResult value, $Res Function(_GlobalSessionResult) then) =
       __$GlobalSessionResultCopyWithImpl<$Res>;
   @override
   $Res call({int count, String host, PingStats stats, GeoPosition? location});
@@ -1084,8 +1019,7 @@ abstract class _$GlobalSessionResultCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GlobalSessionResultCopyWithImpl<$Res>
-    extends _$GlobalSessionResultCopyWithImpl<$Res>
+class __$GlobalSessionResultCopyWithImpl<$Res> extends _$GlobalSessionResultCopyWithImpl<$Res>
     implements _$GlobalSessionResultCopyWith<$Res> {
   __$GlobalSessionResultCopyWithImpl(
       _GlobalSessionResult _value, $Res Function(_GlobalSessionResult) _then)
@@ -1126,10 +1060,7 @@ class __$GlobalSessionResultCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_GlobalSessionResult implements _GlobalSessionResult {
   _$_GlobalSessionResult(
-      {required this.count,
-      required this.host,
-      required this.stats,
-      this.location});
+      {required this.count, required this.host, required this.stats, this.location});
 
   factory _$_GlobalSessionResult.fromJson(Map<String, dynamic> json) =>
       _$$_GlobalSessionResultFromJson(json);
@@ -1156,8 +1087,7 @@ class _$_GlobalSessionResult implements _GlobalSessionResult {
             (identical(other.count, count) || other.count == count) &&
             (identical(other.host, host) || other.host == host) &&
             (identical(other.stats, stats) || other.stats == stats) &&
-            (identical(other.location, location) ||
-                other.location == location));
+            (identical(other.location, location) || other.location == location));
   }
 
   @override
@@ -1166,8 +1096,7 @@ class _$_GlobalSessionResult implements _GlobalSessionResult {
   @JsonKey(ignore: true)
   @override
   _$GlobalSessionResultCopyWith<_GlobalSessionResult> get copyWith =>
-      __$GlobalSessionResultCopyWithImpl<_GlobalSessionResult>(
-          this, _$identity);
+      __$GlobalSessionResultCopyWithImpl<_GlobalSessionResult>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {

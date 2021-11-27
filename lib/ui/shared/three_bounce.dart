@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/animation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ThreeBounce extends StatefulWidget {
   const ThreeBounce({
@@ -19,8 +19,7 @@ class ThreeBounce extends StatefulWidget {
   _ThreeBounceState createState() => _ThreeBounceState();
 }
 
-class _ThreeBounceState extends State<ThreeBounce>
-    with SingleTickerProviderStateMixin {
+class _ThreeBounceState extends State<ThreeBounce> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override

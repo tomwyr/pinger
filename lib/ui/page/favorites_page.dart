@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -30,8 +32,7 @@ class _FavoritesPageState extends BaseState<FavoritesPage> with HostTapHandler {
       return HostsPage(
         title: S.current.favoritesPageTitle,
         hosts: hosts,
-        getTrailingLabel: (it) =>
-            S.current.pingCountLabel(stats![it]?.pingCount ?? 0),
+        getTrailingLabel: (it) => S.current.pingCountLabel(stats![it]?.pingCount ?? 0),
         removeHosts: _hostsStore.removeFavorites,
         onHostSelected: (it) => onHostTap(_pingStore, it),
       );

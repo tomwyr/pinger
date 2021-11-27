@@ -1,7 +1,9 @@
 import 'dart:math';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fl_chart/fl_chart.dart';
+
 import 'package:pinger/resources.dart';
 
 class GlobalDistributionChart extends StatelessWidget {
@@ -37,8 +39,7 @@ class GlobalDistributionChart extends StatelessWidget {
         .map((it) => FlSpot(it.value.toDouble(), it.count / dataCount * 100))
         .toList()
       ..sort((e1, e2) => e1.x.compareTo(e2.x));
-    final highlightIndex =
-        _insertUserResultSpot(userResult, firstGroupSize, spots);
+    final highlightIndex = _insertUserResultSpot(userResult, firstGroupSize, spots);
     return GlobalDistributionChart._(
       key: key,
       highlightIndex: highlightIndex,
@@ -47,9 +48,8 @@ class GlobalDistributionChart extends StatelessWidget {
       minY: 0.0,
       maxY: (spots.map((it) => it.y).fold(0.0, max) / 10).ceil() * 10.0,
       spots: spots,
-      getLabelX: (it) => it == 0.0
-          ? "0"
-          : pow(_logBase, it + firstGroupSize - 1).toStringAsFixed(0),
+      getLabelX: (it) =>
+          it == 0.0 ? "0" : pow(_logBase, it + firstGroupSize - 1).toStringAsFixed(0),
       getLabelY: (it) => it.toInt().toString(),
     );
   }
@@ -62,23 +62,18 @@ class GlobalDistributionChart extends StatelessWidget {
     return _calcResultLog(log(maxValue)).toInt();
   }
 
-  static List<PingValueCount> _groupChartData(
-      Map<int, int> values, int firstSize) {
+  static List<PingValueCount> _groupChartData(Map<int, int> values, int firstSize) {
     final groups = <int, int>{};
     values.forEach((value, count) {
-      final groupKey = value > 0
-          ? max(_calcResultLog(value).round(), firstSize) - firstSize + 1
-          : 0;
+      final groupKey =
+          value > 0 ? max(_calcResultLog(value).round(), firstSize) - firstSize + 1 : 0;
       final groupCount = groups[groupKey] ?? 0;
       groups[groupKey] = groupCount + count;
     });
-    return groups.entries
-        .map((it) => PingValueCount(it.key, it.value))
-        .toList();
+    return groups.entries.map((it) => PingValueCount(it.key, it.value)).toList();
   }
 
-  static int _insertUserResultSpot(
-      int value, int firstGroupSize, List<FlSpot> spots) {
+  static int _insertUserResultSpot(int value, int firstGroupSize, List<FlSpot> spots) {
     final valueX = value > 0 ? _calcResultLog(value) - firstGroupSize + 1 : 0;
     var spot = FlSpot.nullSpot;
     var index = spots.indexWhere((it) => it.x >= valueX);

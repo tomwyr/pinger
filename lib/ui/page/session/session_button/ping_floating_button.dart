@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 
 class PingFloatingButton extends StatelessWidget {
@@ -33,13 +34,11 @@ class PingFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final shadowColor = raised ? R.colors.shadow : R.colors.none;
     return Listener(
-      onPointerMove:
-          onSwipeUpdate != null ? (it) => onSwipeUpdate!(it.delta.dx) : null,
+      onPointerMove: onSwipeUpdate != null ? (it) => onSwipeUpdate!(it.delta.dx) : null,
       onPointerUp: onSwipeEnd != null ? (_) => onSwipeEnd!() : null,
       child: GestureDetector(
         onTap: onTap,
-        onLongPressStart:
-            onLongPressStart != null ? (_) => onLongPressStart!() : null,
+        onLongPressStart: onLongPressStart != null ? (_) => onLongPressStart!() : null,
         onLongPressEnd: onLongPressEnd != null ? (_) => onLongPressEnd!() : null,
         child: SizedBox.fromSize(
           size: Size.square(size),

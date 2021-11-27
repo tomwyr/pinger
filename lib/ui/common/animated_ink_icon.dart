@@ -16,8 +16,7 @@ class AnimatedInkIcon extends StatefulWidget {
   _AnimatedInkIconState createState() => _AnimatedInkIconState();
 }
 
-class _AnimatedInkIconState extends State<AnimatedInkIcon>
-    with SingleTickerProviderStateMixin {
+class _AnimatedInkIconState extends State<AnimatedInkIcon> with SingleTickerProviderStateMixin {
   late AnimationController _animator;
 
   @override

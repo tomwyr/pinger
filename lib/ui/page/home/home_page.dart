@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -87,9 +89,7 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
           data: R.themes.raisedButton,
           child: ElevatedButton(
             child: Text(S.current.showIntroButtonLabel),
-            onPressed: () => PingerApp.router
-                .show(RouteConfig.intro())
-                .then((_) => onIntroDone()),
+            onPressed: () => PingerApp.router.show(RouteConfig.intro()).then((_) => onIntroDone()),
           ),
         ),
         Container(height: 8.0),

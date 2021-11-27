@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/user_settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
 class PingerPrefs {
@@ -48,8 +49,7 @@ class PingerPrefs {
     final allResults = getArchiveResults();
     final resultId = _getNewResultId(allResults);
     allResults.add(result.copyWith(id: resultId));
-    final jsonStringList =
-        allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
+    final jsonStringList = allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
     return resultId;
   }
@@ -66,8 +66,7 @@ class PingerPrefs {
   Future<void> deleteArchiveResult(int? resultId) async {
     final allResults = getArchiveResults();
     allResults.removeWhere((it) => it!.id == resultId);
-    final jsonStringList =
-        allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
+    final jsonStringList = allResults.map((it) => it!.toJson()).map(jsonEncode).toList();
     await _sharedPrefs.setStringList(_archiveResultsKey, jsonStringList);
   }
 
@@ -116,11 +115,9 @@ class PingerPrefs {
 
   String? getLastHost() => _sharedPrefs.getString(_lastHostKey);
 
-  Future<void> setLastHost(String host) =>
-      _sharedPrefs.setString(_lastHostKey, host);
+  Future<void> setLastHost(String host) => _sharedPrefs.setString(_lastHostKey, host);
 
   bool? getDidShowIntro() => _sharedPrefs.getBool(_didShowIntroKey);
 
-  Future<void> setDidShowIntro(bool value) =>
-      _sharedPrefs.setBool(_didShowIntroKey, value);
+  Future<void> setDidShowIntro(bool value) => _sharedPrefs.setBool(_didShowIntroKey, value);
 }

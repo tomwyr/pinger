@@ -1,5 +1,7 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dotted_border/dotted_border.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
@@ -21,8 +23,8 @@ class ResultDetailsSummaryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final meanHeightRatio = (result!.stats.mean - result!.stats.min) /
-        (result!.stats.max - result!.stats.min);
+    final meanHeightRatio =
+        (result!.stats.mean - result!.stats.min) / (result!.stats.max - result!.stats.min);
     final meanLineTop = padding + height * (1 - meanHeightRatio);
     return SizedBox(
       height: height + 2 * padding,
@@ -70,8 +72,7 @@ class ResultDetailsSummaryChart extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildChartLabels(
-      double width, double padding, double meanLineTop) {
+  List<Widget> _buildChartLabels(double width, double padding, double meanLineTop) {
     final pingCount = result!.values.length;
     final indexMin = result!.values.indexOf(result!.stats.min);
     final indexMax = result!.values.indexOf(result!.stats.max);

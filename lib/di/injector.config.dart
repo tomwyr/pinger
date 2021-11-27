@@ -6,8 +6,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i6;
 import 'package:connectivity/connectivity.dart' as _i4;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart'
-    as _i7;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as _i7;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:location/location.dart' as _i9;
@@ -45,38 +44,29 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   gh.factory<_i4.Connectivity>(() => injectorModule.connectivity);
   gh.singleton<_i5.FaviconService>(_i5.FaviconService.create());
   gh.factory<_i6.FirebaseFirestore>(() => injectorModule.firestore);
-  gh.factory<_i7.FlutterLocalNotificationsPlugin>(
-      () => injectorModule.localNotifications);
+  gh.factory<_i7.FlutterLocalNotificationsPlugin>(() => injectorModule.localNotifications);
   gh.factory<_i8.LifecycleNotifier>(() => _i8.LifecycleNotifier());
   gh.factory<_i9.Location>(() => injectorModule.location);
-  gh.factory<_i10.NotificationMessages>(
-      () => injectorModule.notificationLocalizations);
+  gh.factory<_i10.NotificationMessages>(() => injectorModule.notificationLocalizations);
   gh.factory<_i11.NotificationsManager>(() => _i11.NotificationsManager(
-      get<_i7.FlutterLocalNotificationsPlugin>(),
-      get<_i10.NotificationMessages>()));
-  await gh.factoryAsync<_i12.PackageInfo>(() => injectorModule.packageInfo,
-      preResolve: true);
+      get<_i7.FlutterLocalNotificationsPlugin>(), get<_i10.NotificationMessages>()));
+  await gh.factoryAsync<_i12.PackageInfo>(() => injectorModule.packageInfo, preResolve: true);
   gh.factory<_i13.PingCommand>(() => _i13.PingCommand.create());
   gh.factory<_i13.PingService>(() => _i13.PingService(get<_i13.PingCommand>()));
-  gh.factory<_i14.PingerApi>(
-      () => _i14.PingerApi(get<_i6.FirebaseFirestore>()));
-  await gh.factoryAsync<_i15.SharedPreferences>(
-      () => injectorModule.sharedPreferences,
+  gh.factory<_i14.PingerApi>(() => _i14.PingerApi(get<_i6.FirebaseFirestore>()));
+  await gh.factoryAsync<_i15.SharedPreferences>(() => injectorModule.sharedPreferences,
       preResolve: true);
   gh.factory<_i16.Vibration>(() => _i16.Vibration());
-  gh.singleton<_i17.PingerPrefs>(
-      _i17.PingerPrefs(get<_i15.SharedPreferences>()));
+  gh.singleton<_i17.PingerPrefs>(_i17.PingerPrefs(get<_i15.SharedPreferences>()));
   gh.singleton<_i18.ResultsStore>(
       _i18.ResultsStore(get<_i17.PingerPrefs>(), get<_i14.PingerApi>()));
-  gh.singleton<_i19.SettingsStore>(_i19.SettingsStore(
-      get<_i12.PackageInfo>(), get<_i17.PingerPrefs>(), get<_i3.AppConfig>()));
+  gh.singleton<_i19.SettingsStore>(
+      _i19.SettingsStore(get<_i12.PackageInfo>(), get<_i17.PingerPrefs>(), get<_i3.AppConfig>()));
   gh.singleton<_i20.PermissionStore>(
-      _i20.NotificationPermissionStore(
-          get<_i19.SettingsStore>(), get<_i8.LifecycleNotifier>()),
+      _i20.NotificationPermissionStore(get<_i19.SettingsStore>(), get<_i8.LifecycleNotifier>()),
       instanceName: 'notification');
   gh.singleton<_i20.PermissionStore>(
-      _i20.LocationPermissionStore(
-          get<_i19.SettingsStore>(), get<_i8.LifecycleNotifier>()),
+      _i20.LocationPermissionStore(get<_i19.SettingsStore>(), get<_i8.LifecycleNotifier>()),
       instanceName: 'location');
   gh.singleton<_i21.DeviceStore>(_i21.DeviceStore(
       get<_i8.LifecycleNotifier>(),
@@ -86,11 +76,8 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       get<_i11.NotificationsManager>(),
       get<_i19.SettingsStore>(),
       get<_i20.PermissionStore>(instanceName: 'notification')));
-  gh.singleton<_i22.HostsStore>(_i22.HostsStore(
-      get<_i17.PingerPrefs>(),
-      get<_i14.PingerApi>(),
-      get<_i5.FaviconService>(),
-      get<_i21.DeviceStore>()));
+  gh.singleton<_i22.HostsStore>(_i22.HostsStore(get<_i17.PingerPrefs>(), get<_i14.PingerApi>(),
+      get<_i5.FaviconService>(), get<_i21.DeviceStore>()));
   gh.singleton<_i23.PingStore>(_i23.PingStore(
       get<_i17.PingerPrefs>(),
       get<_i14.PingerApi>(),
