@@ -89,9 +89,12 @@ abstract class PingStoreBase with Store {
   void init() {
     final host = _pingerPrefs.getLastHost();
     if (host != null) initSession(host);
-    reaction((_) => currentHost, _cacheCurrentHost);
-    reaction((_) => currentSession?.status, _handleStatusChange);
-    reaction((_) => currentSession, _deviceStore.updateNotification);
+    reaction<String?>((_) => currentHost, _cacheCurrentHost);
+    reaction<PingStatus?>((_) => currentSession?.status, _handleStatusChange);
+    reaction<PingSession?>(
+      (_) => currentSession,
+      _deviceStore.updateNotification,
+    );
   }
 
   void _cacheCurrentHost(String? host) async {

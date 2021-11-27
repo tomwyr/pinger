@@ -21,7 +21,7 @@ class InfoTrayEntry<T> implements SeparatedItem<InfoTrayItem> {
   late ReactionDisposer _reactionDisposer;
 
   void init() {
-    _reactionDisposer = reaction(
+    _reactionDisposer = reaction<bool>(
       (_) => isVisible(valueObservable()),
       (dynamic it) => visibility.value = it,
       fireImmediately: true,

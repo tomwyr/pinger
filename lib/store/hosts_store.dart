@@ -63,7 +63,7 @@ abstract class HostsStoreBase with Store {
   Future<void> init() async {
     _emitStats();
     autorun((_) => _emitFavorites());
-    reaction((_) => _deviceStore.isNetworkEnabled, _checkRefreshIcons);
+    reaction<bool?>((_) => _deviceStore.isNetworkEnabled, _checkRefreshIcons);
     await fetchHosts();
   }
 
@@ -108,7 +108,7 @@ abstract class HostsStoreBase with Store {
       return counts.pingCounts
           .map((it) => HostItem(it.host, it.count / maxCount))
           .toList()
-            ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
+        ..sort((e1, e2) => e2.popularity.compareTo(e1.popularity));
     }
   }
 
