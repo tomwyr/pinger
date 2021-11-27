@@ -1,13 +1,13 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/lifecycle_notifier.dart';
 
 part 'permission_store.g.dart';
 
-abstract class PermissionStore extends PermissionStoreBase
-    with _$PermissionStore {
+abstract class PermissionStore extends PermissionStoreBase with _$PermissionStore {
   PermissionStore(
     this._settingsStore,
     this._lifecycleNotifier,
@@ -54,14 +54,12 @@ class LocationPermissionStore extends PermissionStore {
   Permission get _permission => Permission.locationWhenInUse;
 
   @override
-  bool? _getSetting() =>
-      _settingsStore.userSettings!.shareSettings.attachLocation;
+  bool? _getSetting() => _settingsStore.userSettings!.shareSettings.attachLocation;
 
   @override
   Future<void> _updateSetting(bool value) async {
     await _settingsStore.updateSettings(
-      _settingsStore.userSettings!.copyWith
-          .shareSettings(attachLocation: value),
+      _settingsStore.userSettings!.copyWith.shareSettings(attachLocation: value),
     );
   }
 }
@@ -129,8 +127,7 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
   Future<void> _checkAccessStatus() async {
     var status = await _permission.isGranted;
     if (_permission is PermissionWithService) {
-      final isEnabled =
-          await (_permission as PermissionWithService).serviceStatus.isEnabled;
+      final isEnabled = await (_permission as PermissionWithService).serviceStatus.isEnabled;
       status = status && isEnabled;
     }
     if (status != canAccessService) canAccessService = status;

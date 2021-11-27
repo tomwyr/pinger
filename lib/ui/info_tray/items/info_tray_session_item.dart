@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
@@ -103,8 +104,7 @@ class InfoTraySessionItem extends StatelessWidget {
       finite: (it) => min(it, maxBarCount),
       infinite: () => maxBarCount,
     );
-    final visibleBarCount =
-        session!.status.isSessionDone ? barCount : barCount - 1;
+    final visibleBarCount = session!.status.isSessionDone ? barCount : barCount - 1;
     final firstVisible = max(session!.values!.length - visibleBarCount, 0);
     final visibleValues = session!.values!.skip(firstVisible);
     final barsSpace = constraints.maxWidth - ((barCount - 1) * gapWidth);

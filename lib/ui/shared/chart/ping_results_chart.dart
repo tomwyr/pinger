@@ -1,7 +1,9 @@
 import 'dart:math';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fl_chart/fl_chart.dart';
+
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
@@ -28,12 +30,9 @@ class PingResultsChart extends StatelessWidget {
     final dotsSpacing = (dotsCount / 10).ceilToDouble();
     final titlesHorizontalInterval = dotsSpacing;
     final endX = startX! + dotsCount - 1;
-    final num? titlesVerticalInterval = maxValue != null
-        ? (maxValue! / min(dotsCount, 8)).clamp(1.0, double.infinity)
-        : null;
-    final maxY = (titlesVerticalInterval != null
-            ? maxValue! + titlesVerticalInterval / 2
-            : null)
+    final num? titlesVerticalInterval =
+        maxValue != null ? (maxValue! / min(dotsCount, 8)).clamp(1.0, double.infinity) : null;
+    final maxY = (titlesVerticalInterval != null ? maxValue! + titlesVerticalInterval / 2 : null)
         ?.ceilToDouble();
     return LineChart(
       LineChartData(
@@ -55,19 +54,16 @@ class PingResultsChart extends StatelessWidget {
           ),
           bottomTitles: SideTitles(
             showTitles: true,
-            getTitles: (it) => it >= startX! && it <= endX && it % 1.0 == 0.0
-                ? (it + 1.5).toInt().toString()
-                : '',
+            getTitles: (it) =>
+                it >= startX! && it <= endX && it % 1.0 == 0.0 ? (it + 1.5).toInt().toString() : '',
             interval: titlesHorizontalInterval,
             getTextStyles: (_, __) => R.styles.chartLabel,
           ),
         ),
         gridData: FlGridData(
           show: true,
-          getDrawingHorizontalLine: (_) =>
-              FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
-          getDrawingVerticalLine: (_) =>
-              FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
+          getDrawingHorizontalLine: (_) => FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
+          getDrawingVerticalLine: (_) => FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
           drawHorizontalLine: values!.isNotEmpty,
           drawVerticalLine: values!.isNotEmpty,
           horizontalInterval: titlesVerticalInterval as double?,
@@ -107,8 +103,7 @@ class PingResultsChart extends StatelessWidget {
               preventCurveOverShooting: true,
               colors: [R.colors.primaryLight],
               spots: values!
-                  .mapIndexed((i, e) =>
-                      e != null ? FlSpot(i.toDouble(), e.toDouble()) : null)
+                  .mapIndexed((i, e) => e != null ? FlSpot(i.toDouble(), e.toDouble()) : null)
                   .whereNotNull()
                   .toList(),
             ),

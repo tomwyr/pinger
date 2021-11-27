@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
@@ -19,8 +20,7 @@ class SessionValuesList extends StatefulWidget {
   _SessionValuesListState createState() => _SessionValuesListState();
 }
 
-class _SessionValuesListState extends State<SessionValuesList>
-    with SingleTickerProviderStateMixin {
+class _SessionValuesListState extends State<SessionValuesList> with SingleTickerProviderStateMixin {
   final _insertDuration = const Duration(milliseconds: 500);
 
   var _listKey = GlobalKey<AnimatedListState>();

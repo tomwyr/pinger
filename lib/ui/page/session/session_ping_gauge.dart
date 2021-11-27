@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
@@ -22,8 +23,7 @@ class SessionPingGauge extends StatelessWidget {
   final int? maxValue;
   final Size edgeValuesSize = Size(48.0, 24.0);
 
-  static int? _getMinValue(PingSession session) =>
-      session.stats != null ? 0 : null;
+  static int? _getMinValue(PingSession session) => session.stats != null ? 0 : null;
 
   static int? _getMaxValue(PingSession session) {
     if (session.stats != null) {
@@ -121,9 +121,7 @@ class SessionPingGauge extends StatelessWidget {
 
   String _getDeltaLabel(List<int?> values) {
     if (values.length > 1 && values.last != null) {
-      final previous = values.reversed
-          .skip(1)
-          .firstWhere((it) => it != null, orElse: () => null);
+      final previous = values.reversed.skip(1).firstWhere((it) => it != null, orElse: () => null);
       if (previous != null) {
         final delta = (values.last! - previous).round();
         return delta < 0 ? "$delta" : "+$delta";
@@ -132,8 +130,7 @@ class SessionPingGauge extends StatelessWidget {
     return "-";
   }
 
-  String _getValueLabel(int? value) =>
-      value != null ? S.current.pingValueLabel(value) : "-";
+  String _getValueLabel(int? value) => value != null ? S.current.pingValueLabel(value) : "-";
 }
 
 class PingGaugeArc extends StatefulWidget {
@@ -157,8 +154,7 @@ class PingGaugeArc extends StatefulWidget {
             infinite: () => 0.0,
           )
         : 0.0;
-    final lastResult =
-        session.values!.lastWhere((it) => it != null, orElse: () => null);
+    final lastResult = session.values!.lastWhere((it) => it != null, orElse: () => null);
     final value = lastResult != null ? lastResult / gaugeMaxValue! : null;
     return PingGaugeArc(
       progress: progress,
@@ -172,8 +168,7 @@ class PingGaugeArc extends StatefulWidget {
   _PingGaugeArcState createState() => _PingGaugeArcState();
 }
 
-class _PingGaugeArcState extends State<PingGaugeArc>
-    with SingleTickerProviderStateMixin {
+class _PingGaugeArcState extends State<PingGaugeArc> with SingleTickerProviderStateMixin {
   late AnimationController _animator;
   late Animation<double> _arcProgressAnim;
   late Animation<double> _dotValueAnim;
@@ -256,8 +251,7 @@ class PingGaugeDot extends StatefulWidget {
   _PingGaugeDotState createState() => _PingGaugeDotState();
 }
 
-class _PingGaugeDotState extends State<PingGaugeDot>
-    with SingleTickerProviderStateMixin {
+class _PingGaugeDotState extends State<PingGaugeDot> with SingleTickerProviderStateMixin {
   late Animation<Color?> _dotColorAnim;
   late AnimationController _animator;
 
@@ -265,8 +259,7 @@ class _PingGaugeDotState extends State<PingGaugeDot>
   void initState() {
     super.initState();
     _animator = AnimationController(vsync: this, duration: widget.duration);
-    _dotColorAnim = AlwaysStoppedAnimation(
-        widget.isActive ? R.colors.secondary : R.colors.gray);
+    _dotColorAnim = AlwaysStoppedAnimation(widget.isActive ? R.colors.secondary : R.colors.gray);
   }
 
   @override
@@ -275,9 +268,7 @@ class _PingGaugeDotState extends State<PingGaugeDot>
     if (old.isActive != widget.isActive) {
       _dotColorAnim = ColorTween(
         begin: _dotColorAnim.value,
-        end: !widget.isActive
-            ? R.colors.gray
-            : R.colors.secondary,
+        end: !widget.isActive ? R.colors.gray : R.colors.secondary,
       ).animate(_animator);
       _animator.forward(from: 0.0);
     }

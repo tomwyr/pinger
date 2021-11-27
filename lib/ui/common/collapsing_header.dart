@@ -28,8 +28,7 @@ class CollapsingHeader extends StatefulWidget {
   _CollapsingHeaderState createState() => _CollapsingHeaderState();
 }
 
-class _CollapsingHeaderState extends State<CollapsingHeader>
-    with SingleTickerProviderStateMixin {
+class _CollapsingHeaderState extends State<CollapsingHeader> with SingleTickerProviderStateMixin {
   late AnimationController _animator;
   late Animation<double> _baseAnim;
   late Animation<double> _heightAnim;

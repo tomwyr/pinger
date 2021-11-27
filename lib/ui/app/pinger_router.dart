@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/page/archive_page.dart';
@@ -71,8 +72,7 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   Future<T?> _replace<T>(_PageRouteConfig config) =>
       navigator!.pushReplacementNamed(config.name, arguments: config.widget);
 
-  Future<T?> _pushOnHome<T>(_PageRouteConfig config) =>
-      navigator!.pushNamedAndRemoveUntil(
+  Future<T?> _pushOnHome<T>(_PageRouteConfig config) => navigator!.pushNamedAndRemoveUntil(
         config.name,
         (it) => it.settings.name == PingerRoutes.HOME,
         arguments: config.widget,
@@ -92,12 +92,10 @@ class PingerNavigatorRouter extends NavigatorObserver implements PingerRouter {
   void didPush(Route route, Route? previousRoute) => _onRouteChanged(route);
 
   @override
-  void didPop(Route route, Route? previousRoute) =>
-      _onRouteChanged(previousRoute!);
+  void didPop(Route route, Route? previousRoute) => _onRouteChanged(previousRoute!);
 
   @override
-  void didReplace({Route? newRoute, Route? oldRoute}) =>
-      _onRouteChanged(newRoute!);
+  void didReplace({Route? newRoute, Route? oldRoute}) => _onRouteChanged(newRoute!);
 
   void _onRouteChanged(Route activeRoute) {
     _currentRoute = activeRoute.settings.name;
@@ -124,29 +122,23 @@ class RouteConfig {
 
   factory RouteConfig.home() => _PageRouteConfig(PingerRoutes.HOME, HomePage());
 
-  factory RouteConfig.intro() =>
-      _PageRouteConfig(PingerRoutes.INTRO, IntroPage());
+  factory RouteConfig.intro() => _PageRouteConfig(PingerRoutes.INTRO, IntroPage());
 
-  factory RouteConfig.settings() =>
-      _PageRouteConfig(PingerRoutes.SETTINGS, SettingsPage());
+  factory RouteConfig.settings() => _PageRouteConfig(PingerRoutes.SETTINGS, SettingsPage());
 
-  factory RouteConfig.archive() =>
-      _PageRouteConfig(PingerRoutes.ARCHIVE, ArchivePage());
+  factory RouteConfig.archive() => _PageRouteConfig(PingerRoutes.ARCHIVE, ArchivePage());
 
   factory RouteConfig.results(PingResult? result) =>
       _PageRouteConfig(PingerRoutes.RESULTS, ResultDetailsPage(result: result));
 
-  factory RouteConfig.favorites() =>
-      _PageRouteConfig(PingerRoutes.FAVORITES, FavoritesPage());
+  factory RouteConfig.favorites() => _PageRouteConfig(PingerRoutes.FAVORITES, FavoritesPage());
 
-  factory RouteConfig.recents() =>
-      _PageRouteConfig(PingerRoutes.RECENTS, RecentsPage());
+  factory RouteConfig.recents() => _PageRouteConfig(PingerRoutes.RECENTS, RecentsPage());
 
-  factory RouteConfig.search([String? initialQuery]) => _PageRouteConfig(
-      PingerRoutes.SEARCH, SearchPage(initialQuery: initialQuery));
+  factory RouteConfig.search([String? initialQuery]) =>
+      _PageRouteConfig(PingerRoutes.SEARCH, SearchPage(initialQuery: initialQuery));
 
-  factory RouteConfig.session() =>
-      _PageRouteConfig(PingerRoutes.SESSION, SessionPage());
+  factory RouteConfig.session() => _PageRouteConfig(PingerRoutes.SESSION, SessionPage());
 
   factory RouteConfig.sheet(RoutePageBuilder builder) =>
       _SheetRouteConfig(PingerRoutes.SHEET, builder);

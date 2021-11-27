@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+
 import 'package:pinger/assets.dart';
 
 abstract class AppConfig {

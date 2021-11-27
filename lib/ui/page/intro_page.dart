@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
-import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/app/pinger_app.dart';
+import 'package:pinger/ui/page/base_page.dart';
 
 class IntroPage extends StatefulWidget {
   @override
@@ -27,8 +28,7 @@ class _IntroPageState extends BaseState<IntroPage> {
   void initState() {
     super.initState();
     _pageProgress = ValueNotifier(0.0);
-    _pageController = PageController(initialPage: _currentItem)
-      ..addListener(_updateProgress);
+    _pageController = PageController(initialPage: _currentItem)..addListener(_updateProgress);
   }
 
   @override
@@ -122,8 +122,7 @@ class _IntroPageState extends BaseState<IntroPage> {
     );
   }
 
-  Widget _buildItem(
-      int index, AssetImage image, String title, String description) {
+  Widget _buildItem(int index, AssetImage image, String title, String description) {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -177,8 +176,7 @@ class _IntroPageState extends BaseState<IntroPage> {
         children: List<Widget>.generate(
           _itemCount,
           (index) {
-            final num relativeProgress =
-                (progress - index).clamp(-1.0, 1.0).abs();
+            final num relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
             return GestureDetector(
               onTap: () => _moveToPage(index),
               child: Container(
@@ -242,8 +240,7 @@ class _IntroPageState extends BaseState<IntroPage> {
 
   Widget _buildNextButton(double expansion) {
     final raisedButtonWidth =
-        (R.themes.raisedButton.minWidth - _nextButtonSize) * expansion +
-            _nextButtonSize;
+        (R.themes.raisedButton.minWidth - _nextButtonSize) * expansion + _nextButtonSize;
     return Align(
       alignment: Alignment(1.0 - expansion, 0.0),
       child: SizedBox(

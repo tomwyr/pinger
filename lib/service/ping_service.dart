@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+
 import 'package:injectable/injectable.dart';
+
 import 'package:pinger/model/user_settings.dart';
 
 @injectable
@@ -68,14 +70,11 @@ class BashPingCommand extends PingCommand {
   }
 
   double _parseResult(ProcessResult result) {
-    final didSucceed =
-        (result.stderr as String? ?? "").isEmpty && result.stdout != null;
+    final didSucceed = (result.stderr as String? ?? "").isEmpty && result.stdout != null;
     if (!didSucceed) throw PingError.REQUEST_FAILED;
-    final value =
-        RegExp(r"time=(\d+(\.\d+)?) ms").firstMatch(result.stdout)?.group(1);
+    final value = RegExp(r"time=(\d+(\.\d+)?) ms").firstMatch(result.stdout)?.group(1);
     if (value == null) {
-      final didLosePacket =
-          (result.stdout as String).contains("100% packet loss");
+      final didLosePacket = (result.stdout as String).contains("100% packet loss");
       if (didLosePacket) throw PingError.PACKET_LOST;
       throw PingError.INVALID_FORMAT;
     }

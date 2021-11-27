@@ -1,5 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fl_chart/fl_chart.dart';
+
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
@@ -51,8 +53,7 @@ class ResultTileChart extends StatelessWidget {
             barWidth: 1.0,
             spots: values
                 .mapIndexed(
-                  (i, e) =>
-                      e != null ? FlSpot(i.toDouble(), e.toDouble()) : null,
+                  (i, e) => e != null ? FlSpot(i.toDouble(), e.toDouble()) : null,
                 )
                 .whereNotNull()
                 .toList(),

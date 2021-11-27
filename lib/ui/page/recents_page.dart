@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -25,8 +27,7 @@ class _RecentsPageState extends BaseState<RecentsPage> with HostTapHandler {
       return HostsPage(
         title: S.current.recentsPageTitle,
         hosts: stats.keys.toList(),
-        getTrailingLabel: (it) =>
-            FormatUtils.getSinceNowLabel(stats[it]!.pingTime),
+        getTrailingLabel: (it) => FormatUtils.getSinceNowLabel(stats[it]!.pingTime),
         removeHosts: _hostsStore.removeStats,
         onHostSelected: (it) => onHostTap(_pingStore, it),
       );

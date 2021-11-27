@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/draggable_sheet.dart';
 import 'package:pinger/ui/info_tray/info_tray.dart';
@@ -80,8 +81,7 @@ class InfoTraySheet extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: SizedBox(
                 height: _handleHeight * (1.0 - snapshot.data! / 2),
-                width: _handleWidth +
-                    (constraints.maxWidth - _handleWidth) * snapshot.data!,
+                width: _handleWidth + (constraints.maxWidth - _handleWidth) * snapshot.data!,
                 child: GestureDetector(
                   onTap: onHandleTap,
                   child: DecoratedBox(

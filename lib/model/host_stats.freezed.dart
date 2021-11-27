@@ -21,10 +21,7 @@ HostStats _$HostStatsFromJson(Map<String, dynamic> json) {
 class _$HostStatsTearOff {
   const _$HostStatsTearOff();
 
-  _HostStats call(
-      {required String host,
-      required int pingCount,
-      required DateTime pingTime}) {
+  _HostStats call({required String host, required int pingCount, required DateTime pingTime}) {
     return _HostStats(
       host: host,
       pingCount: pingCount,
@@ -48,8 +45,7 @@ mixin _$HostStats {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $HostStatsCopyWith<HostStats> get copyWith =>
-      throw _privateConstructorUsedError;
+  $HostStatsCopyWith<HostStats> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -92,8 +88,7 @@ class _$HostStatsCopyWithImpl<$Res> implements $HostStatsCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$HostStatsCopyWith<$Res> implements $HostStatsCopyWith<$Res> {
-  factory _$HostStatsCopyWith(
-          _HostStats value, $Res Function(_HostStats) then) =
+  factory _$HostStatsCopyWith(_HostStats value, $Res Function(_HostStats) then) =
       __$HostStatsCopyWithImpl<$Res>;
   @override
   $Res call({String host, int pingCount, DateTime pingTime});
@@ -134,11 +129,9 @@ class __$HostStatsCopyWithImpl<$Res> extends _$HostStatsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_HostStats implements _HostStats {
-  _$_HostStats(
-      {required this.host, required this.pingCount, required this.pingTime});
+  _$_HostStats({required this.host, required this.pingCount, required this.pingTime});
 
-  factory _$_HostStats.fromJson(Map<String, dynamic> json) =>
-      _$$_HostStatsFromJson(json);
+  factory _$_HostStats.fromJson(Map<String, dynamic> json) => _$$_HostStatsFromJson(json);
 
   @override
   final String host;
@@ -158,10 +151,8 @@ class _$_HostStats implements _HostStats {
         (other.runtimeType == runtimeType &&
             other is _HostStats &&
             (identical(other.host, host) || other.host == host) &&
-            (identical(other.pingCount, pingCount) ||
-                other.pingCount == pingCount) &&
-            (identical(other.pingTime, pingTime) ||
-                other.pingTime == pingTime));
+            (identical(other.pingCount, pingCount) || other.pingCount == pingCount) &&
+            (identical(other.pingTime, pingTime) || other.pingTime == pingTime));
   }
 
   @override
@@ -179,13 +170,10 @@ class _$_HostStats implements _HostStats {
 }
 
 abstract class _HostStats implements HostStats {
-  factory _HostStats(
-      {required String host,
-      required int pingCount,
-      required DateTime pingTime}) = _$_HostStats;
+  factory _HostStats({required String host, required int pingCount, required DateTime pingTime}) =
+      _$_HostStats;
 
-  factory _HostStats.fromJson(Map<String, dynamic> json) =
-      _$_HostStats.fromJson;
+  factory _HostStats.fromJson(Map<String, dynamic> json) = _$_HostStats.fromJson;
 
   @override
   String get host;
@@ -195,6 +183,5 @@ abstract class _HostStats implements HostStats {
   DateTime get pingTime;
   @override
   @JsonKey(ignore: true)
-  _$HostStatsCopyWith<_HostStats> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$HostStatsCopyWith<_HostStats> get copyWith => throw _privateConstructorUsedError;
 }

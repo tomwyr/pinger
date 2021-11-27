@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:package_info/package_info.dart';
+
 import 'package:pinger/config.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
@@ -71,8 +72,7 @@ abstract class SettingsStoreBase with Store {
         ),
       );
 
-  TraySettings _createDefaultTraySettings() =>
-      TraySettings(enabled: true, autoReveal: false);
+  TraySettings _createDefaultTraySettings() => TraySettings(enabled: true, autoReveal: false);
 
   @action
   Future<void> updateSettings(UserSettings settings) async {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/ui/common/draggable_sheet.dart';
 import 'package:pinger/ui/info_tray/info_tray.dart';
 
@@ -37,6 +39,5 @@ class InfoTrayEntry<T> implements SeparatedItem<InfoTrayItem> {
   InfoTrayItem get value => item;
 
   @override
-  WidgetBuilder get builder =>
-      (_) => Observer(builder: (_) => valueBuilder(valueObservable()));
+  WidgetBuilder get builder => (_) => Observer(builder: (_) => valueBuilder(valueObservable()));
 }

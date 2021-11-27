@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
@@ -64,8 +66,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
               Container(height: 48.0),
               SettingsFooterSection(
                 appInfo: appInfo,
-                onShowIntroPressed: () =>
-                    PingerApp.router.show(RouteConfig.intro()),
+                onShowIntroPressed: () => PingerApp.router.show(RouteConfig.intro()),
               ),
             ],
           ),

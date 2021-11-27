@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class FadeOut extends StatefulWidget {
   final Duration duration;

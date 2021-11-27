@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
@@ -28,11 +29,9 @@ class SessionValuesItem extends StatelessWidget {
   }) {
     final reversedIndex = values.length - index - 1;
     final result = values[reversedIndex];
-    final prevResult = values.reversed
-        .skip(index + 1)
-        .firstWhere((it) => it != null, orElse: () => null);
-    final delta =
-        result != null && prevResult != null ? result - prevResult : null;
+    final prevResult =
+        values.reversed.skip(index + 1).firstWhere((it) => it != null, orElse: () => null);
+    final delta = result != null && prevResult != null ? result - prevResult : null;
     return SessionValuesItem._(
       key: key,
       index: reversedIndex + 1,
@@ -95,7 +94,11 @@ class SessionValuesItem extends StatelessWidget {
     return SizedBox(
       width: indicatorBoxWidth,
       child: Text(
-        (delta != null && delta != 0) ? delta! > 0 ? "+$delta" : "$delta" : "-",
+        (delta != null && delta != 0)
+            ? delta! > 0
+                ? "+$delta"
+                : "$delta"
+            : "-",
         style: TextStyle(color: R.colors.gray),
         textAlign: TextAlign.center,
       ),

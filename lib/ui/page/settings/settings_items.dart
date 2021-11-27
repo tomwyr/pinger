@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -157,8 +158,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
     super.dispose();
   }
 
-  TextEditingValue? _getNewInputValue(
-      int pressIndex, bool isInfinite, String currentText) {
+  TextEditingValue? _getNewInputValue(int pressIndex, bool isInfinite, String currentText) {
     if (pressIndex == 0) {
       if (isInfinite) {
         return TextEditingValue.empty;

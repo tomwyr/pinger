@@ -37,8 +37,7 @@ class DraggableSheet extends StatefulWidget {
   _DraggableSheetState createState() => _DraggableSheetState();
 }
 
-class _DraggableSheetState extends State<DraggableSheet>
-    with SingleTickerProviderStateMixin {
+class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProviderStateMixin {
   final _dragAnimTween = Tween<double>(begin: 0.0, end: 0.0);
   final _dragDelta = ValueNotifier(0.0);
   final _visibility = ValueNotifier(false);
@@ -82,9 +81,8 @@ class _DraggableSheetState extends State<DraggableSheet>
 
   void _setupDragAnimation() {
     _animator = AnimationController(vsync: this, duration: widget.duration);
-    final animation = _dragAnimTween
-        .chain(CurveTween(curve: Curves.easeOutCubic))
-        .animate(_animator);
+    final animation =
+        _dragAnimTween.chain(CurveTween(curve: Curves.easeOutCubic)).animate(_animator);
     animation
       ..addListener(() {
         _dragDelta.value += (animation.value - (_lastAnimValue ?? 0.0));
@@ -93,16 +91,13 @@ class _DraggableSheetState extends State<DraggableSheet>
       ..addStatusListener((it) {
         if (it == AnimationStatus.completed) {
           _lastAnimValue = null;
-          _sheetState = _dragDelta.value == 0.0
-              ? SheetState.COLLAPSED
-              : SheetState.EXPANDED;
+          _sheetState = _dragDelta.value == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
         }
       });
   }
 
   void _onSheetHeight() {
-    if (_sheetState == SheetState.EXPANDED ||
-        _sheetState == SheetState.EXPANDING) {
+    if (_sheetState == SheetState.EXPANDED || _sheetState == SheetState.EXPANDING) {
       final heightDiff = (_lastHeight - _sheetHeight.value).total;
       Future(() => _dragDelta.value += heightDiff);
     } else {
@@ -115,30 +110,25 @@ class _DraggableSheetState extends State<DraggableSheet>
 
   void _updateExpansion() {
     final contentHeight = _sheetHeight.value.content;
-    _currentExpansion = contentHeight > 0.0
-        ? (-_dragDelta.value / contentHeight).clamp(0.0, 1.0)
-        : 0.0;
+    _currentExpansion =
+        contentHeight > 0.0 ? (-_dragDelta.value / contentHeight).clamp(0.0, 1.0) : 0.0;
     _expansion.add(_currentExpansion);
   }
 
   void _onDragUpdate(double delta) {
     if (!_animator.isAnimating) {
       _sheetState = SheetState.DRAGGING;
-      _dragDelta.value =
-          (_dragDelta.value + delta).clamp(-_sheetHeight.value.content, 0.0);
+      _dragDelta.value = (_dragDelta.value + delta).clamp(-_sheetHeight.value.content, 0.0);
     }
   }
 
   void _onDragEnd(double velocity) {
     if (!_animator.isAnimating) {
       final endDelta = _calcEndDelta(velocity);
-      final didReachEnd = endDelta == 0.0
-          ? _dragDelta.value >= 0.0
-          : _dragDelta.value <= endDelta;
+      final didReachEnd = endDelta == 0.0 ? _dragDelta.value >= 0.0 : _dragDelta.value <= endDelta;
       if (didReachEnd) {
         _dragDelta.value = endDelta;
-        _sheetState =
-            endDelta == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
+        _sheetState = endDelta == 0.0 ? SheetState.COLLAPSED : SheetState.EXPANDED;
       } else {
         _animateTo(endDelta);
       }
@@ -147,8 +137,7 @@ class _DraggableSheetState extends State<DraggableSheet>
 
   double _calcEndDelta(double velocity) {
     final contentHeight = _sheetHeight.value.content;
-    final expand = velocity < 0.0 ||
-        (velocity == 0.0 && _dragDelta.value < -contentHeight / 2);
+    final expand = velocity < 0.0 || (velocity == 0.0 && _dragDelta.value < -contentHeight / 2);
     return expand ? -contentHeight : 0.0;
   }
 
@@ -157,9 +146,7 @@ class _DraggableSheetState extends State<DraggableSheet>
       _dragAnimTween
         ..begin = 0.0
         ..end = delta - _dragDelta.value;
-      _sheetState = _dragAnimTween.end! > 0
-          ? SheetState.COLLAPSING
-          : SheetState.EXPANDING;
+      _sheetState = _dragAnimTween.end! > 0 ? SheetState.COLLAPSING : SheetState.EXPANDING;
       _animator.forward(from: 0.0);
     }
   }
@@ -230,9 +217,8 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     final height = layoutItems(size);
-    final num contentOffset =
-        (size.height + dragDelta + _calcHeightDiff(height))
-            .clamp(size.height - height.content, size.height);
+    final num contentOffset = (size.height + dragDelta + _calcHeightDiff(height))
+        .clamp(size.height - height.content, size.height);
     final num handleOffset = contentOffset - height.handle;
     positionChild(_SheetItem.CONTENT, Offset(0.0, contentOffset as double));
     positionChild(_SheetItem.HANDLE, Offset(0.0, handleOffset as double));
@@ -249,8 +235,7 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   double _calcHeightDiff(_SheetHeight height) {
     final diff = sheetHeight.value - height;
     if (diff != _SheetHeight.zero) {
-      return sheetState == SheetState.EXPANDING ||
-              sheetState == SheetState.EXPANDED
+      return sheetState == SheetState.EXPANDING || sheetState == SheetState.EXPANDED
           ? min(diff.total, 0.0)
           : max(diff.total, 0.0);
     }
@@ -281,9 +266,7 @@ class _SheetHeight {
 
   @override
   bool operator ==(other) =>
-      other is _SheetHeight &&
-      other.handle == handle &&
-      other.content == content;
+      other is _SheetHeight && other.handle == handle && other.content == content;
 }
 
 class SeparatedDraggableSheet<T> extends StatefulWidget {
@@ -311,15 +294,12 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SeparatedDraggableSheetState<T> createState() =>
-      _SeparatedDraggableSheetState<T>();
+  _SeparatedDraggableSheetState<T> createState() => _SeparatedDraggableSheetState<T>();
 }
 
-class _SeparatedDraggableSheetState<T>
-    extends State<SeparatedDraggableSheet<T>> {
+class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>> {
   final _visibleItems = <T>{};
-  final Map<T, ValueNotifier<bool?>> _separatorVisibilities =
-      <T, ValueNotifier<bool>>{};
+  final Map<T, ValueNotifier<bool?>> _separatorVisibilities = <T, ValueNotifier<bool>>{};
   final _visibilityListeners = <T, VoidCallback>{};
 
   late List<SeparatedItem<T>> _items;
@@ -331,8 +311,7 @@ class _SeparatedDraggableSheetState<T>
     _items = widget.items
       ..forEach((it) {
         _separatorVisibilities[it.value] = ValueNotifier(it.visibility.value);
-        final listener =
-            () => _onItemVisibility(it.value, it.visibility.value!);
+        final listener = () => _onItemVisibility(it.value, it.visibility.value!);
         _visibilityListeners[it.value] = listener;
         it.visibility.addListener(listener);
         Future(listener);
@@ -349,8 +328,7 @@ class _SeparatedDraggableSheetState<T>
   }
 
   void _onItemVisibility(T item, bool visible) {
-    final didChange =
-        visible ? _visibleItems.add(item) : _visibleItems.remove(item);
+    final didChange = visible ? _visibleItems.add(item) : _visibleItems.remove(item);
     if (didChange) {
       visible ? _onItemAppeared(item) : _onItemDisappeared(item);
       widget.onVisibilityChanged(_visibleItems);

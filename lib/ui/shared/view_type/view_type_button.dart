@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 
 class ViewTypeButton extends StatelessWidget {
   static final height = 26.0;
-  
+
   final String? label;
   final bool selected;
   final VoidCallback onPressed;

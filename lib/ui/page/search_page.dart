@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -53,8 +55,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
 
   void _onQueryChanged(String query) {
     _hostsStore.search(query);
-    _highlightHost.value =
-        query.endsWith(".") ? query.substring(0, query.length - 1) : query;
+    _highlightHost.value = query.endsWith(".") ? query.substring(0, query.length - 1) : query;
   }
 
   void _onClearPressed() {
@@ -122,8 +123,7 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
     );
   }
 
-  Widget _buildNoResults(AssetImage image, String title, String description,
-      {Widget? action}) {
+  Widget _buildNoResults(AssetImage image, String title, String description, {Widget? action}) {
     return ScrollEdgeGradient(
       color: R.colors.canvas,
       builder: (controller) => FlexChildScrollView(

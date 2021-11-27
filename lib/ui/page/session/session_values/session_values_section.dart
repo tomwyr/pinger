@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/ui/page/session/session_ping_gauge.dart';
@@ -89,9 +90,8 @@ class _SessionValuesSectionState extends State<SessionValuesSection> {
           padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
           child: LayoutBuilder(
             builder: (_, constraints) => Padding(
-              padding: EdgeInsets.only(
-                  top: (constraints.maxHeight - _gaugeSafeHeight)
-                      .clamp(0.0, 16.0)),
+              padding:
+                  EdgeInsets.only(top: (constraints.maxHeight - _gaugeSafeHeight).clamp(0.0, 16.0)),
               child: SessionPingGauge(
                 session: widget.session,
                 duration: widget.sessionDuration,

@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/service/notifications_manager.dart';
@@ -60,8 +61,7 @@ abstract class DeviceStoreBase with Store {
   }
 
   void _onConnectivityChanged(ConnectivityResult result) {
-    final isEnabled = result == ConnectivityResult.mobile ||
-        result == ConnectivityResult.wifi;
+    final isEnabled = result == ConnectivityResult.mobile || result == ConnectivityResult.wifi;
     if (isNetworkEnabled != isEnabled) isNetworkEnabled = isEnabled;
   }
 

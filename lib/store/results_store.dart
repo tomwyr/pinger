@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/service/pinger_api.dart';
@@ -33,8 +34,7 @@ abstract class ResultsStoreBase with Store {
 
   @action
   Future<void> fetchGlobalResults(String host) async {
-    final needsFetch =
-        !globalResults.containsKey(host) || globalResults[host] is SnapError;
+    final needsFetch = !globalResults.containsKey(host) || globalResults[host] is SnapError;
     if (needsFetch) {
       _setGlobalResults(host, DataSnap.loading());
       try {

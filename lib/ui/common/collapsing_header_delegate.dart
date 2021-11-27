@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:pinger/ui/common/box_clipper.dart';
 
 class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -31,8 +31,7 @@ class CollapsingHeaderDelegate extends SliverPersistentHeaderDelegate {
     final expansion = 1 - shrinkOffset / maxExtent;
     final topItemTop = topItemPadding * expansion;
     final bottomItemTop = topItemMaxExtent * expansion;
-    final topItemOverflowStart =
-        maxExtent * expansion - topItemTop + bottomItemExtent;
+    final topItemOverflowStart = maxExtent * expansion - topItemTop + bottomItemExtent;
     final bottomItemEnd = bottomItemTop + bottomItemExtent;
     return Stack(
       clipBehavior: Clip.none,

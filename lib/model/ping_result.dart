@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:pinger/model/user_settings.dart';
 
 part 'ping_result.freezed.dart';
@@ -18,8 +19,7 @@ class PingResult with _$PingResult {
     required PingStats stats,
   }) = _PingResult;
 
-  factory PingResult.fromJson(Map<String, dynamic> json) =>
-      _$PingResultFromJson(json);
+  factory PingResult.fromJson(Map<String, dynamic> json) => _$PingResultFromJson(json);
 }
 
 @freezed
@@ -49,6 +49,5 @@ class PingStats with _$PingStats {
     );
   }
 
-  factory PingStats.fromJson(Map<String, dynamic> json) =>
-      _$PingStatsFromJson(json);
+  factory PingStats.fromJson(Map<String, dynamic> json) => _$PingStatsFromJson(json);
 }

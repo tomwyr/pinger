@@ -1,5 +1,7 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dotted_border/dotted_border.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';

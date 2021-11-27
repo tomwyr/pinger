@@ -31,13 +31,11 @@ mixin _$DeviceStore on DeviceStoreBase, Store {
     return _$initAsyncAction.run(() => super.init());
   }
 
-  final _$getCurrentPositionAsyncAction =
-      AsyncAction('DeviceStoreBase.getCurrentPosition');
+  final _$getCurrentPositionAsyncAction = AsyncAction('DeviceStoreBase.getCurrentPosition');
 
   @override
   Future<GeoPosition> getCurrentPosition() {
-    return _$getCurrentPositionAsyncAction
-        .run(() => super.getCurrentPosition());
+    return _$getCurrentPositionAsyncAction.run(() => super.getCurrentPosition());
   }
 
   @override

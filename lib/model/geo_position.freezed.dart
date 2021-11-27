@@ -43,14 +43,12 @@ mixin _$GeoPosition {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GeoPositionCopyWith<GeoPosition> get copyWith =>
-      throw _privateConstructorUsedError;
+  $GeoPositionCopyWith<GeoPosition> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $GeoPositionCopyWith<$Res> {
-  factory $GeoPositionCopyWith(
-          GeoPosition value, $Res Function(GeoPosition) then) =
+  factory $GeoPositionCopyWith(GeoPosition value, $Res Function(GeoPosition) then) =
       _$GeoPositionCopyWithImpl<$Res>;
   $Res call({double lat, double lon});
 }
@@ -82,10 +80,8 @@ class _$GeoPositionCopyWithImpl<$Res> implements $GeoPositionCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$GeoPositionCopyWith<$Res>
-    implements $GeoPositionCopyWith<$Res> {
-  factory _$GeoPositionCopyWith(
-          _GeoPosition value, $Res Function(_GeoPosition) then) =
+abstract class _$GeoPositionCopyWith<$Res> implements $GeoPositionCopyWith<$Res> {
+  factory _$GeoPositionCopyWith(_GeoPosition value, $Res Function(_GeoPosition) then) =
       __$GeoPositionCopyWithImpl<$Res>;
   @override
   $Res call({double lat, double lon});
@@ -94,8 +90,7 @@ abstract class _$GeoPositionCopyWith<$Res>
 /// @nodoc
 class __$GeoPositionCopyWithImpl<$Res> extends _$GeoPositionCopyWithImpl<$Res>
     implements _$GeoPositionCopyWith<$Res> {
-  __$GeoPositionCopyWithImpl(
-      _GeoPosition _value, $Res Function(_GeoPosition) _then)
+  __$GeoPositionCopyWithImpl(_GeoPosition _value, $Res Function(_GeoPosition) _then)
       : super(_value, (v) => _then(v as _GeoPosition));
 
   @override
@@ -124,8 +119,7 @@ class __$GeoPositionCopyWithImpl<$Res> extends _$GeoPositionCopyWithImpl<$Res>
 class _$_GeoPosition implements _GeoPosition {
   _$_GeoPosition({required this.lat, required this.lon});
 
-  factory _$_GeoPosition.fromJson(Map<String, dynamic> json) =>
-      _$$_GeoPositionFromJson(json);
+  factory _$_GeoPosition.fromJson(Map<String, dynamic> json) => _$$_GeoPositionFromJson(json);
 
   @override
   final double lat;
@@ -161,11 +155,9 @@ class _$_GeoPosition implements _GeoPosition {
 }
 
 abstract class _GeoPosition implements GeoPosition {
-  factory _GeoPosition({required double lat, required double lon}) =
-      _$_GeoPosition;
+  factory _GeoPosition({required double lat, required double lon}) = _$_GeoPosition;
 
-  factory _GeoPosition.fromJson(Map<String, dynamic> json) =
-      _$_GeoPosition.fromJson;
+  factory _GeoPosition.fromJson(Map<String, dynamic> json) = _$_GeoPosition.fromJson;
 
   @override
   double get lat;
@@ -173,6 +165,5 @@ abstract class _GeoPosition implements GeoPosition {
   double get lon;
   @override
   @JsonKey(ignore: true)
-  _$GeoPositionCopyWith<_GeoPosition> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$GeoPositionCopyWith<_GeoPosition> get copyWith => throw _privateConstructorUsedError;
 }

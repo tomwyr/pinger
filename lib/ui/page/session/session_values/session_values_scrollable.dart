@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 
 class SessionValuesScrollable extends StatefulWidget {
@@ -21,8 +22,7 @@ class SessionValuesScrollable extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SessionValuesScrollableState createState() =>
-      _SessionValuesScrollableState();
+  _SessionValuesScrollableState createState() => _SessionValuesScrollableState();
 }
 
 class _SessionValuesScrollableState extends State<SessionValuesScrollable> {

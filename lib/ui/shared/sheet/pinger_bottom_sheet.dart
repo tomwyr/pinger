@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
@@ -137,9 +138,7 @@ class PingerBottomSheet extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.zero,
                   ),
-                  onPressed: canAccept == null || canAccept!()
-                      ? onAcceptPressed ?? _tryPop
-                      : null,
+                  onPressed: canAccept == null || canAccept!() ? onAcceptPressed ?? _tryPop : null,
                   child: Icon(acceptIcon),
                 ),
               ),

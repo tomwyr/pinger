@@ -12,10 +12,10 @@ mixin _$HostsStore on HostsStoreBase, Store {
   Computed<List<HostItem>?>? _$searchResultsComputed;
 
   @override
-  List<HostItem>? get searchResults => (_$searchResultsComputed ??=
-          Computed<List<HostItem>?>(() => super.searchResults,
+  List<HostItem>? get searchResults =>
+      (_$searchResultsComputed ??= Computed<List<HostItem>?>(() => super.searchResults,
               name: 'HostsStoreBase.searchResults'))
-      .value;
+          .value;
 
   final _$_searchQueryAtom = Atom(name: 'HostsStoreBase._searchQuery');
 
@@ -98,16 +98,14 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return _$addFavoriteAsyncAction.run(() => super.addFavorite(host));
   }
 
-  final _$removeFavoritesAsyncAction =
-      AsyncAction('HostsStoreBase.removeFavorites');
+  final _$removeFavoritesAsyncAction = AsyncAction('HostsStoreBase.removeFavorites');
 
   @override
   Future<void> removeFavorites(List<String> hosts) {
     return _$removeFavoritesAsyncAction.run(() => super.removeFavorites(hosts));
   }
 
-  final _$incrementStatsAsyncAction =
-      AsyncAction('HostsStoreBase.incrementStats');
+  final _$incrementStatsAsyncAction = AsyncAction('HostsStoreBase.incrementStats');
 
   @override
   Future<void> incrementStats(String host) {
@@ -121,21 +119,19 @@ mixin _$HostsStore on HostsStoreBase, Store {
     return _$removeStatsAsyncAction.run(() => super.removeStats(hosts));
   }
 
-  final _$_tryLoadFaviconAsyncAction =
-      AsyncAction('HostsStoreBase._tryLoadFavicon');
+  final _$_tryLoadFaviconAsyncAction = AsyncAction('HostsStoreBase._tryLoadFavicon');
 
   @override
   Future<void> _tryLoadFavicon(String host) {
     return _$_tryLoadFaviconAsyncAction.run(() => super._tryLoadFavicon(host));
   }
 
-  final _$HostsStoreBaseActionController =
-      ActionController(name: 'HostsStoreBase');
+  final _$HostsStoreBaseActionController = ActionController(name: 'HostsStoreBase');
 
   @override
   void search(String query) {
-    final _$actionInfo = _$HostsStoreBaseActionController.startAction(
-        name: 'HostsStoreBase.search');
+    final _$actionInfo =
+        _$HostsStoreBaseActionController.startAction(name: 'HostsStoreBase.search');
     try {
       return super.search(query);
     } finally {

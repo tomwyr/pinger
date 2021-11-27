@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class TransparentGradientBox extends StatelessWidget {
   final Color color;
@@ -26,10 +25,9 @@ class TransparentGradientBox extends StatelessWidget {
       TransparentGradientBox._(
         key: key,
         color: color,
-        width:
-            direction == AxisDirection.left || direction == AxisDirection.right
-                ? size
-                : double.infinity,
+        width: direction == AxisDirection.left || direction == AxisDirection.right
+            ? size
+            : double.infinity,
         height: direction == AxisDirection.up || direction == AxisDirection.down
             ? size
             : double.infinity,

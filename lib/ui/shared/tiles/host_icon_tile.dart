@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/utils/data_snap.dart';
 
@@ -81,9 +83,8 @@ class _HostIconTileState extends State<HostIconTile> {
     if (widget.host == null) {
       _iconObservable = Observable(null);
     } else {
-      _iconObservable = context
-          .dependOnInheritedWidgetOfExactType<HostIconProvider>()!
-          .getIcon(widget.host!);
+      _iconObservable =
+          context.dependOnInheritedWidgetOfExactType<HostIconProvider>()!.getIcon(widget.host!);
     }
   }
 

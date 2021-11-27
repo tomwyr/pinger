@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class ClipBox extends StatelessWidget {
   final double? width;
@@ -29,10 +29,8 @@ class BoxClipper extends CustomClipper<Rect> {
   BoxClipper(this.width, this.height);
 
   @override
-  Rect getClip(Size size) =>
-      Rect.fromLTWH(0.0, 0.0, width ?? size.width, height ?? size.height);
+  Rect getClip(Size size) => Rect.fromLTWH(0.0, 0.0, width ?? size.width, height ?? size.height);
 
   @override
-  bool shouldReclip(BoxClipper old) =>
-      old.width != width || old.height != height;
+  bool shouldReclip(BoxClipper old) => old.width != width || old.height != height;
 }

@@ -12,8 +12,7 @@ _$_HostStats _$$_HostStatsFromJson(Map<String, dynamic> json) => _$_HostStats(
       pingTime: DateTime.parse(json['pingTime'] as String),
     );
 
-Map<String, dynamic> _$$_HostStatsToJson(_$_HostStats instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$_HostStatsToJson(_$_HostStats instance) => <String, dynamic>{
       'host': instance.host,
       'pingCount': instance.pingCount,
       'pingTime': instance.pingTime.toIso8601String(),

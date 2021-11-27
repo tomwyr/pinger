@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+
 import 'package:pinger/extensions.dart';
 
 void main() {
@@ -6,8 +7,7 @@ void main() {
     test("mapIndexed iterates over list with current index", () {
       final list = [8, 2, 9, 5, 1, 7, 0];
 
-      final matchesInput =
-          list.mapIndexed((i, e) => list[i] == e).every((it) => it);
+      final matchesInput = list.mapIndexed((i, e) => list[i] == e).every((it) => it);
 
       expect(matchesInput, true);
 

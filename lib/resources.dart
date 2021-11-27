@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 final R = PingerResources._();
@@ -137,8 +138,7 @@ abstract class PingerThemes {
         ),
       );
 
-  static ToggleButtonsThemeData get _toggleButtonsTheme =>
-      ToggleButtonsThemeData(
+  static ToggleButtonsThemeData get _toggleButtonsTheme => ToggleButtonsThemeData(
         selectedColor: R.colors.secondary,
         fillColor: R.colors.secondary.withOpacity(0.25),
         splashColor: R.colors.primaryLight.withOpacity(0.5),
@@ -146,8 +146,7 @@ abstract class PingerThemes {
         borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
       );
 
-  static TextSelectionThemeData get _textSelectionTheme =>
-      TextSelectionThemeData(
+  static TextSelectionThemeData get _textSelectionTheme => TextSelectionThemeData(
         cursorColor: R.colors.secondary,
         selectionColor: R.colors.primaryLight.withOpacity(0.5),
         selectionHandleColor: R.colors.primaryLight,
@@ -174,12 +173,9 @@ class PingerStyles {
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);
-  TextStyle get bottomSheetTitle =>
-      TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
-  TextStyle get bottomSheetSubtitle =>
-      TextStyle(fontSize: 18.0, color: R.colors.gray);
-  BorderSide get outlineButtonBorder =>
-      BorderSide(color: R.colors.grayLight, width: 1.5);
+  TextStyle get bottomSheetTitle => TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  TextStyle get bottomSheetSubtitle => TextStyle(fontSize: 18.0, color: R.colors.gray);
+  BorderSide get outlineButtonBorder => BorderSide(color: R.colors.grayLight, width: 1.5);
 }
 
 class PingerSymbols {

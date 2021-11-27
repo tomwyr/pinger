@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
@@ -55,9 +56,7 @@ class HostTile extends StatelessWidget {
               softWrap: false,
               overflow: TextOverflow.fade,
               style: TextStyle(
-                color: type == HostTileType.highlighted
-                    ? R.colors.white
-                    : R.colors.primary,
+                color: type == HostTileType.highlighted ? R.colors.white : R.colors.primary,
               ),
             ),
           ),
@@ -66,8 +65,7 @@ class HostTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Icon(
-            type == HostTileType.removableSelected ||
-                    type == HostTileType.removable
+            type == HostTileType.removableSelected || type == HostTileType.removable
                 ? Icons.delete
                 : Icons.chevron_right,
             color: type == HostTileType.removableSelected

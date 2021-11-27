@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_global.dart';
@@ -82,8 +83,7 @@ class GlobalResultsDataSection extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GlobalResultsDataSectionState createState() =>
-      _GlobalResultsDataSectionState();
+  _GlobalResultsDataSectionState createState() => _GlobalResultsDataSectionState();
 }
 
 class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
@@ -226,8 +226,7 @@ class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {
     ];
   }
 
-  List<Widget> _buildGlobalSection(
-      String title, String description, Widget content) {
+  List<Widget> _buildGlobalSection(String title, String description, Widget content) {
     return [
       Container(height: 12.0),
       Text(title, style: TextStyle(color: R.colors.gray, fontSize: 18.0)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';

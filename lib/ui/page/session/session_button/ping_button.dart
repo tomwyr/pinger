@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/page/session/session_button/ping_floating_button.dart';
 import 'package:pinger/ui/page/session/session_button/ping_lock_indicator.dart';
@@ -87,9 +88,7 @@ class _PingButtonState extends State<PingButton> {
       _isSwiping = true;
       _swipeTotalDelta += delta;
       _lockSwipe.value =
-          (_swipeTotalDelta / (_fullSize + _lockDimens.totalWidth))
-              .clamp(-1.0, 1.0)
-              .abs();
+          (_swipeTotalDelta / (_fullSize + _lockDimens.totalWidth)).clamp(-1.0, 1.0).abs();
     }
   }
 

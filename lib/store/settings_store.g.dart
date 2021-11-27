@@ -61,22 +61,18 @@ mixin _$SettingsStore on SettingsStoreBase, Store {
     return _$initAsyncAction.run(() => super.init());
   }
 
-  final _$updateSettingsAsyncAction =
-      AsyncAction('SettingsStoreBase.updateSettings');
+  final _$updateSettingsAsyncAction = AsyncAction('SettingsStoreBase.updateSettings');
 
   @override
   Future<void> updateSettings(UserSettings settings) {
-    return _$updateSettingsAsyncAction
-        .run(() => super.updateSettings(settings));
+    return _$updateSettingsAsyncAction.run(() => super.updateSettings(settings));
   }
 
-  final _$notifyDidShowIntroAsyncAction =
-      AsyncAction('SettingsStoreBase.notifyDidShowIntro');
+  final _$notifyDidShowIntroAsyncAction = AsyncAction('SettingsStoreBase.notifyDidShowIntro');
 
   @override
   Future<void> notifyDidShowIntro() {
-    return _$notifyDidShowIntroAsyncAction
-        .run(() => super.notifyDidShowIntro());
+    return _$notifyDidShowIntroAsyncAction.run(() => super.notifyDidShowIntro());
   }
 
   @override

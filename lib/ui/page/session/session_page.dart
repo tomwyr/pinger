@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -81,8 +83,8 @@ class _SessionPageState extends BaseState<SessionPage> {
     );
   }
 
-  Widget _buildHeader(PingSession session, bool isFavorite, bool isExpanded,
-      bool didChangeSettings) {
+  Widget _buildHeader(
+      PingSession session, bool isFavorite, bool isExpanded, bool didChangeSettings) {
     return SessionHostHeader(
       session: session,
       isExpanded: isExpanded,
@@ -93,8 +95,7 @@ class _SessionPageState extends BaseState<SessionPage> {
           label: S.current.sessionSearchButtonLabel,
           enabled: true,
           active: false,
-          onPressed: () =>
-              PingerApp.router.show(RouteConfig.search(session.host)),
+          onPressed: () => PingerApp.router.show(RouteConfig.search(session.host)),
         ),
         SessionHostButton(
           icon: Icons.bookmark,
@@ -154,8 +155,7 @@ class _SessionPageState extends BaseState<SessionPage> {
     );
   }
 
-  Widget _buildResults(
-      PingSession session, Duration? sessionDuration, bool isExpanded) {
+  Widget _buildResults(PingSession session, Duration? sessionDuration, bool isExpanded) {
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 8.0),
@@ -182,8 +182,7 @@ class _SessionPageState extends BaseState<SessionPage> {
     ]);
   }
 
-  Widget _buildPingButton(
-      PingStatus status, PingStatus? prevStatus, bool canArchive) {
+  Widget _buildPingButton(PingStatus status, PingStatus? prevStatus, bool canArchive) {
     final showArchive = status.isSessionDone || prevStatus.isSessionDone;
     final secondaryIcon = showArchive ? Icons.archive : Icons.stop;
     switch (status) {
