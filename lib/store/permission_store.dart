@@ -60,7 +60,8 @@ class LocationPermissionStore extends PermissionStore {
   @override
   Future<void> _updateSetting(bool value) async {
     await _settingsStore.updateSettings(
-      _settingsStore.userSettings!.copyWith.shareSettings(attachLocation: value),
+      _settingsStore.userSettings!.copyWith
+          .shareSettings(attachLocation: value),
     );
   }
 }
@@ -84,7 +85,7 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
     _lifecycleNotifier.register(this);
     await _checkAccessStatus();
     await _syncSettingState();
-    _reactionDisposer = reaction(
+    _reactionDisposer = reaction<bool?>(
       (_) => _getSetting(),
       _verifySettingStatus,
       fireImmediately: true,

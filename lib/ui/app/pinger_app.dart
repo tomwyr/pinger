@@ -28,9 +28,9 @@ class _PingerAppState extends State<PingerApp> {
   @override
   void initState() {
     super.initState();
-    reaction(
+    reaction<bool>(
       (_) => _settingsStore.userSettings!.nightMode,
-      (dynamic it) => setState(() => R.load(it ? Brightness.dark : Brightness.light)),
+      (it) => setState(() => R.load(it ? Brightness.dark : Brightness.light)),
       fireImmediately: true,
     );
   }

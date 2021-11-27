@@ -86,7 +86,7 @@ class _InfoTrayState extends State<InfoTray>
   void initState() {
     super.initState();
     _entries = _createEntries()..values.forEach((it) => it.init());
-    _settingsDisposer = reaction(
+    _settingsDisposer = reaction<TraySettings?>(
       (_) => _settingsStore.userSettings!.traySettings,
       _onTraySettings,
       fireImmediately: true,
@@ -109,9 +109,9 @@ class _InfoTrayState extends State<InfoTray>
         _controller.hide();
       }
       final state = _controller.sheetState;
-      if (settings.autoReveal&& state == SheetState.COLLAPSED) {
+      if (settings.autoReveal && state == SheetState.COLLAPSED) {
         _controller.expand();
-      } else if (!settings.autoReveal&& state == SheetState.EXPANDED) {
+      } else if (!settings.autoReveal && state == SheetState.EXPANDED) {
         _controller.collapse();
       }
     } else if (_controller.isVisible!) {
