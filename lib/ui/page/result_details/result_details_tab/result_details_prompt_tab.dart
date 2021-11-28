@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/info_section.dart';
 
 class ResultDetailsPromptTab extends StatelessWidget {
@@ -35,12 +34,9 @@ class ResultDetailsPromptTab extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40.0),
-            child: ButtonTheme.fromButtonThemeData(
-              data: R.themes.raisedButton,
-              child: ElevatedButton(
-                child: Text(buttonLabel),
-                onPressed: onButtonPressed,
-              ),
+            child: ElevatedButton(
+              child: Text(buttonLabel),
+              onPressed: onButtonPressed,
             ),
           ),
         ]),

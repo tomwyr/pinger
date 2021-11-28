@@ -229,58 +229,58 @@ class _IntroPageState extends BaseState<IntroPage> {
       alignment: Alignment.centerLeft,
       child: Opacity(
         opacity: 1.0 - value,
-        child: ButtonTheme.fromButtonThemeData(
-          data: R.themes.flatButton,
-          child: TextButton(
-            child: Text(S.current.skipButtonLabel),
-            onPressed: value < 1.0 ? PingerApp.router.pop : null,
-          ),
+        child: TextButton(
+          child: Text(S.current.skipButtonLabel),
+          onPressed: value < 1.0 ? PingerApp.router.pop : null,
         ),
       ),
     );
   }
 
   Widget _buildNextButton(double expansion) {
-    final raisedButtonWidth =
-        (R.themes.raisedButton.minWidth - _nextButtonSize) * expansion + _nextButtonSize;
     return Align(
       alignment: Alignment(1.0 - expansion, 0.0),
       child: SizedBox(
         height: _nextButtonSize - 16.0 * expansion,
-        child: ButtonTheme.fromButtonThemeData(
-          data: R.themes.raisedButton.copyWith(
-            minWidth: raisedButtonWidth,
-            padding: EdgeInsets.only(
+        child: ElevatedButton(
+          style: R.themes.app.elevatedButtonTheme.style?.copyWith(
+            minimumSize: MaterialStateProperty.all(_getElevatedButtonSize(expansion)),
+            padding: MaterialStateProperty.all(EdgeInsets.only(
               left: 20.0 * expansion,
               right: 12.0 * expansion,
-            ),
+            )),
           ),
-          child: ElevatedButton(
-            onPressed: expansion > 0.5 ? PingerApp.router.pop : _onNextPressed,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ClipRect(
-                  child: Align(
-                    widthFactor: expansion,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: Opacity(
-                        opacity: expansion,
-                        child: Text(S.current.getStartedButtonLabel),
-                      ),
+          onPressed: expansion > 0.5 ? PingerApp.router.pop : _onNextPressed,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ClipRect(
+                child: Align(
+                  widthFactor: expansion,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: Opacity(
+                      opacity: expansion,
+                      child: Text(S.current.getStartedButtonLabel),
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward,
-                  size: _nextButtonSize / 2 - 8.0 * expansion,
-                ),
-              ],
-            ),
+              ),
+              Icon(
+                Icons.arrow_forward,
+                size: _nextButtonSize / 2 - 8.0 * expansion,
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Size _getElevatedButtonSize(double expansion) {
+    final minWidth = R.dimens.elevatedButtonMinWidth;
+    final width = (minWidth - _nextButtonSize) * expansion + _nextButtonSize;
+
+    return Size(width, R.dimens.elevatedButtonMinHeight);
   }
 }

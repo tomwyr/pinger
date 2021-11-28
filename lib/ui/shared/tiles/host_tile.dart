@@ -31,17 +31,7 @@ class HostTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: type == HostTileType.highlighted ? 4.0 : 0.0,
-        padding: const EdgeInsets.only(left: 12.0),
-        // TODO verify how to apply colors
-        // highlightElevation: type == HostTileType.highlighted ? 8.0 : 0.0,
-        // color: type == HostTileType.highlighted
-        //     ? R.colors.primaryLight
-        //     : type == HostTileType.removableSelected
-        //         ? R.colors.secondary.withOpacity(0.5)
-        //         : R.colors.grayLight,
-      ),
+      style: _getElevatedButtonStyle(),
       key: ValueKey(host),
       onPressed: onPressed,
       onLongPress: onLongPress,
@@ -78,4 +68,21 @@ class HostTile extends StatelessWidget {
       ]),
     );
   }
+
+  ButtonStyle _getElevatedButtonStyle() => ElevatedButton.styleFrom(
+        padding: const EdgeInsets.only(left: 12.0),
+        primary: type == HostTileType.highlighted
+            ? R.colors.primaryLight
+            : type == HostTileType.removableSelected
+                ? R.colors.secondary.withOpacity(0.5)
+                : R.colors.grayLight,
+      ).copyWith(elevation: MaterialStateProperty.resolveWith(
+        (states) {
+          if (type != HostTileType.highlighted) return 0.0;
+
+          if (states.contains(MaterialState.pressed)) return 8.0;
+
+          return 0.0;
+        },
+      ));
 }

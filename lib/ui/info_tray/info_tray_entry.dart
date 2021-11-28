@@ -18,6 +18,7 @@ class InfoTrayEntry<T> implements SeparatedItem<InfoTrayItem> {
   final ValueGetter<T> valueObservable;
   final Widget Function(T value) valueBuilder;
   final bool Function(T value) isVisible;
+
   @override
   final ValueNotifier<bool?> visibility = ValueNotifier(null);
 

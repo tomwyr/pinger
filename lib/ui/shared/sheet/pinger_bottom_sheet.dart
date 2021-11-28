@@ -122,14 +122,12 @@ class PingerBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               if (rejectLabel != null)
-                ButtonTheme.fromButtonThemeData(
-                  data: R.themes.flatButton.copyWith(
-                    padding: EdgeInsets.zero,
+                TextButton(
+                  style: R.themes.app.textButtonTheme.style?.copyWith(
+                    padding: MaterialStateProperty.all(EdgeInsets.zero),
                   ),
-                  child: TextButton(
-                    onPressed: onRejectPressed ?? _tryPop,
-                    child: Text(rejectLabel!),
-                  ),
+                  onPressed: onRejectPressed ?? _tryPop,
+                  child: Text(rejectLabel!),
                 ),
               if (rejectLabel != null) const Spacer(),
               SizedBox.fromSize(

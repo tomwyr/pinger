@@ -23,8 +23,6 @@ class ResultsGroupTile extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         side: R.styles.outlineButtonBorder,
-        // TODO verify where to apply colors
-        // highlightedBorderColor: R.styles.outlineButtonBorder.color,
       ),
       onPressed: onPressed,
       child: Column(

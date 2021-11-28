@@ -32,9 +32,6 @@ class ResultTile extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.only(left: 12.0),
           side: R.styles.outlineButtonBorder,
-          // TODO verify how to apply colors
-          // highlightedBorderColor: R.styles.outlineButtonBorder.color,
-          // color: R.colors.canvas,
         ),
         onPressed: onPressed,
         child: LayoutBuilder(
