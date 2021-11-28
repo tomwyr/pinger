@@ -114,12 +114,9 @@ class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {
           Images.undrawServerDown,
           S.current.dataFetchFailedTitle,
           S.current.dataFetchFailedDesc,
-          action: ButtonTheme.fromButtonThemeData(
-            data: R.themes.raisedButton,
-            child: ElevatedButton(
-              onPressed: _hostsStore.fetchHosts,
-              child: Text(S.current.tryAgainButtonLabel),
-            ),
+          action: ElevatedButton(
+            onPressed: _hostsStore.fetchHosts,
+            child: Text(S.current.tryAgainButtonLabel),
           ),
         ),
       ),

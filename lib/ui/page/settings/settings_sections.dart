@@ -201,12 +201,9 @@ class SettingsFooterSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Center(
-          child: ButtonTheme.fromButtonThemeData(
-            data: R.themes.raisedButton,
-            child: ElevatedButton(
-              child: Text(S.current.showIntroButtonLabel),
-              onPressed: onShowIntroPressed,
-            ),
+          child: ElevatedButton(
+            child: Text(S.current.showIntroButtonLabel),
+            onPressed: onShowIntroPressed,
           ),
         ),
         Container(height: 12.0),

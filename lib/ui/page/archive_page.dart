@@ -115,12 +115,9 @@ class _ArchivePageState extends BaseState<ArchivePage> {
             description: S.current.archiveEmptyDesc,
           ),
         ),
-        ButtonTheme.fromButtonThemeData(
-          data: R.themes.raisedButton,
-          child: ElevatedButton(
-            child: Text(S.current.startNowButtonLabel),
-            onPressed: () => PingerApp.router.show(RouteConfig.search()),
-          ),
+        ElevatedButton(
+          child: Text(S.current.startNowButtonLabel),
+          onPressed: () => PingerApp.router.show(RouteConfig.search()),
         ),
         Container(height: 64.0),
       ]),

@@ -84,7 +84,10 @@ class PingerDarkColors extends PingerColors {
 class PingerDimens {
   const PingerDimens();
 
+  final buttonSplashOpacity = 0.15;
   final buttonThemeRadius = 12.0;
+  final elevatedButtonMinWidth = 216.0;
+  final elevatedButtonMinHeight = kMinInteractiveDimension;
 }
 
 abstract class PingerThemes {
@@ -92,21 +95,24 @@ abstract class PingerThemes {
 
   final app = _appTheme.copyWith(primaryColorBrightness: Brightness.light);
 
-  final raisedButton = _buttonTheme.copyWith(minWidth: 216.0);
-  final flatButton = _buttonTheme.copyWith(
-    colorScheme: ColorScheme.light(primary: R.colors.gray),
-  );
-
   static ThemeData get _appTheme => ThemeData(
         fontFamily: GoogleFonts.roboto().fontFamily,
         canvasColor: R.colors.canvas,
         primaryColor: R.colors.secondary,
         hintColor: R.colors.gray,
+        toggleableActiveColor: R.colors.secondary,
+        colorScheme: _colorScheme,
         textTheme: _textTheme,
-        buttonTheme: _buttonTheme,
+        elevatedButtonTheme: _elevatedButtonTheme,
+        textButtonTheme: _textButtonTheme,
+        outlinedButtonTheme: _outlinedButtonTheme,
         appBarTheme: _appBarTheme,
         toggleButtonsTheme: _toggleButtonsTheme,
         textSelectionTheme: _textSelectionTheme,
+      );
+
+  static ColorScheme get _colorScheme => ColorScheme.light(
+        primary: R.colors.secondary,
       );
 
   static TextTheme get _textTheme => TextTheme(
@@ -118,21 +124,45 @@ abstract class PingerThemes {
         displayColor: R.colors.primary,
       );
 
-  static ButtonThemeData get _buttonTheme => ButtonThemeData(
-        height: 48.0,
-        buttonColor: R.colors.secondary,
-        colorScheme: ColorScheme.light(primary: R.colors.primary),
-        textTheme: ButtonTextTheme.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
+  static ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(R.dimens.elevatedButtonMinWidth, R.dimens.elevatedButtonMinHeight),
+          primary: R.colors.secondary,
+          shape: _buttonShape,
+        ).copyWith(
+          overlayColor: MaterialStateProperty.all(
+            R.colors.secondary.withOpacity(R.dimens.buttonSplashOpacity),
+          ),
         ),
+      );
+
+  static TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: R.colors.secondary,
+          shape: _buttonShape,
+        ),
+      );
+
+  static OutlinedButtonThemeData get _outlinedButtonTheme => OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          primary: R.colors.primary,
+          shape: _buttonShape,
+        ).copyWith(
+          overlayColor: MaterialStateProperty.all(
+            R.colors.secondary.withOpacity(R.dimens.buttonSplashOpacity),
+          ),
+        ),
+      );
+
+  static OutlinedBorder get _buttonShape => RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(R.dimens.buttonThemeRadius),
       );
 
   static AppBarTheme get _appBarTheme => AppBarTheme(
         elevation: 0.0,
         color: R.colors.canvas,
         iconTheme: IconThemeData(color: R.colors.primaryLight),
-        toolbarTextStyle: GoogleFonts.orbitron(
+        titleTextStyle: GoogleFonts.orbitron(
           color: R.colors.secondary,
           fontSize: 24.0,
         ),

@@ -87,20 +87,14 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
             description: S.current.homeIntroDesc,
           ),
         ),
-        ButtonTheme.fromButtonThemeData(
-          data: R.themes.raisedButton,
-          child: ElevatedButton(
-            child: Text(S.current.showIntroButtonLabel),
-            onPressed: () => PingerApp.router.show(RouteConfig.intro()).then((_) => onIntroDone()),
-          ),
+        ElevatedButton(
+          child: Text(S.current.showIntroButtonLabel),
+          onPressed: () => PingerApp.router.show(RouteConfig.intro()).then((_) => onIntroDone()),
         ),
         Container(height: 8.0),
-        ButtonTheme.fromButtonThemeData(
-          data: R.themes.flatButton,
-          child: TextButton(
-            child: Text(S.current.skipButtonLabel),
-            onPressed: onIntroDone,
-          ),
+        TextButton(
+          child: Text(S.current.skipButtonLabel),
+          onPressed: onIntroDone,
         ),
         Container(height: 16.0),
       ]),
