@@ -12,7 +12,7 @@ class ResultDetailsPromptTab extends StatelessWidget {
     required this.onButtonPressed,
   }) : super(key: key);
 
-  final ImageProvider image;
+  final AssetImage image;
   final String title;
   final String description;
   final String buttonLabel;
@@ -27,7 +27,7 @@ class ResultDetailsPromptTab extends StatelessWidget {
         child: Column(children: <Widget>[
           Expanded(
             child: InfoSection(
-              image: image as AssetImage,
+              image: image,
               title: title,
               description: description,
             ),

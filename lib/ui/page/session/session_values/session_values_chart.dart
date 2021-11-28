@@ -156,9 +156,9 @@ class _SessionValuesChartState extends State<SessionValuesChart>
             onHorizontalDragUpdate: _onDragUpdate,
             onHorizontalDragEnd: _onDragEnd,
             onHorizontalDragCancel: _onDragCancel,
-            child: ValueListenableBuilder(
+            child: ValueListenableBuilder<double?>(
               valueListenable: _startX,
-              builder: (_, dynamic value, __) => PingResultsChart(
+              builder: (_, value, __) => PingResultsChart(
                 values: widget.values,
                 maxValue: widget.stats?.max,
                 dotsCount: _visibleDotsCount,

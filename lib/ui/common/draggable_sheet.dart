@@ -217,11 +217,11 @@ class _SheetLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     final height = layoutItems(size);
-    final num contentOffset = (size.height + dragDelta + _calcHeightDiff(height))
+    final contentOffset = (size.height + dragDelta + _calcHeightDiff(height))
         .clamp(size.height - height.content, size.height);
-    final num handleOffset = contentOffset - height.handle;
-    positionChild(_SheetItem.content, Offset(0.0, contentOffset as double));
-    positionChild(_SheetItem.handle, Offset(0.0, handleOffset as double));
+    final handleOffset = contentOffset - height.handle;
+    positionChild(_SheetItem.content, Offset(0.0, contentOffset));
+    positionChild(_SheetItem.handle, Offset(0.0, handleOffset));
     sheetHeight.value = height;
   }
 
@@ -299,7 +299,7 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
 
 class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>> {
   final _visibleItems = <T>{};
-  final Map<T, ValueNotifier<bool?>> _separatorVisibilities = <T, ValueNotifier<bool>>{};
+  final _separatorVisibilities = <T, ValueNotifier<bool?>>{};
   final _visibilityListeners = <T, VoidCallback>{};
 
   late List<SeparatedItem<T>> _items;

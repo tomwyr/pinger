@@ -32,7 +32,7 @@ class PingService {
 
   Stream<double> _pingNext(String host, PingSettings settings) async* {
     try {
-      yield await (_pingCommand.execute(host, settings) as FutureOr<double>);
+      yield await _pingCommand.execute(host, settings);
     } catch (e, stackTrace) {
       yield* Future<double>.error(e, stackTrace).asStream();
     }
@@ -50,7 +50,7 @@ abstract class PingCommand {
     throw UnsupportedError("Unhandled platform.");
   }
 
-  Future<double?> execute(String host, PingSettings settings);
+  Future<double> execute(String host, PingSettings settings);
 }
 
 class BashPingCommand extends PingCommand {
@@ -86,7 +86,7 @@ class SimplePingCommand extends PingCommand {
   final MethodChannel _channel = const MethodChannel('com.tomwyr.pinger/simplePing');
 
   @override
-  Future<double?> execute(String host, PingSettings settings) async {
+  Future<double> execute(String host, PingSettings settings) async {
     try {
       return await _channel.invokeMethod('ping', {
         'hostName': host,

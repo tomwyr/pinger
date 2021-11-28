@@ -36,7 +36,7 @@ class SessionPingGauge extends StatelessWidget {
               : firstDigit < 5
                   ? 5
                   : 10;
-      return maxFirstDigit * (pow(10, max.toString().length - 1) as int);
+      return maxFirstDigit * pow(10, max.toString().length - 1).toInt();
     }
     return null;
   }

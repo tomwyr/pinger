@@ -60,7 +60,7 @@ class PingSettingItem extends StatelessWidget {
             unit: unit,
             allowInfinite: allowInfinite,
           );
-          if (result != value) onChanged(result);
+          if (result != null && result != value) onChanged(result);
         },
         child: Container(
           constraints: const BoxConstraints(minWidth: _switchWidth),
@@ -107,14 +107,14 @@ class SettingItemSheet extends StatefulWidget {
   final NumSetting? value;
   final ValueChanged<NumSetting?> onValueChanged;
 
-  static Future<NumSetting> show({
+  static Future<NumSetting?> show({
     required NumSetting? value,
     required String label,
     required String unit,
     required bool allowInfinite,
   }) {
     var currentValue = value;
-    return PingerBottomSheet.show<NumSetting>(
+    return PingerBottomSheet.show<NumSetting?>(
       title: Text(label, style: R.styles.bottomSheetTitle),
       subtitle: Text(
         S.current.settingSheetTitle,

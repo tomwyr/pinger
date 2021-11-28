@@ -45,14 +45,14 @@ class _ArchivePageState extends BaseState<ArchivePage> {
       },
       child: Observer(
         builder: (_) => Scaffold(
-          appBar: _buildAppBar(_resultsStore.localResults!.isNotEmpty) as PreferredSizeWidget?,
+          appBar: _buildAppBar(_resultsStore.localResults!.isNotEmpty),
           body: _buildBody(_resultsStore.localResults),
         ),
       ),
     );
   }
 
-  Widget _buildAppBar(bool hasResults) {
+  AppBar _buildAppBar(bool hasResults) {
     return _viewType == ArchiveViewType.host
         ? AppBar(
             leading: BackButton(onPressed: () {
