@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
-@singleton
+@injectable
 class FaviconService {
   const FaviconService(
     this.baseUrl,
@@ -15,10 +15,13 @@ class FaviconService {
 
   @factoryMethod
   factory FaviconService.create() => const FaviconService(
-        'https://api.faviconkit.com/',
+        googleBaseUrl,
         {'image/png', 'image/vnd.microsoft.icon'},
         Duration(days: 7),
       );
+
+  static const faviconKitBaseUrl = 'https://api.faviconkit.com/';
+  static const googleBaseUrl = 'https://www.google.com/s2/favicons?sz=32&domain=';
 
   final String baseUrl;
   final Set<String> validFormats;

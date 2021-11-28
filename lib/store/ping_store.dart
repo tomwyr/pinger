@@ -125,7 +125,7 @@ abstract class PingStoreBase with Store {
   void initSession(String host) {
     _stopPing();
     _didShareResult = false;
-    prevSession = currentSession;
+    prevSession = host == currentSession?.host ? currentSession : null;
     currentSession = PingSession(
       host: host,
       status: PingStatus.initial,
