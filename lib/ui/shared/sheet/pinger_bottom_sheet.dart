@@ -21,7 +21,7 @@ class PingerBottomSheet extends StatelessWidget {
     required this.builder,
   }) : super(key: key);
 
-  static Future<T> show<T>({
+  static Future<T?> show<T>({
     Widget? title,
     Widget? subtitle,
     IconData? acceptIcon,
@@ -32,7 +32,7 @@ class PingerBottomSheet extends StatelessWidget {
     Widget Function(VoidCallback rebuild)? builder,
   }) async {
     var didPop = false;
-    final result = await PingerApp.router.show(RouteConfig.sheet(
+    final result = await PingerApp.router.show<T>(RouteConfig.sheet(
       (_, animation, __) => PingerBottomSheet._(
         title: title,
         subtitle: subtitle,

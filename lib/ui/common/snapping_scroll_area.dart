@@ -50,11 +50,11 @@ class _SnappingScrollAreaState extends State<SnappingScrollArea> {
     if (!_isSnapping) {
       final relativeOffset =
           _scrollController!.offset + (widget.itemInterval - widget.mainAxisPadding) / 2;
-      final num position = (relativeOffset ~/ widget.itemInterval).clamp(0, widget.itemCount - 1);
-      Future(() => _snapChartTo(position as int));
+      final position = (relativeOffset ~/ widget.itemInterval).clamp(0, widget.itemCount - 1);
+      Future(() => _snapChartTo(position));
       if (position != _snapPosition) {
-        _snapPosition = position as int?;
-        widget.onPositionChanged(position as int);
+        _snapPosition = position;
+        widget.onPositionChanged(position);
       }
     }
     return true;

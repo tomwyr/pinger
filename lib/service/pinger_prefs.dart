@@ -38,8 +38,8 @@ class PingerPrefs {
     if (_sharedPrefs.containsKey(_archiveResultsKey)) {
       return _sharedPrefs
           .getStringList(_archiveResultsKey)!
-          .map(jsonDecode)
-          .map((it) => PingResult.fromJson(it as Map<String, dynamic>))
+          .map((it) => jsonDecode(it) as Map<String, dynamic>)
+          .map((it) => PingResult.fromJson(it))
           .toList();
     }
     return [];
@@ -95,8 +95,8 @@ class PingerPrefs {
     if (_sharedPrefs.containsKey(_hostsStatsKey)) {
       return _sharedPrefs
           .getStringList(_hostsStatsKey)!
-          .map((it) => jsonDecode(it) as Map<String, dynamic>?)
-          .map((it) => HostStats.fromJson(it!))
+          .map((it) => jsonDecode(it) as Map<String, dynamic>)
+          .map((it) => HostStats.fromJson(it))
           .toList();
     }
     return [];

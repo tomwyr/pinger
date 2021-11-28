@@ -30,7 +30,7 @@ class PingResultsChart extends StatelessWidget {
     final dotsSpacing = (dotsCount / 10).ceilToDouble();
     final titlesHorizontalInterval = dotsSpacing;
     final endX = startX! + dotsCount - 1;
-    final num? titlesVerticalInterval =
+    final titlesVerticalInterval =
         maxValue != null ? (maxValue! / min(dotsCount, 8)).clamp(1.0, double.infinity) : null;
     final maxY = (titlesVerticalInterval != null ? maxValue! + titlesVerticalInterval / 2 : null)
         ?.ceilToDouble();
@@ -66,7 +66,7 @@ class PingResultsChart extends StatelessWidget {
           getDrawingVerticalLine: (_) => FlLine(color: R.colors.grayLight, strokeWidth: 1.0),
           drawHorizontalLine: values!.isNotEmpty,
           drawVerticalLine: values!.isNotEmpty,
-          horizontalInterval: titlesVerticalInterval as double?,
+          horizontalInterval: titlesVerticalInterval,
           verticalInterval: titlesHorizontalInterval,
         ),
         lineTouchData: LineTouchData(

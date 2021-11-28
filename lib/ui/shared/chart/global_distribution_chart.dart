@@ -74,7 +74,7 @@ class GlobalDistributionChart extends StatelessWidget {
   }
 
   static int _insertUserResultSpot(int value, int firstGroupSize, List<FlSpot> spots) {
-    final valueX = value > 0 ? _calcResultLog(value) - firstGroupSize + 1 : 0;
+    final valueX = value > 0 ? _calcResultLog(value) - firstGroupSize + 1 : 0.0;
     var spot = FlSpot.nullSpot;
     var index = spots.indexWhere((it) => it.x >= valueX);
     if (index == 0) {
@@ -88,7 +88,7 @@ class GlobalDistributionChart extends StatelessWidget {
       final s1 = spots[index - 1], s2 = spots[index];
       final x = valueX.clamp(spots.first.x, spots.last.x);
       final y = s1.y + (s2.y - s1.y) * (valueX - s1.x) / (s2.x - s1.x);
-      spot = FlSpot(x as double, y);
+      spot = FlSpot(x, y);
     }
     spots.insert(index, spot);
     return index;

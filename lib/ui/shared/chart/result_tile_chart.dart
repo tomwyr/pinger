@@ -32,6 +32,7 @@ class ResultTileChart extends StatelessWidget {
         axisTitleData: FlAxisTitleData(show: false),
         titlesData: FlTitlesData(show: false),
         barTouchData: BarTouchData(enabled: false),
+        gridData: FlGridData(show: false),
         barGroups: [
           _buildBarData(0, min, barWidth),
           _buildBarData(1, mean, barWidth),

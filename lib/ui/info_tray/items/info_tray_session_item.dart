@@ -72,7 +72,7 @@ class InfoTraySessionItem extends StatelessWidget {
   }
 
   Widget _buildResultsChart() {
-    if (session!.values!.isNullOrEmpty) return Container();
+    if ((session?.values).isNullOrEmpty) return Container();
     return LayoutBuilder(
       builder: (_, constraints) => Row(
         crossAxisAlignment: CrossAxisAlignment.end,

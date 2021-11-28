@@ -157,9 +157,9 @@ class _IntroPageState extends BaseState<IntroPage> {
     return ValueListenableBuilder<double>(
       valueListenable: _pageProgress,
       builder: (_, progress, child) {
-        final num relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
+        final relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
         return Opacity(
-          opacity: 1 - (relativeProgress as double),
+          opacity: 1 - relativeProgress,
           child: FractionalTranslation(
             translation: Offset(relativeProgress, 0.0),
             child: child,
@@ -178,7 +178,7 @@ class _IntroPageState extends BaseState<IntroPage> {
         children: List<Widget>.generate(
           _itemCount,
           (index) {
-            final num relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
+            final relativeProgress = (progress - index).clamp(-1.0, 1.0).abs();
             return GestureDetector(
               onTap: () => _moveToPage(index),
               child: Container(
@@ -186,7 +186,7 @@ class _IntroPageState extends BaseState<IntroPage> {
                 height: 16.0,
                 width: 32.0 - 16.0 * relativeProgress,
                 decoration: BoxDecoration(
-                  color: _indicatorColor.transform(relativeProgress as double),
+                  color: _indicatorColor.transform(relativeProgress),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
