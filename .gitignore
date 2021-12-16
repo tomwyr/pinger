@@ -43,3 +43,4 @@ android/app/src/**/google-services.json
 # Generated source files
 lib/**/*.*.dart
 lib/generated
+lib/assets.dart
