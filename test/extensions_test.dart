@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:pinger/extensions.dart';
 
 void main() {
@@ -44,13 +43,13 @@ void main() {
     });
 
     test("lastOrNull returns last element if list is not empty", () {
-      final List? list = [4];
+      final List list = [4];
 
-      expect(list?.lastOrNull, 4);
+      expect(list.lastOrNull, 4);
 
-      list?.add(null);
+      list.add(null);
 
-      expect(list?.lastOrNull, null);
+      expect(list.lastOrNull, null);
     });
   });
 }

@@ -92,14 +92,13 @@ class PingerDimens {
 abstract class PingerThemes {
   final mode = ThemeMode.light;
 
-  final app = _appTheme.copyWith(primaryColorBrightness: Brightness.light);
+  final app = _appTheme;
 
   static ThemeData get _appTheme => ThemeData(
         fontFamily: GoogleFonts.roboto().fontFamily,
         canvasColor: R.colors.canvas,
         primaryColor: R.colors.secondary,
         hintColor: R.colors.gray,
-        toggleableActiveColor: R.colors.secondary,
         colorScheme: _colorScheme,
         textTheme: _textTheme,
         elevatedButtonTheme: _elevatedButtonTheme,
@@ -115,9 +114,9 @@ abstract class PingerThemes {
       );
 
   static TextTheme get _textTheme => TextTheme(
-        bodyText2: const TextStyle(),
-        button: const TextStyle(fontSize: 18.0),
-        subtitle1: TextStyle(color: R.colors.primary),
+        bodyMedium: const TextStyle(),
+        labelLarge: const TextStyle(fontSize: 18.0),
+        titleMedium: TextStyle(color: R.colors.primary),
       ).apply(
         bodyColor: R.colors.primary,
         displayColor: R.colors.primary,
@@ -126,7 +125,7 @@ abstract class PingerThemes {
   static ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(R.dimens.elevatedButtonMinWidth, R.dimens.elevatedButtonMinHeight),
-          primary: R.colors.secondary,
+          backgroundColor: R.colors.secondary,
           shape: _buttonShape,
         ).copyWith(
           overlayColor: MaterialStateProperty.all(
@@ -137,14 +136,14 @@ abstract class PingerThemes {
 
   static TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: R.colors.secondary,
+          backgroundColor: R.colors.secondary,
           shape: _buttonShape,
         ),
       );
 
   static OutlinedButtonThemeData get _outlinedButtonTheme => OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          primary: R.colors.primary,
+          backgroundColor: R.colors.primary,
           shape: _buttonShape,
         ).copyWith(
           overlayColor: MaterialStateProperty.all(
@@ -187,18 +186,13 @@ class PingerLightThemes extends PingerThemes {}
 class PingerDarkThemes extends PingerThemes {
   @override
   ThemeMode get mode => ThemeMode.dark;
-
-  @override
-  ThemeData get app => PingerThemes._appTheme.copyWith(
-        primaryColorBrightness: Brightness.dark,
-      );
 }
 
 class PingerStyles {
   // Theme references
-  TextStyle? get textFieldText => R.themes.app.textTheme.subtitle1;
+  TextStyle? get textFieldText => R.themes.app.textTheme.titleMedium;
   TextStyle? get appBarTitle => R.themes.app.appBarTheme.toolbarTextStyle;
-  TextStyle? get text => R.themes.app.textTheme.bodyText2;
+  TextStyle? get text => R.themes.app.textTheme.bodyMedium;
 
   // Common styles
   TextStyle get chartLabel => TextStyle(fontSize: 12.0, color: R.colors.gray);

@@ -21,7 +21,7 @@ class ResultDetailsResultsTab extends StatefulWidget {
   final Widget Function(List<Widget> slivers) scrollBuilder;
 
   @override
-  _ResultDetailsResultsTabState createState() => _ResultDetailsResultsTabState();
+  State<ResultDetailsResultsTab> createState() => _ResultDetailsResultsTabState();
 }
 
 class _ResultDetailsResultsTabState extends State<ResultDetailsResultsTab> {

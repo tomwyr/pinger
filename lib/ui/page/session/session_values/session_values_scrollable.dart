@@ -21,7 +21,7 @@ class SessionValuesScrollable extends StatefulWidget {
   final Widget child;
 
   @override
-  _SessionValuesScrollableState createState() => _SessionValuesScrollableState();
+  State<SessionValuesScrollable> createState() => _SessionValuesScrollableState();
 }
 
 class _SessionValuesScrollableState extends State<SessionValuesScrollable> {

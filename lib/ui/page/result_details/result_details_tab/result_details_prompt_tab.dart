@@ -35,8 +35,8 @@ class ResultDetailsPromptTab extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40.0),
             child: ElevatedButton(
-              child: Text(buttonLabel),
               onPressed: onButtonPressed,
+              child: Text(buttonLabel),
             ),
           ),
         ]),

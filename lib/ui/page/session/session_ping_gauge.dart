@@ -165,7 +165,7 @@ class PingGaugeArc extends StatefulWidget {
   final Duration duration;
 
   @override
-  _PingGaugeArcState createState() => _PingGaugeArcState();
+  State<PingGaugeArc> createState() => _PingGaugeArcState();
 }
 
 class _PingGaugeArcState extends State<PingGaugeArc> with SingleTickerProviderStateMixin {
@@ -248,7 +248,7 @@ class PingGaugeDot extends StatefulWidget {
   final Duration duration;
 
   @override
-  _PingGaugeDotState createState() => _PingGaugeDotState();
+  State<PingGaugeDot> createState() => _PingGaugeDotState();
 }
 
 class _PingGaugeDotState extends State<PingGaugeDot> with SingleTickerProviderStateMixin {

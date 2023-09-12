@@ -34,7 +34,7 @@ class ResultDetailsPage extends StatefulWidget {
   final PingResult? result;
 
   @override
-  _ResultDetailsPageState createState() => _ResultDetailsPageState();
+  State<ResultDetailsPage> createState() => _ResultDetailsPageState();
 }
 
 class _ResultDetailsPageState extends BaseState<ResultDetailsPage>

@@ -82,7 +82,7 @@ class GlobalResultsDataSection extends StatefulWidget {
   final PingResult? userResult;
 
   @override
-  _GlobalResultsDataSectionState createState() => _GlobalResultsDataSectionState();
+  State<GlobalResultsDataSection> createState() => _GlobalResultsDataSectionState();
 }
 
 class _GlobalResultsDataSectionState extends State<GlobalResultsDataSection> {

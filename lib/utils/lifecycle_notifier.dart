@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:injectable/injectable.dart';
 
 @injectable
 class LifecycleNotifier extends WidgetsBindingObserver {
   LifecycleNotifier() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   final Set<LifecycleAware> _listeners = {};
@@ -37,23 +36,36 @@ class LifecycleNotifier extends WidgetsBindingObserver {
           it.onInactive();
         }
         break;
+      case AppLifecycleState.hidden:
+        for (var it in _listeners) {
+          it.onHidden();
+        }
+        break;
     }
   }
 }
 
-class LifecycleAware {
+mixin class LifecycleAware {
   factory LifecycleAware({
     VoidCallback? onPaused,
     VoidCallback? onResumed,
     VoidCallback? onInactive,
     VoidCallback? onDetached,
+    VoidCallback? onHidden,
   }) =>
-      _FunLifecycleAware(onPaused, onResumed, onInactive, onDetached);
+      _FunLifecycleAware(
+        onPaused,
+        onResumed,
+        onInactive,
+        onDetached,
+        onHidden,
+      );
 
   void onPaused() {}
   void onResumed() {}
   void onInactive() {}
   void onDetached() {}
+  void onHidden() {}
 }
 
 class _FunLifecycleAware implements LifecycleAware {
@@ -62,12 +74,14 @@ class _FunLifecycleAware implements LifecycleAware {
     this._onResumed,
     this._onInactive,
     this._onDetached,
+    this._onHidden,
   );
 
   final VoidCallback? _onPaused;
   final VoidCallback? _onResumed;
   final VoidCallback? _onInactive;
   final VoidCallback? _onDetached;
+  final VoidCallback? _onHidden;
 
   @override
   void onPaused() => _onPaused?.call();
@@ -80,4 +94,7 @@ class _FunLifecycleAware implements LifecycleAware {
 
   @override
   void onDetached() => _onDetached?.call();
+
+  @override
+  void onHidden() => _onHidden?.call();
 }

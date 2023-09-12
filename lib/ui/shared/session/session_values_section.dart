@@ -25,7 +25,7 @@ class SessionValuesSection extends StatefulWidget {
   final ValueChanged<PingValuesType> onViewTypeChanged;
 
   @override
-  _SessionValuesSectionState createState() => _SessionValuesSectionState();
+  State<SessionValuesSection> createState() => _SessionValuesSectionState();
 }
 
 class _SessionValuesSectionState extends State<SessionValuesSection> {

@@ -30,7 +30,7 @@ class HomeHostSuggestions extends StatefulWidget {
   final Map<String, HostStats>? stats;
 
   @override
-  _HomeHostSuggestionsState createState() => _HomeHostSuggestionsState();
+  State<HomeHostSuggestions> createState() => _HomeHostSuggestionsState();
 }
 
 class _HomeHostSuggestionsState extends State<HomeHostSuggestions> {

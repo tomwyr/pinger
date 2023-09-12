@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -20,7 +18,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends BaseState<HomePage> with HostTapHandler {
@@ -92,8 +90,8 @@ class _HomePageState extends BaseState<HomePage> with HostTapHandler {
         ),
         Container(height: 8.0),
         TextButton(
-          child: Text(S.current.skipButtonLabel),
           onPressed: onIntroDone,
+          child: Text(S.current.skipButtonLabel),
         ),
         Container(height: 16.0),
       ]),

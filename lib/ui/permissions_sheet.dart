@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
@@ -19,7 +17,7 @@ class PermissionsSheet extends StatefulWidget {
   final Widget child;
 
   @override
-  _PermissionsSheetState createState() => _PermissionsSheetState();
+  State<PermissionsSheet> createState() => _PermissionsSheetState();
 }
 
 class _PermissionsSheetState extends State<PermissionsSheet> {
@@ -28,14 +26,18 @@ class _PermissionsSheetState extends State<PermissionsSheet> {
   PermissionSheetHandler get _notificationHandler => PermissionSheetHandler(
         title: S.current.notificationAccessDisabledTitle,
         subtitle: S.current.notificationAccessDisabledDesc,
-        openSettings: AppSettings.openNotificationSettings,
+        openSettings: () => AppSettings.openAppSettings(
+          type: AppSettingsType.notification,
+        ),
         store: Injector.resolve(PermissionStore.notification),
       );
 
   PermissionSheetHandler get _locationHandler => PermissionSheetHandler(
         title: S.current.locationAccessDisabledTitle,
         subtitle: S.current.locationAccessDisabledDesc,
-        openSettings: AppSettings.openLocationSettings,
+        openSettings: () => AppSettings.openAppSettings(
+          type: AppSettingsType.location,
+        ),
         store: Injector.resolve(PermissionStore.location),
       );
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
@@ -21,7 +19,7 @@ class PingerApp extends StatefulWidget {
   static PingerRouter get router => _router;
 
   @override
-  _PingerAppState createState() => _PingerAppState();
+  State<PingerApp> createState() => _PingerAppState();
 }
 
 class _PingerAppState extends State<PingerApp> {

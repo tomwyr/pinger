@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
 
 class ScrollEdgeGradient extends StatefulWidget {
@@ -25,7 +24,7 @@ class ScrollEdgeGradient extends StatefulWidget {
   final ScrollController? controller;
 
   @override
-  _ScrollEdgeGradientState createState() => _ScrollEdgeGradientState();
+  State<ScrollEdgeGradient> createState() => _ScrollEdgeGradientState();
 }
 
 class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
@@ -64,7 +63,7 @@ class _ScrollEdgeGradientState extends State<ScrollEdgeGradient> {
       if (widget.start) _buildGradient(isVertical ? AxisDirection.down : AxisDirection.right),
       if (widget.end) _buildGradient(isVertical ? AxisDirection.up : AxisDirection.left),
     ]);
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _updateExtent());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateExtent());
   }
 
   @override

@@ -25,7 +25,7 @@ class CollapsingHeader extends StatefulWidget {
   final CollapsingHeaderBuilder? builder;
 
   @override
-  _CollapsingHeaderState createState() => _CollapsingHeaderState();
+  State<CollapsingHeader> createState() => _CollapsingHeaderState();
 }
 
 class _CollapsingHeaderState extends State<CollapsingHeader> with SingleTickerProviderStateMixin {

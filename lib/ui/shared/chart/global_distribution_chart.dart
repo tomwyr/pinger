@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
-
+import 'package:flutter/material.dart';
 import 'package:pinger/resources.dart';
 
 class GlobalDistributionChart extends StatelessWidget {
@@ -39,9 +37,14 @@ class GlobalDistributionChart extends StatelessWidget {
       minY: 0.0,
       maxY: (spots.map((it) => it.y).fold(0.0, max) / 10).ceil() * 10.0,
       spots: spots,
-      getLabelX: (it) =>
-          it == 0.0 ? "0" : pow(_logBase, it + firstGroupSize - 1).toStringAsFixed(0),
-      getLabelY: (it) => it.toInt().toString(),
+      getLabelX: (it) => Text(
+        it == 0.0 ? "0" : pow(_logBase, it + firstGroupSize - 1).toStringAsFixed(0),
+        style: R.styles.chartLabel,
+      ),
+      getLabelY: (it) => Text(
+        it.toInt().toString(),
+        style: R.styles.chartLabel,
+      ),
     );
   }
 
@@ -53,8 +56,8 @@ class GlobalDistributionChart extends StatelessWidget {
   final double minY;
   final double maxY;
   final List<FlSpot> spots;
-  final String Function(double) getLabelX;
-  final String Function(double) getLabelY;
+  final Widget Function(double) getLabelX;
+  final Widget Function(double) getLabelY;
 
   static int _calcFistGroupSize(Map<int, int> values) {
     final maxValue = values.keys.reduce(max);
@@ -104,36 +107,45 @@ class GlobalDistributionChart extends StatelessWidget {
       minY: minY,
       maxY: maxY,
       titlesData: FlTitlesData(
-        leftTitles: SideTitles(
-          showTitles: true,
-          interval: (maxY - minY) / 4,
-          getTitles: getLabelY,
-          getTextStyles: (_, __) => R.styles.chartLabel,
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: (maxY - minY) / 4,
+            getTitlesWidget: (value, meta) => getLabelY(value),
+          ),
         ),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          interval: (maxX - minX) / 6,
-          getTitles: getLabelX,
-          getTextStyles: (_, __) => R.styles.chartLabel,
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: (maxX - minX) / 6,
+            getTitlesWidget: (value, meta) => getLabelX(value),
+          ),
+        ),
+        topTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
+        ),
+        rightTitles: const AxisTitles(
+          sideTitles: SideTitles(showTitles: false),
         ),
       ),
-      axisTitleData: FlAxisTitleData(show: false),
       borderData: FlBorderData(show: false),
-      gridData: FlGridData(show: false),
-      lineTouchData: LineTouchData(enabled: false),
+      gridData: const FlGridData(show: false),
+      lineTouchData: const LineTouchData(enabled: false),
       lineBarsData: [
         LineChartBarData(
           isStrokeCapRound: true,
           belowBarData: BarAreaData(
             show: true,
-            colors: [
-              R.colors.primaryLight.withOpacity(0.7),
-              R.colors.primaryLight.withOpacity(0.2),
-              R.colors.primaryLight.withOpacity(0.0),
-            ],
-            gradientColorStops: [0.0, 0.7, 1.0],
-            gradientFrom: const Offset(0.0, 0.0),
-            gradientTo: const Offset(0.0, 1.0),
+            gradient: LinearGradient(
+              colors: [
+                R.colors.primaryLight.withOpacity(0.7),
+                R.colors.primaryLight.withOpacity(0.2),
+                R.colors.primaryLight.withOpacity(0.0),
+              ],
+              stops: const [0.0, 0.7, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
           dotData: FlDotData(
             show: true,
@@ -146,7 +158,7 @@ class GlobalDistributionChart extends StatelessWidget {
           isCurved: true,
           curveSmoothness: 0.2,
           preventCurveOverShooting: true,
-          colors: [R.colors.primaryLight],
+          color: R.colors.primaryLight,
           spots: spots,
         ),
       ],

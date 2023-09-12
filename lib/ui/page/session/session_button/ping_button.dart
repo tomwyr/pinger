@@ -31,7 +31,7 @@ class PingButton extends StatefulWidget {
   final VoidCallback? onLockSwipe;
 
   @override
-  _PingButtonState createState() => _PingButtonState();
+  State<PingButton> createState() => _PingButtonState();
 }
 
 class _PingButtonState extends State<PingButton> {

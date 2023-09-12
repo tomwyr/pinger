@@ -25,7 +25,7 @@ class InfoTray extends StatefulWidget {
   final Widget? child;
 
   @override
-  _InfoTrayState createState() => _InfoTrayState();
+  State<InfoTray> createState() => _InfoTrayState();
 }
 
 class _InfoTrayState extends State<InfoTray> with SingleTickerProviderStateMixin {

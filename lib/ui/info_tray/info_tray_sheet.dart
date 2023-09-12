@@ -33,12 +33,12 @@ class InfoTraySheet extends StatelessWidget {
       controller: controller,
       duration: _animDuration,
       animateVisibility: true,
-      child: child,
       items: items,
       onVisibilityChanged: onVisibilityChanged,
       contentBuilder: (_, children) => _buildTray(children),
       handleBuilder: (_) => _buildHandle(),
       separatorBuilder: (_) => _buildSeparator(),
+      child: child,
     );
   }
 

@@ -68,7 +68,7 @@ class NotificationsManager {
         playSound: false,
         enableVibration: false,
       ),
-      iOS: IOSNotificationDetails(
+      iOS: DarwinNotificationDetails(
         presentAlert: false,
         presentSound: false,
       ),

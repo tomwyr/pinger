@@ -15,7 +15,7 @@ class RecentsPage extends StatefulWidget {
   const RecentsPage({Key? key}) : super(key: key);
 
   @override
-  _RecentsPageState createState() => _RecentsPageState();
+  State<RecentsPage> createState() => _RecentsPageState();
 }
 
 class _RecentsPageState extends BaseState<RecentsPage> with HostTapHandler {

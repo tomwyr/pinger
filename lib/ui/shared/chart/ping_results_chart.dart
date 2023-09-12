@@ -1,9 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
-
+import 'package:flutter/material.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
@@ -40,24 +38,40 @@ class PingResultsChart extends StatelessWidget {
         maxX: endX + dotsSpacing,
         minY: 0.0,
         maxY: maxY ?? 0.0,
-        clipData: FlClipData.horizontal(),
-        axisTitleData: FlAxisTitleData(show: false),
+        clipData: const FlClipData.horizontal(),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
-          leftTitles: SideTitles(
-            showTitles: true,
-            reservedSize: valueLabelSize,
-            margin: valueLabelMargin,
-            interval: titlesVerticalInterval?.ceilToDouble(),
-            getTitles: (it) => it.toInt().toString(),
-            getTextStyles: (_, __) => R.styles.chartLabel,
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: valueLabelSize,
+              interval: titlesVerticalInterval?.ceilToDouble(),
+              getTitlesWidget: (value, meta) => Padding(
+                padding: EdgeInsets.all(valueLabelMargin),
+                child: Text(
+                  value.toInt().toString(),
+                  style: R.styles.chartLabel,
+                ),
+              ),
+            ),
           ),
-          bottomTitles: SideTitles(
-            showTitles: true,
-            getTitles: (it) =>
-                it >= startX! && it <= endX && it % 1.0 == 0.0 ? (it + 1.5).toInt().toString() : '',
-            interval: titlesHorizontalInterval,
-            getTextStyles: (_, __) => R.styles.chartLabel,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: titlesHorizontalInterval,
+              getTitlesWidget: (value, meta) => Text(
+                value >= startX! && value <= endX && value % 1.0 == 0.0
+                    ? (value + 1.5).toInt().toString()
+                    : '',
+                style: R.styles.chartLabel,
+              ),
+            ),
+          ),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
           ),
         ),
         gridData: FlGridData(
@@ -101,7 +115,7 @@ class PingResultsChart extends StatelessWidget {
               ),
               isCurved: true,
               preventCurveOverShooting: true,
-              colors: [R.colors.primaryLight],
+              color: R.colors.primaryLight,
               spots: values!
                   .mapIndexed((i, e) => e != null ? FlSpot(i.toDouble(), e.toDouble()) : null)
                   .whereNotNull()
@@ -118,7 +132,7 @@ class PingResultsChart extends StatelessWidget {
                   radius: 2.5,
                 ),
               ),
-              colors: [R.colors.none],
+              color: R.colors.none,
               spots: values!
                   .mapIndexed(
                     (i, e) => e == null ? FlSpot(i.toDouble(), 0.0) : null,

@@ -21,7 +21,7 @@ class SessionValuesChart extends StatefulWidget {
   final bool shouldFollowHead;
 
   @override
-  _SessionValuesChartState createState() => _SessionValuesChartState();
+  State<SessionValuesChart> createState() => _SessionValuesChartState();
 }
 
 class _SessionValuesChartState extends State<SessionValuesChart>

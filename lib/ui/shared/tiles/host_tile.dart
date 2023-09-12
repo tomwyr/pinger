@@ -71,7 +71,7 @@ class HostTile extends StatelessWidget {
 
   ButtonStyle _getElevatedButtonStyle() => ElevatedButton.styleFrom(
         padding: const EdgeInsets.only(left: 12.0),
-        primary: type == HostTileType.highlighted
+        backgroundColor: type == HostTileType.highlighted
             ? R.colors.primaryLight
             : type == HostTileType.removableSelected
                 ? R.colors.secondary.withOpacity(0.5)

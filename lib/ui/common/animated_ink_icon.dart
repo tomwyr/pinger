@@ -13,7 +13,7 @@ class AnimatedInkIcon extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  _AnimatedInkIconState createState() => _AnimatedInkIconState();
+  State<AnimatedInkIcon> createState() => _AnimatedInkIconState();
 }
 
 class _AnimatedInkIconState extends State<AnimatedInkIcon> with SingleTickerProviderStateMixin {

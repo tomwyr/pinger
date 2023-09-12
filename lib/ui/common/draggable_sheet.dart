@@ -34,7 +34,7 @@ class DraggableSheet extends StatefulWidget {
   final WidgetBuilder contentBuilder;
 
   @override
-  _DraggableSheetState createState() => _DraggableSheetState();
+  State<DraggableSheet> createState() => _DraggableSheetState();
 }
 
 class _DraggableSheetState extends State<DraggableSheet> with SingleTickerProviderStateMixin {
@@ -294,7 +294,7 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
   final Widget Function(BuildContext, List<Widget>) contentBuilder;
 
   @override
-  _SeparatedDraggableSheetState<T> createState() => _SeparatedDraggableSheetState<T>();
+  State<SeparatedDraggableSheet<T>> createState() => _SeparatedDraggableSheetState<T>();
 }
 
 class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>> {
@@ -368,7 +368,6 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
     return DraggableSheet(
       controller: widget.controller,
       duration: widget.duration,
-      child: widget.child,
       handleBuilder: widget.handleBuilder,
       contentBuilder: (context) => widget.contentBuilder(
         context,
@@ -385,6 +384,7 @@ class _SeparatedDraggableSheetState<T> extends State<SeparatedDraggableSheet<T>>
           ]
         ],
       ),
+      child: widget.child,
     );
   }
 

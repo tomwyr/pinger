@@ -17,7 +17,7 @@ class SessionValuesList extends StatefulWidget {
   final bool shouldFollowHead;
 
   @override
-  _SessionValuesListState createState() => _SessionValuesListState();
+  State<SessionValuesList> createState() => _SessionValuesListState();
 }
 
 class _SessionValuesListState extends State<SessionValuesList> with SingleTickerProviderStateMixin {

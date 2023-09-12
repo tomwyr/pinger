@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -14,7 +12,7 @@ class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
 
   @override
-  _FavoritesPageState createState() => _FavoritesPageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
 class _FavoritesPageState extends BaseState<FavoritesPage> with HostTapHandler {

@@ -5,8 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:package_info/package_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:pinger/di/injector.config.dart';
 import 'package:pinger/store/device_store.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -15,6 +13,7 @@ import 'package:pinger/store/ping_store.dart';
 import 'package:pinger/store/results_store.dart';
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/notification_messages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Injector {
   static Future<void> configure(String environment) async {
@@ -47,7 +46,7 @@ abstract class InjectorModule {
   FlutterLocalNotificationsPlugin get localNotifications => FlutterLocalNotificationsPlugin()
     ..initialize(const InitializationSettings(
       android: AndroidInitializationSettings('ic_notification'),
-      iOS: IOSInitializationSettings(
+      iOS: DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
@@ -60,5 +59,4 @@ abstract class InjectorModule {
 }
 
 @injectableInit
-Future<void> _initInjectable(String environment) =>
-    $initGetIt(GetIt.instance, environment: environment);
+Future<void> _initInjectable(String environment) => GetIt.instance.init(environment: environment);

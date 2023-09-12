@@ -182,7 +182,7 @@ class PingerTransitions {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    const _blurSigma = 3.0;
+    const blurSigma = 3.0;
 
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -190,8 +190,8 @@ class PingerTransitions {
         Positioned.fill(
           child: BackdropFilter(
             filter: ImageFilter.blur(
-              sigmaX: animation.value * _blurSigma,
-              sigmaY: animation.value * _blurSigma,
+              sigmaX: animation.value * blurSigma,
+              sigmaY: animation.value * blurSigma,
             ),
             child: Container(color: R.colors.none),
           ),

@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:fl_chart/fl_chart.dart';
-
+import 'package:flutter/material.dart';
 import 'package:pinger/extensions.dart';
 import 'package:pinger/resources.dart';
 
@@ -29,10 +27,9 @@ class ResultTileChart extends StatelessWidget {
       BarChart(BarChartData(
         groupsSpace: 0.0,
         borderData: FlBorderData(show: false),
-        axisTitleData: FlAxisTitleData(show: false),
-        titlesData: FlTitlesData(show: false),
+        titlesData: const FlTitlesData(show: false),
         barTouchData: BarTouchData(enabled: false),
-        gridData: FlGridData(show: false),
+        gridData: const FlGridData(show: false),
         barGroups: [
           _buildBarData(0, min, barWidth),
           _buildBarData(1, mean, barWidth),
@@ -40,17 +37,16 @@ class ResultTileChart extends StatelessWidget {
         ],
       )),
       LineChart(LineChartData(
-        titlesData: FlTitlesData(show: false),
-        axisTitleData: FlAxisTitleData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
-        gridData: FlGridData(show: false),
-        lineTouchData: LineTouchData(enabled: false),
+        gridData: const FlGridData(show: false),
+        lineTouchData: const LineTouchData(enabled: false),
         lineBarsData: [
           LineChartBarData(
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             isCurved: true,
             preventCurveOverShooting: true,
-            colors: [R.colors.secondary],
+            color: R.colors.secondary,
             barWidth: 1.0,
             spots: values
                 .mapIndexed(
@@ -67,9 +63,9 @@ class ResultTileChart extends StatelessWidget {
   BarChartGroupData _buildBarData(int index, int value, double width) {
     return BarChartGroupData(x: index, barRods: [
       BarChartRodData(
-        y: value.toDouble(),
+        toY: value.toDouble(),
         width: width,
-        colors: [R.colors.primaryLight.withOpacity(0.5)],
+        color: R.colors.primaryLight.withOpacity(0.5),
         borderRadius: BorderRadius.only(
           topLeft: barRadius,
           topRight: barRadius,

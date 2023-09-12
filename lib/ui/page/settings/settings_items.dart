@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -136,7 +135,7 @@ class SettingItemSheet extends StatefulWidget {
   }
 
   @override
-  _SettingItemSheetState createState() => _SettingItemSheetState();
+  State<SettingItemSheet> createState() => _SettingItemSheetState();
 }
 
 class _SettingItemSheetState extends State<SettingItemSheet> {
@@ -215,7 +214,6 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
   Widget _buildToggleButtons(String text) {
     final isInfinite = text == R.symbols.infinity;
     return ToggleButtons(
-      children: [const Icon(Icons.edit, size: 12.0), Text(R.symbols.infinity)],
       isSelected: [!isInfinite, isInfinite],
       onPressed: (index) {
         final text = _controller!.text;
@@ -225,6 +223,7 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
           if (newValue.text != text) _onInputChanged(newValue.text);
         }
       },
+      children: [const Icon(Icons.edit, size: 12.0), Text(R.symbols.infinity)],
     );
   }
 

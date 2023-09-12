@@ -13,7 +13,7 @@ class FadeOut extends StatefulWidget {
   final Widget child;
 
   @override
-  _FadeOutState createState() => _FadeOutState();
+  State<FadeOut> createState() => _FadeOutState();
 }
 
 class _FadeOutState extends State<FadeOut> with SingleTickerProviderStateMixin {

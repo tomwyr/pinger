@@ -23,7 +23,7 @@ class SnappingScrollArea extends StatefulWidget {
   final ValueChanged<int> onPositionChanged;
 
   @override
-  _SnappingScrollAreaState createState() => _SnappingScrollAreaState();
+  State<SnappingScrollArea> createState() => _SnappingScrollAreaState();
 }
 
 class _SnappingScrollAreaState extends State<SnappingScrollArea> {

@@ -34,7 +34,7 @@ class SessionHostButton extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   shape: const CircleBorder(),
                   side: BorderSide(color: color),
-                  primary: color,
+                  foregroundColor: color,
                 ),
                 onPressed: onPressed,
                 child: Icon(icon, color: color),

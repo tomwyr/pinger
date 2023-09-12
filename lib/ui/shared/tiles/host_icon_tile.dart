@@ -61,7 +61,7 @@ class HostIconTile extends StatefulWidget {
   final Color? shadowColor;
 
   @override
-  _HostIconTileState createState() => _HostIconTileState();
+  State<HostIconTile> createState() => _HostIconTileState();
 }
 
 class _HostIconTileState extends State<HostIconTile> {

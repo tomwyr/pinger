@@ -15,7 +15,7 @@ class ThreeBounce extends StatefulWidget {
   final Duration duration;
 
   @override
-  _ThreeBounceState createState() => _ThreeBounceState();
+  State<ThreeBounce> createState() => _ThreeBounceState();
 }
 
 class _ThreeBounceState extends State<ThreeBounce> with SingleTickerProviderStateMixin {

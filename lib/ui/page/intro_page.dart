@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
@@ -10,7 +9,7 @@ class IntroPage extends StatefulWidget {
   const IntroPage({Key? key}) : super(key: key);
 
   @override
-  _IntroPageState createState() => _IntroPageState();
+  State<IntroPage> createState() => _IntroPageState();
 }
 
 class _IntroPageState extends BaseState<IntroPage> {
@@ -230,8 +229,8 @@ class _IntroPageState extends BaseState<IntroPage> {
       child: Opacity(
         opacity: 1.0 - value,
         child: TextButton(
-          child: Text(S.current.skipButtonLabel),
           onPressed: value < 1.0 ? PingerApp.router.pop : null,
+          child: Text(S.current.skipButtonLabel),
         ),
       ),
     );

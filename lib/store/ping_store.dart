@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_global.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -224,7 +222,7 @@ abstract class PingStoreBase with Store {
     );
     if (!isDone) {
       currentSession = currentSession!.copyWith(status: PingStatus.sessionStarted);
-      final PingSettings? settings = currentSession!.settings.copyWith(count: remainingCount);
+      final settings = currentSession!.settings.copyWith(count: remainingCount);
       _startPing(settings: settings, onDone: _onSessionDone);
     } else {
       currentSession = currentSession!.copyWith(status: PingStatus.sessionDone);

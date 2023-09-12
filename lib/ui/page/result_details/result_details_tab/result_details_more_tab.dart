@@ -23,7 +23,7 @@ class ResultDetailsMoreTab extends StatefulWidget {
   final VoidCallback onStartPingPressed;
 
   @override
-  _ResultDetailsMoreTabState createState() => _ResultDetailsMoreTabState();
+  State<ResultDetailsMoreTab> createState() => _ResultDetailsMoreTabState();
 }
 
 class _ResultDetailsMoreTabState extends State<ResultDetailsMoreTab> {

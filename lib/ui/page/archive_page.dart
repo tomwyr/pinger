@@ -24,7 +24,7 @@ class ArchivePage extends StatefulWidget {
   const ArchivePage({Key? key}) : super(key: key);
 
   @override
-  _ArchivePageState createState() => _ArchivePageState();
+  State<ArchivePage> createState() => _ArchivePageState();
 }
 
 class _ArchivePageState extends BaseState<ArchivePage> {

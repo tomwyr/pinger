@@ -27,7 +27,7 @@ class SearchPage extends StatefulWidget {
   final String? initialQuery;
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends BaseState<SearchPage> with HostTapHandler {

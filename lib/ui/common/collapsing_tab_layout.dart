@@ -17,7 +17,7 @@ class CollapsingTabLayout extends StatefulWidget {
   final Future<void> Function(double) scrollLayout;
 
   @override
-  _CollapsingTabLayoutState createState() => _CollapsingTabLayoutState();
+  State<CollapsingTabLayout> createState() => _CollapsingTabLayoutState();
 }
 
 class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {

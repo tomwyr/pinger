@@ -25,7 +25,7 @@ class HostsPage extends StatefulWidget {
   final ValueChanged<String> onHostSelected;
 
   @override
-  _HostsPageState createState() => _HostsPageState();
+  State<HostsPage> createState() => _HostsPageState();
 }
 
 class _HostsPageState extends BaseState<HostsPage> {
