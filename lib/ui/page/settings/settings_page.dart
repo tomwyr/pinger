@@ -9,6 +9,7 @@ import 'package:pinger/ui/app/pinger_router.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/page/base_page.dart';
 import 'package:pinger/ui/page/settings/settings_sections.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -66,6 +67,7 @@ class _SettingsPageState extends BaseState<SettingsPage> {
               Container(height: 48.0),
               SettingsFooterSection(
                 appInfo: appInfo,
+                onPrivacyPolicyPressed: () => launchUrlString(_settingsStore.privacyPolicyUrl),
                 onShowIntroPressed: () => PingerApp.router.show(RouteConfig.intro()),
               ),
             ],

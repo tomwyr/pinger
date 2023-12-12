@@ -11,6 +11,7 @@
   "searchHostHint": "Rechercher un hôte...",
   "confirmHostRemoveTitle": "Supprimer les éléments sélectionnés?",
   "startNowButtonLabel": "Démarrer maintenant",
+  "privacyPolicyButtonLabel": "Politique de confidentialité", 
   "showIntroButtonLabel": "Montrer intro",
   "tryAgainButtonLabel": "Retenter",
   "getStartedButtonLabel": "Démarrer",

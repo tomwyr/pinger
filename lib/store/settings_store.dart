@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:package_info/package_info.dart';
-
 import 'package:pinger/config.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/service/pinger_prefs.dart';
@@ -34,15 +33,19 @@ abstract class SettingsStoreBase with Store {
   @observable
   AppInfo? appInfo;
 
+  @observable
+  String privacyPolicyUrl = '';
+
   @action
   Future<void> init() async {
     didShowIntro = _pingerPrefs.getDidShowIntro() ?? false;
     userSettings = _getUserSettings();
+    privacyPolicyUrl = 'https://gist.github.com/tomwyr/9e530eb3ad2957c2d0f6c91dec30460e';
     appInfo = AppInfo(
       name: _packageInfo.appName,
       version: _packageInfo.version,
       icon: _appConfig.iconPath,
-      copyright: "© 2019 Tomasz Wyrowiński",
+      copyright: "© 2023 Tomasz Wyrowiński",
     );
   }
 

@@ -11,6 +11,7 @@
   "searchHostHint": "Search for host...",
   "confirmHostRemoveTitle": "Remove selected items?",
   "startNowButtonLabel": "Start now",
+  "privacyPolicyButtonLabel": "Privacy policy",
   "showIntroButtonLabel": "Show intro",
   "tryAgainButtonLabel": "Try again",
   "getStartedButtonLabel": "Get started",

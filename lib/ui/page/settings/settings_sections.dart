@@ -104,7 +104,7 @@ class OtherSettingsSection extends StatelessWidget {
           label: S.current.settingsNightModeTitle,
           value: settings.nightMode,
           onChanged: (it) => onChanged(settings.copyWith(nightMode: it)),
-        )
+        ),
       ],
     );
   }
@@ -189,10 +189,12 @@ class SettingsFooterSection extends StatelessWidget {
     super.key,
     required this.appInfo,
     required this.onShowIntroPressed,
+    required this.onPrivacyPolicyPressed,
   });
 
   final AppInfo? appInfo;
   final VoidCallback onShowIntroPressed;
+  final VoidCallback onPrivacyPolicyPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +202,14 @@ class SettingsFooterSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Center(
-          child: ElevatedButton(
+          child: TextButton(
+            onPressed: onPrivacyPolicyPressed,
+            child: Text(S.current.privacyPolicyButtonLabel),
+          ),
+        ),
+        Container(height: 12.0),
+        Center(
+          child: TextButton(
             onPressed: onShowIntroPressed,
             child: Text(S.current.showIntroButtonLabel),
           ),
