@@ -22,9 +22,9 @@ abstract class Injector {
     resolve<ResultsStore>().init();
     resolve<HostsStore>().init();
     resolve<PingStore>().init();
+    await resolve<PermissionStore>(PermissionStore.location).init();
+    await resolve<PermissionStore>(PermissionStore.notification).init();
     resolve<DeviceStore>().init();
-    resolve<PermissionStore>(PermissionStore.location).init();
-    resolve<PermissionStore>(PermissionStore.notification).init();
   }
 
   static T resolve<T extends Object>([String? instanceName]) =>

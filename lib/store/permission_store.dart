@@ -81,6 +81,7 @@ abstract class PermissionStoreBase with Store, LifecycleAware {
   @action
   Future<void> init() async {
     _lifecycleNotifier.register(this);
+    await _permission.request();
     await _checkAccessStatus();
     await _syncSettingState();
     _reactionDisposer = reaction<bool?>(

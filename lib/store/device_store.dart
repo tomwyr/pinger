@@ -2,7 +2,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/model/geo_position.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/service/notifications_manager.dart';
@@ -23,6 +22,7 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
     this._notificationsManager,
     this._settingsStore,
     @Named(PermissionStore.notification) this._notificationPermissionStore,
+    @Named(PermissionStore.location) this._locationPermissionStore,
   );
 
   @override
@@ -39,6 +39,8 @@ class DeviceStore extends DeviceStoreBase with _$DeviceStore {
   final SettingsStore _settingsStore;
   @override
   final PermissionStore _notificationPermissionStore;
+  @override
+  final PermissionStore _locationPermissionStore;
 }
 
 abstract class DeviceStoreBase with Store {
@@ -49,6 +51,7 @@ abstract class DeviceStoreBase with Store {
   NotificationsManager get _notificationsManager;
   SettingsStore get _settingsStore;
   PermissionStore get _notificationPermissionStore;
+  PermissionStore get _locationPermissionStore;
 
   PingSession? _lastSession;
 
@@ -60,7 +63,13 @@ abstract class DeviceStoreBase with Store {
     _connectivity.onConnectivityChanged.listen(_onConnectivityChanged);
     _lifecycleNotifier.register(LifecycleAware(onResumed: _syncNetworkStatus));
     await _syncNetworkStatus();
-    await _location.changeSettings(accuracy: LocationAccuracy.balanced);
+    await _initLocationSettings();
+  }
+
+  Future<void> _initLocationSettings() async {
+    if (_locationPermissionStore.canAccessService) {
+      await _location.changeSettings(accuracy: LocationAccuracy.balanced);
+    }
   }
 
   Future<void> _syncNetworkStatus() async {
