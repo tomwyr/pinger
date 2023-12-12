@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 
 final R = PingerResources._();
@@ -111,6 +110,7 @@ abstract class PingerThemes {
 
   static ColorScheme get _colorScheme => ColorScheme.light(
         primary: R.colors.secondary,
+        background: R.colors.canvas,
       );
 
   static TextTheme get _textTheme => TextTheme(
@@ -125,6 +125,7 @@ abstract class PingerThemes {
   static ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: Size(R.dimens.elevatedButtonMinWidth, R.dimens.elevatedButtonMinHeight),
+          foregroundColor: R.colors.white,
           backgroundColor: R.colors.secondary,
           shape: _buttonShape,
         ).copyWith(
@@ -136,14 +137,14 @@ abstract class PingerThemes {
 
   static TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
         style: TextButton.styleFrom(
-          backgroundColor: R.colors.secondary,
+          foregroundColor: R.colors.secondary,
           shape: _buttonShape,
         ),
       );
 
   static OutlinedButtonThemeData get _outlinedButtonTheme => OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          backgroundColor: R.colors.primary,
+          foregroundColor: R.colors.primary,
           shape: _buttonShape,
         ).copyWith(
           overlayColor: MaterialStateProperty.all(
