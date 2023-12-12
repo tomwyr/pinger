@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class FlexChildScrollView extends StatelessWidget {
   const FlexChildScrollView({
-    Key? key,
+    super.key,
     this.controller,
     required this.child,
-  }) : super(key: key);
+  });
 
   final ScrollController? controller;
   final Widget child;

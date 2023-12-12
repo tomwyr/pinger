@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/app/pinger_router.dart';
 
 class PingerBottomSheet extends StatelessWidget {
   const PingerBottomSheet._({
-    Key? key,
     required this.title,
     required this.subtitle,
     required this.acceptIcon,
@@ -17,7 +15,7 @@ class PingerBottomSheet extends StatelessWidget {
     required this.didPop,
     required this.animation,
     required this.builder,
-  }) : super(key: key);
+  });
 
   static Future<T?> show<T>({
     Widget? title,

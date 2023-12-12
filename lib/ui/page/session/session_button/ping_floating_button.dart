@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 
 class PingFloatingButton extends StatelessWidget {
   const PingFloatingButton({
-    Key? key,
+    super.key,
     required this.duration,
     required this.raised,
     required this.size,
@@ -16,7 +15,7 @@ class PingFloatingButton extends StatelessWidget {
     this.onLongPressEnd,
     this.onSwipeUpdate,
     this.onSwipeEnd,
-  }) : super(key: key);
+  });
 
   final Duration duration;
   final bool raised;

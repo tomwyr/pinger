@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
@@ -8,9 +7,9 @@ import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsInfoTab extends StatelessWidget {
   const ResultDetailsInfoTab({
-    Key? key,
+    super.key,
     required this.result,
-  }) : super(key: key);
+  });
 
   final PingResult? result;
 

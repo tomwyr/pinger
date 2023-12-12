@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -27,9 +25,9 @@ enum ResultDetailsTab { results, global, info, more }
 
 class ResultDetailsPage extends StatefulWidget {
   const ResultDetailsPage({
-    Key? key,
+    super.key,
     required this.result,
-  }) : super(key: key);
+  });
 
   final PingResult? result;
 

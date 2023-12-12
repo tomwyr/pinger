@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/draggable_sheet.dart';
 import 'package:pinger/ui/info_tray/info_tray.dart';
@@ -7,13 +6,13 @@ import 'package:pinger/ui/info_tray/info_tray_entry.dart';
 
 class InfoTraySheet extends StatelessWidget {
   const InfoTraySheet({
-    Key? key,
+    super.key,
     required this.controller,
     required this.onHandleTap,
     required this.onVisibilityChanged,
     required this.items,
     required this.child,
-  }) : super(key: key);
+  });
 
   static const _handleWidth = 64.0;
   static const _handleHeight = 32.0;

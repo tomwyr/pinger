@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
@@ -10,11 +9,11 @@ import 'package:pinger/ui/shared/chart/ping_results_chart.dart';
 
 class SessionValuesChart extends StatefulWidget {
   const SessionValuesChart({
-    Key? key,
+    super.key,
     required this.values,
     required this.stats,
     required this.shouldFollowHead,
-  }) : super(key: key);
+  });
 
   final List<int?>? values;
   final PingStats? stats;

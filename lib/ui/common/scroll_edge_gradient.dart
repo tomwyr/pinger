@@ -3,7 +3,7 @@ import 'package:pinger/ui/common/transparent_gradient_box.dart';
 
 class ScrollEdgeGradient extends StatefulWidget {
   const ScrollEdgeGradient({
-    Key? key,
+    super.key,
     required this.builder,
     required this.color,
     this.extentThreshold = 48.0,
@@ -12,7 +12,7 @@ class ScrollEdgeGradient extends StatefulWidget {
     this.axis = Axis.vertical,
     this.sliverOverlap = 0.0,
     this.controller,
-  }) : super(key: key);
+  });
 
   final Widget Function(ScrollController?) builder;
   final Color color;

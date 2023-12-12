@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 
 class SessionHostButton extends StatelessWidget {
   const SessionHostButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.label,
     required this.enabled,
     required this.active,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final String label;

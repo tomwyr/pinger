@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:dotted_border/dotted_border.dart';
-
+import 'package:flutter/material.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
@@ -9,11 +7,11 @@ import 'package:pinger/ui/shared/chart/result_summary_chart.dart';
 
 class ResultDetailsSummaryChart extends StatelessWidget {
   const ResultDetailsSummaryChart({
-    Key? key,
+    super.key,
     required this.padding,
     required this.height,
     required this.result,
-  }) : super(key: key);
+  });
 
   final double padding;
   final double height;

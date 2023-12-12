@@ -5,13 +5,13 @@ import 'package:pinger/resources.dart';
 
 class ResultTileChart extends StatelessWidget {
   const ResultTileChart({
-    Key? key,
+    super.key,
     required this.values,
     required this.min,
     required this.mean,
     required this.max,
     required this.barWidth,
-  }) : super(key: key);
+  });
 
   final Radius barRadius = const Radius.circular(2.0);
 

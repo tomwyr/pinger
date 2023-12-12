@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/extensions.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/model/ping_session.dart';
@@ -10,12 +9,12 @@ import 'package:pinger/utils/format_utils.dart';
 
 class InfoTraySessionItem extends StatelessWidget {
   const InfoTraySessionItem({
-    Key? key,
+    super.key,
     required this.session,
     required this.duration,
     required this.onButtonPressed,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final PingSession? session;
   final Duration? duration;

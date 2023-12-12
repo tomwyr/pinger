@@ -10,9 +10,9 @@ import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 
 class PermissionsSheet extends StatefulWidget {
   const PermissionsSheet({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

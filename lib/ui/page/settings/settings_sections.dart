@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/user_settings.dart';
 import 'package:pinger/resources.dart';
@@ -8,11 +7,11 @@ import 'package:pinger/ui/page/settings/settings_items.dart';
 
 class PingSettingsSection extends StatelessWidget {
   const PingSettingsSection({
-    Key? key,
+    super.key,
     this.showHeader = true,
     required this.settings,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final bool showHeader;
   final PingSettings? settings;
@@ -75,10 +74,10 @@ class PingSettingsSection extends StatelessWidget {
 
 class OtherSettingsSection extends StatelessWidget {
   const OtherSettingsSection({
-    Key? key,
+    super.key,
     required this.settings,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final UserSettings settings;
   final ValueChanged<UserSettings> onChanged;
@@ -113,10 +112,10 @@ class OtherSettingsSection extends StatelessWidget {
 
 class ShareSettingsSection extends StatelessWidget {
   const ShareSettingsSection({
-    Key? key,
+    super.key,
     required this.settings,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final ShareSettings? settings;
   final ValueChanged<ShareSettings> onChanged;
@@ -150,10 +149,10 @@ class ShareSettingsSection extends StatelessWidget {
 
 class TraySettingsSection extends StatelessWidget {
   const TraySettingsSection({
-    Key? key,
+    super.key,
     required this.settings,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final TraySettings? settings;
   final ValueChanged<TraySettings?> onChanged;
@@ -187,10 +186,10 @@ class TraySettingsSection extends StatelessWidget {
 
 class SettingsFooterSection extends StatelessWidget {
   const SettingsFooterSection({
-    Key? key,
+    super.key,
     required this.appInfo,
     required this.onShowIntroPressed,
-  }) : super(key: key);
+  });
 
   final AppInfo? appInfo;
   final VoidCallback onShowIntroPressed;

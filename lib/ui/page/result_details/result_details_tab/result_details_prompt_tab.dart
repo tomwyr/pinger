@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/ui/shared/info_section.dart';
 
 class ResultDetailsPromptTab extends StatelessWidget {
   const ResultDetailsPromptTab({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.description,
     required this.buttonLabel,
     required this.onButtonPressed,
-  }) : super(key: key);
+  });
 
   final AssetImage image;
   final String title;

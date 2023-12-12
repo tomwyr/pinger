@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 
 class SessionSummarySection extends StatelessWidget {
   const SessionSummarySection({
-    Key? key,
+    super.key,
     required this.values,
     required this.stats,
-  }) : super(key: key);
+  });
 
   final List<int?>? values;
   final PingStats? stats;

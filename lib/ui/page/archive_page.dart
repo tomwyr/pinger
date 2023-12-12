@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -21,7 +19,7 @@ import 'package:pinger/ui/shared/tiles/results_group_tile.dart';
 enum ArchiveViewType { list, groups, host }
 
 class ArchivePage extends StatefulWidget {
-  const ArchivePage({Key? key}) : super(key: key);
+  const ArchivePage({super.key});
 
   @override
   State<ArchivePage> createState() => _ArchivePageState();
@@ -35,13 +33,12 @@ class _ArchivePageState extends BaseState<ArchivePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_viewType == ArchiveViewType.host) {
+    return PopScope(
+      canPop: _viewType != ArchiveViewType.host,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
           setState(() => _viewType = ArchiveViewType.groups);
-          return false;
         }
-        return true;
       },
       child: Observer(
         builder: (_) => Scaffold(

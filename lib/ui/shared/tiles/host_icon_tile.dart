@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/resources.dart';
 import 'package:pinger/utils/data_snap.dart';
 
@@ -12,10 +10,10 @@ typedef HostIconGetter = Observable<DataSnap<Uint8List>> Function(String url);
 
 class HostIconProvider extends InheritedWidget {
   const HostIconProvider({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.getIcon,
-  }) : super(key: key, child: child);
+  });
 
   final HostIconGetter getIcon;
 
@@ -25,11 +23,11 @@ class HostIconProvider extends InheritedWidget {
 
 class HostIconTile extends StatefulWidget {
   const HostIconTile._({
-    Key? key,
+    super.key,
     required this.host,
     required this.duration,
     required this.shadowColor,
-  }) : super(key: key);
+  });
 
   HostIconTile({
     Key? key,

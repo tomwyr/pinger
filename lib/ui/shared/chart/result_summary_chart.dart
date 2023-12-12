@@ -5,11 +5,11 @@ import 'package:pinger/resources.dart';
 
 class ResultSummaryChart extends StatelessWidget {
   const ResultSummaryChart({
-    Key? key,
+    super.key,
     required this.minIndex,
     required this.maxIndex,
     required this.values,
-  }) : super(key: key);
+  });
 
   final int minIndex;
   final int maxIndex;

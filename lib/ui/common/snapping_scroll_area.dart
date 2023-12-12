@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SnappingScrollArea extends StatefulWidget {
   const SnappingScrollArea({
-    Key? key,
+    super.key,
     required this.child,
     required this.itemInterval,
     required this.itemCount,
@@ -11,7 +11,7 @@ class SnappingScrollArea extends StatefulWidget {
     this.snapDuration = const Duration(milliseconds: 300),
     this.mainAxisPadding = 0.0,
     this.initialPosition = 0,
-  }) : super(key: key);
+  });
 
   final int initialPosition;
   final int itemCount;

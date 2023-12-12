@@ -19,7 +19,7 @@ class PingLockIndicatorDimens {
 
 class PingLockIndicator extends StatelessWidget {
   const PingLockIndicator({
-    Key? key,
+    super.key,
     required this.duration,
     required this.direction,
     required this.margin,
@@ -27,7 +27,7 @@ class PingLockIndicator extends StatelessWidget {
     required this.color,
     required this.dimens,
     required this.swipe,
-  }) : super(key: key);
+  });
 
   final Duration duration;
   final TextDirection direction;

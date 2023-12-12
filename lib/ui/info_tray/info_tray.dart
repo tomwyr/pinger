@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:mobx/mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/model/user_settings.dart';
@@ -18,9 +16,9 @@ import 'package:pinger/ui/info_tray/items/info_tray_session_item.dart';
 
 class InfoTray extends StatefulWidget {
   const InfoTray({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget? child;
 

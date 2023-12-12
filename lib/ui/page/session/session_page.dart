@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -24,7 +22,7 @@ import 'package:pinger/ui/shared/sheet/pinger_bottom_sheet.dart';
 import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class SessionPage extends StatefulWidget {
-  const SessionPage({Key? key}) : super(key: key);
+  const SessionPage({super.key});
 
   @override
   State<SessionPage> createState() => _SessionPageState();

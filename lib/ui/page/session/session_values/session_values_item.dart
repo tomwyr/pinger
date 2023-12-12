@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
 class SessionValuesItem extends StatelessWidget {
   const SessionValuesItem._({
-    Key? key,
+    super.key,
     required this.index,
     required this.result,
     required this.delta,
     required this.showLink,
-  }) : super(key: key);
+  });
 
   factory SessionValuesItem.reversed({
     Key? key,

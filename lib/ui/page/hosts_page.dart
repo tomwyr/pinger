@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/app/pinger_app.dart';
@@ -10,13 +9,13 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HostsPage extends StatefulWidget {
   const HostsPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.hosts,
     required this.getTrailingLabel,
     required this.removeHosts,
     required this.onHostSelected,
-  }) : super(key: key);
+  });
 
   final String title;
   final List<String> hosts;
@@ -106,14 +105,12 @@ class _HostsPageState extends BaseState<HostsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        _onBackPressed();
-        return false;
-      },
+    return PopScope(
+      canPop: !_isEditing,
+      onPopInvoked: (_) => _onBackPressed(),
       child: Scaffold(
         appBar: AppBar(
-          leading: CloseButton(onPressed: _onBackPressed),
+          leading: const CloseButton(),
           title: Text(
             !_isEditing ? widget.title : S.current.removeHostsPageTitle,
           ),

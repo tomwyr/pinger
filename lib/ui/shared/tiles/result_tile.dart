@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/chart/result_tile_chart.dart';
@@ -13,11 +12,11 @@ enum ResultTileType {
 
 class ResultTile extends StatelessWidget {
   const ResultTile({
-    Key? key,
+    super.key,
     required this.result,
     this.onPressed,
     this.type = ResultTileType.regular,
-  }) : super(key: key);
+  });
 
   final PingResult? result;
   final VoidCallback? onPressed;

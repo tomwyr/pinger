@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/ui/page/session/session_ping_gauge.dart';
@@ -12,12 +11,12 @@ import 'package:pinger/ui/shared/view_type/view_types.dart';
 
 class SessionValuesSection extends StatefulWidget {
   const SessionValuesSection({
-    Key? key,
+    super.key,
     required this.session,
     required this.sessionDuration,
     required this.viewType,
     required this.onViewTypeChanged,
-  }) : super(key: key);
+  });
 
   final PingSession session;
   final Duration sessionDuration;

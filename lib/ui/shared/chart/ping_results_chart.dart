@@ -7,14 +7,14 @@ import 'package:pinger/resources.dart';
 
 class PingResultsChart extends StatelessWidget {
   const PingResultsChart({
-    Key? key,
+    super.key,
     required this.values,
     required this.maxValue,
     required this.startX,
     required this.dotsCount,
     required this.valueLabelSize,
     required this.valueLabelMargin,
-  }) : super(key: key);
+  });
 
   final List<int?>? values;
   final int? maxValue;

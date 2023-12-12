@@ -6,7 +6,7 @@ import 'package:pinger/resources.dart';
 
 class GlobalDistributionChart extends StatelessWidget {
   const GlobalDistributionChart._({
-    Key? key,
+    super.key,
     required this.highlightIndex,
     required this.minX,
     required this.maxX,
@@ -15,7 +15,7 @@ class GlobalDistributionChart extends StatelessWidget {
     required this.spots,
     required this.getLabelX,
     required this.getLabelY,
-  }) : super(key: key);
+  });
 
   factory GlobalDistributionChart({
     Key? key,

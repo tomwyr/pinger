@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
@@ -12,11 +11,11 @@ import 'package:pinger/ui/shared/tiles/result_tile.dart';
 
 class ResultDetailsMoreTab extends StatefulWidget {
   const ResultDetailsMoreTab({
-    Key? key,
+    super.key,
     required this.results,
     required this.onItemSelected,
     required this.onStartPingPressed,
-  }) : super(key: key);
+  });
 
   final List<PingResult?> results;
   final ValueChanged<PingResult?> onItemSelected;

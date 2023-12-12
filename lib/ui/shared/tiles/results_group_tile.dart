@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class ResultsGroupTile extends StatelessWidget {
   const ResultsGroupTile({
-    Key? key,
+    super.key,
     required this.host,
     required this.resultsCount,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final String host;
   final int resultsCount;

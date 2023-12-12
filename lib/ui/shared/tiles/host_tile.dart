@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
@@ -12,14 +11,14 @@ enum HostTileType {
 
 class HostTile extends StatelessWidget {
   const HostTile({
-    Key? key,
+    super.key,
     required this.host,
     this.loadIcon = true,
     this.onPressed,
     this.onLongPress,
     this.trailing,
     this.type = HostTileType.regular,
-  }) : super(key: key);
+  });
 
   final String? host;
   final bool loadIcon;

@@ -19,13 +19,13 @@ class DraggableSheetController {
 
 class DraggableSheet extends StatefulWidget {
   const DraggableSheet({
-    Key? key,
+    super.key,
     required this.controller,
     required this.duration,
     required this.child,
     required this.handleBuilder,
     required this.contentBuilder,
-  }) : super(key: key);
+  });
 
   final DraggableSheetController controller;
   final Duration duration;
@@ -271,7 +271,7 @@ class _SheetHeight {
 
 class SeparatedDraggableSheet<T> extends StatefulWidget {
   const SeparatedDraggableSheet({
-    Key? key,
+    super.key,
     required this.controller,
     required this.duration,
     required this.animateVisibility,
@@ -281,7 +281,7 @@ class SeparatedDraggableSheet<T> extends StatefulWidget {
     required this.handleBuilder,
     required this.separatorBuilder,
     required this.contentBuilder,
-  }) : super(key: key);
+  });
 
   final DraggableSheetController controller;
   final Duration duration;

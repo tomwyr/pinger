@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/ui/common/inline_multi_child_layout_delegate.dart';
 
 class CollapsingTile extends StatelessWidget {
   const CollapsingTile({
-    Key? key,
+    super.key,
     required this.expansion,
     required this.avatar,
     required this.label,
-  }) : super(key: key);
+  });
 
   final double expansion;
   final Widget avatar;

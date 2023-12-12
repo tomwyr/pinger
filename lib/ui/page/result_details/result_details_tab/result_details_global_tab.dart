@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_global.dart';
@@ -18,13 +17,13 @@ import 'package:pinger/utils/data_snap.dart';
 
 class ResultDetailsGlobalTab extends StatelessWidget {
   const ResultDetailsGlobalTab({
-    Key? key,
+    super.key,
     required this.isSharingLocation,
     required this.onShareLocationPressed,
     required this.userResult,
     required this.globalResults,
     required this.onRefreshPressed,
-  }) : super(key: key);
+  });
 
   final bool isSharingLocation;
   final VoidCallback onShareLocationPressed;
@@ -73,10 +72,10 @@ class ResultDetailsGlobalTab extends StatelessWidget {
 
 class GlobalResultsDataSection extends StatefulWidget {
   const GlobalResultsDataSection({
-    Key? key,
+    super.key,
     required this.globalResults,
     required this.userResult,
-  }) : super(key: key);
+  });
 
   final GlobalHostResults globalResults;
   final PingResult? userResult;

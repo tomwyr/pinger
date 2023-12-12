@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
@@ -10,12 +9,12 @@ import 'package:pinger/utils/format_utils.dart';
 
 class ResultDetailsHeader extends StatelessWidget {
   const ResultDetailsHeader({
-    Key? key,
+    super.key,
     required this.result,
     required this.expansion,
     required this.minExtent,
     required this.maxExtent,
-  }) : super(key: key);
+  });
 
   final PingResult? result;
   final double expansion;

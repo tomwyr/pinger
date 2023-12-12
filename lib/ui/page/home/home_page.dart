@@ -15,7 +15,7 @@ import 'package:pinger/ui/shared/info_section.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

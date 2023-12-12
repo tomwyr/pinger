@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:pinger/store/settings_store.dart';
 import 'package:pinger/utils/lifecycle_notifier.dart';
 
@@ -25,9 +24,9 @@ abstract class PermissionStore extends PermissionStoreBase with _$PermissionStor
 @Singleton(as: PermissionStore)
 class NotificationPermissionStore extends PermissionStore {
   NotificationPermissionStore(
-    SettingsStore settingsStore,
-    LifecycleNotifier lifecycleNotifier,
-  ) : super(settingsStore, lifecycleNotifier);
+    super.settingsStore,
+    super.lifecycleNotifier,
+  );
 
   @override
   Permission get _permission => Permission.notification;
@@ -47,9 +46,9 @@ class NotificationPermissionStore extends PermissionStore {
 @Singleton(as: PermissionStore)
 class LocationPermissionStore extends PermissionStore {
   LocationPermissionStore(
-    SettingsStore settingsStore,
-    LifecycleNotifier lifecycleNotifier,
-  ) : super(settingsStore, lifecycleNotifier);
+    super.settingsStore,
+    super.lifecycleNotifier,
+  );
 
   @override
   Permission get _permission => Permission.locationWhenInUse;

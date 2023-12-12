@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class ThreeBounce extends StatefulWidget {
   const ThreeBounce({
-    Key? key,
+    super.key,
     this.color,
     this.size = 48.0,
     this.duration = const Duration(milliseconds: 1500),
-  }) : super(key: key);
+  });
 
   final Color? color;
   final double size;

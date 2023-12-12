@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/ui/shared/view_type/view_type_button.dart';
 
 class ViewTypeRow<T> extends StatelessWidget {
   const ViewTypeRow({
-    Key? key,
+    super.key,
     required this.labeledTypes,
     required this.selection,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final Map<T, String> labeledTypes;
   final T selection;

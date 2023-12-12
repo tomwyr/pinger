@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 
 class InfoTrayConnectivityItem extends StatelessWidget {
-  const InfoTrayConnectivityItem({Key? key}) : super(key: key);
+  const InfoTrayConnectivityItem({super.key});
 
   @override
   Widget build(BuildContext context) {

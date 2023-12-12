@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/host_stats.dart';
 import 'package:pinger/resources.dart';
@@ -13,14 +12,14 @@ import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HomeHostSuggestions extends StatefulWidget {
   const HomeHostSuggestions({
-    Key? key,
+    super.key,
     required this.searchBar,
     required this.onItemPressed,
     required this.currentHost,
     required this.favorites,
     required this.popular,
     required this.stats,
-  }) : super(key: key);
+  });
 
   final Widget searchBar;
   final ValueChanged<String> onItemPressed;

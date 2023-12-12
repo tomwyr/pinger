@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class AnimatedInkIcon extends StatefulWidget {
   const AnimatedInkIcon({
-    Key? key,
+    super.key,
     required this.icon,
     required this.transition,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   final AnimatedIconData icon;
   final bool transition;

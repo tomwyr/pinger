@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/model/ping_result.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/page/archive_page.dart';
@@ -146,13 +145,13 @@ class RouteConfig {
 }
 
 class _PageRouteConfig extends RouteConfig {
-  _PageRouteConfig(String name, this.widget) : super._(name);
+  _PageRouteConfig(super.name, this.widget) : super._();
 
   final Widget widget;
 }
 
 class _SheetRouteConfig extends RouteConfig {
-  _SheetRouteConfig(String name, this.builder) : super._(name);
+  _SheetRouteConfig(super.name, this.builder) : super._();
 
   final RoutePageBuilder builder;
 }

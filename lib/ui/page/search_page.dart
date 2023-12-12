@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/assets.dart';
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
@@ -20,9 +18,9 @@ import 'package:pinger/utils/host_tap_handler.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({
-    Key? key,
+    super.key,
     this.initialQuery,
-  }) : super(key: key);
+  });
 
   final String? initialQuery;
 

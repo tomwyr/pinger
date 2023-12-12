@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CollapsingTabLayout extends StatefulWidget {
   const CollapsingTabLayout({
-    Key? key,
+    super.key,
     required this.appBar,
     required this.tabBarView,
     required this.collapsedOffset,
     required this.controller,
     required this.scrollLayout,
-  }) : super(key: key);
+  });
 
   final SliverAppBar appBar;
   final TabBarView tabBarView;
@@ -70,10 +70,10 @@ class _CollapsingTabLayoutState extends State<CollapsingTabLayout> {
 
 class CollapsingTabLayoutItem extends StatelessWidget {
   const CollapsingTabLayoutItem({
-    Key? key,
+    super.key,
     required this.slivers,
     this.controller,
-  }) : super(key: key);
+  });
 
   final List<Widget> slivers;
   final ScrollController? controller;

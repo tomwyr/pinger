@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
 import 'package:pinger/ui/common/collapsing_header.dart';
@@ -7,12 +6,12 @@ import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class SessionHostHeader extends StatelessWidget {
   const SessionHostHeader({
-    Key? key,
+    super.key,
     required this.session,
     required this.isExpanded,
     required this.buttons,
     required this.animDuration,
-  }) : super(key: key);
+  });
 
   final PingSession session;
   final bool isExpanded;

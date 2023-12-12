@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ClipBox extends StatelessWidget {
   const ClipBox({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     required this.child,
-  }) : super(key: key);
+  });
 
   final double? width;
   final double? height;

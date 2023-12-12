@@ -8,14 +8,14 @@ typedef CollapsingHeaderBuilder = Widget Function(
 
 class CollapsingHeader extends StatefulWidget {
   const CollapsingHeader({
-    Key? key,
+    super.key,
     required this.isExpanded,
     required this.title,
     required this.content,
     required this.bottom,
     required this.duration,
     this.builder,
-  }) : super(key: key);
+  });
 
   final bool isExpanded;
   final String title;

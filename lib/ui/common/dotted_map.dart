@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class DottedMap extends StatelessWidget {
   const DottedMap({
-    Key? key,
+    super.key,
     required this.dots,
     required this.dotColor,
     required this.emptyDotColor,
-  }) : super(key: key);
+  });
 
   final List<MapDot> dots;
   final ColorTween dotColor;

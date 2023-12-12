@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
-
 import 'package:dotted_border/dotted_border.dart';
-
+import 'package:flutter/material.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/shared/tiles/host_tile.dart';
 
 class HomeHostsSection extends StatelessWidget {
   const HomeHostsSection({
-    Key? key,
+    super.key,
     required this.title,
     required this.hosts,
     required this.itemLimit,
@@ -16,7 +14,7 @@ class HomeHostsSection extends StatelessWidget {
     this.tileType = HostTileType.regular,
     this.emptyLabel,
     this.onMorePressed,
-  }) : super(key: key);
+  });
 
   final String title;
   final List<String>? hosts;

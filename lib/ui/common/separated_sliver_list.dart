@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class SeparatedSliverList extends StatelessWidget {
   const SeparatedSliverList({
-    Key? key,
+    super.key,
     required this.itemCount,
     required this.itemBuilder,
     required this.separatorBuilder,
-  }) : super(key: key);
+  });
 
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;

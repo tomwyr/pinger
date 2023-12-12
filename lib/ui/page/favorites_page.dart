@@ -9,7 +9,7 @@ import 'package:pinger/ui/page/hosts_page.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+  const FavoritesPage({super.key});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();

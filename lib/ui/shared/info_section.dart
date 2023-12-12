@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 class InfoSection extends StatelessWidget {
   const InfoSection({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.description,
     this.risksOverflow = false,
-  }) : super(key: key);
+  });
 
   final double size = 144.0;
 

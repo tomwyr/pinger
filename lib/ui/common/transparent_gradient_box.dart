@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TransparentGradientBox extends StatelessWidget {
   const TransparentGradientBox._({
-    Key? key,
+    super.key,
     required this.color,
     required this.width,
     required this.height,
     required this.beginAlignment,
     required this.endAlignment,
-  }) : super(key: key);
+  });
 
   factory TransparentGradientBox({
     Key? key,

@@ -6,7 +6,7 @@ import 'package:pinger/ui/app/pinger_app.dart';
 import 'package:pinger/ui/page/base_page.dart';
 
 class IntroPage extends StatefulWidget {
-  const IntroPage({Key? key}) : super(key: key);
+  const IntroPage({super.key});
 
   @override
   State<IntroPage> createState() => _IntroPageState();

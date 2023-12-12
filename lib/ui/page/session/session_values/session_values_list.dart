@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 import 'package:pinger/ui/common/scroll_edge_gradient.dart';
 import 'package:pinger/ui/common/transparent_gradient_box.dart';
@@ -8,10 +7,10 @@ import 'package:pinger/ui/page/session/session_values/session_values_scrollable.
 
 class SessionValuesList extends StatefulWidget {
   const SessionValuesList({
-    Key? key,
+    super.key,
     required this.values,
     required this.shouldFollowHead,
-  }) : super(key: key);
+  });
 
   final List<int?>? values;
   final bool shouldFollowHead;

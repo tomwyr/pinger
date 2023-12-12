@@ -10,7 +10,7 @@ import 'package:pinger/utils/format_utils.dart';
 const double _switchWidth = 60.0;
 
 class SettingsHeaderItem extends StatelessWidget {
-  const SettingsHeaderItem({Key? key, this.title}) : super(key: key);
+  const SettingsHeaderItem({super.key, this.title});
 
   final String? title;
 
@@ -32,13 +32,13 @@ class SettingsHeaderItem extends StatelessWidget {
 
 class PingSettingItem extends StatelessWidget {
   const PingSettingItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.unit,
     required this.value,
     required this.onChanged,
     this.allowInfinite = false,
-  }) : super(key: key);
+  });
 
   final String label;
   final String unit;
@@ -92,12 +92,12 @@ class PingSettingItem extends StatelessWidget {
 
 class SettingItemSheet extends StatefulWidget {
   const SettingItemSheet({
-    Key? key,
+    super.key,
     required this.unit,
     required this.allowInfinite,
     required this.value,
     required this.onValueChanged,
-  }) : super(key: key);
+  });
 
   static const _digitsRegExp = r"[1-9]\d{0,2})";
 
@@ -253,13 +253,13 @@ class _SettingItemSheetState extends State<SettingItemSheet> {
 
 class SwitchSettingItem extends StatelessWidget {
   const SwitchSettingItem({
-    Key? key,
+    super.key,
     required this.label,
     this.description,
     this.enabled = true,
     required this.value,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String label;
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:pinger/di/injector.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/store/hosts_store.dart';
@@ -12,7 +10,7 @@ import 'package:pinger/utils/format_utils.dart';
 import 'package:pinger/utils/host_tap_handler.dart';
 
 class RecentsPage extends StatefulWidget {
-  const RecentsPage({Key? key}) : super(key: key);
+  const RecentsPage({super.key});
 
   @override
   State<RecentsPage> createState() => _RecentsPageState();

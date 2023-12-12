@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class FadeOut extends StatefulWidget {
   const FadeOut({
-    Key? key,
+    super.key,
     required this.duration,
     required this.visible,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Duration duration;
   final bool visible;

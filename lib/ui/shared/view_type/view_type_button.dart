@@ -1,16 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 
 class ViewTypeButton extends StatelessWidget {
   const ViewTypeButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.selected,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   static const height = 26.0;
 

@@ -13,7 +13,7 @@ import 'package:pinger/ui/permissions_sheet.dart';
 import 'package:pinger/ui/shared/tiles/host_icon_tile.dart';
 
 class PingerApp extends StatefulWidget {
-  const PingerApp({Key? key}) : super(key: key);
+  const PingerApp({super.key});
 
   static final PingerNavigatorRouter _router = PingerNavigatorRouter();
   static PingerRouter get router => _router;

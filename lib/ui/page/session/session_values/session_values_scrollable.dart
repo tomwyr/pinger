@@ -1,18 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/resources.dart';
 
 class SessionValuesScrollable extends StatefulWidget {
   const SessionValuesScrollable({
-    Key? key,
+    super.key,
     required this.axis,
     required this.didReachHead,
     required this.shouldFollowHead,
     required this.moveToHeadValue,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Axis axis;
   final ValueNotifier<bool>? didReachHead;

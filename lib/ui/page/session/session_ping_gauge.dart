@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 import 'package:pinger/extensions.dart';
 import 'package:pinger/generated/l10n.dart';
 import 'package:pinger/model/ping_session.dart';
@@ -10,12 +9,11 @@ import 'package:pinger/utils/format_utils.dart';
 
 class SessionPingGauge extends StatelessWidget {
   SessionPingGauge({
-    Key? key,
+    super.key,
     required this.session,
     required this.duration,
   })  : minValue = _getMinValue(session),
-        maxValue = _getMaxValue(session),
-        super(key: key);
+        maxValue = _getMaxValue(session);
 
   final PingSession session;
   final Duration? duration;
@@ -135,12 +133,12 @@ class SessionPingGauge extends StatelessWidget {
 
 class PingGaugeArc extends StatefulWidget {
   const PingGaugeArc({
-    Key? key,
+    super.key,
     required this.progress,
     required this.value,
     required this.isActive,
     required this.duration,
-  }) : super(key: key);
+  });
 
   factory PingGaugeArc.forSession(PingSession session, int? gaugeMaxValue) {
     final progress = !session.status.isQuickCheck
@@ -237,11 +235,11 @@ class _PingGaugeArcState extends State<PingGaugeArc> with SingleTickerProviderSt
 
 class PingGaugeDot extends StatefulWidget {
   const PingGaugeDot({
-    Key? key,
+    super.key,
     required this.value,
     required this.isActive,
     required this.duration,
-  }) : super(key: key);
+  });
 
   final double value;
   final bool isActive;
