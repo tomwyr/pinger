@@ -15,7 +15,6 @@ platform :android do
     lane :publish_play_store do
         upload_to_play_store(
             json_key_data: ENV["JSON_KEY_DATA"],
-            package_name: ENV["PACKAGE_NAME"],
             aab: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
         )
     end
