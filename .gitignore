@@ -39,8 +39,3 @@ lib/generated_plugin_registrant.dart
 # Google API keys
 ios/Config/**/GoogleService-Info.plist
 android/app/src/**/google-services.json
-
-# Generated source files
-lib/**/*.*.dart
-lib/generated
-lib/assets.dart
