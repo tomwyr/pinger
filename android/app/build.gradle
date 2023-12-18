@@ -24,15 +24,14 @@ if (flutterVersionName == null) {
 
 def keystoreProperties = new Properties()
 if (System.env.IS_RELEASE) {
-    keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
-    keystoreProperties.setProperty('keyPassword', System.getenv('KEY_PASSWORD'));
-    keystoreProperties.setProperty('keyAlias', 'upload');
-    keystoreProperties.setProperty('storeFile', 'key.jks');
+    keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'))
+    keystoreProperties.setProperty('keyPassword', System.getenv('KEY_PASSWORD'))
+    keystoreProperties.setProperty('keyAlias', 'upload')
+    keystoreProperties.setProperty('storeFile', 'key.jks')
 }
 
 android {
     namespace "com.tomwyr.pinger"
-    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -54,6 +53,7 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
+        compileSdk flutter.compileSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -67,7 +67,7 @@ android {
        }
    }
 
-    flavorDimensions "app"
+    flavorDimensions = ["app"]
     productFlavors {
         dev {
             dimension "app"
