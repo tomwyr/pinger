@@ -26,7 +26,8 @@ jobs:
         env:
           SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
           FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_PROD}}
-        run: echo $SIGNING_KEY && echo $SIGNING_KEY | base64 -d > android/app/key.jks && echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
+        # run: echo $SIGNING_KEY | base64 -d > android/app/key.jks && echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
+        run: echo $SIGNING_KEY | base64 -d | base64
       # Build and publish Android
       # - name: Build Android
       #   env:
