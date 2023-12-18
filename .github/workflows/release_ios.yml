@@ -2,9 +2,7 @@ name: release_ios
 
 on:
   push:
-    tags: v*
-  pull_request:
-    tags: v*
+    # tags: v*
 
 jobs:
   build_and_publish_ios_to_store:
