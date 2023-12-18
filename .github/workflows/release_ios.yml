@@ -2,10 +2,11 @@ name: release_ios
 
 on:
   push:
-    # tags: v*
+    tags: v*
 
 jobs:
   build_and_publish_ios_to_store:
+    if: false
     name: Publish iOS app for release
     runs-on: macos-latest
     env:
