@@ -25,8 +25,8 @@ if (flutterVersionName == null) {
 def keystoreProperties = new Properties()
 if (System.env.IS_RELEASE) {
     keystoreProperties.setProperty('storePassword', System.getenv('SIGNING_PASSWORD'));
-    keystoreProperties.setProperty('keyPassword', System.getenv('SIGNING_PASSWORD'));
-    keystoreProperties.setProperty('keyAlias', 'pinger_key');
+    keystoreProperties.setProperty('keyPassword', System.getenv('KEY_PASSWORD'));
+    keystoreProperties.setProperty('keyAlias', 'upload');
     keystoreProperties.setProperty('storeFile', 'key.jks');
 }
 

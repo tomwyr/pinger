@@ -31,6 +31,7 @@ jobs:
       - name: Build Android
         env:
           SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
+          KEY_PASSWORD: ${{secrets.ANDROID_KEY_PASSWORD}}
         run: flutter build appbundle --flavor prod --dart-define APP_ENV=prod
       - name: Publish Android
         working-directory: ./android
