@@ -98,8 +98,6 @@ class _HostsPageState extends BaseState<HostsPage> {
         _selection = [];
         _isEditing = false;
       });
-    } else {
-      PingerApp.router.pop();
     }
   }
 
