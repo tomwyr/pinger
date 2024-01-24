@@ -1,0 +1,40 @@
+name: release_android
+
+on:
+  push:
+    tags: v*
+
+jobs:
+  build_and_publish_android_to_store:
+    name: Publish Android app for release
+    runs-on: macos-latest
+    env:
+      IS_RELEASE: true
+      APP_ID: com.tomwyr.pinger
+      APP_FLAVOR: prod
+    steps:
+      # Setup environment
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - name: Decode confidential files
+        env:
+          SIGNING_KEY: ${{secrets.ANDROID_SIGNING_KEY}}
+          FIREBASE_API_KEY_ANDROID: ${{secrets.FIREBASE_API_KEY_ANDROID_PROD}}
+        run: echo $SIGNING_KEY | base64 -d > android/app/key.jks && echo $FIREBASE_API_KEY_ANDROID | base64 -d > android/app/src/prod/google-services.json
+      # Build and publish Android
+      - name: Build Android
+        env:
+          SIGNING_PASSWORD: ${{secrets.ANDROID_SIGNING_PASSWORD}}
+          KEY_PASSWORD: ${{secrets.ANDROID_KEY_PASSWORD}}
+        run: flutter build appbundle --flavor prod --dart-define APP_ENV=prod
+      - name: Publish Android
+        working-directory: ./android
+        env:
+          JSON_KEY_DATA: ${{secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT_KEY}}
+        run: fastlane publish_play_store

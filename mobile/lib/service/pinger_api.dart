@@ -1,0 +1,58 @@
+import 'package:flutter/services.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
+
+import 'package:pinger/model/ping_global.dart';
+
+@injectable
+class PingerApi {
+  PingerApi(this._firestore);
+
+  final String _allPath = 'all';
+  final String _countsPath = 'counts-monthly';
+  final String _resultsPath = 'results-monthly';
+  final String _sessionsPath = 'sessions';
+
+  final FirebaseFirestore _firestore;
+
+  Future<GlobalPingCounts> getPingCounts() async {
+    final countsDoc = _firestore.collection(_countsPath).doc(_allPath);
+    final countsSnap = await _runCall(countsDoc.get);
+    return countsSnap.data() != null
+        ? GlobalPingCounts.fromJson(countsSnap.data()!)
+        : GlobalPingCounts.empty();
+  }
+
+  Future<GlobalHostResults> getHostResults(String host) async {
+    final hostDoc = _firestore.collection(_resultsPath).doc(host);
+    final resultsSnap = await _runCall(hostDoc.get);
+    return resultsSnap.data() != null
+        ? GlobalHostResults.fromJson(resultsSnap.data()!)
+        : GlobalHostResults.empty();
+  }
+
+  Future<void> saveSessionResult(GlobalSessionResult result) async {
+    final sessionsCol = _firestore.collection(_sessionsPath);
+    await _runCall(() => sessionsCol.add(result.toJson()));
+  }
+
+  Future<T> _runCall<T>(Future<T> Function() call) async {
+    try {
+      return await call();
+    } on PlatformException catch (e) {
+      switch (e.message) {
+        case "Failed to get document because the client is offline.":
+          throw ApiError.clientOffline;
+        case "PERMISSION_DENIED: Missing or insufficient permissions.":
+          throw ApiError.accessDenied;
+      }
+      rethrow;
+    }
+  }
+}
+
+enum ApiError {
+  clientOffline,
+  accessDenied,
+}

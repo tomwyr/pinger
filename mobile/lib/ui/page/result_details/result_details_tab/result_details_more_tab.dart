@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:pinger/assets.dart';
+import 'package:pinger/generated/l10n.dart';
+import 'package:pinger/model/ping_result.dart';
+import 'package:pinger/resources.dart';
+import 'package:pinger/ui/common/collapsing_tab_layout.dart';
+import 'package:pinger/ui/common/scroll_edge_gradient.dart';
+import 'package:pinger/ui/common/separated_sliver_list.dart';
+import 'package:pinger/ui/page/result_details/result_details_tab/result_details_prompt_tab.dart';
+import 'package:pinger/ui/shared/tiles/result_tile.dart';
+
+class ResultDetailsMoreTab extends StatefulWidget {
+  const ResultDetailsMoreTab({
+    super.key,
+    required this.results,
+    required this.onItemSelected,
+    required this.onStartPingPressed,
+  });
+
+  final List<PingResult?> results;
+  final ValueChanged<PingResult?> onItemSelected;
+  final VoidCallback onStartPingPressed;
+
+  @override
+  State<ResultDetailsMoreTab> createState() => _ResultDetailsMoreTabState();
+}
+
+class _ResultDetailsMoreTabState extends State<ResultDetailsMoreTab> {
+  @override
+  Widget build(BuildContext context) {
+    return ScrollEdgeGradient(
+      color: R.colors.canvas,
+      sliverOverlap: kToolbarHeight + kTextTabBarHeight,
+      builder: (controller) => CollapsingTabLayoutItem(
+        controller: controller,
+        slivers: <Widget>[
+          if (widget.results.isEmpty)
+            ResultDetailsPromptTab(
+              image: Images.undrawEmpty,
+              title: S.current.nothingToShowTitle,
+              description: S.current.resultOtherEmptyDesc,
+              buttonLabel: S.current.startNowButtonLabel,
+              onButtonPressed: widget.onStartPingPressed,
+            )
+          else
+            SliverPadding(
+              padding: const EdgeInsets.all(16.0),
+              sliver: SeparatedSliverList(
+                itemCount: widget.results.length,
+                itemBuilder: (_, index) {
+                  final item = widget.results[index];
+                  return ResultTile(
+                    result: item,
+                    type: ResultTileType.detailed,
+                    onPressed: () => widget.onItemSelected(item),
+                  );
+                },
+                separatorBuilder: (_, __) => const Divider(),
+              ),
+            )
+        ],
+      ),
+    );
+  }
+}

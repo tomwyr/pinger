@@ -1,0 +1,54 @@
+name: release_ios
+
+on:
+  push:
+    tags: v*
+
+jobs:
+  build_and_publish_ios_to_store:
+    if: false
+    name: Publish iOS app for release
+    runs-on: macos-latest
+    env:
+      IS_RELEASE: true
+      APP_ID: com.tomwyr.pinger
+      APP_FLAVOR: prod
+    steps:
+      # Setup environment
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: bundle update --bundler
+        working-directory: ./ios
+      - name: Decode confidential files
+        env:
+          FIREBASE_API_KEY_IOS: ${{secrets.FIREBASE_API_KEY_IOS_PROD}}
+        run: mkdir -p ios/Config/prod && echo $FIREBASE_API_KEY_IOS | base64 -d > ios/Config/prod/GoogleService-Info.plist
+      # Build and publish iOS
+      - name: Build iOS
+        run: flutter build ios --flavor prod --dart-define APP_ENV=prod --no-codesign
+      - name: Archive iOS
+        working-directory: ./ios
+        env:
+          GIT_URL: https://github.com/tomwyr/pinger-ios-signing.git
+          KEYCHAIN_NAME: pinger-keychain
+          KEYCHAIN_PASSWORD: ${{secrets.KEYCHAIN_PASSWORD}}
+          MATCH_PASSWORD: ${{secrets.MATCH_PASSWORD}}
+          GIT_BASIC_AUTHORIZATION: ${{secrets.GIT_BASIC_AUTHORIZATION}}
+          IOS_SIGNING_IDENTITY: ${{secrets.IOS_SIGNING_IDENTITY}}
+          PROFILE_TYPE: appstore
+          EXPORT_METHOD: app-store
+        run: bundle exec fastlane sign_and_build_app
+      - name: Publish iOS
+        working-directory: ./ios
+        env:
+          FASTLANE_USER: ${{secrets.APPLE_ID}}
+          FASTLANE_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{secrets.APPLE_APPLICATION_SPECIFIC_PASSWORD}}
+          FASTLANE_SESSION: ${{secrets.SPACEAUTH_SESSION}}
+        run: bundle exec fastlane publish_app_store
